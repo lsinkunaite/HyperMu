@@ -1,0 +1,39 @@
+include definitions.g4bl
+
+torus Victorus innerRadius=0 outerRadius=11 majorRadius=91 initialPhi=0 finalPhi=360 maxStep=100 material=H2 color=$H2Color kill=0
+torus Hectorus innerRadius=0 outerRadius=14 majorRadius=91 initialPhi=0 finalPhi=360 maxStep=100 material=Al color=$AlColor kill=0
+
+tubs GridSchmid innerRadius=0 outerRadius=77 length=6 material=H2 color=$H2Color
+tubs TubOuterGrid innerRadius=0 outerRadius=77 length=2 material=Al color=$AlColor
+tubs TorusMirrorus innerRadius=85 outerRadius=97 length=12 material=Pb color=$PbColor
+
+box BeamVis width=1 height=1 length=1 material=H2 color=1,0,0
+
+
+#Detectors
+detector SciDetIn0 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetIn1 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetIn2 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+
+detector SciDetFIn0 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetFIn1 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetFIn2 width=60 height=60 length=$SciL format=rootExtended material=Scintillator color=$SciColor
+
+detector OuterGrid1F solid=TubOuterGrid format=rootExtended material=Al color=$AlColor
+detector OuterGrid2B solid=TubOuterGrid format=rootExtended material=Al color=$AlColor
+
+group TorinoMolino length=36
+   place BeamVis parent=GridSchmid
+   place OuterGrid2B z=-4
+   place GridSchmid z=0
+   place OuterGrid1F z=4
+   place TorusMirrorus parent=Victorus z=0
+   place Victorus parent=Hectorus z=0
+   place Hectorus z=0
+   place SciDetIn0 z=-7-($SciL/2)
+   place SciDetIn1 z=-8-($SciL*1.5)
+   place SciDetIn2 z=-9-($SciL*2.5)
+   place SciDetFIn0 z=7+($SciL/2)
+   place SciDetFIn1 z=8+($SciL*1.5)
+   place SciDetFIn2 z=9+($SciL*2.5)
+endgroup
