@@ -1,0 +1,41 @@
+##################################################################
+##                                                              ##
+##                         mudecay.g4bl                         ##
+##                                                              ##
+##  Simulation of a muon decay positioned at the center of the  ##
+##      target in the HypereX detector with Combo11 design.     ##
+##                                                              ##
+##            ( Last modified by Laura on 02-05-2018 )          ##
+##                                                              ##
+################################################################## 
+
+
+include definitions.g4bl     #definitions
+include fullset.g4bl     #geometry
+
+#number of simulated events
+param evts=1e6
+
+#physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+physics QGSP_BERT_EMX
+
+#Define some parameters
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Air maxStep=100.0
+param histoFile=mudecay_Comb11_Nevts_SciL_$evts$SciL.root
+
+trackcuts keep=e-,e+,gamma,mu+,mu-
+
+#Define source
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+place FullSetAriette z=0 rotation=X180
+
+#Kill entries exiting into -z
+virtualdetector killer width=$size height=$size length=1 material=Vacuum kill=1 color=255/256,255/256,255/256,0.1
+place killer z=-200
+
+virtualdetector checker width=$size height=$size length=1 material=Vacuum kill=0 color=255/256,255/256,255/256,0.1
+place checker z=300
