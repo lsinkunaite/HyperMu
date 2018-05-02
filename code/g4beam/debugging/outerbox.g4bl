@@ -1,0 +1,15 @@
+include definitions.g4bl
+include torino.g4bl
+
+box VacBox width=216 height=216 length=42 material=Vacuum color=$VacColor
+box AlBox width=226 height=226 length=52 material=Al color=$AlColor
+#box HoleBox width=15 height=15 length=5 material=Vacuum color=$VacColor
+
+group FoxTheOuterBox length=52
+   place TorinoMolino parent=VacBox z=0 #rotation=Y180
+   place VacBox parent=AlBox
+   #place HoleBox parent=AlBox z=23.5
+   place AlBox
+endgroup
+
+

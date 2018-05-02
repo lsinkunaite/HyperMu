@@ -1,0 +1,20 @@
+#Define materials
+material H2 Z=1 A=1.01 density=0.000090
+
+#Define colours
+param SciColor=64/256,79/256,232/256,0.7
+param BGOColor=235/256,160/256,10/256,0.3
+param H2Color=0.5,0.6,0.6,0.4
+param AlColor=0.6,0.6,0.6,0.9
+param PbColor=0.8,0.3,0.9,0.8
+param LilaColor=0.4,0.3,0.7,0.8
+param VacColor=0.1,0.1,0.8,0.2
+param lArColor=0.6,0.1,1.0,0.7
+
+#Define detectors
+param SciL=3
+param BGOH=(1080)/(9+(2*$SciL))
+#param BGOH=113
+#param BGOW=226
+param BGOW=(2160)/(9+(2*$SciL))
+param SciDetW=10

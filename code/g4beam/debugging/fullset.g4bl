@@ -1,0 +1,15 @@
+include definitions.g4bl
+include outerbox.g4bl
+
+#Outer detectors
+detector BGODet1B width=$BGOW height=$BGOH length=50 format=rootExtended material=BGO color=$BGOColor
+detector BGODet2B width=$BGOW height=$BGOH length=50 format=rootExtended material=BGO color=$BGOColor
+detector BGODet3F width=$BGOW height=2*$BGOH length=50 format=rootExtended material=BGO color=$BGOColor
+
+group FullSetAriette length=172
+   place BGODet3F
+   place FoxTheOuterBox z=0
+   place BGODet1B y=$BGOH/2 z=61
+   place BGODet2B y=-$BGOH/2 z=61
+endgroup
+
