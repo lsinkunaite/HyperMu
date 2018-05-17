@@ -1,0 +1,50 @@
+#############################################################
+##                                                         ##
+##                     academic.g4bl                       ##
+##                                                         ##
+##  Simulation of an isotropic source of:                  ##
+##    (1) muon decay                                       ##
+##    (2) gold cascade                                     ##
+##  positioned in front of the detector plate, which is a  ##
+##  light plastic scintillator of variable thicknes: 1mm,  ##
+##  2mm, 3mm, 4mm, 5mm.                                    ##
+##                                                         ##
+#############################################################
+
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e6
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+#physics QGSP_BERT_EMX
+
+#Define some parameters
+
+param detL=20
+param name=mudecay
+#param name=goldcascade
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param histoFile=acadecombo_iso_Nevts_SciL_$evts$detL$name.root
+
+trackcuts keep=e-,e+,gamma,mu+,mu-
+
+#Define source
+# (1) muon decay
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+isotropicsource x=0 y=0 z=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+#Geometry
+box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
+detector SciDetD0 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+
+place BeamVis z=0
+place SciDetD0 z=15+(0.5*$detL)

@@ -1,0 +1,55 @@
+################################################################
+##                                                            ##
+##                      alacademic.g4bl                       ##
+##                                                            ##
+##  Simulation of a beam source of:                           ##
+##    (1) muon decay                                          ##
+##    (2) gold cascade                                        ##
+##  positioned in front of the aluminium plate, behind        ##
+##  which there is a detector plate, that is a light plastic  ##
+##  scintillator of variable thicknes: 1mm, 2mm, 3mm, 4mm,    ##
+##  5mm.                                                      ##
+##                                                            ##
+################################################################
+
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e6
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+#physics QGSP_BERT_EMX
+
+#Define some parameters
+
+param alL=5
+param detL=20
+#param name=mudecay
+param name=goldcascade
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param histoFile=alacadecombo_Nevts_SciL_alL_$evts$detL$name$alL.root
+
+trackcuts keep=e-,e+,gamma,mu+,mu-
+
+#Define source
+# (1) muon decay
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+#isotropicsource x=0 y=0 z=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+#Geometry
+box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
+box AlPlate width=350 height=350 length=$alL material=Al color=$AlColor
+detector SciDetD0 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+
+place BeamVis z=0
+
+place AlPlate z=15+(0.5*$alL)
+place SciDetD0 z=17+$alL+(0.5*$detL)
