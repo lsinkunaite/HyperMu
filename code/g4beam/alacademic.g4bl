@@ -23,8 +23,8 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
 
-param alL=5
-param detL=20
+param alL=0
+param detL=1
 #param name=mudecay
 param name=goldcascade
 
@@ -51,5 +51,6 @@ detector SciDetD0 width=250 height=250 length=$detL format=rootExtended material
 
 place BeamVis z=0
 
-place AlPlate z=15+(0.5*$alL)
-place SciDetD0 z=17+$alL+(0.5*$detL)
+#place AlPlate z=15+(0.5*$alL)
+#place SciDetD0 z=17+$alL+(0.5*$detL)
+place SciDetD0 z=15+(0.5*$detL)
