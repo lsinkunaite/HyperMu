@@ -23,42 +23,44 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
 
-param alL=0
-param detL=10
-param pbL=5
-#param name=mudecay
-param name=goldcascade
+param alL=5
+param detL=20
+param pbL=2
+param name=mudecay
+#param name=goldcascade
+#param alname=big_1000x1000
+param alname=small_250x250
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=alacadecombo_Nevts_SciL_alL_pbL$evts$detL$name$alL$pbL.root
+param histoFile=alacadecombo_Nevts_SciL_alL_$evts$detL$name$alL$alname.root
 
 trackcuts keep=e-,e+,gamma,mu+,mu-
 
 #Define source
 # (1) muon decay
-#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 #isotropicsource x=0 y=0 z=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 #Geometry
 box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
-box AlPlate width=350 height=350 length=$alL material=Al color=$AlColor
+box AlPlate width=250 height=250 length=$alL material=Al color=$AlColor
 detector SciDetD0 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
-detector SciDetD1 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
-detector SciDetD2 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
-box PbPlate width=250 height=250 length=$pbL material=Pb color=$PbColor
+#detector SciDetD1 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+#detector SciDetD2 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+#box PbPlate width=250 height=250 length=$pbL material=Pb color=$PbColor
 
 place BeamVis z=0
 
-#place AlPlate z=15+(0.5*$alL)
-#place SciDetD0 z=17+$alL+(0.5*$detL)
-place SciDetD0 z=15+(0.5*$detL)
-place PbPlate z=15+$detL+(0.5*$pbL)
-place SciDetD1 z=15+$pbL+(1.5*$detL)
-place PbPlate z=15+(2*$detL)+(1.5*$pbL)
-place SciDetD2 z=15+(2*$pbL)+(2.5*$detL)
+place AlPlate z=15+(0.5*$alL)
+place SciDetD0 z=15+$alL+(0.5*$detL)
+#place SciDetD0 z=15+(0.5*$detL)
+#place PbPlate z=15+$detL+(0.5*$pbL)
+#place SciDetD1 z=15+$pbL+(1.5*$detL)
+#place PbPlate z=15+(2*$detL)+(1.5*$pbL)
+#place SciDetD2 z=15+(2*$pbL)+(2.5*$detL)
