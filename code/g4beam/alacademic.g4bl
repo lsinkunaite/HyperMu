@@ -24,7 +24,8 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 #Define some parameters
 
 param alL=0
-param detL=1
+param detL=10
+param pbL=5
 #param name=mudecay
 param name=goldcascade
 
@@ -32,7 +33,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=alacadecombo_Nevts_SciL_alL_$evts$detL$name$alL.root
+param histoFile=alacadecombo_Nevts_SciL_alL_pbL$evts$detL$name$alL$pbL.root
 
 trackcuts keep=e-,e+,gamma,mu+,mu-
 
@@ -48,9 +49,16 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
 box AlPlate width=350 height=350 length=$alL material=Al color=$AlColor
 detector SciDetD0 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetD1 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+detector SciDetD2 width=250 height=250 length=$detL format=rootExtended material=Scintillator color=$SciColor
+box PbPlate width=250 height=250 length=$pbL material=Pb color=$PbColor
 
 place BeamVis z=0
 
 #place AlPlate z=15+(0.5*$alL)
 #place SciDetD0 z=17+$alL+(0.5*$detL)
 place SciDetD0 z=15+(0.5*$detL)
+place PbPlate z=15+$detL+(0.5*$pbL)
+place SciDetD1 z=15+$pbL+(1.5*$detL)
+place PbPlate z=15+(2*$detL)+(1.5*$pbL)
+place SciDetD2 z=15+(2*$pbL)+(2.5*$detL)
