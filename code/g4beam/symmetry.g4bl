@@ -22,7 +22,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param name=goldcascade
-param side=_full
+param side=_right
 param worldMaterial=Vacuum maxStep=100.0
 param histoFile=symmetry_Nevts_$evts$name$side.root
 
@@ -33,12 +33,13 @@ trackcuts keep=e-,e+,gamma,mu+,mu-
 beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 #Geometry
-box cubeB width=105 height=105 length=105 material=Scintillator color=$SciColor
-box cubeS width=100 height=100 length=100 material=Scintillator color=$SciColor
-boolean op=subtraction Cube cubeB cubeS material=Scintillator color=$SciColor
+box plateH width=100 height=5 length=100 material=Scintillator color=$SciColor
+box plateL width=5 height=100 length=100 material=Scintillator color=$SciColor
+box plateF width=100 height=100 length=5 material=Scintillator color=$SciColor
 
+box VacBox width=100 height=5 length=100 material=Vacuum color=1,0,0
 box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
-detector SymmetryCube solid=Cube format=rootExtended color=$SciColor
+detector SymmetryPlate solid=plateL format=rootExtended color=$SciColor
 
-place SymmetryCube z=0
-
+place SymmetryPlate z=0 x=52.5
+#place VacBox z=0 y=60
