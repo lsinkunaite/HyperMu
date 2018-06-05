@@ -2,7 +2,7 @@
 ##                                                            ##
 ##                      symmetry.g4bl                         ##
 ##                                                            ##
-##  Simulation of a beam source of Au gold cascade to check   ##                 
+##  Simulation of a beam source of Au gold cascade to check   ##               
 ##  whether a beam is isotropic or not. Simulation performed  ##
 ##  for 6 different walls surrounding a cube that is placed   ##
 ##  around the beam source.                                   ##
@@ -15,16 +15,14 @@ include definitions.g4bl    #definitions
 param evts=1e6
 
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
-#physics QGSP_BERT_EMX
 
 #Define some parameters
 param P=0
 param size=200
-#param steppingVerbose=1
 param name=goldcascade
-param side=_right
+param side=_full
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=symmetry_Nevts_$evts$name$side.root
+param histoFile=TEST_symmetry_Nevts_$evts$name$side.root
 
 trackcuts keep=e-,e+,gamma,mu+,mu-
 
@@ -33,13 +31,18 @@ trackcuts keep=e-,e+,gamma,mu+,mu-
 beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 #Geometry
-box plateH width=100 height=5 length=100 material=Scintillator color=$SciColor
-box plateL width=5 height=100 length=100 material=Scintillator color=$SciColor
-box plateF width=100 height=100 length=5 material=Scintillator color=$SciColor
+box cubeB width=100100 height=100100 length=100100 material=BGO color=$BGOColor
+box cubeS width=100 height=100 length=100 material=BGO color=$BGOColor
+boolean op=subtraction Cube cubeB cubeS material=BGO color=$BGOColor
+#box plateH width=100 height=100000 length=100 material=BGO color=$BGOColor
+#box plateL width=100000 height=100 length=100 material=BGO color=$BGOColor
 
 box VacBox width=100 height=5 length=100 material=Vacuum color=1,0,0
-box BeamVis width=1 height=1 length=1 material=Vacuum color=1,0,0
-detector SymmetryPlate solid=plateL format=rootExtended color=$SciColor
 
-place SymmetryPlate z=0 x=52.5
-#place VacBox z=0 y=60
+
+detector SymmetryCube solid=Cube format=rootExtended color=$BGOColor
+#detector SymmetryPlate solid=plateH format=rootExtended color=$SciColor
+
+#place SymmetryPlate z=0 y=50050
+
+place SymmetryCube z=0
