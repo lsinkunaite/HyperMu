@@ -1,5 +1,15 @@
-
-
+##########################################################
+##                                                      ##
+##                     bubble3.g4bl                     ##
+##                                                      ##
+##  Simulation of a beam source of:                     ##
+##    (1) muon decay                                    ##
+##    (2) gold cascade                                  ##
+##  positioned at the center of the spherically-shaped  ##
+##  plastic-scintillator detector, with a 3-mm layer    ##
+##  of Aluminium in between.                            ##
+##                                                      ##
+##########################################################
 
 include definitions.g4bl    #definitions
 
