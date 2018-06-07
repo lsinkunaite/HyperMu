@@ -1,0 +1,52 @@
+##########################################################
+##                                                      ##
+##                     bubble3.g4bl                     ##
+##                                                      ##
+##  Simulation of a beam source of:                     ##
+##    (1) muon decay                                    ##
+##    (2) gold cascade                                  ##
+##  positioned at the center of the spherically-shaped  ##
+##  plastic-scintillator detector, with a 3-mm layer    ##
+##  of Aluminium in between.                            ##
+##                                                      ##
+##########################################################
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e6
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+
+#Define some parameters
+#param name=mudecay
+param name=goldcascade
+param SciD=20
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param histoFile=bubble_3mm_Al_Nevts_SciSphere_SciD_$evts$name$SciD.root
+
+trackcuts keep=e-,e+,gamma,mu-,mu+
+
+
+#Define source
+# (1) muon decay
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+
+#Geometry
+sphere SciSphere innerRadius=10.0 outerRadius=(10.0+$SciD) initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Scintillator color=$SciColor
+
+sphere AlSphere innerRadius=3.5 outerRadius=6.5 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Al color=$AlColor
+
+detector SciDet solid=SciSphere format=rootExtended material=Scintillator color=64/256,79/256,232/256,0.3
+
+place AlSphere z=0
+
+place SciDet z=0

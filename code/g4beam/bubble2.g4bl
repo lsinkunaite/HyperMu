@@ -1,35 +1,34 @@
 ##########################################################
 ##                                                      ##
-##                     bubble.g4bl                      ##
+##                     bubble2.g4bl                     ##
 ##                                                      ##
 ##  Simulation of a beam source of:                     ##
 ##    (1) muon decay                                    ##
 ##    (2) gold cascade                                  ##
 ##  positioned at the center of the spherically-shaped  ##
-##  BGO detector.                                       ##
+##  plastic-scintillator detector.                      ##
 ##                                                      ##
-##########################################################
+##########################################################            
 
-include definitions.g4bl    #definitions
+include definitions.g4bl   #definitions
 
 #number of simulated events
 param evts=1e6
 
-#physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
-physics QGSP_BERT_EMX
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
 #param name=mudecay
 param name=goldcascade
+param SciD=20
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=bubble_Nevts_BGOSphere_$evts$name.root
+param histoFile=bubble_Nevts_SciSphere_SciD_$evts$name$SciD.root
 
-trackcuts keep=e-,e+,gamma,mu+,mu-
-
+trackcuts keep=e-,e+,gamma,mu-,mu+
 
 
 #Define source
@@ -41,8 +40,8 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
-sphere BGOsphere innerRadius=10.0 outerRadius=310.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=BGO color=$BGOColor
+sphere SciSphere innerRadius=10.0 outerRadius=(10.0+$SciD) initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Scintillator color=$SciColor
 
-detector BGOdet solid=BGOsphere format=rootExtended material=BGO color=$BGOColor
+detector SciDet solid=SciSphere format=rootExtended material=Scintillator color=$SciColor
 
-place BGOdet z=0
+place SciDet z=0
