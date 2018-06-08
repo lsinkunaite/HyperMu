@@ -91,7 +91,7 @@ void bubble2(){
    /*           Analysis            */
    /*********************************/
 
-   const int nbins = 200;
+   const int nbins = 500;
   
    // 0-mm Al layer 
    TFile* fmu1 = new TFile(TString(filemu1));
@@ -123,33 +123,58 @@ void bubble2(){
 
 
    // 0-mm Al layer
-   TH1F *hmu1 = new TH1F("hmu1","Edep",nbins,0.01,50);
-   TH1F *hmu2 = new TH1F("hmu2","Edep",nbins,0.01,50);
-   TH1F *hmu3 = new TH1F("hmu3","Edep",nbins,0.01,50);
-   TH1F *hmu5 = new TH1F("hmu5","Edep",nbins,0.01,50);
-   TH1F *hmu10 = new TH1F("hmu10","Edep",nbins,0.01,50);
-   TH1F *hmu20 = new TH1F("hmu20","Edep",nbins,0.01,50);
-   TH1F *hx1 = new TH1F("hx1","Edep",nbins,0.01,10);
-   TH1F *hx2 = new TH1F("hx2","Edep",nbins,0.01,10);
-   TH1F *hx3 = new TH1F("hx3","Edep",nbins,0.01,10);
-   TH1F *hx5 = new TH1F("hx5","Edep",nbins,0.01,10);
-   TH1F *hx10 = new TH1F("hx10","Edep",nbins,0.01,10);
-   TH1F *hx20 = new TH1F("hx20","Edep",nbins,0.01,10);
+   TH1F *hmu1 = new TH1F("hmu1","Edep",nbins,0.01,0.7);
+   TH1F *hmu2 = new TH1F("hmu2","Edep",nbins,0.01,1.4);
+   TH1F *hmu3 = new TH1F("hmu3","Edep",nbins,0.01,1.8);
+   TH1F *hmu5 = new TH1F("hmu5","Edep",nbins,0.01,3);
+   TH1F *hmu10 = new TH1F("hmu10","Edep",nbins,0.01,6);
+   TH1F *hmu20 = new TH1F("hmu20","Edep",nbins,0.01,11);
+   TH1F *hx1 = new TH1F("hx1","Edep",nbins,0.01,0.8);
+   TH1F *hx2 = new TH1F("hx2","Edep",nbins,0.01,1.4);
+   TH1F *hx3 = new TH1F("hx3","Edep",nbins,0.01,2.2);
+   TH1F *hx5 = new TH1F("hx5","Edep",nbins,0.01,3);
+   TH1F *hx10 = new TH1F("hx10","Edep",nbins,0.01,4);
+   TH1F *hx20 = new TH1F("hx20","Edep",nbins,0.01,5.5);
+   // 0-mm Al layer [norm.]
+   TH1F *hmu1n = new TH1F("hmu1n","Edep",nbins,0.01,0.7);
+   TH1F *hmu2n = new TH1F("hmu2n","Edep",nbins,0.01,1.4);
+   TH1F *hmu3n = new TH1F("hmu3n","Edep",nbins,0.01,1.8);
+   TH1F *hmu5n = new TH1F("hmu5n","Edep",nbins,0.01,3);
+   TH1F *hmu10n = new TH1F("hmu10n","Edep",nbins,0.01,6);
+   TH1F *hmu20n = new TH1F("hmu20n","Edep",nbins,0.01,11);
+   TH1F *hx1n = new TH1F("hx1n","Edep",nbins,0.01,0.8);
+   TH1F *hx2n = new TH1F("hx2n","Edep",nbins,0.01,1.4);
+   TH1F *hx3n = new TH1F("hx3n","Edep",nbins,0.01,2.2);
+   TH1F *hx5n = new TH1F("hx5n","Edep",nbins,0.01,3);
+   TH1F *hx10n = new TH1F("hx10n","Edep",nbins,0.01,4);
+   TH1F *hx20n = new TH1F("hx20n","Edep",nbins,0.01,5.5);
 
    // 3-mm Al layer
-   TH1F *hAlmu1 = new TH1F("hAlmu1","Edep",nbins,0.01,50);
-   TH1F *hAlmu2 = new TH1F("hAlmu2","Edep",nbins,0.01,50);
-   TH1F *hAlmu3 = new TH1F("hAlmu3","Edep",nbins,0.01,50);
-   TH1F *hAlmu5 = new TH1F("hAlmu5","Edep",nbins,0.01,50);
-   TH1F *hAlmu10 = new TH1F("hAlmu10","Edep",nbins,0.01,50);
-   TH1F *hAlmu20 = new TH1F("hAlmu20","Edep",nbins,0.01,50);
-   TH1F *hAlx1 = new TH1F("hAlx1","Edep",nbins,0.01,10);
-   TH1F *hAlx2 = new TH1F("hAlx2","Edep",nbins,0.01,10);
-   TH1F *hAlx3 = new TH1F("hAlx3","Edep",nbins,0.01,10);
-   TH1F *hAlx5 = new TH1F("hAlx5","Edep",nbins,0.01,10);
-   TH1F *hAlx10 = new TH1F("hAlx10","Edep",nbins,0.01,10);
-   TH1F *hAlx20 = new TH1F("hAlx20","Edep",nbins,0.01,10);
-
+   TH1F *hAlmu1 = new TH1F("hAlmu1","Edep",nbins,0.01,0.7);
+   TH1F *hAlmu2 = new TH1F("hAlmu2","Edep",nbins,0.01,1.4);
+   TH1F *hAlmu3 = new TH1F("hAlmu3","Edep",nbins,0.01,1.8);
+   TH1F *hAlmu5 = new TH1F("hAlmu5","Edep",nbins,0.01,3);
+   TH1F *hAlmu10 = new TH1F("hAlmu10","Edep",nbins,0.01,6);
+   TH1F *hAlmu20 = new TH1F("hAlmu20","Edep",nbins,0.01,11);
+   TH1F *hAlx1 = new TH1F("hAlx1","Edep",nbins,0.01,0.8);
+   TH1F *hAlx2 = new TH1F("hAlx2","Edep",nbins,0.01,1.4);
+   TH1F *hAlx3 = new TH1F("hAlx3","Edep",nbins,0.01,2.2);
+   TH1F *hAlx5 = new TH1F("hAlx5","Edep",nbins,0.01,3);
+   TH1F *hAlx10 = new TH1F("hAlx10","Edep",nbins,0.01,4);
+   TH1F *hAlx20 = new TH1F("hAlx20","Edep",nbins,0.01,5.5);
+   // 3-mm Al layer [norm.]
+   TH1F *hAlmu1n = new TH1F("hAlmu1n","Edep",nbins,0.01,0.7);
+   TH1F *hAlmu2n = new TH1F("hAlmu2n","Edep",nbins,0.01,1.4);
+   TH1F *hAlmu3n = new TH1F("hAlmu3n","Edep",nbins,0.01,1.8);
+   TH1F *hAlmu5n = new TH1F("hAlmu5n","Edep",nbins,0.01,3);
+   TH1F *hAlmu10n = new TH1F("hAlmu10n","Edep",nbins,0.01,6);
+   TH1F *hAlmu20n = new TH1F("hAlmu20n","Edep",nbins,0.01,11);
+   TH1F *hAlx1n = new TH1F("hAlx1n","Edep",nbins,0.01,0.8);
+   TH1F *hAlx2n = new TH1F("hAlx2n","Edep",nbins,0.01,1.4);
+   TH1F *hAlx3n = new TH1F("hAlx3n","Edep",nbins,0.01,2.2);
+   TH1F *hAlx5n = new TH1F("hAlx5n","Edep",nbins,0.01,3);
+   TH1F *hAlx10n = new TH1F("hAlx10n","Edep",nbins,0.01,4);
+   TH1F *hAlx20n = new TH1F("hAlx20n","Edep",nbins,0.01,5.5);
 
    // 0-mm Al layer
    TTree *tmu1 = (TTree*)fmu1->Get("Detector/SciDet");
@@ -193,6 +218,19 @@ void bubble2(){
    tx5->Draw("Edep>>hx5","","");
    tx10->Draw("Edep>>hx10","","");
    tx20->Draw("Edep>>hx20","","");
+   // 0-mm Al layer [norm.]
+   tmu1->Draw("Edep>>hmu1n","","");
+   tmu2->Draw("Edep>>hmu2n","","");
+   tmu3->Draw("Edep>>hmu3n","","");
+   tmu5->Draw("Edep>>hmu5n","","");
+   tmu10->Draw("Edep>>hmu10n","","");
+   tmu20->Draw("Edep>>hmu20n","","");
+   tx1->Draw("Edep>>hx1n","","");
+   tx2->Draw("Edep>>hx2n","","");
+   tx3->Draw("Edep>>hx3n","","");
+   tx5->Draw("Edep>>hx5n","","");
+   tx10->Draw("Edep>>hx10n","","");
+   tx20->Draw("Edep>>hx20n","","");
 
    // 3-mm Al layer
    tAlmu1->Draw("Edep>>hAlmu1","","");
@@ -207,7 +245,19 @@ void bubble2(){
    tAlx5->Draw("Edep>>hAlx5","","");
    tAlx10->Draw("Edep>>hAlx10","","");
    tAlx20->Draw("Edep>>hAlx20","","");
-
+   // 3-mm Al layer [norm.]
+   tAlmu1->Draw("Edep>>hAlmu1n","","");
+   tAlmu2->Draw("Edep>>hAlmu2n","","");
+   tAlmu3->Draw("Edep>>hAlmu3n","","");
+   tAlmu5->Draw("Edep>>hAlmu5n","","");
+   tAlmu10->Draw("Edep>>hAlmu10n","","");
+   tAlmu20->Draw("Edep>>hAlmu20n","","");
+   tAlx1->Draw("Edep>>hAlx1n","","");
+   tAlx2->Draw("Edep>>hAlx2n","","");
+   tAlx3->Draw("Edep>>hAlx3n","","");
+   tAlx5->Draw("Edep>>hAlx5n","","");
+   tAlx10->Draw("Edep>>hAlx10n","","");
+   tAlx20->Draw("Edep>>hAlx20n","","");
 
    // 0-mm Al layer
    hmu1->SetLineColor(kBlack);
@@ -222,6 +272,19 @@ void bubble2(){
    hx5->SetLineColor(kBlack);
    hx10->SetLineColor(kBlack);
    hx20->SetLineColor(kBlack);
+   // 0-mm Al layer [norm.]
+   hmu1n->SetLineColor(kBlack);
+   hmu2n->SetLineColor(kBlack);
+   hmu3n->SetLineColor(kBlack);
+   hmu5n->SetLineColor(kBlack);
+   hmu10n->SetLineColor(kBlack);
+   hmu20n->SetLineColor(kBlack);
+   hx1n->SetLineColor(kRed);
+   hx2n->SetLineColor(kRed);
+   hx3n->SetLineColor(kRed);
+   hx5n->SetLineColor(kRed);
+   hx10n->SetLineColor(kRed);
+   hx20n->SetLineColor(kRed);
 
    // 3-mm Al layer
    hAlmu1->SetLineColor(kRed);
@@ -236,13 +299,26 @@ void bubble2(){
    hAlx5->SetLineColor(kRed);
    hAlx10->SetLineColor(kRed);
    hAlx20->SetLineColor(kRed);
+   // 3-mm Al layer [norm.]
+   hAlmu1n->SetLineColor(kBlack);
+   hAlmu2n->SetLineColor(kBlack);
+   hAlmu3n->SetLineColor(kBlack);
+   hAlmu5n->SetLineColor(kBlack);
+   hAlmu10n->SetLineColor(kBlack);
+   hAlmu20n->SetLineColor(kBlack);
+   hAlx1n->SetLineColor(kRed);
+   hAlx2n->SetLineColor(kRed);
+   hAlx3n->SetLineColor(kRed);
+   hAlx5n->SetLineColor(kRed);
+   hAlx10n->SetLineColor(kRed);
+   hAlx20n->SetLineColor(kRed);
 
 
    /********************************/
    /*           Plotting           */
    /********************************/
 
-   TCanvas *c = new TCanvas("c","Edep",800,600);
+/*   TCanvas *c = new TCanvas("c","Edep",800,600);
    c->Divide(3,2);
    c->cd(1);
    hmu1->SetTitle("Mu-decay: 1-mm SciD vs 1-mm SciD + 3-mm Al");
@@ -343,94 +419,94 @@ void bubble2(){
    TCanvas *d = new TCanvas("d","Edep",800,600);
    d->Divide(3,2);
    d->cd(1);
-   hx1->SetTitle("X-ray cascade: 1-mm SciD vs 1-mm SciD + 3-mm Al");
-   hx1->GetXaxis()->SetTitle("Edep [MeV]");
-   hx1->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx1->GetYaxis()->SetTitleOffset(2.0);
-   hx1->Draw();
-   d->Update();
-   TPaveStats *stx1 = (TPaveStats*)hx1->GetListOfFunctions()->FindObject("stats");
-   stx1->SetY1NDC(0.6); stx1->SetY2NDC(0.75);
-   hAlx1->Draw("sames");
+   hAlx1->SetTitle("X-ray cascade: 1-mm SciD vs 1-mm SciD + 3-mm Al");
+   hAlx1->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx1->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx1->GetYaxis()->SetTitleOffset(2.0);
+   hAlx1->Draw();
    d->Update();
    TPaveStats *stAlx1 = (TPaveStats*)hAlx1->GetListOfFunctions()->FindObject("stats");
+   stAlx1->SetY1NDC(0.6); stAlx1->SetY2NDC(0.75);
    stAlx1->SetTextColor(kRed);
-   stAlx1->Draw();
+   hx1->Draw("sames");
+   d->Update();
+   TPaveStats *stx1 = (TPaveStats*)hx1->GetListOfFunctions()->FindObject("stats");
+   stx1->Draw();
 
    d->cd(2);
-   hx2->SetTitle("X-ray cascade: 2-mm SciD vs 2-mm SciD + 3-mm Al");
-   hx2->GetXaxis()->SetTitle("Edep [MeV]");
-   hx2->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx2->GetYaxis()->SetTitleOffset(2.0);
-   hx2->Draw();
-   d->Update();
-   TPaveStats *stx2 = (TPaveStats*)hx2->GetListOfFunctions()->FindObject("stats");
-   stx2->SetY1NDC(0.6); stx2->SetY2NDC(0.75);
-   hAlx2->Draw("sames");
+   hAlx2->SetTitle("X-ray cascade: 2-mm SciD vs 2-mm SciD + 3-mm Al");
+   hAlx2->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx2->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx2->GetYaxis()->SetTitleOffset(2.0);
+   hAlx2->Draw();
    d->Update();
    TPaveStats *stAlx2 = (TPaveStats*)hAlx2->GetListOfFunctions()->FindObject("stats");
+   stAlx2->SetY1NDC(0.6); stAlx2->SetY2NDC(0.75);
    stAlx2->SetTextColor(kRed);
-   stAlx2->Draw();
+   hx2->Draw("sames");
+   d->Update();
+   TPaveStats *stx2 = (TPaveStats*)hx2->GetListOfFunctions()->FindObject("stats");
+   stx2->Draw();
 
    d->cd(3);
-   hx3->SetTitle("X-ray cascade: 3-mm SciD vs 3-mm SciD + 3-mm Al");
-   hx3->GetXaxis()->SetTitle("Edep [MeV]");
-   hx3->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx3->GetYaxis()->SetTitleOffset(2.0);
-   hx3->Draw();
-   d->Update();
-   TPaveStats *stx3 = (TPaveStats*)hx3->GetListOfFunctions()->FindObject("stats");
-   stx3->SetY1NDC(0.6); stx3->SetY2NDC(0.75);
-   hAlx3->Draw("sames");
+   hAlx3->SetTitle("X-ray cascade: 3-mm SciD vs 3-mm SciD + 3-mm Al");
+   hAlx3->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx3->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx3->GetYaxis()->SetTitleOffset(2.0);
+   hAlx3->Draw();
    d->Update();
    TPaveStats *stAlx3 = (TPaveStats*)hAlx3->GetListOfFunctions()->FindObject("stats");
+   stAlx3->SetY1NDC(0.6); stAlx3->SetY2NDC(0.75);
    stAlx3->SetTextColor(kRed);
-   stAlx3->Draw();
+   hx3->Draw("sames");
+   d->Update();
+   TPaveStats *stx3 = (TPaveStats*)hx3->GetListOfFunctions()->FindObject("stats");
+   stx3->Draw();
 
    d->cd(4);
-   hx5->SetTitle("X-ray cascade: 5-mm SciD vs 5-mm SciD + 3-mm Al");
-   hx5->GetXaxis()->SetTitle("Edep [MeV]");
-   hx5->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx5->GetYaxis()->SetTitleOffset(2.0);
-   hx5->Draw();
-   d->Update();
-   TPaveStats *stx5 = (TPaveStats*)hx5->GetListOfFunctions()->FindObject("stats");
-   stx5->SetY1NDC(0.6); stx5->SetY2NDC(0.75);
-   hAlx5->Draw("sames");
+   hAlx5->SetTitle("X-ray cascade: 5-mm SciD vs 5-mm SciD + 3-mm Al");
+   hAlx5->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx5->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx5->GetYaxis()->SetTitleOffset(2.0);
+   hAlx5->Draw();
    d->Update();
    TPaveStats *stAlx5 = (TPaveStats*)hAlx5->GetListOfFunctions()->FindObject("stats");
+   stAlx5->SetY1NDC(0.6); stAlx5->SetY2NDC(0.75);
    stAlx5->SetTextColor(kRed);
-   stAlx5->Draw();
+   hx5->Draw("sames");
+   d->Update();
+   TPaveStats *stx5 = (TPaveStats*)hx5->GetListOfFunctions()->FindObject("stats");
+   stx5->Draw();
 
    d->cd(5);
-   hx10->SetTitle("X-ray cascade: 10-mm SciD vs 10-mm SciD + 3-mm Al");
-   hx10->GetXaxis()->SetTitle("Edep [MeV]");
-   hx10->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx10->GetYaxis()->SetTitleOffset(2.0);
-   hx10->Draw();
-   d->Update();
-   TPaveStats *stx10 = (TPaveStats*)hx10->GetListOfFunctions()->FindObject("stats");
-   stx10->SetY1NDC(0.6); stx10->SetY2NDC(0.75);
-   hAlx10->Draw("sames");
+   hAlx10->SetTitle("X-ray cascade: 10-mm SciD vs 10-mm SciD + 3-mm Al");
+   hAlx10->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx10->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx10->GetYaxis()->SetTitleOffset(2.0);
+   hAlx10->Draw();
    d->Update();
    TPaveStats *stAlx10 = (TPaveStats*)hAlx10->GetListOfFunctions()->FindObject("stats");
+   stAlx10->SetY1NDC(0.6); stAlx10->SetY2NDC(0.75);
    stAlx10->SetTextColor(kRed);
-   stAlx10->Draw();
+   hx10->Draw("sames");
+   d->Update();
+   TPaveStats *stx10 = (TPaveStats*)hx10->GetListOfFunctions()->FindObject("stats");
+   stx10->Draw();
 
    d->cd(6);
-   hx20->SetTitle("X-ray cascade: 20-mm SciD vs 20-mm SciD + 3-mm Al");
-   hx20->GetXaxis()->SetTitle("Edep [MeV]");
-   hx20->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hx20->GetYaxis()->SetTitleOffset(2.0);
-   hx20->Draw();
-   d->Update();
-   TPaveStats *stx20 = (TPaveStats*)hx20->GetListOfFunctions()->FindObject("stats");
-   stx20->SetY1NDC(0.6); stx20->SetY2NDC(0.75);
-   hAlx20->Draw("sames");
+   hAlx20->SetTitle("X-ray cascade: 20-mm SciD vs 20-mm SciD + 3-mm Al");
+   hAlx20->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlx20->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlx20->GetYaxis()->SetTitleOffset(2.0);
+   hAlx20->Draw();
    d->Update();
    TPaveStats *stAlx20 = (TPaveStats*)hAlx20->GetListOfFunctions()->FindObject("stats");
+   stAlx20->SetY1NDC(0.6); stAlx20->SetY2NDC(0.75);
    stAlx20->SetTextColor(kRed);
-   stAlx20->Draw();
+   hx20->Draw("sames");
+   d->Update();
+   TPaveStats *stx20 = (TPaveStats*)hx20->GetListOfFunctions()->FindObject("stats");
+   stx20->Draw();
 
    d->SaveAs("BubbleTest2_goldcascade_p1.pdf");
    d->SaveAs("BubbleTest2_goldcascade_p1.png");
@@ -441,104 +517,234 @@ void bubble2(){
    TCanvas *e = new TCanvas("e","Edep",800,600);
    e->Divide(3,2);
    e->cd(1);
-   hmu1->SetTitle("Mu-decay vs X-ray cascade: 1-mm SciD");
-   hmu1->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu1->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu1->GetYaxis()->SetTitleOffset(2.0);
-   hmu1->DrawNormalized();
+   hmu1n->SetTitle("Mu-decay vs X-ray cascade: 1-mm SciD");
+   hmu1n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu1n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu1n->GetYaxis()->SetTitleOffset(2.0);
+   hmu1n->Scale(1/(hmu1n->Integral()));
+   hmu1n->Draw();
    e->Update();
-   TPaveStats *stmu1due = (TPaveStats*)hmu1->GetListOfFunctions()->FindObject("stats");
-   stmu1due->SetY1NDC(0.6); stmu1due->SetY2NDC(0.75);
-   hx1->SetLineColor(kRed);
-   hx1->DrawNormalized("sames");
+   TPaveStats *stmu1n = (TPaveStats*)hmu1n->GetListOfFunctions()->FindObject("stats");
+   stmu1n->SetY1NDC(0.6); stmu1n->SetY2NDC(0.75);
+   hx1n->Scale(1/(hx1n->Integral()));
+   hx1n->Draw("sames");
    e->Update();
-   TPaveStats *stx1due = (TPaveStats*)hx1->GetListOfFunctions()->FindObject("stats");
-   stx1due->SetTextColor(kRed);
-   stx1due->Draw();
+   TPaveStats *stx1n = (TPaveStats*)hx1n->GetListOfFunctions()->FindObject("stats");
+   stx1n->SetTextColor(kRed);
+   stx1n->Draw();
    
    e->cd(2);
-   hmu2->SetTitle("Mu-decay vs X-ray cascade: 2-mm SciD");
-   hmu2->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu2->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu2->GetYaxis()->SetTitleOffset(2.0);
-   hmu2->DrawNormalized();
+   hmu2n->SetTitle("Mu-decay vs X-ray cascade: 2-mm SciD");
+   hmu2n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu2n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu2n->GetYaxis()->SetTitleOffset(2.0);
+   hmu2n->Scale(1/(hmu2n->Integral()));
+   hmu2n->Draw();
    e->Update();
-   TPaveStats *stmu2due = (TPaveStats*)hmu2->GetListOfFunctions()->FindObject("stats");
-   stmu2due->SetY1NDC(0.6); stmu2due->SetY2NDC(0.75);
-   hx2->SetLineColor(kRed);
-   hx2->DrawNormalized("sames");
+   TPaveStats *stmu2n = (TPaveStats*)hmu2n->GetListOfFunctions()->FindObject("stats");
+   stmu2n->SetY1NDC(0.6); stmu2n->SetY2NDC(0.75);
+   hx2n->Scale(1/(hx2n->Integral()));
+   hx2n->Draw("sames");
    e->Update();
-   TPaveStats *stx2due = (TPaveStats*)hx2->GetListOfFunctions()->FindObject("stats");
-   stx2due->SetTextColor(kRed);
-   stx2due->Draw();
+   TPaveStats *stx2n = (TPaveStats*)hx2n->GetListOfFunctions()->FindObject("stats");
+   stx2n->SetTextColor(kRed);
+   stx2n->Draw();
 
    e->cd(3);
-   hmu3->SetTitle("Mu-decay vs X-ray cascade: 3-mm SciD");
-   hmu3->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu3->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu3->GetYaxis()->SetTitleOffset(2.0);
-   hmu3->DrawNormalized();
+   hmu3n->SetTitle("Mu-decay vs X-ray cascade: 3-mm SciD");
+   hmu3n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu3n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu3n->GetYaxis()->SetTitleOffset(2.0);
+   hmu3n->Scale(1/(hmu3n->Integral()));
+   hmu3n->Draw();
    e->Update();
-   TPaveStats *stmu3due = (TPaveStats*)hmu3->GetListOfFunctions()->FindObject("stats");
-   stmu3due->SetY1NDC(0.6); stmu3due->SetY2NDC(0.75);
-   hx3->SetLineColor(kRed);
-   hx3->DrawNormalized("sames");
+   TPaveStats *stmu3n = (TPaveStats*)hmu3n->GetListOfFunctions()->FindObject("stats");
+   stmu3n->SetY1NDC(0.6); stmu3n->SetY2NDC(0.75);
+   hx3n->Scale(1/(hx3n->Integral()));
+   hx3n->Draw("sames");
    e->Update();
-   TPaveStats *stx3due = (TPaveStats*)hx3->GetListOfFunctions()->FindObject("stats");
-   stx3due->SetTextColor(kRed);
-   stx3due->Draw();
+   TPaveStats *stx3n = (TPaveStats*)hx3n->GetListOfFunctions()->FindObject("stats");
+   stx3n->SetTextColor(kRed);
+   stx3n->Draw();
 
    e->cd(4);
-   hmu5->SetTitle("Mu-decay vs X-ray cascade: 5-mm SciD");
-   hmu5->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu5->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu5->GetYaxis()->SetTitleOffset(2.0);
-   hmu5->DrawNormalized();
+   hmu5n->SetTitle("Mu-decay vs X-ray cascade: 5-mm SciD");
+   hmu5n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu5n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu5n->GetYaxis()->SetTitleOffset(2.0);
+   hmu5n->Scale(1/(hmu5n->Integral()));
+   hmu5n->Draw();
    e->Update();
-   TPaveStats *stmu5due = (TPaveStats*)hmu5->GetListOfFunctions()->FindObject("stats");
-   stmu5due->SetY1NDC(0.6); stmu5due->SetY2NDC(0.75);
-   hx5->SetLineColor(kRed);
-   hx5->DrawNormalized("sames");
+   TPaveStats *stmu5n = (TPaveStats*)hmu5n->GetListOfFunctions()->FindObject("stats");
+   stmu5n->SetY1NDC(0.6); stmu5n->SetY2NDC(0.75);
+   hx5n->Scale(1/(hx5n->Integral()));
+   hx5n->Draw("sames");
    e->Update();
-   TPaveStats *stx5due = (TPaveStats*)hx5->GetListOfFunctions()->FindObject("stats");
-   stx5due->SetTextColor(kRed);
-   stx5due->Draw();
+   TPaveStats *stx5n = (TPaveStats*)hx5n->GetListOfFunctions()->FindObject("stats");
+   stx5n->SetTextColor(kRed);
+   stx5n->Draw();
 
    e->cd(5);
-   hmu10->SetTitle("Mu-decay vs X-ray cascade: 10-mm SciD");
-   hmu10->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu10->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu10->GetYaxis()->SetTitleOffset(2.0);
-   hmu10->DrawNormalized();
+   hmu10n->SetTitle("Mu-decay vs X-ray cascade: 10-mm SciD");
+   hmu10n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu10n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu10n->GetYaxis()->SetTitleOffset(2.0);
+   hmu10n->Scale(1/(hmu10n->Integral()));
+   hmu10n->Draw();
    e->Update();
-   TPaveStats *stmu10due = (TPaveStats*)hmu10->GetListOfFunctions()->FindObject("stats");
-   stmu10due->SetY1NDC(0.6); stmu10due->SetY2NDC(0.75);
-   hx10->SetLineColor(kRed);
-   hx10->DrawNormalized("sames");
+   TPaveStats *stmu10n = (TPaveStats*)hmu10n->GetListOfFunctions()->FindObject("stats");
+   stmu10n->SetY1NDC(0.6); stmu10n->SetY2NDC(0.75);
+   hx10n->Scale(1/(hx10n->Integral()));
+   hx10n->Draw("sames");
    e->Update();
-   TPaveStats *stx10due = (TPaveStats*)hx10->GetListOfFunctions()->FindObject("stats");
-   stx10due->SetTextColor(kRed);
-   stx10due->Draw();
+   TPaveStats *stx10n = (TPaveStats*)hx10n->GetListOfFunctions()->FindObject("stats");
+   stx10n->SetTextColor(kRed);
+   stx10n->Draw();
 
    e->cd(6);
-   hmu20->SetTitle("Mu-decay vs X-ray cascade: 20-mm SciD");
-   hmu20->GetXaxis()->SetTitle("Edep [MeV]");
-   hmu20->GetYaxis()->SetTitle("# of counts [a.u.]");
-   hmu20->GetYaxis()->SetTitleOffset(2.0);
-   hmu20->DrawNormalized();
+   hmu20n->SetTitle("Mu-decay vs X-ray cascade: 20-mm SciD");
+   hmu20n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu20n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu20n->GetYaxis()->SetTitleOffset(2.0);
+   hmu20n->Scale(1/(hmu20n->Integral()));
+   hmu20n->Draw();
    e->Update();
-   TPaveStats *stmu20due = (TPaveStats*)hmu20->GetListOfFunctions()->FindObject("stats");
-   stmu20due->SetY1NDC(0.6); stmu20due->SetY2NDC(0.75);
-   hx20->SetLineColor(kRed);
-   hx20->DrawNormalized("sames");
+   TPaveStats *stmu20n = (TPaveStats*)hmu20n->GetListOfFunctions()->FindObject("stats");
+   stmu20n->SetY1NDC(0.6); stmu20n->SetY2NDC(0.75);
+   hx20n->Scale(1/(hx20n->Integral()));
+   hx20n->Draw("sames");
    e->Update();
-   TPaveStats *stx20due = (TPaveStats*)hx20->GetListOfFunctions()->FindObject("stats");
-   stx20due->SetTextColor(kRed);
-   stx20due->Draw();
+   TPaveStats *stx20n = (TPaveStats*)hx20n->GetListOfFunctions()->FindObject("stats");
+   stx20n->SetTextColor(kRed);
+   stx20n->Draw();
 
-   e->SaveAs("BubbleTest2_muX_p1.pdf");
-   e->SaveAs("BubbleTest2_muX_p1.png");
-   e->SaveAs("BubbleTest2_muX_p1.C");
+   e->SaveAs("BubbleTest2_muX_p2.pdf");
+   e->SaveAs("BubbleTest2_muX_p2.png");
+   e->SaveAs("BubbleTest2_muX_p2.C");
+
+
+
+   TCanvas *f = new TCanvas("f","Edep",800,600);
+   f->Divide(3,2);
+   f->cd(1);
+   hAlmu1n->SetTitle("Mu-decay vs X-ray cascade: 1-mm SciD + 3-mm Al");
+   hAlmu1n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu1n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu1n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu1n->Scale(1/(hAlmu1n->Integral()));
+   hAlmu1n->Draw();
+   f->Update();
+   TPaveStats *stAlmu1n = (TPaveStats*)hAlmu1n->GetListOfFunctions()->FindObject("stats");
+   stAlmu1n->SetY1NDC(0.6); stAlmu1n->SetY2NDC(0.75);
+   hAlx1n->Scale(1/(hAlx1n->Integral()));
+   hAlx1n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx1n = (TPaveStats*)hAlx1n->GetListOfFunctions()->FindObject("stats");
+   stAlx1n->SetTextColor(kRed);
+   stAlx1n->Draw();
+
+   f->cd(2);
+   hAlmu2n->SetTitle("Mu-decay vs X-ray cascade: 2-mm SciD + 3-mm Al");
+   hAlmu2n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu2n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu2n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu2n->Scale(1/(hAlmu2n->Integral()));
+   hAlmu2n->Draw();
+   f->Update();
+   TPaveStats *stAlmu2n = (TPaveStats*)hAlmu2n->GetListOfFunctions()->FindObject("stats");
+   stAlmu2n->SetY1NDC(0.6); stAlmu2n->SetY2NDC(0.75);
+   hAlx2n->Scale(1/(hAlx2n->Integral()));
+   hAlx2n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx2n = (TPaveStats*)hAlx2n->GetListOfFunctions()->FindObject("stats");
+   stAlx2n->SetTextColor(kRed);
+   stAlx2n->Draw();
+
+   f->cd(3);
+   hAlmu3n->SetTitle("Mu-decay vs X-ray cascade: 3-mm SciD + 3-mm Al");
+   hAlmu3n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu3n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu3n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu3n->Scale(1/(hAlmu3n->Integral()));
+   hAlmu3n->Draw();
+   f->Update();
+   TPaveStats *stAlmu3n = (TPaveStats*)hAlmu3n->GetListOfFunctions()->FindObject("stats");
+   stAlmu3n->SetY1NDC(0.6); stAlmu3n->SetY2NDC(0.75);
+   hAlx3n->Scale(1/(hAlx3n->Integral()));
+   hAlx3n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx3n = (TPaveStats*)hAlx3n->GetListOfFunctions()->FindObject("stats");
+   stAlx3n->SetTextColor(kRed);
+   stAlx3n->Draw();
+
+   f->cd(4);
+   hAlmu5n->SetTitle("Mu-decay vs X-ray cascade: 5-mm SciD + 3-mm Al");
+   hAlmu5n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu5n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu5n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu5n->Scale(1/(hAlmu5n->Integral()));
+   hAlmu5n->Draw();
+   f->Update();
+   TPaveStats *stAlmu5n = (TPaveStats*)hAlmu5n->GetListOfFunctions()->FindObject("stats");
+   stAlmu5n->SetY1NDC(0.6); stAlmu5n->SetY2NDC(0.75);
+   hAlx5n->Scale(1/(hAlx5n->Integral()));
+   hAlx5n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx5n = (TPaveStats*)hAlx5n->GetListOfFunctions()->FindObject("stats");
+   stAlx5n->SetTextColor(kRed);
+   stAlx5n->Draw();   
+
+   f->cd(5);
+   hAlmu10n->SetTitle("Mu-decay vs X-ray cascade: 10-mm SciD + 3-mm Al");
+   hAlmu10n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu10n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu10n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu10n->Scale(1/(hAlmu10n->Integral()));
+   hAlmu10n->Draw();
+   f->Update();
+   TPaveStats *stAlmu10n = (TPaveStats*)hAlmu10n->GetListOfFunctions()->FindObject("stats");
+   stAlmu10n->SetY1NDC(0.6); stAlmu10n->SetY2NDC(0.75);
+   hAlx10n->Scale(1/(hAlx10n->Integral()));
+   hAlx10n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx10n = (TPaveStats*)hAlx10n->GetListOfFunctions()->FindObject("stats");
+   stAlx10n->SetTextColor(kRed);
+   stAlx10n->Draw();
+
+   f->cd(6);
+   hAlmu20n->SetTitle("Mu-decay vs X-ray cascade: 20-mm SciD + 3-mm Al");
+   hAlmu20n->GetXaxis()->SetTitle("Edep [MeV]");
+   hAlmu20n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hAlmu20n->GetYaxis()->SetTitleOffset(2.0);
+   hAlmu20n->Scale(1/(hAlmu20n->Integral()));
+   hAlmu20n->Draw();
+   f->Update();
+   TPaveStats *stAlmu20n = (TPaveStats*)hAlmu20n->GetListOfFunctions()->FindObject("stats");
+   stAlmu20n->SetY1NDC(0.6); stAlmu20n->SetY2NDC(0.75);
+   hAlx20n->Scale(1/(hAlx20n->Integral()));
+   hAlx20n->Draw("sames");
+   f->Update();
+   TPaveStats *stAlx20n = (TPaveStats*)hAlx20n->GetListOfFunctions()->FindObject("stats");
+   stAlx20n->SetTextColor(kRed);
+   stAlx20n->Draw();
+
+   f->SaveAs("BubbleTest2_Al_muX_p2.pdf");
+   f->SaveAs("BubbleTest2_Al_muX_p2.png");
+   f->SaveAs("BubbleTest2_Al_muX_p2.C");
+ 
+*/
+
+   TCanvas *g = new TCanvas("g","Edep",800,600);
+   g->Divide(3,2);
+   g->cd(1);
+   hmu1n->SetTitle("Mu-decay vs X-ray cascade: 1-mm SciD");
+   hmu1n->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu1n->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu1n->GetYaxis()->SetTitleOffset(2.0);
+   hmu1n->Draw();
+   g->Update();
+   TPaveStats *stmu1N = (TPaveStats*)hmu1n->GetListOfFunctionss()->FindObject("stats");
+   
 
 
 
