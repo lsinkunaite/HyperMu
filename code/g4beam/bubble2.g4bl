@@ -20,7 +20,7 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 #Define some parameters
 #param name=mudecay
 param name=goldcascade
-param SciD=20
+param SciD=1
 
 param P=0
 param size=200
