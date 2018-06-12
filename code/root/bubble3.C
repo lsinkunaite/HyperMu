@@ -69,7 +69,7 @@ void bubble3(){
    /*             Analysis             */
    /************************************/
 
-   const int nbins=500;
+   const int nbins=250;
 
    TFile* fmu0 = new TFile(TString(filemu0));
    TFile* fmu2 = new TFile(TString(filemu2));
@@ -79,19 +79,19 @@ void bubble3(){
    TFile* fx5 = new TFile(TString(filex5));
 
    // histograms
-   TH1F *hmu0 = new TH1F("hmu0","Edep",nbins,0.01,12);
-   TH1F *hmu2 = new TH1F("hmu2","Edep",nbins,0.01,12);
-   TH1F *hmu5 = new TH1F("hmu5","Edep",nbins,0.01,12);
-   TH1F *hx0 = new TH1F("hx0","Edep",nbins,0.01,6);
-   TH1F *hx2 = new TH1F("hx2","Edep",nbins,0.01,6);
-   TH1F *hx5 = new TH1F("hx5","Edep",nbins,0.01,6);
+   TH1F *hmu0 = new TH1F("hmu0","Edep",nbins,0.01,10);
+   TH1F *hmu2 = new TH1F("hmu2","Edep",nbins,0.01,10);
+   TH1F *hmu5 = new TH1F("hmu5","Edep",nbins,0.01,10);
+   TH1F *hx0 = new TH1F("hx0","Edep",nbins,0.01,2.5);
+   TH1F *hx2 = new TH1F("hx2","Edep",nbins,0.01,2.5);
+   TH1F *hx5 = new TH1F("hx5","Edep",nbins,0.01,2.5);
    // normalised histograms
-   TH1F *hmu0n = new TH1F("hmu0n","Edep",nbins,0.01,12);
-   TH1F *hmu2n = new TH1F("hmu2n","Edep",nbins,0.01,12);
-   TH1F *hmu5n = new TH1F("hmu5n","Edep",nbins,0.01,12);
-   TH1F *hx0n = new TH1F("hx0n","Edep",nbins,0.01,6);
-   TH1F *hx2n = new TH1F("hx2n","Edep",nbins,0.01,6);
-   TH1F *hx5n = new TH1F("hx5n","Edep",nbins,0.01,6);
+   TH1F *hmu0n = new TH1F("hmu0n","Edep",nbins,0.01,18);
+   TH1F *hmu2n = new TH1F("hmu2n","Edep",nbins,0.01,18);
+   TH1F *hmu5n = new TH1F("hmu5n","Edep",nbins,0.01,18);
+   TH1F *hx0n = new TH1F("hx0n","Edep",nbins,0.01,9);
+   TH1F *hx2n = new TH1F("hx2n","Edep",nbins,0.01,9);
+   TH1F *hx5n = new TH1F("hx5n","Edep",nbins,0.01,9);
 
    TTree *tmu0 = (TTree*)fmu0->Get("Detector/SciDet");
    TTree *tmu2 = (TTree*)fmu2->Get("Detector/SciDet");
@@ -159,23 +159,21 @@ void bubble3(){
 
 
    c->cd(2);
-   hmu0n->SetTitle("Mu-decay [norm.]: 20-mm SciD {0,2,5}-mm Pb");
+   gPad->SetLogy();
+   hmu0n->SetTitle("Mu-decay [log]: 20-mm SciD {0,2,5}-mm Pb");
    hmu0n->GetXaxis()->SetTitle("Edep [MeV]");
    hmu0n->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmu0n->GetYaxis()->SetTitleOffset(2.0);
-   hmu0n->Scale(1/(hmu0n->Integral()));
    hmu0n->Draw();
    c->Update();
    TPaveStats *stmu0n = (TPaveStats*)hmu0n->GetListOfFunctions()->FindObject("stats");
    stmu0n->SetY1NDC(0.4); stmu0n->SetY2NDC(0.55);
    stmu0n->SetTextColor(kBlack);
-   hmu2n->Scale(1/(hmu2n->Integral()));
    hmu2n->Draw("sames");
    c->Update();
    TPaveStats *stmu2n = (TPaveStats*)hmu2n->GetListOfFunctions()->FindObject("stats");
    stmu2n->SetY1NDC(0.6); stmu2n->SetY2NDC(0.75);
    stmu2n->SetTextColor(kRed);
-   hmu5n->Scale(1/(hmu5n->Integral()));
    hmu5n->Draw("sames");
    c->Update();
    TPaveStats *stmu5n = (TPaveStats*)hmu5n->GetListOfFunctions()->FindObject("stats");
@@ -204,23 +202,21 @@ void bubble3(){
    stx5->Draw();
 
    c->cd(4);
-   hx0n->SetTitle("X-ray cascade [norm.]: 20-mm SciD {0,2,5}-mm Pb");
+   gPad->SetLogy();
+   hx0n->SetTitle("X-ray cascade [log]: 20-mm SciD {0,2,5}-mm Pb");
    hx0n->GetXaxis()->SetTitle("Edep [MeV]");
    hx0n->GetYaxis()->SetTitle("# of counts [a.u.]");
    hx0n->GetYaxis()->SetTitleOffset(2.0);
-   hx0n->Scale(1/(hx0n->Integral()));
    hx0n->Draw();
    c->Update();
    TPaveStats *stx0n = (TPaveStats*)hx0n->GetListOfFunctions()->FindObject("stats");
    stx0n->SetY1NDC(0.4); stx0n->SetY2NDC(0.55);
    stx0n->SetTextColor(kBlack);
-   hx2n->Scale(1/(hx2n->Integral()));
    hx2n->Draw("sames");
    c->Update();
    TPaveStats *stx2n = (TPaveStats*)hx2n->GetListOfFunctions()->FindObject("stats");
    stx2n->SetY1NDC(0.6); stx2n->SetY2NDC(0.75);
    stx2n->SetTextColor(kRed);
-   hx5n->Scale(1/(hx5n->Integral()));
    hx5n->Draw("sames");
    c->Update();
    TPaveStats *stx5n = (TPaveStats*)hx5n->GetListOfFunctions()->FindObject("stats");
