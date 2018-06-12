@@ -19,13 +19,14 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 #physics QGSP_BERT_EMX
 
 #Define some parameters
-#param name=mudecay
-param name=goldcascade
+param name=_mudecay
+#param name=_goldcascade
+#param name=_5MeVxray
 
 param P=0
 param size=200
 #param steppingVerbose=1
-param worldMaterial=Vacuum maxStep=100.0
+param worldMaterials=Vacuum maxStep=100.0
 param histoFile=bubble_Nevts_BGOSphere_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu+,mu-
@@ -34,14 +35,16 @@ trackcuts keep=e-,e+,gamma,mu+,mu-
 
 #Define source
 # (1) muon decay
-#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
+# (3) 5-MeV x-ray
+#isotropicsource x=0 y=0 z=0 meanP=5 nEvents=$evts particle=gamma
 
 #Geometry
-sphere BGOsphere innerRadius=10.0 outerRadius=310.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=BGO color=$BGOColor
+sphere BGOsphere innerRadius=10.0 outerRadius=3010.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=BGO color=$BGOColor
 
 detector BGOdet solid=BGOsphere format=rootExtended material=BGO color=$BGOColor
 

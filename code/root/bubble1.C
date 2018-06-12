@@ -60,8 +60,9 @@ void bubble1(){
    /*********************************/
 
    // Names of the files
-   std::string filemu = "bubble_Nevts_BGOSphere_1e6mudecay.root";
-   std::string filex = "bubble_Nevts_BGOSphere_1e6goldcascade.root";
+   std::string filemu = "bubble_Nevts_BGOSphere_1e6_mudecay.root";
+   std::string filex = "bubble_Nevts_BGOSphere_1e6_goldcascade.root";
+   std::string filemx = "bubble_Nevts_BGOSphere_1e6_5MeVxray.root";
    
    /*********************************/
    /*           Analysis            */
@@ -71,18 +72,23 @@ void bubble1(){
 
    TFile* fmu = new TFile(TString(filemu));
    TFile* fx = new TFile(TString(filex));
+   TFile* fmx = new TFile(TString(filemx));
 
-   TH1F *hmu = new TH1F("hmu","Edep",nbins,0.01,50);
-   TH1F *hx = new TH1F("hx","Edep",nbins,0.01,10);
+   TH1F *hmu = new TH1F("hmu","Edep",nbins,0.01,63.5);
+   TH1F *hx = new TH1F("hx","Edep",nbins,9.2,10.4);
+   TH1F *hmx = new TH1F("hmx","Edep",nbins,0.01,10);
 
    TTree *tmu = (TTree*)fmu->Get("Detector/BGOdet");
    TTree *tx = (TTree*)fx->Get("Detector/BGOdet");
+   TTree *tmx = (TTree*)fmx->Get("Detector/BGOdet");
 
    tmu->Draw("Edep>>hmu","","");
    tx->Draw("Edep>>hx","","");
+   tmx->Draw("Edep>>hmx","","");
 
    hmu->SetLineColor(kBlack);
    hx->SetLineColor(kRed);
+   hmx->SetLineColor(kGreen-3);
 
    
    /***********************************/
@@ -90,7 +96,7 @@ void bubble1(){
    /***********************************/
 
    TCanvas *c = new TCanvas("c","Edep",800,600);
-   c->Divide(2,2);
+   c->Divide(2,3);
    c->cd(1);
    hmu->SetTitle("Mu-decay: spherical 3000mm BGO");
    hmu->GetXaxis()->SetTitle("Edep [MeV]");
@@ -99,6 +105,34 @@ void bubble1(){
    hmu->Draw();
   
    c->cd(3);
+   hmx->SetTitle("5-MeV X-ray: spherical 3000mm BGO");
+   hmx->GetXaxis()->SetTitle("Edep [MeV]");
+   hmx->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmx->GetYaxis()->SetTitleOffset(2.0);
+   hmx->Draw();
+  
+   c->cd(5);
+   hx->SetTitle("X-cascade Au: spherical 3000mm BGO");
+   hx->GetXaxis()->SetTitle("Edep [MeV]");
+   hx->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hx->GetYaxis()->SetTitleOffset(2.0);
+   hx->Draw();
+
+   c->cd(2);
+   hmu->SetTitle("Mu-decay: spherical 3000mm BGO");
+   hmu->GetXaxis()->SetTitle("Edep [MeV]");
+   hmu->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmu->GetYaxis()->SetTitleOffset(2.0);
+   hmu->Draw();
+  
+   c->cd(4);
+   hmx->SetTitle("5-MeV X-ray: spherical 3000mm BGO");
+   hmx->GetXaxis()->SetTitle("Edep [MeV]");
+   hmx->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmx->GetYaxis()->SetTitleOffset(2.0);
+   hmx->Draw();
+  
+   c->cd(6);
    hx->SetTitle("X-cascade Au: spherical 3000mm BGO");
    hx->GetXaxis()->SetTitle("Edep [MeV]");
    hx->GetYaxis()->SetTitle("# of counts [a.u.]");
