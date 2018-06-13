@@ -909,9 +909,9 @@ void bubble2(){
    stAlmu20z->SetTextColor(kRed);
    stAlmu20z->Draw();
 
-   g->SaveAs("BubbleTest2_mudecay_p3_zoom.pdf");
-   g->SaveAs("BubbleTest2_mudecay_p3_zoom.png");
-   g->SaveAs("BubbleTest2_mudecay_p3_zoom.C");   
+   g->SaveAs("BubbleTest2_mudecay_zoom_p3.pdf");
+   g->SaveAs("BubbleTest2_mudecay_zoom_p3.png");
+   g->SaveAs("BubbleTest2_mudecay_zoom_p3.C");   
  
  
 
@@ -1013,9 +1013,9 @@ void bubble2(){
    stAlx20z->SetTextColor(kRed);
    stAlx20z->Draw();
 
-   h->SaveAs("BubbleTest2_goldcascade_p3_zoom.pdf");
-   h->SaveAs("BubbleTest2_goldcascade_p3_zoom.png");
-   h->SaveAs("BubbleTest2_goldcascade_p3_zoom.C");
+   h->SaveAs("BubbleTest2_goldcascade_zoom_p3.pdf");
+   h->SaveAs("BubbleTest2_goldcascade_zoom_p3.png");
+   h->SaveAs("BubbleTest2_goldcascade_zoom_p3.C");
 
 
 
