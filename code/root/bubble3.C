@@ -58,12 +58,12 @@ void bubble3(){
    /************************************/
 
    // Names of the files
-   std::string filemu0 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay0.root";
-   std::string filemu2 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay2.root";
-   std::string filemu5 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay5.root";
-   std::string filex0 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade0.root";
-   std::string filex2 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade2.root";
-   std::string filex5 = "bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade5.root";
+   std::string filemu0 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay0.root";
+   std::string filemu2 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay2.root";
+   std::string filemu5 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6mudecay5.root";
+   std::string filex0 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade0.root";
+   std::string filex2 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade2.root";
+   std::string filex5 = "../../simdata/bubble3/bubble_20mm_SciD_Nevts_SciSphere_PbD_1e6goldcascade5.root";
 
    /************************************/
    /*             Analysis             */

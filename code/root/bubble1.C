@@ -60,9 +60,9 @@ void bubble1(){
    /*********************************/
 
    // Names of the files
-   std::string filemu = "bubble_Nevts_BGOSphere_1e6_mudecay.root";
-   std::string filex = "bubble_Nevts_BGOSphere_1e6_goldcascade.root";
-   std::string filemx = "bubble_Nevts_BGOSphere_1e6_5MeVxray.root";
+   std::string filemu = "../../simdata/bubble1/bubble_Nevts_BGOSphere_1e6_mudecay.root";
+   std::string filex = "../../simdata/bubble1/bubble_Nevts_BGOSphere_1e6_goldcascade.root";
+   std::string filemx = "../../simdata/bubble1/bubble_Nevts_BGOSphere_1e6_5MeVxray.root";
    
    /*********************************/
    /*           Analysis            */

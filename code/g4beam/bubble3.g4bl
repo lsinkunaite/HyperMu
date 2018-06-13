@@ -21,13 +21,13 @@ physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 #Define some parameters
 #param name=mudecay
 param name=goldcascade
-param SciD=20
+param SciD=1
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=bubble_3mm_Al_Nevts_SciSphere_SciD_$evts$name$SciD.root
+param histoFile=../../simdata/bubble2/bubble_3mm_Al_Nevts_SciSphere_SciD_$evts$name$SciD.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
