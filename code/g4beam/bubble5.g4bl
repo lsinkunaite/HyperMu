@@ -27,7 +27,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/bubble4/bubble_500mm_BGO_2x5mm_SciD_Nevts_SciSphere_PbD_$evts$name.root
+param histoFile=../../simdata/bubble4/bubble_500mm_BGO_2x5mm_SciD_Nevts_SciSphere_3mm_Al_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
