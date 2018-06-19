@@ -7,8 +7,8 @@
 ##    (2) gold cascade                                  ##
 ##  positioned at the center of two spherically-shaped  ##
 ##  5-mm plastic scintillator detectors plus a 250-mm/  ##
-##  500-mm BGO detector, with a 3-mm Aluminium layer    ##
-##  in between.                                         ##
+##  500-mm/750-mm plastic scintillator detector, with   ##
+##  a 3-mm/6-mm Aluminium layer in between.             ##
 ##                                                      ##
 ##########################################################
 
@@ -20,39 +20,39 @@ param evts=1e6
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
-#param name=mudecay
-param name=goldcascade
+param name=mudecay
+#param name=goldcascade
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/bubble4/bubble_500mm_BGO_2x5mm_SciD_Nevts_SciSphere_3mm_Al_$evts$name.root
+param histoFile=../../simdata/bubble4/bubble_2x5mm_250mm_SciD_Nevts_SciSphere_6mm_Al_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 
 #Define source
 # (1) muon decay
-#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
 sphere SciSphere1 innerRadius=15.0 outerRadius=20.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Scintillator color=$SciColor
 sphere SciSphere2 innerRadius=20.0 outerRadius=25.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Scintillator color=$SciColor
-sphere BGOSphere innerRadius=25.0 outerRadius=525.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=BGO color=$BGOColor
+sphere SciSphere3 innerRadius=25.0 outerRadius=275.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=BGO color=$BGOColor
 
-sphere AlSphere innerRadius=12.0 outerRadius=15.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Al color=$AlColor
+sphere AlSphere innerRadius=9.0 outerRadius=15.0 initialPhi=0 finalPhi=360 initialTheta=0 finalTheta=180 maxStep=1 material=Al color=$AlColor
 
-detector SciDet1 solid=SciSphere1 format=rootExtended material=Scintillator color=64/256,79/256,232/256,0.3
-detector SciDet2 solid=SciSphere2 format=rootExtended material=Scintillator color=64/256,79/256,232/256,0.3
-detector BGODet solid=BGOSphere format=rootExtended material=Scintillator color=$BGOColor
+detector SciDet1 solid=SciSphere1 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet2 solid=SciSphere2 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet3 solid=SciSphere3 format=rootExtended material=Scintillator color=$SciColor
 
 place AlSphere z=0
 
 place SciDet1 z=0
 place SciDet2 z=0
-place BGODet z=0
+place SciDet3 z=0
