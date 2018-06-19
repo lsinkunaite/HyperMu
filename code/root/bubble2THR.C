@@ -147,31 +147,31 @@ void bubble2THR(){
    TFile* fAlx10 = new TFile(TString(fileAlx10));
    TFile* fAlx20 = new TFile(TString(fileAlx20));
    // 6-mm Al layer
-   TFile* f6Almu1 = new TFile(TString(fileAlmu1));
-   TFile* f6Almu2 = new TFile(TString(fileAlmu2));
-   TFile* f6Almu3 = new TFile(TString(fileAlmu3));
-   TFile* f6Almu5 = new TFile(TString(fileAlmu5));
-   TFile* f6Almu10 = new TFile(TString(fileAlmu10));
-   TFile* f6Almu20 = new TFile(TString(fileAlmu20));
-   TFile* f6Alx1 = new TFile(TString(fileAlx1));
-   TFile* f6Alx2 = new TFile(TString(fileAlx2));
-   TFile* f6Alx3 = new TFile(TString(fileAlx3));
-   TFile* f6Alx5 = new TFile(TString(fileAlx5));
-   TFile* f6Alx10 = new TFile(TString(fileAlx10));
-   TFile* f6Alx20 = new TFile(TString(fileAlx20));
+   TFile* f6Almu1 = new TFile(TString(file6Almu1));
+   TFile* f6Almu2 = new TFile(TString(file6Almu2));
+   TFile* f6Almu3 = new TFile(TString(file6Almu3));
+   TFile* f6Almu5 = new TFile(TString(file6Almu5));
+   TFile* f6Almu10 = new TFile(TString(file6Almu10));
+   TFile* f6Almu20 = new TFile(TString(file6Almu20));
+   TFile* f6Alx1 = new TFile(TString(file6Alx1));
+   TFile* f6Alx2 = new TFile(TString(file6Alx2));
+   TFile* f6Alx3 = new TFile(TString(file6Alx3));
+   TFile* f6Alx5 = new TFile(TString(file6Alx5));
+   TFile* f6Alx10 = new TFile(TString(file6Alx10));
+   TFile* f6Alx20 = new TFile(TString(file6Alx20));
    // 10-mm Al layer
-   TFile* f10Almu1 = new TFile(TString(fileAlmu1));
-   TFile* f10Almu2 = new TFile(TString(fileAlmu2));
-   TFile* f10Almu3 = new TFile(TString(fileAlmu3));
-   TFile* f10Almu5 = new TFile(TString(fileAlmu5));
-   TFile* f10Almu10 = new TFile(TString(fileAlmu10));
-   TFile* f10Almu20 = new TFile(TString(fileAlmu20));
-   TFile* f10Alx1 = new TFile(TString(fileAlx1));
-   TFile* f10Alx2 = new TFile(TString(fileAlx2));
-   TFile* f10Alx3 = new TFile(TString(fileAlx3));
-   TFile* f10Alx5 = new TFile(TString(fileAlx5));
-   TFile* f10Alx10 = new TFile(TString(fileAlx10));
-   TFile* f10Alx20 = new TFile(TString(fileAlx20));
+   TFile* f10Almu1 = new TFile(TString(file10Almu1));
+   TFile* f10Almu2 = new TFile(TString(file10Almu2));
+   TFile* f10Almu3 = new TFile(TString(file10Almu3));
+   TFile* f10Almu5 = new TFile(TString(file10Almu5));
+   TFile* f10Almu10 = new TFile(TString(file10Almu10));
+   TFile* f10Almu20 = new TFile(TString(file10Almu20));
+   TFile* f10Alx1 = new TFile(TString(file10Alx1));
+   TFile* f10Alx2 = new TFile(TString(file10Alx2));
+   TFile* f10Alx3 = new TFile(TString(file10Alx3));
+   TFile* f10Alx5 = new TFile(TString(file10Alx5));
+   TFile* f10Alx10 = new TFile(TString(file10Alx10));
+   TFile* f10Alx20 = new TFile(TString(file10Alx20));
 
 
    // 0-mm Al layer
