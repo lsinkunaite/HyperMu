@@ -124,11 +124,23 @@ void bubble4BIN(){
  
    float Edep, EventID;
    float tEdep, iEventID, jEventID, kEventID;
+
+   const int nsamps = 11;
+   float Ethrx[nsamps] = {};
+   float Ethrmu[nsamps] = {};
+   float PXX[nsamps] = {};
+   float PXe[nsamps] = {};
+   float Pee[nsamps] = {};
+   float PeX[nsamps] = {};
    float Ethr = 0.5;
    float Pxx = 0;
-   float tPxx;
+   float tPxx, tPee, tPex; 
    int Xray = 0;
    int elec = 0;
+   
+   Ethrx[0] = 0; Ethrmu[0] = 0;
+   for (int i=1; i<nsamps; i++) Ethrx[i] = Ethrx[i-1] + 0.2;
+   for (int i=1; i<nsamps; i++) Ethrmu[i] = Ethrmu[i-1] + 0.2;
    
    TNtuple * mu250SciDet1 = (TNtuple*)fmu250->Get("Detector/SciDet1");
    TNtuple * mu250SciDet2 = (TNtuple*)fmu250->Get("Detector/SciDet2");
@@ -150,49 +162,183 @@ void bubble4BIN(){
    x250SciDet3->SetBranchAddress("EventID",&EventID);
    
 
-   for (int i=0; i< x250SciDet1->GetEntries(); i++) {
-//   for (int i=0; i < 20; i++) {
-      x250SciDet1->GetEntry(i);
-	  tPxx = 0;
-	  iEventID = EventID;
-	   
-	  if (Edep < Ethr) {
-         tPxx += 1;   
-	  
-	     for (int j=0; j< x250SciDet2->GetEntries(); j++) {		
-		    x250SciDet2->GetEntry(j);		  
-		    if (EventID == iEventID) {
-			   jEventID = EventID;
-		       if (Edep < Ethr) {
-			      tPxx += 1;
+   
+   for (int m=0; m < nsamps; m++) {
+	   Ethr = Ethrx[m];
+	//   std::cout << "Ethr = " << Ethr << std::endl;
 
-                  for (int k=0; k< x250SciDet3->GetEntries(); k++) {
-		             x250SciDet3->GetEntry(k);
-             
-		             if ((EventID == iEventID) && (EventID == jEventID)) {
-				        //std::cout << "EventID = " << EventID << " iEventID = " << iEventID << " jEventID = " << jEventID <<std::endl;
-			            if ((Edep >= Ethr) && (Edep < 10) && (tPxx == 2)) {
-			               Xray += 1;
-			               std::cout << "i,j,k = " << i << "," << j << "," << k << " Edep= " << Edep << " Pass = " << tPxx << std::endl;
-			            } else {
-			               elec += 1;
-			            }
-			         }
-			           
-		          }
-		             
-		       } else {
-				   elec += 1;
-			   }	   
-		    }     
-         }		   	  
-      } else {
-	       elec += 1;
-	  }      	  
-   }
-			   
-   std::cout << "Xray = " << Xray << " and elec = " << elec << std::endl;
+       Xray = 0; elec = 0;
+	   for (int i=0; i< x250SciDet1->GetEntries(); i++) {
+		  x250SciDet1->GetEntry(i);
+		  tPxx = 0;
+		  iEventID = EventID;
+		   
+		  if (Edep < Ethr) {
+			 tPxx += 1;   
+		  
+			 for (int j=0; j< x250SciDet2->GetEntries(); j++) {		
+				x250SciDet2->GetEntry(j);		  
+				if (EventID == iEventID) {
+				   jEventID = EventID;
+				   if (Edep < Ethr) {
+					  tPxx += 1;
 
+					  for (int k=0; k< x250SciDet3->GetEntries(); k++) {
+						 x250SciDet3->GetEntry(k);
+				 
+						 if ((EventID == iEventID) && (EventID == jEventID)) {
+							if ((Edep >= Ethr) && (Edep < 10) && (tPxx == 2)) {
+							   Xray += 1;
+							} else {
+							   elec += 1;
+							}
+						 }
+						   
+					  }
+						 
+				   } else {
+					   elec += 1;
+				   }	   
+				}     
+			 }		   	  
+		  } else {
+			   elec += 1;
+		  }      	  
+	   }
+				   
+//	   std::cout << "Xray = " << Xray << " and elec = " << elec << std::endl;
+
+       PXX[m] = Xray/(double)(x250SciDet1->GetEntries());
+       PXe[m] = elec/(double)(x250SciDet1->GetEntries());
+    //   std::cout << "PXX[m] = " << PXX[m] << " PXe[m] = " << PXe[m] << std::endl;
+    //   std::cout << "entries = " << x250SciDet1->GetEntries() << std::endl;
+
+       
+    }     
+  
+  
+ /*   for (int l=0; l<sizeTHRx; l++) {
+		std::cout << "Ethrx = " << Ethrx[l] << " PXX = " << PXX[l] << " PXe = " << PXe[l] << std::endl;
+    }
+  */
+    
+  
+  
+  for (int n=0; n < nsamps; n++) {
+	   Ethr = Ethrmu[n];
+	   //   std::cout << "Ethr = " << Ethr << std::endl;
+
+       Xray = 0; elec = 0;
+	   for (int i=0; i< mu250SciDet1->GetEntries(); i++) {
+		  mu250SciDet1->GetEntry(i);
+		  tPee = 0;
+		  iEventID = EventID;
+		   
+		  if (Edep > Ethr) {
+			 tPee += 1;   
+		  
+			 for (int j=0; j< mu250SciDet2->GetEntries(); j++) {		
+				x250SciDet2->GetEntry(j);		  
+				if (EventID == iEventID) {
+				   jEventID = EventID;
+				   if (Edep > Ethr) {
+					  tPee += 1;
+
+					  for (int k=0; k< mu250SciDet3->GetEntries(); k++) {
+						 mu250SciDet3->GetEntry(k);
+				 
+						 if ((EventID == iEventID) && (EventID == jEventID)) {
+							if ((Edep > 10) && (tPee != 0)) {
+							   elec += 1;
+							} else {
+							   Xray += 1;
+							}
+						 }
+						   
+					  }
+						 
+				   } //else if (tPee == 0) {
+					  // Xray += 1;
+				  // }	   
+				}     
+			 }		   	  
+		  } //else {
+			//   elec += 1;
+		 // }      	  
+	   }
+				   
+	   std::cout << "Xray = " << Xray << " and elec = " << elec << std::endl;
+
+       Pee[n] = elec/(double)(1e6);
+       PeX[n] = Xray/(double)(1e6);
+       std::cout << "nEntries = " << mu250SciDet1->GetEntries() << std::endl;
+       std::cout << "Pee[n] = " << Pee[n] << " PeX[n] = " << PeX[n] << std::endl;
+       
+       
+    }     
+  
+  
+  
+    TCanvas *c = new TCanvas("c","E_{THR}",800,600);
+    c->Divide(2,1);
+    c->cd(1);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *grSciDet1PXX = new TGraph(nsamps,Ethrx,PXX);
+    grSciDet1PXX->SetTitle("P_{X->X} vs P_{X->e} 250x [10^3 events]");
+    grSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    grSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    grSciDet1PXX->GetYaxis()->SetRangeUser(1e-4,1.1);
+    grSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    grSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    grSciDet1PXX->SetMarkerColor(kBlack);
+    grSciDet1PXX->SetMarkerStyle(33);
+    grSciDet1PXX->SetLineColor(kBlack);
+    grSciDet1PXX->Draw("ALP");
+    TGraph *grSciDet1PXe = new TGraph(nsamps,Ethrx,PXe);
+    grSciDet1PXe->SetMarkerColor(kRed);
+    grSciDet1PXe->SetMarkerStyle(31);
+    grSciDet1PXe->SetLineColor(kRed);
+    grSciDet1PXe->Draw("LP");
+    legSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    legSciDet1PXXPXe->AddEntry(grSciDet1PXX,"P_{X->X}","lp");
+    legSciDet1PXXPXe->AddEntry(grSciDet1PXe,"P_{X->e}","lp");
+    legSciDet1PXXPXe->Draw();
+  
+  
+    c->cd(2);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *grmu250Pee = new TGraph(nsamps,Ethrmu,Pee);
+    grmu250Pee->SetTitle("P_{e->e} vs P_{e->X} 250mu [10^3 events]");
+    grmu250Pee->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    grmu250Pee->GetXaxis()->SetRangeUser(0,2.05);
+    //grmu250Pee->GetYaxis()->SetRangeUser(1e-4,1.1);
+    grmu250Pee->GetYaxis()->SetTitle("P_{e->e/X}(E_{THR})");
+    grmu250Pee->GetYaxis()->SetTitleOffset(1.8);
+    grmu250Pee->SetMarkerColor(kBlack);
+    grmu250Pee->SetMarkerStyle(33);
+    grmu250Pee->SetLineColor(kBlack);
+    grmu250Pee->Draw("ALP");
+    TGraph *grmu250PeX = new TGraph(nsamps,Ethrmu,PeX);
+    grmu250PeX->SetMarkerColor(kRed);
+    grmu250PeX->SetMarkerStyle(31);
+    grmu250PeX->SetLineColor(kRed);
+    grmu250PeX->Draw("LP");
+    legmu250PeePeX = new TLegend(0.2,-0.01,0.4,0.08);
+    legmu250PeePeX->AddEntry(grmu250Pee,"P_{e->e}","lp");
+    legmu250PeePeX->AddEntry(grmu250PeX,"P_{e->X}","lp");
+    legmu250PeePeX->Draw();
+  
+    c->SaveAs("Bubble4BinPlot_Xmutest.pdf");
+    c->SaveAs("Bubble4BinPlot_Xmutest.png");
+    c->SaveAs("Bubble4BinPlot_Xmutest.C");
+  
+  
+  
+  
+  
+  
   
  }
  
