@@ -40,7 +40,6 @@ using namespace std;
 #include "TString.h"
 #include "TStyle.h"
 #include "TText.h"
-//#include "TVector.h"
 
 void bubble4BIN(){
 
@@ -78,7 +77,7 @@ void bubble4BIN(){
    std::string filex500 = "../../simdata/bubble4/bubble_2x5mm_500mm_SciD_Nevts_SciSphere_3mm_Al_1e6goldcascade.root";
    std::string filex750 = "../../simdata/bubble4/bubble_2x5mm_750mm_SciD_Nevts_SciSphere_3mm_Al_1e6goldcascade.root";
    // With {250,500,750}-mm SciD3 6-mm Al
-   std::string file6Almu250 = "../../simdata/bubble4/bubble_2x5mm_250mm_SciD_Nevts_SciSphere_6mm_Al_1e6mudecay.root";
+   std::string file6Almu250 = "../../simdata/bubble4/bubble_2x5mm_250mm_SciD_Nevts_SciSphere_3mm_Al_1e6mudecay.root";
    std::string file6Almu500 = "../../simdata/bubble4/bubble_2x5mm_500mm_SciD_Nevts_SciSphere_6mm_Al_1e6mudecay.root";
    std::string file6Almu750 = "../../simdata/bubble4/bubble_2x5mm_750mm_SciD_Nevts_SciSphere_6mm_Al_1e6mudecay.root";
    std::string file6Alx250 = "../../simdata/bubble4/bubble_2x5mm_250mm_SciD_Nevts_SciSphere_6mm_Al_1e6goldcascade.root";
@@ -96,7 +95,10 @@ void bubble4BIN(){
    /*           Analysis            */
    /*********************************/
 
-   const int nbins = 300;
+
+   //using clock = std::chrono::steady_clock;
+
+   //const int nbins = 300;
   
    // TFiles
    // 3-mm Al 
@@ -161,14 +163,31 @@ void bubble4BIN(){
    x250SciDet3->SetBranchAddress("Edep",&Edep);
    x250SciDet3->SetBranchAddress("EventID",&EventID);
    
+    
+   system("[ -e data/PXX/test.txt ] && rm data/PXX/test.txt");
+   system("[ -e data/PXe/test.txt ] && rm data/PXe/test.txt");
+        
+
 
    
    for (int m=0; m < nsamps; m++) {
+	   
+       // Starting the clock
+       //std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+
+
 	   Ethr = Ethrx[m];
 	//   std::cout << "Ethr = " << Ethr << std::endl;
 
+
+
        Xray = 0; elec = 0;
 	   for (int i=0; i< x250SciDet1->GetEntries(); i++) {
+    //   for (int i=0; i<10000; i++) {
+	//	   if ((i % 1000) == 0) {
+	//		   std::cout << "i = " << i << std::endl;
+	//	   }
+	
 		  x250SciDet1->GetEntry(i);
 		  tPxx = 0;
 		  iEventID = EventID;
@@ -177,6 +196,7 @@ void bubble4BIN(){
 			 tPxx += 1;   
 		  
 			 for (int j=0; j< x250SciDet2->GetEntries(); j++) {		
+			 //for (int j = 0; j<10000; j++) {
 				x250SciDet2->GetEntry(j);		  
 				if (EventID == iEventID) {
 				   jEventID = EventID;
@@ -184,10 +204,11 @@ void bubble4BIN(){
 					  tPxx += 1;
 
 					  for (int k=0; k< x250SciDet3->GetEntries(); k++) {
+					  //for (int k=0; k< 10000; k++) {
 						 x250SciDet3->GetEntry(k);
 				 
 						 if ((EventID == iEventID) && (EventID == jEventID)) {
-							if ((Edep >= Ethr) && (Edep < 10) && (tPxx == 2)) {
+							if ((Edep >= 0.5) && (Edep < 10) && (tPxx == 2)) {
 							   Xray += 1;
 							} else {
 							   elec += 1;
@@ -210,6 +231,40 @@ void bubble4BIN(){
 
        PXX[m] = Xray/(double)(x250SciDet1->GetEntries());
        PXe[m] = elec/(double)(x250SciDet1->GetEntries());
+ 
+       std::stringstream Ethrxss; Ethrxss << Ethrx[m]*1000;
+ 
+ 
+       freopen("data/PXX/ETHR_"+TString(Ethrxss.str())+"keV.txt","w",stdout);
+       std::cout << PXX[m] << std::endl;
+       fclose(stdout);
+       freopen("/dev/tty","a",stdout);
+       //std::cout << "PXX[" << m << "]: " << PXX[m] << std::endl;
+       freopen("data/PXe/ETHR_"+TString(Ethrxss.str())+"keV.txt","w",stdout);
+       std::cout << PXe[m] << std::endl;
+       fclose(stdout);
+       freopen("/dev/tty","a",stdout);
+       
+       
+       
+       
+       
+       freopen("data/PXX/test.txt","a",stdout);
+       std::cout << Ethrx[m]*1000 << std::setw(10) << PXX[m] << std::endl;
+       fclose(stdout);
+       freopen("/dev/tty","a",stdout);
+       
+       freopen("data/PXe/test.txt","a",stdout);
+       std::cout << Ethrx[m]*1000 << std::setw(10) << PXe[m] << std::endl;
+       fclose(stdout);
+       freopen("/dev/tty","a",stdout);
+       
+   
+   /*
+       std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+       std::chrono::steady_clock::duration execution_time = end - start;
+       std::cout << "time[" << m << "]: " << execution_time << std::endl;
+     */  
     //   std::cout << "PXX[m] = " << PXX[m] << " PXe[m] = " << PXe[m] << std::endl;
     //   std::cout << "entries = " << x250SciDet1->GetEntries() << std::endl;
 
@@ -222,7 +277,7 @@ void bubble4BIN(){
     }
   */
     
-  
+ /* 
   
   for (int n=0; n < nsamps; n++) {
 	   Ethr = Ethrmu[n];
@@ -276,7 +331,7 @@ void bubble4BIN(){
        
        
     }     
-  
+  */
   
   
     TCanvas *c = new TCanvas("c","E_{THR}",800,600);
@@ -305,7 +360,7 @@ void bubble4BIN(){
     legSciDet1PXXPXe->AddEntry(grSciDet1PXe,"P_{X->e}","lp");
     legSciDet1PXXPXe->Draw();
   
-  
+  /*
     c->cd(2);
     gPad->SetLogy();
     gPad->SetGrid(1,1);
@@ -329,7 +384,7 @@ void bubble4BIN(){
     legmu250PeePeX->AddEntry(grmu250Pee,"P_{e->e}","lp");
     legmu250PeePeX->AddEntry(grmu250PeX,"P_{e->X}","lp");
     legmu250PeePeX->Draw();
-  
+  */
     c->SaveAs("Bubble4BinPlot_Xmutest.pdf");
     c->SaveAs("Bubble4BinPlot_Xmutest.png");
     c->SaveAs("Bubble4BinPlot_Xmutest.C");
