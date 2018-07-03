@@ -17,6 +17,7 @@
 #include <sstream>
 #include <stdio>
 #include <stdlib>
+#include <vector>
 using namespace std;
 
 // ROOT
@@ -83,22 +84,163 @@ void bubble4FASTBIN(){
    std::string file6Alx250 = "../../simdata/bubble4/bubble_2x5mm_250mm_SciD_Nevts_SciSphere_6mm_Al_1e6goldcascade.root";
    std::string file6Alx500 = "../../simdata/bubble4/bubble_2x5mm_500mm_SciD_Nevts_SciSphere_6mm_Al_1e6goldcascade.root";
    std::string file6Alx750 = "../../simdata/bubble4/bubble_2x5mm_750mm_SciD_Nevts_SciSphere_6mm_Al_1e6goldcascade.root";
-   // With {250,500,750}-mm SciD3 0-mm Al
-   std::string file0Almu250 = "../../simdata/bubble4/bubble_0x5mm_250mm_SciD_Nevts_SciSphere_0mm_Al_1e6mudecay.root";
-   std::string file0Almu500 = "../../simdata/bubble4/bubble_0x5mm_500mm_SciD_Nevts_SciSphere_0mm_Al_1e6mudecay.root";
-   std::string file0Almu750 = "../../simdata/bubble4/bubble_0x5mm_750mm_SciD_Nevts_SciSphere_0mm_Al_1e6mudecay.root";
-   std::string file0Alx250 = "../../simdata/bubble4/bubble_0x5mm_250mm_SciD_Nevts_SciSphere_0mm_Al_1e6goldcascade.root";
-   std::string file0Alx500 = "../../simdata/bubble4/bubble_0x5mm_500mm_SciD_Nevts_SciSphere_0mm_Al_1e6goldcascade.root";
-   std::string file0Alx750 = "../../simdata/bubble4/bubble_0x5mm_750mm_SciD_Nevts_SciSphere_0mm_Al_1e6goldcascade.root";
+
+   std::vector<std::string> Xfiles;
+   std::vector<std::string> mufiles;
+
+   // X-ray cascade
+   Xfiles.push_back(filex250);
+   Xfiles.push_back(filex500);
+   Xfiles.push_back(filex750);
+   Xfiles.push_back(file6Alx250);
+   Xfiles.push_back(file6Alx500);
+   Xfiles.push_back(file6Alx750);
+
+   // mu-decay
+   mufiles.push_back(filemu250);
+   mufiles.push_back(filemu500);
+   mufiles.push_back(filemu750);
+   mufiles.push_back(file6Almu250);
+   mufiles.push_back(file6Almu500);
+   mufiles.push_back(file6Almu750);
+
 
    /*********************************/
    /*           Analysis            */
    /*********************************/
 
+   float Edep, EventID;
+   float iEventID;
 
-   //using clock = std::chrono::steady_clock;
+   const int nsamps = 101;
+   float Ethr3 = 0.5;
+   float Ethrx[nsamps] = {};
+   float Ethrmu[nsamps] = {};
+   
+   float PXX250[nsamps] = {};
+   float PXX500[nsamps] = {};
+   float PXX750[nsamps] = {};
+   float PXX6Al250[nsamps] = {};
+   float PXX6Al500[nsamps] = {};
+   float PXX6Al750[nsamps] = {};
+   float PXe250[nsamps] = {};
+   float PXe500[nsamps] = {};
+   float PXe750[nsamps] = {};
+   float PXe6Al250[nsamps] = {};
+   float PXe6Al500[nsamps] = {};
+   float PXe6Al750[nsamps] = {};
+      
+   float PXX[nsamps] = {};
+   float PXe[nsamps] = {};
+   float Pee[nsamps] = {};
+   float PeX[nsamps] = {};
+   float Ethr;
+   float Pxx = 0;
+   float tPxx, tPee, tPex; 
+   int Xray = 0;
+   int elec = 0;
 
-   //const int nbins = 300;
+   std::vector<float> PXXvector;
+   std::vector<float> PXevector;
+/*
+   // X-ray cascade
+   PXXvector.push_back(*PXX250);
+   PXXvector.push_back(*PXX500);
+   PXXvector.push_back(*PXX750);
+   PXXvector.push_back(*PXX6Al250);
+   PXXvector.push_back(*PXX6Al500);
+   PXXvector.push_back(*PXX6Al750);
+   PXXvector.push_back(*PXX0Al250);
+   PXXvector.push_back(*PXX0Al500);
+   PXXvector.push_back(*PXX0Al750);
+   
+   // mu-decay
+   PXevector.push_back(*PXe250);
+   PXevector.push_back(*PXe500);
+   PXevector.push_back(*PXe750);
+   PXevector.push_back(*PXe6Al250);
+   PXevector.push_back(*PXe6Al500);
+   PXevector.push_back(*PXe6Al750);
+   PXevector.push_back(*PXe0Al250);
+   PXevector.push_back(*PXe0Al500);
+   PXevector.push_back(*PXe0Al750);
+*/
+
+   for (std::vector<std::string>::iterator it = Xfiles.begin(); it != Xfiles.end(); ++it) {
+      std::cout << "File: " << (*it).substr(22,(*it).find(".root")) << " is being analysed" <<std::endl;
+
+      //int index = std::distance(Xfiles.begin(), it);
+
+      TFile *xfile = new TFile(TString(*it));
+      
+      Ethrx[0] = 0;
+      for (int i=1; i<nsamps; i++) Ethrx[i] = Ethrx[i-1] + 0.02;
+
+      TNtuple * xSciDet1 = (TNtuple*)xfile->Get("Detector/SciDet1");
+      TNtuple * xSciDet2 = (TNtuple*)xfile->Get("Detector/SciDet2");
+      TNtuple * xSciDet3 = (TNtuple*)xfile->Get("Detector/SciDet3");
+
+      xSciDet1->SetBranchAddress("Edep",&Edep);
+      xSciDet1->SetBranchAddress("EventID",&EventID);
+      xSciDet2->SetBranchAddress("Edep",&Edep);
+      xSciDet2->SetBranchAddress("EventID",&EventID);
+      xSciDet3->SetBranchAddress("Edep",&Edep);
+      xSciDet3->SetBranchAddress("EventID",&EventID);
+   
+      for (int m=0; m < nsamps; m++) {
+	   
+	     Ethr = Ethrx[m];
+         Xray = 0; elec = 0;
+	     
+	     for (int i=0; i< xSciDet1->GetEntries(); i++) {
+	
+		    xSciDet1->GetEntry(i);
+		    tPxx = 0;
+		    iEventID = EventID;
+		   
+		    if (Edep < Ethr) {
+			   tPxx += 1;   
+		  
+		       xSciDet2->GetEntry(i);
+		       if (EventID != iEventID) std::cout << "EventID2 = " << EventID << " iEventID = " << iEventID << std::endl;
+		       if (Edep < Ethr) {
+			      tPxx += 1;
+
+                  xSciDet3->GetEntry(i);
+                  if (EventID != iEventID) std::cout << "EventID3 = " << EventID << " iEventID = " << iEventID << std::endl;
+                  if ((Edep >= Ethr3) && (Edep < 10) && (tPxx == 2)) {
+				     Xray += 1;
+				  } else {
+				     elec += 1;
+				  }
+               } else {
+			      elec += 1;
+			   }
+			} else {
+			   elec += 1;
+			}	
+		 }
+
+         PXX[m] = Xray/(double)(xSciDet1->GetEntries());
+         PXe[m] = elec/(double)(xSciDet1->GetEntries());
+        
+      }
+      
+      std::cout << std::endl;
+      std::cout << "PXX[0,3,5,8,10]: " << PXX[0] << std::setw(10) << PXX[3] << std::setw(10) << PXX[5] << std::setw(10) << PXX[8] << std::setw(10) << PXX[10] <<std::endl;        
+      std::cout << "PXe[0,3,5,8,10]: " << PXe[0] << std::setw(10) << PXe[3] << std::setw(10) << PXe[5] << std::setw(10) << PXe[8] << std::setw(10) << PXe[10] <<std::endl;        
+      std::cout << std::endl;   
+         
+      PXXvector.push_back(*PXX);
+      PXevector.push_back(*PXe);
+
+
+   }
+
+
+
+
+/*
   
    // TFiles
    // 3-mm Al 
@@ -115,30 +257,8 @@ void bubble4FASTBIN(){
    TFile* f6Alx250 = new TFile(TString(file6Alx250));
    TFile* f6Alx500 = new TFile(TString(file6Alx500));
    TFile* f6Alx750 = new TFile(TString(file6Alx750));
-   // 0-mm Al
-   TFile* f0Almu250 = new TFile(TString(file0Almu250));
-   TFile* f0Almu500 = new TFile(TString(file0Almu500));
-   TFile* f0Almu750 = new TFile(TString(file0Almu750));
-   TFile* f0Alx250 = new TFile(TString(file0Alx250));
-   TFile* f0Alx500 = new TFile(TString(file0Alx500));
-   TFile* f0Alx750 = new TFile(TString(file0Alx750));
-
  
-   float Edep, EventID;
-   float tEdep, iEventID, jEventID, kEventID;
-
-   const int nsamps = 11;
-   float Ethrx[nsamps] = {};
-   float Ethrmu[nsamps] = {};
-   float PXX[nsamps] = {};
-   float PXe[nsamps] = {};
-   float Pee[nsamps] = {};
-   float PeX[nsamps] = {};
-   float Ethr = 0.5;
-   float Pxx = 0;
-   float tPxx, tPee, tPex; 
-   int Xray = 0;
-   int elec = 0;
+   
    
    Ethrx[0] = 0; Ethrmu[0] = 0;
    for (int i=1; i<nsamps; i++) Ethrx[i] = Ethrx[i-1] + 0.2;
@@ -162,13 +282,17 @@ void bubble4FASTBIN(){
    x250SciDet2->SetBranchAddress("EventID",&EventID);
    x250SciDet3->SetBranchAddress("Edep",&Edep);
    x250SciDet3->SetBranchAddress("EventID",&EventID);
+  
+ */ 
+  
    
-    
+ /*   
+   // Removing old files with PXX/PXe output, if they exist
    system("[ -e data/PXX/test.txt ] && rm data/PXX/test.txt");
    system("[ -e data/PXe/test.txt ] && rm data/PXe/test.txt");
-        
+  */     
 
-
+/*
    
    for (int m=0; m < nsamps; m++) {
 	   
@@ -210,8 +334,11 @@ void bubble4FASTBIN(){
  
          std::stringstream Ethrxss; Ethrxss << Ethrx[m]*1000;
  
+ */
  
-         freopen("data/PXX/ETHR_"+TString(Ethrxss.str())+"keV.txt","w",stdout);
+ 
+         // Saving output data to the files
+/*         freopen("data/PXX/ETHR_"+TString(Ethrxss.str())+"keV.txt","w",stdout);
          std::cout << PXX[m] << std::endl;
          fclose(stdout);
          freopen("/dev/tty","a",stdout);
@@ -229,9 +356,9 @@ void bubble4FASTBIN(){
          std::cout << Ethrx[m]*1000 << std::setw(10) << PXe[m] << std::endl;
          fclose(stdout);
          freopen("/dev/tty","a",stdout);
+*/       
        
-       
-    }     
+  //  }     
   
   
  /*   for (int l=0; l<sizeTHRx; l++) {
@@ -297,31 +424,154 @@ void bubble4FASTBIN(){
   
   
     TCanvas *c = new TCanvas("c","E_{THR}",800,600);
-    c->Divide(2,1);
+    c->Divide(3,2);
     c->cd(1);
     gPad->SetLogy();
     gPad->SetGrid(1,1);
-    TGraph *grSciDet1PXX = new TGraph(nsamps,Ethrx,PXX);
-    grSciDet1PXX->SetTitle("P_{X->X} vs P_{X->e} 250x [10^3 events]");
-    grSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
-    grSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
-    grSciDet1PXX->GetYaxis()->SetRangeUser(1e-4,1.1);
-    grSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
-    grSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
-    grSciDet1PXX->SetMarkerColor(kBlack);
-    grSciDet1PXX->SetMarkerStyle(33);
-    grSciDet1PXX->SetLineColor(kBlack);
-    grSciDet1PXX->Draw("ALP");
-    TGraph *grSciDet1PXe = new TGraph(nsamps,Ethrx,PXe);
-    grSciDet1PXe->SetMarkerColor(kRed);
-    grSciDet1PXe->SetMarkerStyle(31);
-    grSciDet1PXe->SetLineColor(kRed);
-    grSciDet1PXe->Draw("LP");
-    legSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
-    legSciDet1PXXPXe->AddEntry(grSciDet1PXX,"P_{X->X}","lp");
-    legSciDet1PXXPXe->AddEntry(grSciDet1PXe,"P_{X->e}","lp");
-    legSciDet1PXXPXe->Draw();
+    TGraph *gr250xSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[0]);
+    gr250xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10**6 events]");
+    gr250xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr250xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr250xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr250xSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr250xSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr250xSciDet1PXX->SetMarkerColor(kBlack);
+    gr250xSciDet1PXX->SetMarkerStyle(33);
+    gr250xSciDet1PXX->SetLineColor(kBlack);
+    gr250xSciDet1PXX->Draw("ALP");
+    TGraph *gr250xSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[0]);
+    gr250xSciDet1PXe->SetMarkerColor(kRed);
+    gr250xSciDet1PXe->SetMarkerStyle(31);
+    gr250xSciDet1PXe->SetLineColor(kRed);
+    gr250xSciDet1PXe->Draw("LP");
+    leg250xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg250xSciDet1PXXPXe->AddEntry(gr250xSciDet1PXX,"P_{X->X}","lp");
+    leg250xSciDet1PXXPXe->AddEntry(gr250xSciDet1PXe,"P_{X->e}","lp");
+    leg250xSciDet1PXXPXe->Draw();
   
+    c->cd(2);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *gr500xSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[1]);
+    gr500xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} [10**6 events]");
+    gr500xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr500xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr500xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr500xSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr500xSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr500xSciDet1PXX->SetMarkerColor(kBlack);
+    gr500xSciDet1PXX->SetMarkerStyle(33);
+    gr500xSciDet1PXX->SetLineColor(kBlack);
+    gr500xSciDet1PXX->Draw("ALP");
+    TGraph *gr500xSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[1]);
+    gr500xSciDet1PXe->SetMarkerColor(kRed);
+    gr500xSciDet1PXe->SetMarkerStyle(31);
+    gr500xSciDet1PXe->SetLineColor(kRed);
+    gr500xSciDet1PXe->Draw("LP");
+    leg500xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg500xSciDet1PXXPXe->AddEntry(gr500xSciDet1PXX,"P_{X->X}","lp");
+    leg500xSciDet1PXXPXe->AddEntry(gr500xSciDet1PXe,"P_{X->e}","lp");
+    leg500xSciDet1PXXPXe->Draw();
+
+    c->cd(3);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *gr750xSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[2]);
+    gr750xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10**6 events]");
+    gr750xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr750xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr750xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr750xSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr750xSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr750xSciDet1PXX->SetMarkerColor(kBlack);
+    gr750xSciDet1PXX->SetMarkerStyle(33);
+    gr750xSciDet1PXX->SetLineColor(kBlack);
+    gr750xSciDet1PXX->Draw("ALP");
+    TGraph *gr750xSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[2]);
+    gr750xSciDet1PXe->SetMarkerColor(kRed);
+    gr750xSciDet1PXe->SetMarkerStyle(31);
+    gr750xSciDet1PXe->SetLineColor(kRed);
+    gr750xSciDet1PXe->Draw("LP");
+    leg750xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg750xSciDet1PXXPXe->AddEntry(gr750xSciDet1PXX,"P_{X->X}","lp");
+    leg750xSciDet1PXXPXe->AddEntry(gr750xSciDet1PXe,"P_{X->e}","lp");
+    leg750xSciDet1PXXPXe->Draw();
+  
+    c->cd(4);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *gr250x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[3]);
+    gr250x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10**6 events]");
+    gr250x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr250x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr250x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr250x6AlSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr250x6AlSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr250x6AlSciDet1PXX->SetMarkerColor(kBlack);
+    gr250x6AlSciDet1PXX->SetMarkerStyle(33);
+    gr250x6AlSciDet1PXX->SetLineColor(kBlack);
+    gr250x6AlSciDet1PXX->Draw("ALP");
+    TGraph *gr250x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[3]);
+    gr250x6AlSciDet1PXe->SetMarkerColor(kRed);
+    gr250x6AlSciDet1PXe->SetMarkerStyle(31);
+    gr250x6AlSciDet1PXe->SetLineColor(kRed);
+    gr250x6AlSciDet1PXe->Draw("LP");
+    leg250x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg250x6AlSciDet1PXXPXe->AddEntry(gr250x6AlSciDet1PXX,"P_{X->X}","lp");
+    leg250x6AlSciDet1PXXPXe->AddEntry(gr250x6AlSciDet1PXe,"P_{X->e}","lp");
+    leg250x6AlSciDet1PXXPXe->Draw();
+    
+    c->cd(5);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *gr500x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[4]);
+    gr500x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} [10**6 events]");
+    gr500x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr500x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr500x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr500x6AlSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr500x6AlSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr500x6AlSciDet1PXX->SetMarkerColor(kBlack);
+    gr500x6AlSciDet1PXX->SetMarkerStyle(33);
+    gr500x6AlSciDet1PXX->SetLineColor(kBlack);
+    gr500x6AlSciDet1PXX->Draw("ALP");
+    TGraph *gr500x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[4]);
+    gr500x6AlSciDet1PXe->SetMarkerColor(kRed);
+    gr500x6AlSciDet1PXe->SetMarkerStyle(31);
+    gr500x6AlSciDet1PXe->SetLineColor(kRed);
+    gr500x6AlSciDet1PXe->Draw("LP");
+    leg500x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg500x6AlSciDet1PXXPXe->AddEntry(gr500x6AlSciDet1PXX,"P_{X->X}","lp");
+    leg500x6AlSciDet1PXXPXe->AddEntry(gr500x6AlSciDet1PXe,"P_{X->e}","lp");
+    leg500x6AlSciDet1PXXPXe->Draw();
+    
+    c->cd(6);
+    gPad->SetLogy();
+    gPad->SetGrid(1,1);
+    TGraph *gr750x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,&PXXvector[5]);
+    gr750x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10**6 events]");
+    gr750x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
+    gr750x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
+    gr750x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
+    gr750x6AlSciDet1PXX->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+    gr750x6AlSciDet1PXX->GetYaxis()->SetTitleOffset(1.8);
+    gr750x6AlSciDet1PXX->SetMarkerColor(kBlack);
+    gr750x6AlSciDet1PXX->SetMarkerStyle(33);
+    gr750x6AlSciDet1PXX->SetLineColor(kBlack);
+    gr750x6AlSciDet1PXX->Draw("ALP");
+    TGraph *gr750x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,&PXevector[5]);
+    gr750x6AlSciDet1PXe->SetMarkerColor(kRed);
+    gr750x6AlSciDet1PXe->SetMarkerStyle(31);
+    gr750x6AlSciDet1PXe->SetLineColor(kRed);
+    gr750x6AlSciDet1PXe->Draw("LP");
+    leg750x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg750x6AlSciDet1PXXPXe->AddEntry(gr750x6AlSciDet1PXX,"P_{X->X}","lp");
+    leg750x6AlSciDet1PXXPXe->AddEntry(gr750x6AlSciDet1PXe,"P_{X->e}","lp");
+    leg750x6AlSciDet1PXXPXe->Draw();
+
+
+
+
   /*
     c->cd(2);
     gPad->SetLogy();
@@ -347,9 +597,9 @@ void bubble4FASTBIN(){
     legmu250PeePeX->AddEntry(grmu250PeX,"P_{e->X}","lp");
     legmu250PeePeX->Draw();
   */
-    c->SaveAs("Bubble4BinPlot_Xmutest.pdf");
-    c->SaveAs("Bubble4BinPlot_Xmutest.png");
-    c->SaveAs("Bubble4BinPlot_Xmutest.C");
+    c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm.pdf");
+    c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm.png");
+    c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm.C");
   
   
   
