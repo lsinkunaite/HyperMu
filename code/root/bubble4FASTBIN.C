@@ -112,50 +112,42 @@ void bubble4FASTBIN(){
    float Edep, EventID;
    float iEventID;
 
-   const int nsamps = 6;
+   const int nsamps = 101;
    float Ethr3 = 0.5;
    float Estep = 2.0/(nsamps-1);
    float Ethrx[nsamps] = {};
    float Ethrmu[nsamps] = {};
    
-   
+  
+   // X-cascade storage vectors 
    std::vector< std::vector< double > > PXXvector(Xfiles.size(), std::vector< double >(nsamps));
    std::vector< std::vector< double > > PXevector(Xfiles.size(), std::vector< double >(nsamps));
-
-   //std::vector<std::vector<double> > PXXvector;
-   //std::vector<std::vector<double> > PXevector;
-   
+   // mu-decay storage vectors
+   std::vector< std::vector< double > > Peevector(mufiles.size(), std::vector< double >(nsamps));
+   std::vector< std::vector< double > > PeXvector(mufiles.size(), std::vector< double >(nsamps)); 
+  
       
-   float PXX[nsamps] = {};
-   float PXe[nsamps] = {};
-   float Pee[nsamps] = {};
-   float PeX[nsamps] = {};
+   float PXX[nsamps] = {}; // X-cascade
+   float PXe[nsamps] = {}; // X-cascade
+   float Pee[nsamps] = {}; // mu-decay
+   float PeX[nsamps] = {}; // mu-decay
    float Ethr;
    float Pxx = 0;
-   float tPxx, tPee, tPex; 
+   float tPxx, tPex; 
    int Xray = 0;
    int elec = 0;
+   
+   Ethrx[0] = 0;
+   for (int i=1; i<nsamps; i++) Ethrx[i] = Ethrx[i-1] + Estep;
 
-   //std::vector<float*> PXXvector = std::vector<float*>();
-   //std::vector<float*> PXevector = std::vector<float*>();
-
-   //for (std::vector<std::string>::iterator it = Xfiles.begin(); it != Xfiles.end(); ++it) {
+   
+   
+/*
    for (int k = 0; k<Xfiles.size(); k++) {
-      //std::cout << "File: " << (*it).substr(22,(*it).find(".root")) << " is being analysed" <<std::endl;
       std::cout << "File: " << (Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))) << " is being analysed" << std::endl;
 
-      
-
-      //int index = std::distance(Xfiles.begin(),it); 
-//      std::cout << Xfiles.size() << std::endl;
-
-      //TFile *xfile = new TFile(TString(*it));
       TFile *xfile = new TFile(TString(Xfiles[k]));
       
-      
-      Ethrx[0] = 0;
-      for (int i=1; i<nsamps; i++) Ethrx[i] = Ethrx[i-1] + Estep;
-
       TNtuple * xSciDet1 = (TNtuple*)xfile->Get("Detector/SciDet1");
       TNtuple * xSciDet2 = (TNtuple*)xfile->Get("Detector/SciDet2");
       TNtuple * xSciDet3 = (TNtuple*)xfile->Get("Detector/SciDet3");
@@ -176,18 +168,18 @@ void bubble4FASTBIN(){
 	
 		    xSciDet1->GetEntry(i);
 		    tPxx = 0;
-		    iEventID = EventID;
+		    //iEventID = EventID;
 		   
 		    if (Edep < Ethr) {
 			   tPxx += 1;   
 		  
 		       xSciDet2->GetEntry(i);
-		       if (EventID != iEventID) std::cout << "EventID2 = " << EventID << " iEventID = " << iEventID << std::endl;
+		       //if (EventID != iEventID) std::cout << "EventID2 = " << EventID << " iEventID = " << iEventID << std::endl;
 		       if (Edep < Ethr) {
 			      tPxx += 1;
 
                   xSciDet3->GetEntry(i);
-                  if (EventID != iEventID) std::cout << "EventID3 = " << EventID << " iEventID = " << iEventID << std::endl;
+                  //if (EventID != iEventID) std::cout << "EventID3 = " << EventID << " iEventID = " << iEventID << std::endl;
                   if ((Edep >= Ethr3) && (Edep < 10) && (tPxx == 2)) {
 				     Xray += 1;
 				  } else {
@@ -207,99 +199,95 @@ void bubble4FASTBIN(){
          PXevector[k][m] = PXe[m];
      
         
-         std::cout << "PXX[" << m << "] = " << PXX[m] << " PXe[" << m << "] = " << PXe[m] << " PXX[" << m << "] + PXe[" << m << "] = " << PXX[m] + PXe[m] <<std::endl;
+         //std::cout << "PXX[" << m << "] = " << PXX[m] << " PXe[" << m << "] = " << PXe[m] << " PXX[" << m << "] + PXe[" << m << "] = " << PXX[m] + PXe[m] <<std::endl;
         
       }
       
- 
-      std::cout << "test #0: " << k << std::endl;
- 
-         
-      std::cout << std::endl;
-      std::cout << "test #1: " << PXX[2] << std::endl;
-      std::cout << "test #2: " << PXXvector[k][2] << std::endl;
-      std::cout << std::endl;
-      
 
+   }
+*/
+
+
+
+  // for (int k = 0; k<mufiles.size(); k++) {
+   for (int k = 0; k < 2s; k++) {
+      std::cout << "File: " << (mufiles[k]).substr(22,((mufiles[k]).find(".root"))) << " is being analysed" << std::endl;
+
+      TFile *mufile = new TFile(TString(mufiles[k]));
+      
+      TNtuple * muSciDet1 = (TNtuple*)mufile->Get("Detector/SciDet1");
+      TNtuple * muSciDet2 = (TNtuple*)mufile->Get("Detector/SciDet2");
+      TNtuple * muSciDet3 = (TNtuple*)mufile->Get("Detector/SciDet3");
+
+      muSciDet1->SetBranchAddress("Edep",&Edep);
+      muSciDet1->SetBranchAddress("EventID",&EventID);
+      muSciDet2->SetBranchAddress("Edep",&Edep);
+      muSciDet2->SetBranchAddress("EventID",&EventID);
+      muSciDet3->SetBranchAddress("Edep",&Edep);
+      muSciDet3->SetBranchAddress("EventID",&EventID);
+   
+   
+     // for (int m=0; m < nsamps; m++) {
+	  for (int m=0; m < 2; m++)  { 
+	   
+	     Ethr = Ethrx[m];
+         Xray = 0; elec = 0;
+	     
+	     for (int i=0; i< muSciDet1->GetEntries(); i++) {
+	
+		    muSciDet1->GetEntry(i);
+		    tPex = 0;
+		    iEventID = EventID;
+		   
+		    if (Edep < Ethr) {
+			   tPex += 1;   
+		  
+		       muSciDet2->GetEntry(i);
+		       if (EventID != iEventID) {
+				  std::cout << "EventID2 = " << EventID << " iEventID = " << iEventID << std::endl;
+			   }
+/*
+		       if (Edep < Ethr) {
+			      tPex += 1;
+
+                  xSciDet3->GetEntry(i);
+                  //if (EventID != iEventID) std::cout << "EventID3 = " << EventID << " iEventID = " << iEventID << std::endl;
+                  if ((Edep >= Ethr3) && (Edep < 10) && (tPxx == 2)) {
+				     Xray += 1;
+				  } else {
+				     elec += 1;
+				  }
+               } else {
+			      elec += 1;
+			   }
+*/			} else {
+			   elec += 1;
+			}	
+		 }
+
+    /*     PeX[m] = Xray/(double)(muSciDet1->GetEntries());
+         Pee[m] = elec/(double)(muSciDet1->GetEntries());
+         PeXvector[k][m] = PeX[m];
+         Peevector[k][m] = Pee[m];
+     
+        
+         std::cout << "PeX[" << m << "] = " << PeX[m] << " Pee[" << m << "] = " << Pee[m] << " PeX[" << m << "] + Pee[" << m << "] = " << PeX[m] + Pee[m] <<std::endl;
+      */  
+      }
+      
 
    }
 
 
 
 
-    
- /* 
-  
-  for (int n=0; n < nsamps; n++) {
-	   Ethr = Ethrmu[n];
-	   //   std::cout << "Ethr = " << Ethr << std::endl;
 
-       Xray = 0; elec = 0;
-	   for (int i=0; i< mu250SciDet1->GetEntries(); i++) {
-		  mu250SciDet1->GetEntry(i);
-		  tPee = 0;
-		  iEventID = EventID;
-		   
-		  if (Edep > Ethr) {
-			 tPee += 1;   
-		  
-			 for (int j=0; j< mu250SciDet2->GetEntries(); j++) {		
-				x250SciDet2->GetEntry(j);		  
-				if (EventID == iEventID) {
-				   jEventID = EventID;
-				   if (Edep > Ethr) {
-					  tPee += 1;
 
-					  for (int k=0; k< mu250SciDet3->GetEntries(); k++) {
-						 mu250SciDet3->GetEntry(k);
-				 
-						 if ((EventID == iEventID) && (EventID == jEventID)) {
-							if ((Edep > 10) && (tPee != 0)) {
-							   elec += 1;
-							} else {
-							   Xray += 1;
-							}
-						 }
-						   
-					  }
-						 
-				   } //else if (tPee == 0) {
-					  // Xray += 1;
-				  // }	   
-				}     
-			 }		   	  
-		  } //else {
-			//   elec += 1;
-		 // }      	  
-	   }
-				   
-	   std::cout << "Xray = " << Xray << " and elec = " << elec << std::endl;
 
-       Pee[n] = elec/(double)(1e6);
-       PeX[n] = Xray/(double)(1e6);
-       std::cout << "nEntries = " << mu250SciDet1->GetEntries() << std::endl;
-       std::cout << "Pee[n] = " << Pee[n] << " PeX[n] = " << PeX[n] << std::endl;
-       
-       
-    }     
-  */
-  
-  
-  //std::vector<double> v;
-  //double* a = &v[0];
-  
-  
-    //std::cout << " 2d vector size: " << PXXvector.size() << std::endl;
-    //std::cout << "x = " << std::endl;
-    //std::cout << PXXvector[0][2] << std::endl;
-    //float arr[nsamps] = {};
-    //std::copy(PXXvector[0].begin(), PXXvector[0].end(), arr);
-    
-    //std::cout <<" arr[0] = "<< arr[0] << " arr[5] = " << arr[5] <<std::endl;
-    //std::cout << "size of array = " << arr.size() << std::endl;
-    //std::cout << "test1  = " << sizeof(arr) / sizeof(arr[0]) << std::endl;
-    
-  
+
+
+
+/*  
     TCanvas *c = new TCanvas("c","E_{THR}",800,600);
     c->Divide(3,2);
     c->cd(1);
@@ -307,11 +295,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr250x[nsamps] = {};
     std::copy(PXXvector[0].begin(), PXXvector[0].end(), PXXarr250x);
-    
-    std::cout << "test0: " << PXXarr250x[0] << std::setw(1) << PXXarr250x[1] << std::setw(1) << PXXarr250x[2] << std::setw(1) << PXXarr250x[3] << std::setw(1) << PXXarr250x[4] << std::setw(1) << PXXarr250x[5] << std::endl;
-        
     TGraph *gr250xSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr250x);
-    gr250xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10**6 events]");
+    gr250xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
     gr250xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr250xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr250xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -323,15 +308,12 @@ void bubble4FASTBIN(){
     gr250xSciDet1PXX->Draw("ALP");
     float PXearr250x[nsamps] = {};
     std::copy(PXevector[0].begin(), PXevector[0].end(), PXearr250x);
-    
-    std::cout << "test02: " << PXearr250x[0] << std::setw(5) << PXearr250x[1] << std::setw(5) << PXearr250x[2] << std::setw(5) << PXearr250x[3] << std::setw(5) << PXearr250x[4] << std::setw(5) << PXearr250x[5] << std::endl;  
-    
     TGraph *gr250xSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr250x); 
     gr250xSciDet1PXe->SetMarkerColor(kRed);
     gr250xSciDet1PXe->SetMarkerStyle(31);
     gr250xSciDet1PXe->SetLineColor(kRed);
     gr250xSciDet1PXe->Draw("LP");
-    leg250xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg250xSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg250xSciDet1PXXPXe->AddEntry(gr250xSciDet1PXX,"P_{X->X}","lp");
     leg250xSciDet1PXXPXe->AddEntry(gr250xSciDet1PXe,"P_{X->e}","lp");
     leg250xSciDet1PXXPXe->Draw();
@@ -341,11 +323,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr500x[nsamps] = {};
     std::copy(PXXvector[1].begin(), PXXvector[1].end(), PXXarr500x);  
-    
-    std::cout << "test1: " << PXXarr500x[0] << std::setw(5) << PXXarr500x[1] << std::setw(5) << PXXarr500x[2] << std::setw(5) << PXXarr500x[3] << std::setw(5) << PXXarr500x[4] << std::setw(5) << PXXarr500x[5] << std::endl;
-      
     TGraph *gr500xSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr500x);  
-    gr500xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} [10**6 events]");
+    gr500xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} [10^6 events]");
     gr500xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr500xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr500xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -357,16 +336,12 @@ void bubble4FASTBIN(){
     gr500xSciDet1PXX->Draw("ALP");
     float PXearr500x[nsamps] = {};
     std::copy(PXevector[1].begin(), PXevector[1].end(), PXearr500x);
-    
-    std::cout << "test12: " << PXearr500x[0] << std::setw(5) << PXearr500x[1] << std::setw(5) << PXearr500x[2] << std::setw(5) << PXearr500x[3] << std::setw(5) << PXearr500x[4] << std::setw(5) << PXearr500x[5] << std::endl;
-      
-    
     TGraph *gr500xSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr500x); 
     gr500xSciDet1PXe->SetMarkerColor(kRed);
     gr500xSciDet1PXe->SetMarkerStyle(31);
     gr500xSciDet1PXe->SetLineColor(kRed);
     gr500xSciDet1PXe->Draw("LP");
-    leg500xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg500xSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg500xSciDet1PXXPXe->AddEntry(gr500xSciDet1PXX,"P_{X->X}","lp");
     leg500xSciDet1PXXPXe->AddEntry(gr500xSciDet1PXe,"P_{X->e}","lp");
     leg500xSciDet1PXXPXe->Draw();
@@ -376,11 +351,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr750x[nsamps] = {};
     std::copy(PXXvector[2].begin(), PXXvector[2].end(), PXXarr750x);    
-        
-    std::cout << "test2: " << PXXarr750x[0] << std::setw(5) << PXXarr750x[1] << std::setw(5) << PXXarr750x[2] << std::setw(5) << PXXarr750x[3] << std::setw(5) << PXXarr750x[4] << std::setw(5) << PXXarr750x[5] << std::endl;
-    
     TGraph *gr750xSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr750x); 
-    gr750xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10**6 events]");
+    gr750xSciDet1PXX->SetTitle("3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
     gr750xSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr750xSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr750xSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -392,16 +364,12 @@ void bubble4FASTBIN(){
     gr750xSciDet1PXX->Draw("ALP");
     float PXearr750x[nsamps] = {};
     std::copy(PXevector[2].begin(), PXevector[2].end(), PXearr750x);
-    
-    std::cout << "test22: " << PXearr750x[0] << std::setw(5) << PXearr750x[1] << std::setw(5) << PXearr750x[2] << std::setw(5) << PXearr750x[3] << std::setw(5) << PXearr750x[4] << std::setw(5) << PXearr750x[5] << std::endl;
-    
-    
     TGraph *gr750xSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr750x); 
     gr750xSciDet1PXe->SetMarkerColor(kRed);
     gr750xSciDet1PXe->SetMarkerStyle(31);
     gr750xSciDet1PXe->SetLineColor(kRed);
     gr750xSciDet1PXe->Draw("LP");
-    leg750xSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg750xSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg750xSciDet1PXXPXe->AddEntry(gr750xSciDet1PXX,"P_{X->X}","lp");
     leg750xSciDet1PXXPXe->AddEntry(gr750xSciDet1PXe,"P_{X->e}","lp");
     leg750xSciDet1PXXPXe->Draw();
@@ -411,11 +379,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr250x6Al[nsamps] = {};
     std::copy(PXXvector[3].begin(), PXXvector[3].end(), PXXarr250x6Al);    
-    
-    std::cout << "test3: " << PXXarr250x6Al[0] << std::setw(5) << PXXarr250x6Al[1] << std::setw(5) << PXXarr250x6Al[2] << std::setw(5) << PXXarr250x6Al[3] << std::setw(5) << PXXarr250x6Al[4] << std::setw(5) << PXXarr250x6Al[5] << std::endl;
-    
     TGraph *gr250x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr250x6Al);
-    gr250x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10**6 events]");
+    gr250x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
     gr250x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr250x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr250x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -427,16 +392,12 @@ void bubble4FASTBIN(){
     gr250x6AlSciDet1PXX->Draw("ALP");
     float PXearr250x6Al[nsamps] = {};
     std::copy(PXevector[3].begin(), PXevector[3].end(), PXearr250x6Al);
-
-    std::cout << "test32: " << PXearr250x6Al[0] << std::setw(5) << PXearr250x6Al[1] << std::setw(5) << PXearr250x6Al[2] << std::setw(5) << PXearr250x6Al[3] << std::setw(5) << PXearr250x6Al[4] << std::setw(5) << PXearr250x6Al[5] << std::endl;
-    
-
     TGraph *gr250x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr250x6Al); 
     gr250x6AlSciDet1PXe->SetMarkerColor(kRed);
     gr250x6AlSciDet1PXe->SetMarkerStyle(31);
     gr250x6AlSciDet1PXe->SetLineColor(kRed);
     gr250x6AlSciDet1PXe->Draw("LP");
-    leg250x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg250x6AlSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg250x6AlSciDet1PXXPXe->AddEntry(gr250x6AlSciDet1PXX,"P_{X->X}","lp");
     leg250x6AlSciDet1PXXPXe->AddEntry(gr250x6AlSciDet1PXe,"P_{X->e}","lp");
     leg250x6AlSciDet1PXXPXe->Draw();
@@ -446,11 +407,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr500x6Al[nsamps] = {};
     std::copy(PXXvector[4].begin(), PXXvector[4].end(), PXXarr500x6Al);    
-
-    std::cout << "test4: " << PXXarr500x6Al[0] << std::setw(5) << PXXarr500x6Al[1] << std::setw(5) << PXXarr500x6Al[2] << std::setw(5) << PXXarr500x6Al[3] << std::setw(5) << PXXarr500x6Al[4] << std::setw(5) << PXXarr500x6Al[5] << std::endl;
-
     TGraph *gr500x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr500x6Al);
-    gr500x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} [10**6 events]");
+    gr500x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} [10^6 events]");
     gr500x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr500x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr500x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -462,16 +420,12 @@ void bubble4FASTBIN(){
     gr500x6AlSciDet1PXX->Draw("ALP");
     float PXearr500x6Al[nsamps] = {};
     std::copy(PXevector[4].begin(), PXevector[4].end(), PXearr500x6Al);
-
-    std::cout << "test42: " << PXearr500x6Al[0] << std::setw(5) << PXearr500x6Al[1] << std::setw(5) << PXearr500x6Al[2] << std::setw(5) << PXearr500x6Al[3] << std::setw(5) << PXearr500x6Al[4] << std::setw(5) << PXearr500x6Al[5] << std::endl;
-
-
     TGraph *gr500x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr500x6Al); 
     gr500x6AlSciDet1PXe->SetMarkerColor(kRed);
     gr500x6AlSciDet1PXe->SetMarkerStyle(31);
     gr500x6AlSciDet1PXe->SetLineColor(kRed);
     gr500x6AlSciDet1PXe->Draw("LP");
-    leg500x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg500x6AlSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg500x6AlSciDet1PXXPXe->AddEntry(gr500x6AlSciDet1PXX,"P_{X->X}","lp");
     leg500x6AlSciDet1PXXPXe->AddEntry(gr500x6AlSciDet1PXe,"P_{X->e}","lp");
     leg500x6AlSciDet1PXXPXe->Draw();
@@ -481,11 +435,8 @@ void bubble4FASTBIN(){
     gPad->SetGrid(1,1);
     float PXXarr750x6Al[nsamps] = {};
     std::copy(PXXvector[5].begin(), PXXvector[5].end(), PXXarr750x6Al);    
-
-    std::cout << "test5: " << PXXarr750x6Al[0] << std::setw(5) << PXXarr750x6Al[1] << std::setw(5) << PXXarr750x6Al[2] << std::setw(5) << PXXarr750x6Al[3] << std::setw(5) << PXXarr750x6Al[4] << std::setw(5) << PXXarr750x6Al[5] << std::endl;
-
     TGraph *gr750x6AlSciDet1PXX = new TGraph(nsamps,Ethrx,PXXarr750x6Al);
-    gr750x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10**6 events]");
+    gr750x6AlSciDet1PXX->SetTitle("6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
     gr750x6AlSciDet1PXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
     gr750x6AlSciDet1PXX->GetXaxis()->SetRangeUser(0,2.05);
     gr750x6AlSciDet1PXX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -497,16 +448,12 @@ void bubble4FASTBIN(){
     gr750x6AlSciDet1PXX->Draw("ALP");
     float PXearr750x6Al[nsamps] = {};
     std::copy(PXevector[5].begin(), PXevector[5].end(), PXearr750x6Al);
-
-    std::cout << "test52: " << PXearr750x6Al[0] << std::setw(5) << PXearr750x6Al[1] << std::setw(5) << PXearr750x6Al[2] << std::setw(5) << PXearr750x6Al[3] << std::setw(5) << PXearr750x6Al[4] << std::setw(5) << PXearr750x6Al[5] << std::endl;
-
-
     TGraph *gr750x6AlSciDet1PXe = new TGraph(nsamps,Ethrx,PXearr750x6Al); 
     gr750x6AlSciDet1PXe->SetMarkerColor(kRed);
     gr750x6AlSciDet1PXe->SetMarkerStyle(31);
     gr750x6AlSciDet1PXe->SetLineColor(kRed);
     gr750x6AlSciDet1PXe->Draw("LP");
-    leg750x6AlSciDet1PXXPXe = new TLegend(0.2,-0.01,0.4,0.08);
+    leg750x6AlSciDet1PXXPXe = new TLegend(0.2,-0.005,0.4,0.08);
     leg750x6AlSciDet1PXXPXe->AddEntry(gr750x6AlSciDet1PXX,"P_{X->X}","lp");
     leg750x6AlSciDet1PXXPXe->AddEntry(gr750x6AlSciDet1PXe,"P_{X->e}","lp");
     leg750x6AlSciDet1PXXPXe->Draw();
@@ -517,7 +464,7 @@ void bubble4FASTBIN(){
     c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm.png");
     c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm.C");
   
-  
+  */
   
   
   
