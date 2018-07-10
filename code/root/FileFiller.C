@@ -1,5 +1,17 @@
+////////////////////////////////////////////////////////////////////////
+//                                                                    //
+//                           FileFiller.C                             //
+//                                                                    //
+//  Writes ntuple data for mu-decay into an ascii file and then re-   //
+//  arranges the file so that all the missing events would get an     //
+//  Edep value of 0.00 MeV.                                           //
+//                                                                    //
+//                             Laura P.S.                             //
+//                             10-07-2018                             //
+//                                                                    //
+////////////////////////////////////////////////////////////////////////
+
 // I/O
-#include "colors.h"
 #include <fstream>
 #include <iostream>
 
@@ -50,14 +62,14 @@ void FileFiller(){
       //----------------------------------------------------------------
 
 
-      std::cout << BOLD(FBLU("----------------------------------------------------------")) << std::endl;
-      std::cout << BOLD(FBLU("--------------------- Writing Loop " << k+1 << " ---------------------")) << std::endl;
-      std::cout << BOLD(FBLU("----------------------------------------------------------")) << std::endl;
+      std::cout << "\033[1;34m----------------------------------------------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;34m--------------------- Writing Loop " << k+1 << " ---------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;34m----------------------------------------------------------\033[0m")) << std::endl;
 
       
       // SciD1 
       ofstream tmpSciD1;
-      tmpSciD1.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
+      tmpSciD1.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
       tmpSciD1 << "EventID        Edep\n";
       for (int i=0; i<tSciD1->GetEntries(); i++){
 	     tSciD1->GetEntry(i);
@@ -69,7 +81,7 @@ void FileFiller(){
       
       // SciD2
       ofstream tmpSciD2;
-      tmpSciD2.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
+      tmpSciD2.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
       tmpSciD1 << "EventID        Edep\n";
       for (int i=0; i<tSciD2->GetEntries(); i++){
 	     tSciD2->GetEntry(i);
@@ -81,7 +93,7 @@ void FileFiller(){
       
       // SciD3
       ofstream tmpSciD3;
-      tmpSciD3.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
+      tmpSciD3.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
       tmpSciD3 << "EventID        Edep\n";
       for (int i=0; i<tSciD3->GetEntries(); i++){
 	     tSciD3->GetEntry(i);
@@ -96,19 +108,19 @@ void FileFiller(){
       //                          Rewriting
       //----------------------------------------------------------------
  
-      std::cout << BOLD(FRED("----------------------------------------------------------")) << std::endl;
-      std::cout << BOLD(FRED("-------------------- Rewriting Loop " << k+1 << " --------------------")) << std::endl;
-      std::cout << BOLD(FRED("----------------------------------------------------------")) << std::endl;
+      std::cout << "\033[1;31m----------------------------------------------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;31m-------------------- Rewriting Loop " << k+1 << " --------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;31m----------------------------------------------------------\033[0m")) << std::endl;
 
 
  
       // SciD1     
-      std::ifstream inputSciD1(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
+      std::ifstream inputSciD1("../../simdata/bubble4/"+TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
       std::string lineSciD1;
       std::getline(inputSciD1, lineSciD1);
      
       ofstream finSciD1;
-      finSciD1.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt"));
+      finSciD1.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt"));
       
       int ncounter1 = 1;
       while (!inputSciD1.eof()) {
@@ -127,17 +139,17 @@ void FileFiller(){
 	     }   
       }
       finSciD1.close();
-      remove(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
+      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
       std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt") << " generated! " << std::endl;
 
 
       // SciD2     
-      std::ifstream inputSciD2(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
+      std::ifstream inputSciD2(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
       std::string lineSciD2;
       std::getline(inputSciD2, lineSciD2);
      
       ofstream finSciD2;
-      finSciD2.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      finSciD2.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
       
       int ncounter2 = 1;
       while (!inputSciD2.eof()) {
@@ -156,18 +168,18 @@ void FileFiller(){
 	     }   
       }
       finSciD2.close();
-      TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
+      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
       std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt") << " generated! " << std::endl;
 
 
 
       // SciD3     
-      std::ifstream inputSciD3(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
+      std::ifstream inputSciD3(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
       std::string lineSciD3;
       std::getline(inputSciD3, lineSciD3);
      
       ofstream finSciD3;
-      finSciD3.open(TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt"));
+      finSciD3.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt"));
       
       int ncounter3 = 1;
       while (!inputSciD3.eof()) {
@@ -186,7 +198,7 @@ void FileFiller(){
 	     }   
       }
       finSciD3.close();
-      TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
+      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
       std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt") << " generated! " << std::endl;
 
 
@@ -195,112 +207,6 @@ void FileFiller(){
    }
 
 
-/*
-  ofstream myfile1;
-  myfile1.open ("example1.txt");
-  myfile1 << "EventID1    Edep1\n";
-
-  for (int i=0;i<tr1->GetEntries();i++){
-    // loop over the tree
-    tr1->GetEntry(i);
-    myfile1 << EventID << " " << Edep <<"\n"; //write to file
-  }
-  myfile1.close();
-  */
- /* 
-   std::ifstream input( "example1.txt" );
-   std::string line;
-   std::getline(input, line);
-   std::cout << tr1->GetEntries() << std::endl;
-
-   std::vector<double> vEvID1;
-   std::vector<double> vEdep1;
-
-
-   int ncounter = 1;
-   while (!input.eof()) {
-   //while (ncounter <= 300000) {
-	   double EvID1, Edep1;
-	   input >> EvID1 >> Edep1;
-	   //std::cout << std::endl;
-	   //std::cout << "X-check :: ncounter = " << ncounter << " EvID1 = " << EvID1 << std::endl;
-	   if (EvID1 == ncounter) {
-		   vEvID1.push_back(EvID1);
-		   vEdep1.push_back(Edep1);
-		   //std::cout << "I-ncounter: " << ncounter << " EvID1 = " << vEvID1.back() << " Edep1 = " << vEdep1.back() << std::endl;
-		   ncounter++;
-	   } else {
-		   int diff = EvID1 - ncounter;
-		   for (int i=0; i<diff; i++) {
-		   	   vEvID1.push_back(ncounter+i);
-		   	   vEdep1.push_back(0.0);
-               //std::cout << "***********************************************************E-ncounter: " << ncounter << " EvID1 = " << vEvID1.back() << " Edep1 = " << vEdep1.back() << std::endl;
-		   }
-		   vEvID1.push_back(EvID1);
-		   vEdep1.push_back(Edep1);
-		   ncounter = ncounter+diff+1;
-		   //std::cout <<" ncounter: " << ncounter << " EvID1 = " << vEvID1.back() << " Edep1 = " << vEdep1.back() << std::endl;
-	   }
-	   //std::cout << "EvID1 = " << vEvID1[ncounter-1] << " Edep1 = " << vEdep1[ncounter-1] << std::endl;
-	   //ncounter++;
-   }
-   //std::cout << " last test: EvID = " << vEvID1.back() << " and Edep = " << vEdep1.back() << std::endl;
-   vEvID1.pop_back(); vEdep1.pop_back();
-   //std::cout << " does it work? EvID = " << vEvID1.back() << " and Edep = " << vEdep1.back() << std::endl;
-   //vEvID1.pop_back(); vEdep1.pop_back();
-   //std::cout << " does it really work? EvID = " << vEvID1.back() << " and Edep = " << vEdep1.back() << std::endl;
-	   
-*/   
-
-
-   //vEvID1.push_back(EvID1);
-   //vEdep1.push_back(Edep1);
-
-/*
-   
-   while (!input.eof()) {
-	   getline(input, line);
-       
-       while (line >> EvID1 >> Edep1) {
-		   if 
-
-   
-   std::stringstream LineStream(line);
-   
-   while (std::getline(iss, token, ','))
-      {   
-      // process each token
-            std::cout << token << " ";
-        }
-        std::cout << std::endl;
-*/  
-  
-/*  
-  ofstream myfile2;
-  myfile2.open ("example2.txt");
-  myfile2 << "EventID2    Edep2\n";
-
-  for (int i=0;i<tr2->GetEntries();i++){
-    // loop over the tree
-    tr2->GetEntry(i);
-    std::cout << EventID << " " << Edep << std::endl; //print to the screen
-    myfile2 << EventID << " " << Edep <<"\n"; //write to file
-  }
-  myfile2.close();
-
-
-  ofstream myfile3;
-  myfile3.open ("example3.txt");
-  myfile3 << "EventID3    Edep3\n";
-
-  for (int i=0;i<tr3->GetEntries();i++){
-    // loop over the tree
-    tr3->GetEntry(i);
-    std::cout << EventID << " " << Edep << std::endl; //print to the screen
-    myfile3 << EventID << " " << Edep <<"\n"; //write to file
-  }
-  myfile3.close();
-*/
 }
 
 
