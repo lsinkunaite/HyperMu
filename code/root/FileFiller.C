@@ -7,13 +7,14 @@
 //  Edep value of 0.00 MeV.                                           //
 //                                                                    //
 //                             Laura P.S.                             //
-//                             10-07-2018                             //
+//                             11-07-2018                             //
 //                                                                    //
 ////////////////////////////////////////////////////////////////////////
 
 // I/O
 #include <fstream>
 #include <iostream>
+#include <stdio>
 
 // ROOT
 #include "TFile.h"
@@ -62,9 +63,9 @@ void FileFiller(){
       //----------------------------------------------------------------
 
 
-      std::cout << "\033[1;34m----------------------------------------------------------\033[0m")) << std::endl;
-      std::cout << "\033[1;34m--------------------- Writing Loop " << k+1 << " ---------------------\033[0m")) << std::endl;
-      std::cout << "\033[1;34m----------------------------------------------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
+      std::cout << "\033[1;34m--------------------- Writing Loop " << k+1 << " ---------------------\033[0m" << std::endl;
+      std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
 
       
       // SciD1 
@@ -108,16 +109,22 @@ void FileFiller(){
       //                          Rewriting
       //----------------------------------------------------------------
  
-      std::cout << "\033[1;31m----------------------------------------------------------\033[0m")) << std::endl;
-      std::cout << "\033[1;31m-------------------- Rewriting Loop " << k+1 << " --------------------\033[0m")) << std::endl;
-      std::cout << "\033[1;31m----------------------------------------------------------\033[0m")) << std::endl;
+      std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
+      std::cout << "\033[1;31m-------------------- Rewriting Loop " << k+1 << " --------------------\033[0m" << std::endl;
+      std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
  
       // SciD1     
-      std::ifstream inputSciD1("../../simdata/bubble4/"+TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
+      std::ifstream inputSciD1(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
       std::string lineSciD1;
       std::getline(inputSciD1, lineSciD1);
+     
+      ifstream ifile1(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt"));
+      if (ifile1) {
+         remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt" << " successfully removed!" << std::endl;
+	  }
      
       ofstream finSciD1;
       finSciD1.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt"));
@@ -139,14 +146,23 @@ void FileFiller(){
 	     }   
       }
       finSciD1.close();
-      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"));
-      std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt") << " generated! " << std::endl;
+
+      if ((remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"))) == 0) {
+         std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt") << " generated! " << std::endl;
+      }
+
 
 
       // SciD2     
       std::ifstream inputSciD2(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
       std::string lineSciD2;
       std::getline(inputSciD2, lineSciD2);
+
+      ifstream ifile2(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      if (ifile2) {
+         remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt" << " successfully removed!" << std::endl;
+	  }
      
       ofstream finSciD2;
       finSciD2.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
@@ -168,8 +184,10 @@ void FileFiller(){
 	     }   
       }
       finSciD2.close();
-      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
-      std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt") << " generated! " << std::endl;
+      
+      if ((remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"))) == 0) {
+         std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt") << " generated! " << std::endl;
+      }
 
 
 
@@ -178,6 +196,12 @@ void FileFiller(){
       std::string lineSciD3;
       std::getline(inputSciD3, lineSciD3);
      
+      ifstream ifile3(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt"));
+      if (ifile3) {
+         remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt" << " successfully removed!" << std::endl;
+	  }
+        
       ofstream finSciD3;
       finSciD3.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt"));
       
@@ -198,8 +222,10 @@ void FileFiller(){
 	     }   
       }
       finSciD3.close();
-      remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"));
-      std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt") << " generated! " << std::endl;
+
+      if ((remove(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD3.txt"))) == 0) {
+         std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD3.txt") << " generated! " << std::endl;
+      }
 
 
  
