@@ -250,24 +250,24 @@ void bubble4FASTBINmu(){
 		   
 			if (allvEdep1[i][j] < Ethr) {
 			   tPex += 1;   
+			} else {
+			   elec += 1;
+			}
 		  
-			   //if (allvEvID2[i][j] != iEventID) std::cout << "EventID2 = " << allvEvID2[i][j] << " iEventID = " << iEventID << std::endl;
-			   if (allvEdep2[i][j] < Ethr) {
-				  tPex += 1;
+			//if (allvEvID2[i][j] != iEventID) std::cout << "EventID2 = " << allvEvID2[i][j] << " iEventID = " << iEventID << std::endl;
+			if (allvEdep2[i][j] < Ethr) {
+			   tPex += 1;
+			} else {
+		       elec += 1;
+		    }
 
-				  //if (allvEvID3[i][j] != iEventID) std::cout << "EventID3 = " << allvEvID3[i][j] << " iEventID = " << iEventID << std::endl;
-				  if ((allvEdep3[i][j] >= Ethr3) && (allvEdep3[i][j] < 6) && (tPex == 2)) {
-					 Xray += 1;
-				  } else {
-					 elec += 1;
-				  }
-			   } else {
-				  elec += 1;
-			   }
+			//if (allvEvID3[i][j] != iEventID) std::cout << "EventID3 = " << allvEvID3[i][j] << " iEventID = " << iEventID << std::endl;
+			if ((allvEdep3[i][j] >= Ethr3) && (allvEdep3[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
+			   Xray += 1;
 			} else {
 			   elec += 1;
 			}	
-		 }
+		 }   
 
       PeXvector[i][m] = Xray/(double)(allvEvID1[0].size());
       Peevector[i][m] = elec/(double)(allvEvID1[0].size()); 
@@ -477,9 +477,9 @@ void bubble4FASTBINmu(){
    leg750mu6AlSciDet1PeXPee->AddEntry(gr750mu6AlSciDet1Pee,"P_{e->e}","lp");
    leg750mu6AlSciDet1PeXPee->Draw();
 
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_6_MeV_method_A.pdf");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_6_MeV_method_A.png");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_6_MeV_method_A.C");
+   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_method_A.pdf");
+   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_method_A.png");
+   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_method_A.C");
  
   
   
