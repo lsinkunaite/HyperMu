@@ -250,17 +250,12 @@ void bubble4FASTBINmu(){
 		   
 			if (allvEdep1[i][j] < Ethr) {
 			   tPex += 1;   
-			} else {
-			   elec += 1;
 			}
-		  
-			//if (allvEvID2[i][j] != iEventID) std::cout << "EventID2 = " << allvEvID2[i][j] << " iEventID = " << iEventID << std::endl;
+			
 			if (allvEdep2[i][j] < Ethr) {
 			   tPex += 1;
-			} else {
-		       elec += 1;
 		    }
-
+			
 			//if (allvEvID3[i][j] != iEventID) std::cout << "EventID3 = " << allvEvID3[i][j] << " iEventID = " << iEventID << std::endl;
 			if ((allvEdep3[i][j] >= Ethr3) && (allvEdep3[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
 			   Xray += 1;
@@ -337,7 +332,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250muSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr250mu);
-   gr250muSciDet1PeX->SetTitle("6 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
+   gr250muSciDet1PeX->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
    gr250muSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250muSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr250muSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -361,7 +356,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500muSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr500mu);  
-   gr500muSciDet1PeX->SetTitle("6 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} [10^6 events]");
+   gr500muSciDet1PeX->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} [10^6 events]");
    gr500muSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500muSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr500muSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -385,7 +380,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750muSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr750mu); 
-   gr750muSciDet1PeX->SetTitle("6 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
+   gr750muSciDet1PeX->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
    gr750muSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750muSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr750muSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -409,7 +404,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250mu6AlSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr250mu6Al);
-   gr250mu6AlSciDet1PeX->SetTitle("6 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
+   gr250mu6AlSciDet1PeX->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} [10^6 events]");
    gr250mu6AlSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250mu6AlSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr250mu6AlSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -433,7 +428,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500mu6AlSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr500mu6Al);
-   gr500mu6AlSciDet1PeX->SetTitle("6 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} [10^6 events]");
+   gr500mu6AlSciDet1PeX->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} [10^6 events]");
    gr500mu6AlSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500mu6AlSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr500mu6AlSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -457,7 +452,7 @@ void bubble4FASTBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750mu6AlSciDet1PeX = new TGraph(nsamps,Ethrmu,PeXarr750mu6Al);
-   gr750mu6AlSciDet1PeX->SetTitle("6 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
+   gr750mu6AlSciDet1PeX->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} [10^6 events]");
    gr750mu6AlSciDet1PeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750mu6AlSciDet1PeX->GetXaxis()->SetRangeUser(0,2.05);
    gr750mu6AlSciDet1PeX->GetYaxis()->SetRangeUser(1e-6,1.1);
