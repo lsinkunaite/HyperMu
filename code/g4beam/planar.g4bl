@@ -1,0 +1,70 @@
+##########################################################
+##                                                      ##
+##                    planar.g4bl                       ##
+##                                                      ##
+##  Simulation of a beam source of:                     ##
+##    (1) muon decay                                    ##
+##    (2) gold cascade                                  ##
+##  positioned at the center of two rectangular-shaped  ##
+##  5-mm plastic scintillator detectors plus a 250-mm/  ##
+##  500-mm/750-mm plastic scintillator detector, with   ##
+##  a 3-mm/6-mm Aluminium layer in between. 40-mm gap   ##
+##  between the Al plates; planar geometry.             ##
+##                                                      ##
+##########################################################
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e6
+
+param lengthSciD3=500.0
+param lengthAlBox=6.0
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+
+#Define some parameters
+#param name=mudecay
+param name=goldcascade
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param histoFile=../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_$evts$name.root
+
+trackcuts keep=e-,e+,gamma,mu-,mu+
+
+
+#Define source
+# (1) muon decay
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+
+#Geometry
+box SciBox1 width=500.0 height=500.0 length=5.0 material=Scintillator color=$SciColor
+box SciBox2 width=500.0 height=500.0 length=5.0 material=Scintillator color=$SciColor
+box SciBox3 width=500.0 height=500.0 length=$lengthSciD3 material=Scintillator color=$SciColor
+
+box AlBox width=500.0 height=500.0 length=$lengthAlBox material=Al color=$AlColor
+
+detector SciDet1D solid=SciBox1 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet1U solid=SciBox1 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet2D solid=SciBox2 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet2U solid=SciBox2 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet3D solid=SciBox3 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet3U solid=SciBox3 format=rootExtended material=Scintillator color=$SciColor
+
+place AlBox z=(20-(($lengthAlBox)/2))
+place AlBox z=(-20+(($lengthAlBox)/2))
+
+place SciDet1D z=22.5
+place SciDet1U z=-22.5
+place SciDet2D z=27.5
+place SciDet2U z=-27.5
+place SciDet3D z=(30+(($lengthSciD3)/2))
+place SciDet3U z=(-30-(($lengthSciD3)/2))
+
