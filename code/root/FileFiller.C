@@ -83,7 +83,7 @@ void FileFiller(){
       // SciD2
       ofstream tmpSciD2;
       tmpSciD2.open(TString("../../simdata/bubble4/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
-      tmpSciD1 << "EventID        Edep\n";
+      tmpSciD2 << "EventID        Edep\n";
       for (int i=0; i<tSciD2->GetEntries(); i++){
 	     tSciD2->GetEntry(i);
 	     tmpSciD2 << EventID << " " << Edep << "\n";
