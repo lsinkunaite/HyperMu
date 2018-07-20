@@ -555,14 +555,14 @@ void FileFillerPlanar(){
       std::string lineSciD1Dx;
       std::getline(inputSciD1Dx, lineSciD1Dx);
      
-      ifstream ifile1Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Dx.txt"));
+      ifstream ifile1Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1D.txt"));
       if (ifile1Dx) {
-         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Dx.txt"));
-         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Dx.txt" << " successfully removed!" << std::endl;
+         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1D.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1D.txt" << " successfully removed!" << std::endl;
 	  }
      
       ofstream finSciD1Dx;
-      finSciD1Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Dx.txt"));
+      finSciD1Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1D.txt"));
       
       int ncounter1Dx = 1;
       while (!inputSciD1Dx.eof()) {
@@ -583,7 +583,7 @@ void FileFillerPlanar(){
       finSciD1Dx.close();
 
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD1D.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Dx.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1D.txt") << " generated! " << std::endl;
       }
 
 
@@ -593,14 +593,14 @@ void FileFillerPlanar(){
       std::string lineSciD2Dx;
       std::getline(inputSciD2Dx, lineSciD2Dx);
 
-      ifstream ifile2Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Dx.txt"));
+      ifstream ifile2Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2D.txt"));
       if (ifile2Dx) {
-         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Dx.txt"));
-         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Dx.txt" << " successfully removed!" << std::endl;
+         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2D.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2D.txt" << " successfully removed!" << std::endl;
 	  }
      
       ofstream finSciD2Dx;
-      finSciD2Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Dx.txt"));
+      finSciD2Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2D.txt"));
       
       int ncounter2Dx = 1;
       while (!inputSciD2Dx.eof()) {
@@ -621,7 +621,7 @@ void FileFillerPlanar(){
       finSciD2Dx.close();
       
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD2D.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Dx.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2D.txt") << " generated! " << std::endl;
       }
 
 
@@ -631,14 +631,14 @@ void FileFillerPlanar(){
       std::string lineSciD3Dx;
       std::getline(inputSciD3Dx, lineSciD3Dx);
      
-      ifstream ifile3Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Dx.txt"));
+      ifstream ifile3Dx(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3D.txt"));
       if (ifile3Dx) {
-         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Dx.txt"));
-         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Dx.txt" << " successfully removed!" << std::endl;
+         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3D.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3D.txt" << " successfully removed!" << std::endl;
 	  }
         
       ofstream finSciD3Dx;
-      finSciD3Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Dx.txt"));
+      finSciD3Dx.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3D.txt"));
       
       int ncounter3Dx = 1;
       while (!inputSciD3Dx.eof()) {
@@ -659,7 +659,7 @@ void FileFillerPlanar(){
       finSciD3Dx.close();
 
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD3D.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Dx.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3D.txt") << " generated! " << std::endl;
       }
 
 
@@ -669,14 +669,14 @@ void FileFillerPlanar(){
       std::string lineSciD1Ux;
       std::getline(inputSciD1Ux, lineSciD1Ux);
      
-      ifstream ifile1Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Ux.txt"));
+      ifstream ifile1Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1U.txt"));
       if (ifile1Ux) {
-         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Ux.txt"));
+         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1U.txt"));
          std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Ux.txt" << " successfully removed!" << std::endl;
 	  }
      
       ofstream finSciD1Ux;
-      finSciD1Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Ux.txt"));
+      finSciD1Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1U.txt"));
       
       int ncounter1Ux = 1;
       while (!inputSciD1Ux.eof()) {
@@ -697,7 +697,7 @@ void FileFillerPlanar(){
       finSciD1Ux.close();
 
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD1U.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1Ux.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD1U.txt") << " generated! " << std::endl;
       }
 
 
@@ -707,14 +707,14 @@ void FileFillerPlanar(){
       std::string lineSciD2Ux;
       std::getline(inputSciD2Ux, lineSciD2Ux);
 
-      ifstream ifile2Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Ux.txt"));
+      ifstream ifile2Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2U.txt"));
       if (ifile2Ux) {
-         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Ux.txt"));
-         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Ux.txt" << " successfully removed!" << std::endl;
+         remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2U.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2U.txt" << " successfully removed!" << std::endl;
 	  }
      
       ofstream finSciD2Ux;
-      finSciD2Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Ux.txt"));
+      finSciD2Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2U.txt"));
       
       int ncounter2Ux = 1;
       while (!inputSciD2Ux.eof()) {
@@ -735,7 +735,7 @@ void FileFillerPlanar(){
       finSciD2Ux.close();
       
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD2U.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2Ux.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD2U.txt") << " generated! " << std::endl;
       }
 
 
@@ -745,14 +745,14 @@ void FileFillerPlanar(){
       std::string lineSciD3Ux;
       std::getline(inputSciD3Ux, lineSciD3Ux);
      
-      ifstream ifile3Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Ux.txt"));
+      ifstream ifile3Ux(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3U.txt"));
       if (ifile3Ux) {
          remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Ux.txt"));
-         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Ux.txt" << " successfully removed!" << std::endl;
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3U.txt" << " successfully removed!" << std::endl;
 	  }
         
       ofstream finSciD3Ux;
-      finSciD3Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Ux.txt"));
+      finSciD3Ux.open(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3U.txt"));
       
       int ncounter3Ux = 1;
       while (!inputSciD3Ux.eof()) {
@@ -773,7 +773,7 @@ void FileFillerPlanar(){
       finSciD3Ux.close();
 
       if ((remove(TString("../../simdata/planar/"+((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_tmpxSciD3U.txt"))) == 0) {
-         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3Ux.txt") << " generated! " << std::endl;
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(21,((Xfiles[k]).find(".root"))-21))+"_SciD3U.txt") << " generated! " << std::endl;
       }
 
  
