@@ -191,7 +191,8 @@ void planarBINmu(){
 
 
    float Ethr;
-   float tPex, tPxx; 
+   float tPex;
+   int counterD, counterU; 
    int Xray = 0;
    int elec = 0;
    
@@ -344,31 +345,40 @@ void planarBINmu(){
 
 
       // Mu-decay D-stream 	
+      counterD = 0;
+      for (int a=0; a<allvEvID3Dmu[0].size(); a++) {
+         if (allvEdep3Dmu[i][a] >= Ethr3) {
+			counterD++;
+	     }
+	  }
+	  
       for (int m=0; m < nsamps; m++) {
 	     Ethr = Ethrmu[m];
          Xray = 0; elec = 0;
 
 		 for (int j=0; j<allvEvID1Dmu[0].size(); j++) {
-			  
-			tPex = 0;
-		   
-			if (allvEdep1Dmu[i][j] < Ethr) {
-			   tPex += 1;   
-			}
-			
-			if (allvEdep2Dmu[i][j] < Ethr) {
-			   tPex += 1;
-		    }
-			
-			if ((allvEdep3Dmu[i][j] >= Ethr3) && (allvEdep3Dmu[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
-			   Xray += 1;
-			} else {
-			   elec += 1;
-			}	
-		 }   
+		    if (allvEdep3Dmu[i][j] >= Ethr3) {	
+			   tPex = 0;
+			   if (allvEdep1Dmu[i][j] < Ethr) {
+				  tPex += 1;   
+			   }
+				
+			   if (allvEdep2Dmu[i][j] < Ethr) {
+				  tPex += 1;
+			   }
+				
+			   if ((allvEdep3Dmu[i][j] >= Ethr3) && (allvEdep3Dmu[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
+				  Xray += 1;
+			   } else {
+				  elec += 1;
+			   }	
+		    }   
+         }
 
-         PeXvectorD[i][m] = Xray/(double)(allvEvID1Dmu[0].size());
-         PeevectorD[i][m] = elec/(double)(allvEvID1Dmu[0].size()); 
+         PeXvectorD[i][m] = Xray/(double)(counterD);
+         PeevectorD[i][m] = elec/(double)(counterD); 
+       
+         std::cout << "counterD = " << counterD << std::endl;
        
          //std::cout << " PeXD[" << i << "][" << m << "] = " << PeXvectorD[i][m] << " PeeD[" << i << "][" << m << "] = " << PeevectorD[i][m] << std::endl;
      
@@ -377,31 +387,40 @@ void planarBINmu(){
        
       
       // Mu-decay U-stream 	
+      counterU = 0;
+      for (int a=0; a<allvEvID3Umu[0].size(); a++) {
+         if (allvEdep3Umu[i][a] >= Ethr3) {
+			counterU++;
+	     }
+	  }
+	  
       for (int m=0; m < nsamps; m++) {
 	     Ethr = Ethrmu[m];
          Xray = 0; elec = 0;
 
 		 for (int j=0; j<allvEvID1Umu[0].size(); j++) {
-			  
-			tPex = 0;
-		   
-			if (allvEdep1Umu[i][j] < Ethr) {
-			   tPex += 1;   
-			}
-			
-			if (allvEdep2Umu[i][j] < Ethr) {
-			   tPex += 1;
-		    }
-			
-			if ((allvEdep3Umu[i][j] >= Ethr3) && (allvEdep3Umu[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
-			   Xray += 1;
-			} else {
-			   elec += 1;
-			}	
-		 }   
+			if (allvEdep3Umu[i][j] >= Ethr3) {	  				  
+			   tPex = 0;
+			   if (allvEdep1Umu[i][j] < Ethr) {
+				  tPex += 1;   
+			   }
+				
+			   if (allvEdep2Umu[i][j] < Ethr) {
+				  tPex += 1;
+			   }
+				
+			   if ((allvEdep3Umu[i][j] >= Ethr3) && (allvEdep3Umu[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
+				  Xray += 1;
+			   } else {
+				  elec += 1;
+			   }	
+			}   
+		 }
 
-         PeXvectorU[i][m] = Xray/(double)(allvEvID1Umu[0].size());
-         PeevectorU[i][m] = elec/(double)(allvEvID1Umu[0].size()); 
+         PeXvectorU[i][m] = Xray/(double)(counterU);
+         PeevectorU[i][m] = elec/(double)(counterU); 
+        
+         std::cout << "counterU = " << counterU << std::endl;
        
          //std::cout << " PeXU[" << i << "][" << m << "] = " << PeXvectorU[i][m] << " PeeU[" << i << "][" << m << "] = " << PeevectorU[i][m] << std::endl;
      

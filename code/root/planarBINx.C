@@ -345,7 +345,7 @@ void planarBINx(){
       // X-ray cascade D-stream 	
       counterD = 0;
       for (int a=0; a<allvEvID3Dx[0].size(); a++) {
-         if (allvEdep3Dx[0][a] >= Ethr3) {
+         if (allvEdep3Dx[i][a] >= Ethr3) {
 			counterD++;
 	     }
 	  }
@@ -355,31 +355,32 @@ void planarBINx(){
          Xray = 0; elec = 0;
 
 		 for (int j=0; j<allvEvID1Dx[0].size(); j++) {
-			  
-			tPxx = 0;
-		   
-			if (allvEdep1Dx[i][j] < Ethr) {
-			   tPxx += 1;   
-			   if (allvEdep2Dx[i][j] < Ethr) {
-			      tPxx += 1;			
-			      if ((allvEdep3Dx[i][j] >= Ethr3) && (allvEdep3Dx[i][j] < 10)) {
-			         Xray += 1;
-			      } else {
-			         elec += 1;
-			      }
+		    if (allvEdep3Dx[i][j] >= Ethr3) {	  		  
+			   tPxx = 0;
+			   
+			   if (allvEdep1Dx[i][j] < Ethr) {
+			      tPxx += 1;   
+			      if (allvEdep2Dx[i][j] < Ethr) {
+				     tPxx += 1;			
+					 if ((allvEdep3Dx[i][j] >= Ethr3) && (allvEdep3Dx[i][j] < 10) && (tPxx == 2)) {
+						Xray += 1;
+					 } else {
+						elec += 1;
+					 }
+				  } else {
+					 elec += 1;
+				  }
 			   } else {
-			      elec += 1;
+				  elec += 1;
 			   }
-			} else {
-		       elec += 1;
-		    }
-		 }   
+			}
+		 }      
 
 
          PXXvectorD[i][m] = Xray/(double)(counterD);
          PXevectorD[i][m] = elec/(double)(counterD); 
        
-         std::cout << " PXXD[" << i << "][" << m << "] = " << PXXvectorD[i][m] << " PXeD[" << i << "][" << m << "] = " << PXevectorD[i][m] << " counterD = " << counterD << std::endl;
+         //std::cout << " PXXD[" << i << "][" << m << "] = " << PXXvectorD[i][m] << " PXeD[" << i << "][" << m << "] = " << PXevectorD[i][m] << " PXX + PXe = " << PXXvectorD[i][m] + PXevectorD[i][m] << " counterD = " << counterD << std::endl;
      
 
       }   
@@ -388,40 +389,43 @@ void planarBINx(){
       // X-ray cascade U-stream 	
       counterU = 0;
       for (int a=0; a<allvEvID3Ux[0].size(); a++) {
-	     if (allvEdep3Ux[0][a] >= Ethr3) {
+	     if (allvEdep3Ux[i][a] >= Ethr3) {
 			counterU++;
 	     }
 	  }
-
+	  
       for (int m=0; m < nsamps; m++) {
 	     Ethr = Ethrx[m];
          Xray = 0; elec = 0;
 
 		 for (int j=0; j<allvEvID1Ux[0].size(); j++) {
-			  
-			tPxx = 0;
-		   
-			if (allvEdep1Ux[i][j] < Ethr) {
-			   tPxx += 1;   
-			   if (allvEdep2Ux[i][j] < Ethr) {
-			      tPxx += 1;
-			      if ((allvEdep3Ux[i][j] >= Ethr3) && (allvEdep3Ux[i][j] < 10)) {
-			         Xray += 1;
-			      } else {
-			         elec += 1;
-			      }
+			if (allvEdep3Ux[i][j] >= Ethr3) {  
+			   tPxx = 0;
+			   
+			   if (allvEdep1Ux[i][j] < Ethr) {
+				  tPxx += 1;   
+				  if (allvEdep2Ux[i][j] < Ethr) {
+					 tPxx += 1;
+					 if ((allvEdep3Ux[i][j] >= Ethr3) && (allvEdep3Ux[i][j] < 10) && (tPxx == 2)) {
+						Xray += 1;
+					 } else {
+						elec += 1;
+					 }
+				  } else {
+					 elec += 1;
+				  }
 			   } else {
-			      elec += 1;
-			   }
-		    } else {
-			   elec += 1;
-		    }	
+				  elec += 1;
+			   }	
+		    }
 		 }   
+
+         //std::cout << " UXray = " << Xray << " elec = " << elec << std::endl;
 
          PXXvectorU[i][m] = Xray/(double)(counterU);
          PXevectorU[i][m] = elec/(double)(counterU);
        
-         std::cout << " PXXU[" << i << "][" << m << "] = " << PXXvectorU[i][m] << " PXeU[" << i << "][" << m << "] = " << PXevectorU[i][m] << " counterU = " << counterU << std::endl;
+         //std::cout << " PXXU[" << i << "][" << m << "] = " << PXXvectorU[i][m] << " PXeU[" << i << "][" << m << "] = " << PXevectorU[i][m] << " PXX+PXe = " << PXXvectorU[i][m] + PXevectorU[i][m] << " counterU = " << counterU << std::endl;
      
      
       } 
@@ -429,7 +433,7 @@ void planarBINx(){
         
    }
 
-/*
+
 
 
    //-------------------------------------------------------------------
@@ -443,60 +447,60 @@ void planarBINx(){
    std::cout << "\033[1;33m----------------------------------------------------------\033[0m" << std::endl;
 
   
-   // Mu-decay 3-mm
-   float PeXarr250mu3AlD[nsamps] = {};
-   float Peearr250mu3AlD[nsamps] = {};
-   float PeXarr500mu3AlD[nsamps] = {};
-   float Peearr500mu3AlD[nsamps] = {};
-   float PeXarr750mu3AlD[nsamps] = {};
-   float Peearr750mu3AlD[nsamps] = {};
-   float PeXarr250mu3AlU[nsamps] = {};
-   float Peearr250mu3AlU[nsamps] = {};
-   float PeXarr500mu3AlU[nsamps] = {};
-   float Peearr500mu3AlU[nsamps] = {};
-   float PeXarr750mu3AlU[nsamps] = {};
-   float Peearr750mu3AlU[nsamps] = {};
-   // Mu-decay 6-mm
-   float PeXarr250mu6AlD[nsamps] = {};
-   float Peearr250mu6AlD[nsamps] = {};
-   float PeXarr500mu6AlD[nsamps] = {};
-   float Peearr500mu6AlD[nsamps] = {};
-   float PeXarr750mu6AlD[nsamps] = {};
-   float Peearr750mu6AlD[nsamps] = {};
-   float PeXarr250mu6AlU[nsamps] = {};
-   float Peearr250mu6AlU[nsamps] = {};
-   float PeXarr500mu6AlU[nsamps] = {};
-   float Peearr500mu6AlU[nsamps] = {};
-   float PeXarr750mu6AlU[nsamps] = {};
-   float Peearr750mu6AlU[nsamps] = {};
+   // X-ray cascade 3-mm
+   float PXXarr250x3AlD[nsamps] = {};
+   float PXearr250x3AlD[nsamps] = {};
+   float PXXarr500x3AlD[nsamps] = {};
+   float PXearr500x3AlD[nsamps] = {};
+   float PXXarr750x3AlD[nsamps] = {};
+   float PXearr750x3AlD[nsamps] = {};
+   float PXXarr250x3AlU[nsamps] = {};
+   float PXearr250x3AlU[nsamps] = {};
+   float PXXarr500x3AlU[nsamps] = {};
+   float PXearr500x3AlU[nsamps] = {};
+   float PXXarr750x3AlU[nsamps] = {};
+   float PXearr750x3AlU[nsamps] = {};
+   // X-ray cascade 6-mm
+   float PXXarr250x6AlD[nsamps] = {};
+   float PXearr250x6AlD[nsamps] = {};
+   float PXXarr500x6AlD[nsamps] = {};
+   float PXearr500x6AlD[nsamps] = {};
+   float PXXarr750x6AlD[nsamps] = {};
+   float PXearr750x6AlD[nsamps] = {};
+   float PXXarr250x6AlU[nsamps] = {};
+   float PXearr250x6AlU[nsamps] = {};
+   float PXXarr500x6AlU[nsamps] = {};
+   float PXearr500x6AlU[nsamps] = {};
+   float PXXarr750x6AlU[nsamps] = {};
+   float PXearr750x6AlU[nsamps] = {};
 
      
    for (int i=0; i<nsamps; i++) {
-      PeXarr250mu3AlD[i] = PeXvectorD[0][i];
-      Peearr250mu3AlD[i] = PeevectorD[0][i];
-      PeXarr500mu3AlD[i] = PeXvectorD[1][i];
-      Peearr500mu3AlD[i] = PeevectorD[1][i];
-      PeXarr750mu3AlD[i] = PeXvectorD[2][i];
-      Peearr750mu3AlD[i] = PeevectorD[2][i];
-      PeXarr250mu3AlU[i] = PeXvectorU[0][i];
-      Peearr250mu3AlU[i] = PeevectorU[0][i];
-      PeXarr500mu3AlU[i] = PeXvectorU[1][i];
-      Peearr500mu3AlU[i] = PeevectorU[1][i];
-      PeXarr750mu3AlU[i] = PeXvectorU[2][i];
-      Peearr750mu3AlU[i] = PeevectorU[2][i];
+      PXXarr250x3AlD[i] = PXXvectorD[0][i];
+      PXearr250x3AlD[i] = PXevectorD[0][i];
+      PXXarr500x3AlD[i] = PXXvectorD[1][i];
+      PXearr500x3AlD[i] = PXevectorD[1][i];
+      PXXarr750x3AlD[i] = PXXvectorD[2][i];
+      PXearr750x3AlD[i] = PXevectorD[2][i];
+      PXXarr250x3AlU[i] = PXXvectorU[0][i];
+      PXearr250x3AlU[i] = PXevectorU[0][i];
+      PXXarr500x3AlU[i] = PXXvectorU[1][i];
+      PXearr500x3AlU[i] = PXevectorU[1][i];
+      PXXarr750x3AlU[i] = PXXvectorU[2][i];
+      PXearr750x3AlU[i] = PXevectorU[2][i];
 
-      PeXarr250mu6AlD[i] = PeXvectorD[3][i];
-      Peearr250mu6AlD[i] = PeevectorD[3][i];
-      PeXarr500mu6AlD[i] = PeXvectorD[4][i];
-      Peearr500mu6AlD[i] = PeevectorD[4][i];
-      PeXarr750mu6AlD[i] = PeXvectorD[5][i];
-      Peearr750mu6AlD[i] = PeevectorD[5][i];
-      PeXarr250mu6AlU[i] = PeXvectorU[3][i];
-      Peearr250mu6AlU[i] = PeevectorU[3][i];
-      PeXarr500mu6AlU[i] = PeXvectorU[4][i];
-      Peearr500mu6AlU[i] = PeevectorU[4][i];
-      PeXarr750mu6AlU[i] = PeXvectorU[5][i];
-      Peearr750mu6AlU[i] = PeevectorU[5][i];
+      PXXarr250x6AlD[i] = PXXvectorD[3][i];
+      PXearr250x6AlD[i] = PXevectorD[3][i];
+      PXXarr500x6AlD[i] = PXXvectorD[4][i];
+      PXearr500x6AlD[i] = PXevectorD[4][i];
+      PXXarr750x6AlD[i] = PXXvectorD[5][i];
+      PXearr750x6AlD[i] = PXevectorD[5][i];
+      PXXarr250x6AlU[i] = PXXvectorU[3][i];
+      PXearr250x6AlU[i] = PXevectorU[3][i];
+      PXXarr500x6AlU[i] = PXXvectorU[4][i];
+      PXearr500x6AlU[i] = PXevectorU[4][i];
+      PXXarr750x6AlU[i] = PXXvectorU[5][i];
+      PXearr750x6AlU[i] = PXevectorU[5][i];
   
    }
   
@@ -507,150 +511,150 @@ void planarBINx(){
    c->cd(1);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr250mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr250mu3AlD);
-   gr250mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
-   gr250mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr250mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr250mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr250mu3AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr250mu3AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr250mu3AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr250mu3AlSciDet1PeXD->SetMarkerStyle(33);
-   gr250mu3AlSciDet1PeXD->SetLineColor(kBlack);
-   gr250mu3AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr250mu3AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr250mu3AlD); 
-   gr250mu3AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr250mu3AlSciDet1PeeD->SetMarkerStyle(31);
-   gr250mu3AlSciDet1PeeD->SetLineColor(kRed);
-   gr250mu3AlSciDet1PeeD->Draw("LP");
-   leg250mu3AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg250mu3AlSciDet1PeXPeeD->AddEntry(gr250mu3AlSciDet1PeXD,"P_{e->X}","lp");
-   leg250mu3AlSciDet1PeXPeeD->AddEntry(gr250mu3AlSciDet1PeeD,"P_{e->e}","lp");
-   leg250mu3AlSciDet1PeXPeeD->Draw();
+   TGraph *gr250x3AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr250x3AlD);
+   gr250x3AlSciDet1PXXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
+   gr250x3AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr250x3AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr250x3AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr250x3AlSciDet1PXXD->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr250x3AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr250x3AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr250x3AlSciDet1PXXD->SetMarkerStyle(33);
+   gr250x3AlSciDet1PXXD->SetLineColor(kBlack);
+   gr250x3AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr250x3AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr250x3AlD); 
+   gr250x3AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr250x3AlSciDet1PXeD->SetMarkerStyle(31);
+   gr250x3AlSciDet1PXeD->SetLineColor(kRed);
+   gr250x3AlSciDet1PXeD->Draw("LP");
+   leg250x3AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg250x3AlSciDet1PXXPXeD->AddEntry(gr250x3AlSciDet1PXXD,"P_{X->X}","lp");
+   leg250x3AlSciDet1PXXPXeD->AddEntry(gr250x3AlSciDet1PXeD,"P_{X->e}","lp");
+   leg250x3AlSciDet1PXXPXeD->Draw();
   
    c->cd(2);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr500mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr500mu3AlD);  
-   gr500mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
-   gr500mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr500mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr500mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr500mu3AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr500mu3AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr500mu3AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr500mu3AlSciDet1PeXD->SetMarkerStyle(33);
-   gr500mu3AlSciDet1PeXD->SetLineColor(kBlack);
-   gr500mu3AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr500mu3AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr500mu3AlD); 
-   gr500mu3AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr500mu3AlSciDet1PeeD->SetMarkerStyle(31);
-   gr500mu3AlSciDet1PeeD->SetLineColor(kRed);
-   gr500mu3AlSciDet1PeeD->Draw("LP");
-   leg500mu3AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg500mu3AlSciDet1PeXPeeD->AddEntry(gr500mu3AlSciDet1PeXD,"P_{e->X}","lp");
-   leg500mu3AlSciDet1PeXPeeD->AddEntry(gr500mu3AlSciDet1PeeD,"P_{e->e}","lp");
-   leg500mu3AlSciDet1PeXPeeD->Draw();
+   TGraph *gr500x3AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr500x3AlD);  
+   gr500x3AlSciDet1PXXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
+   gr500x3AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr500x3AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr500x3AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr500x3AlSciDet1PXXD->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr500x3AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr500x3AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr500x3AlSciDet1PXXD->SetMarkerStyle(33);
+   gr500x3AlSciDet1PXXD->SetLineColor(kBlack);
+   gr500x3AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr500x3AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr500x3AlD); 
+   gr500x3AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr500x3AlSciDet1PXeD->SetMarkerStyle(31);
+   gr500x3AlSciDet1PXeD->SetLineColor(kRed);
+   gr500x3AlSciDet1PXeD->Draw("LP");
+   leg500x3AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg500x3AlSciDet1PXXPXeD->AddEntry(gr500x3AlSciDet1PXXD,"P_{X->X}","lp");
+   leg500x3AlSciDet1PXXPXeD->AddEntry(gr500x3AlSciDet1PXeD,"P_{X->e}","lp");
+   leg500x3AlSciDet1PXXPXeD->Draw();
 
    c->cd(3);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr750mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr750mu3AlD); 
-   gr750mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
-   gr750mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr750mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr750mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr750mu3AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr750mu3AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr750mu3AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr750mu3AlSciDet1PeXD->SetMarkerStyle(33);
-   gr750mu3AlSciDet1PeXD->SetLineColor(kBlack);
-   gr750mu3AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr750mu3AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr750mu3AlD); 
-   gr750mu3AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr750mu3AlSciDet1PeeD->SetMarkerStyle(31);
-   gr750mu3AlSciDet1PeeD->SetLineColor(kRed);
-   gr750mu3AlSciDet1PeeD->Draw("LP");
-   leg750mu3AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg750mu3AlSciDet1PeXPeeD->AddEntry(gr750mu3AlSciDet1PeXD,"P_{e->X}","lp");
-   leg750mu3AlSciDet1PeXPeeD->AddEntry(gr750mu3AlSciDet1PeeD,"P_{e->e}","lp");
-   leg750mu3AlSciDet1PeXPeeD->Draw();
+   TGraph *gr750x3AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr750x3AlD); 
+   gr750x3AlSciDet1PXXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
+   gr750x3AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr750x3AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr750x3AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr750x3AlSciDet1PXXD->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr750x3AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr750x3AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr750x3AlSciDet1PXXD->SetMarkerStyle(33);
+   gr750x3AlSciDet1PXXD->SetLineColor(kBlack);
+   gr750x3AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr750x3AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr750x3AlD); 
+   gr750x3AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr750x3AlSciDet1PXeD->SetMarkerStyle(31);
+   gr750x3AlSciDet1PXeD->SetLineColor(kRed);
+   gr750x3AlSciDet1PXeD->Draw("LP");
+   leg750x3AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg750x3AlSciDet1PXXPXeD->AddEntry(gr750x3AlSciDet1PXXD,"P_{X->X}","lp");
+   leg750x3AlSciDet1PXXPXeD->AddEntry(gr750x3AlSciDet1PXeD,"P_{X->e}","lp");
+   leg750x3AlSciDet1PXXPXeD->Draw();
   
    c->cd(4);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr250mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr250mu6AlD);
-   gr250mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
-   gr250mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr250mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr250mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr250mu6AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr250mu6AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr250mu6AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr250mu6AlSciDet1PeXD->SetMarkerStyle(33);
-   gr250mu6AlSciDet1PeXD->SetLineColor(kBlack);
-   gr250mu6AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr250mu6AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr250mu6AlD); 
-   gr250mu6AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr250mu6AlSciDet1PeeD->SetMarkerStyle(31);
-   gr250mu6AlSciDet1PeeD->SetLineColor(kRed);
-   gr250mu6AlSciDet1PeeD->Draw("LP");
-   leg250mu6AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg250mu6AlSciDet1PeXPeeD->AddEntry(gr250mu6AlSciDet1PeXD,"P_{e->X}","lp");
-   leg250mu6AlSciDet1PeXPeeD->AddEntry(gr250mu6AlSciDet1PeeD,"P_{e->e}","lp");
-   leg250mu6AlSciDet1PeXPeeD->Draw();
+   TGraph *gr250x6AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr250x6AlD);
+   gr250x6AlSciDet1PXXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
+   gr250x6AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr250x6AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr250x6AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr250x6AlSciDet1PXXD->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr250x6AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr250x6AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr250x6AlSciDet1PXXD->SetMarkerStyle(33);
+   gr250x6AlSciDet1PXXD->SetLineColor(kBlack);
+   gr250x6AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr250x6AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr250x6AlD); 
+   gr250x6AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr250x6AlSciDet1PXeD->SetMarkerStyle(31);
+   gr250x6AlSciDet1PXeD->SetLineColor(kRed);
+   gr250x6AlSciDet1PXeD->Draw("LP");
+   leg250x6AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg250x6AlSciDet1PXXPXeD->AddEntry(gr250x6AlSciDet1PXXD,"P_{X->X}","lp");
+   leg250x6AlSciDet1PXXPXeD->AddEntry(gr250x6AlSciDet1PXeD,"P_{X->e}","lp");
+   leg250x6AlSciDet1PXXPXeD->Draw();
     
    c->cd(5);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr500mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr500mu6AlD);
-   gr500mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
-   gr500mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr500mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr500mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr500mu6AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr500mu6AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr500mu6AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr500mu6AlSciDet1PeXD->SetMarkerStyle(33);
-   gr500mu6AlSciDet1PeXD->SetLineColor(kBlack);
-   gr500mu6AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr500mu6AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr500mu6AlD); 
-   gr500mu6AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr500mu6AlSciDet1PeeD->SetMarkerStyle(31);
-   gr500mu6AlSciDet1PeeD->SetLineColor(kRed);
-   gr500mu6AlSciDet1PeeD->Draw("LP");
-   leg500mu6AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg500mu6AlSciDet1PeXPeeD->AddEntry(gr500mu6AlSciDet1PeXD,"P_{e->X}","lp");
-   leg500mu6AlSciDet1PeXPeeD->AddEntry(gr500mu6AlSciDet1PeeD,"P_{e->e}","lp");
-   leg500mu6AlSciDet1PeXPeeD->Draw();
+   TGraph *gr500x6AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr500x6AlD);
+   gr500x6AlSciDet1PXXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
+   gr500x6AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr500x6AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr500x6AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr500x6AlSciDet1PXXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
+   gr500x6AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr500x6AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr500x6AlSciDet1PXXD->SetMarkerStyle(33);
+   gr500x6AlSciDet1PXXD->SetLineColor(kBlack);
+   gr500x6AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr500x6AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr500x6AlD); 
+   gr500x6AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr500x6AlSciDet1PXeD->SetMarkerStyle(31);
+   gr500x6AlSciDet1PXeD->SetLineColor(kRed);
+   gr500x6AlSciDet1PXeD->Draw("LP");
+   leg500x6AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg500x6AlSciDet1PXXPXeD->AddEntry(gr500x6AlSciDet1PXXD,"P_{X->X}","lp");
+   leg500x6AlSciDet1PXXPXeD->AddEntry(gr500x6AlSciDet1PXeD,"P_{X->e}","lp");
+   leg500x6AlSciDet1PXXPXeD->Draw();
     
    c->cd(6);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr750mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr750mu6AlD);
-   gr750mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
-   gr750mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr750mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
-   gr750mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr750mu6AlSciDet1PeXD->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr750mu6AlSciDet1PeXD->GetYaxis()->SetTitleOffset(1.8);
-   gr750mu6AlSciDet1PeXD->SetMarkerColor(kBlack);
-   gr750mu6AlSciDet1PeXD->SetMarkerStyle(33);
-   gr750mu6AlSciDet1PeXD->SetLineColor(kBlack);
-   gr750mu6AlSciDet1PeXD->Draw("ALP");
-   TGraph *gr750mu6AlSciDet1PeeD = new TGraph(nsamps,Ethrmu,Peearr750mu6AlD); 
-   gr750mu6AlSciDet1PeeD->SetMarkerColor(kRed);
-   gr750mu6AlSciDet1PeeD->SetMarkerStyle(31);
-   gr750mu6AlSciDet1PeeD->SetLineColor(kRed);
-   gr750mu6AlSciDet1PeeD->Draw("LP");
-   leg750mu6AlSciDet1PeXPeeD = new TLegend(0.2,-0.005,0.4,0.08);
-   leg750mu6AlSciDet1PeXPeeD->AddEntry(gr750mu6AlSciDet1PeXD,"P_{e->X}","lp");
-   leg750mu6AlSciDet1PeXPeeD->AddEntry(gr750mu6AlSciDet1PeeD,"P_{e->e}","lp");
-   leg750mu6AlSciDet1PeXPeeD->Draw();
+   TGraph *gr750x6AlSciDet1PXXD = new TGraph(nsamps,Ethrx,PXXarr750x6AlD);
+   gr750x6AlSciDet1PXXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
+   gr750x6AlSciDet1PXXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr750x6AlSciDet1PXXD->GetXaxis()->SetRangeUser(0,2.05);
+   gr750x6AlSciDet1PXXD->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr750x6AlSciDet1PXXD->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr750x6AlSciDet1PXXD->GetYaxis()->SetTitleOffset(1.8);
+   gr750x6AlSciDet1PXXD->SetMarkerColor(kBlack);
+   gr750x6AlSciDet1PXXD->SetMarkerStyle(33);
+   gr750x6AlSciDet1PXXD->SetLineColor(kBlack);
+   gr750x6AlSciDet1PXXD->Draw("ALP");
+   TGraph *gr750x6AlSciDet1PXeD = new TGraph(nsamps,Ethrx,PXearr750x6AlD); 
+   gr750x6AlSciDet1PXeD->SetMarkerColor(kRed);
+   gr750x6AlSciDet1PXeD->SetMarkerStyle(31);
+   gr750x6AlSciDet1PXeD->SetLineColor(kRed);
+   gr750x6AlSciDet1PXeD->Draw("LP");
+   leg750x6AlSciDet1PXXPXeD = new TLegend(0.2,-0.005,0.4,0.08);
+   leg750x6AlSciDet1PXXPXeD->AddEntry(gr750x6AlSciDet1PXXD,"P_{X->X}","lp");
+   leg750x6AlSciDet1PXXPXeD->AddEntry(gr750x6AlSciDet1PXeD,"P_{X->e}","lp");
+   leg750x6AlSciDet1PXXPXeD->Draw();
 
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.pdf");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.png");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.C");
+   c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_D_stream.pdf");
+   c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_D_stream.png");
+   c->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_D_stream.C");
  
   
   
@@ -659,152 +663,152 @@ void planarBINx(){
    d->cd(1);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr250mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr250mu3AlU);
-   gr250mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
-   gr250mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr250mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr250mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr250mu3AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr250mu3AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr250mu3AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr250mu3AlSciDet1PeXU->SetMarkerStyle(33);
-   gr250mu3AlSciDet1PeXU->SetLineColor(kBlack);
-   gr250mu3AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr250mu3AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr250mu3AlU); 
-   gr250mu3AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr250mu3AlSciDet1PeeU->SetMarkerStyle(31);
-   gr250mu3AlSciDet1PeeU->SetLineColor(kRed);
-   gr250mu3AlSciDet1PeeU->Draw("LP");
-   leg250mu3AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg250mu3AlSciDet1PeXPeeU->AddEntry(gr250mu3AlSciDet1PeXU,"P_{e->X}","lp");
-   leg250mu3AlSciDet1PeXPeeU->AddEntry(gr250mu3AlSciDet1PeeU,"P_{e->e}","lp");
-   leg250mu3AlSciDet1PeXPeeU->Draw();
+   TGraph *gr250x3AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr250x3AlU);
+   gr250x3AlSciDet1PXXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
+   gr250x3AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr250x3AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr250x3AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr250x3AlSciDet1PXXU->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr250x3AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr250x3AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr250x3AlSciDet1PXXU->SetMarkerStyle(33);
+   gr250x3AlSciDet1PXXU->SetLineColor(kBlack);
+   gr250x3AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr250x3AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr250x3AlU); 
+   gr250x3AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr250x3AlSciDet1PXeU->SetMarkerStyle(31);
+   gr250x3AlSciDet1PXeU->SetLineColor(kRed);
+   gr250x3AlSciDet1PXeU->Draw("LP");
+   leg250x3AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg250x3AlSciDet1PXXPXeU->AddEntry(gr250x3AlSciDet1PXXU,"P_{X->X}","lp");
+   leg250x3AlSciDet1PeXPXeU->AddEntry(gr250x3AlSciDet1PXeU,"P_{X->e}","lp");
+   leg250x3AlSciDet1PXXPXeU->Draw();
   
    d->cd(2);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr500mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr500mu3AlU);  
-   gr500mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
-   gr500mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr500mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr500mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr500mu3AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr500mu3AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr500mu3AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr500mu3AlSciDet1PeXU->SetMarkerStyle(33);
-   gr500mu3AlSciDet1PeXU->SetLineColor(kBlack);
-   gr500mu3AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr500mu3AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr500mu3AlU); 
-   gr500mu3AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr500mu3AlSciDet1PeeU->SetMarkerStyle(31);
-   gr500mu3AlSciDet1PeeU->SetLineColor(kRed);
-   gr500mu3AlSciDet1PeeU->Draw("LP");
-   leg500mu3AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg500mu3AlSciDet1PeXPeeU->AddEntry(gr500mu3AlSciDet1PeXU,"P_{e->X}","lp");
-   leg500mu3AlSciDet1PeXPeeU->AddEntry(gr500mu3AlSciDet1PeeU,"P_{e->e}","lp");
-   leg500mu3AlSciDet1PeXPeeU->Draw();
+   TGraph *gr500x3AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr500x3AlU);  
+   gr500x3AlSciDet1PXXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
+   gr500x3AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr500x3AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr500x3AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr500x3AlSciDet1PXXU->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr500x3AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr500x3AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr500x3AlSciDet1PXXU->SetMarkerStyle(33);
+   gr500x3AlSciDet1PXXU->SetLineColor(kBlack);
+   gr500x3AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr500x3AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr500x3AlU); 
+   gr500x3AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr500x3AlSciDet1PXeU->SetMarkerStyle(31);
+   gr500x3AlSciDet1PXeU->SetLineColor(kRed);
+   gr500x3AlSciDet1PXeU->Draw("LP");
+   leg500x3AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg500x3AlSciDet1PXXPXeU->AddEntry(gr500x3AlSciDet1PXXU,"P_{X->X}","lp");
+   leg500x3AlSciDet1PXXPXeU->AddEntry(gr500x3AlSciDet1PXeU,"P_{X->e}","lp");
+   leg500x3AlSciDet1PXXPXeU->Draw();
 
    d->cd(3);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr750mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr750mu3AlU); 
-   gr750mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
-   gr750mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr750mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr750mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr750mu3AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr750mu3AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr750mu3AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr750mu3AlSciDet1PeXU->SetMarkerStyle(33);
-   gr750mu3AlSciDet1PeXU->SetLineColor(kBlack);
-   gr750mu3AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr750mu3AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr750mu3AlU); 
-   gr750mu3AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr750mu3AlSciDet1PeeU->SetMarkerStyle(31);
-   gr750mu3AlSciDet1PeeU->SetLineColor(kRed);
-   gr750mu3AlSciDet1PeeU->Draw("LP");
-   leg750mu3AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg750mu3AlSciDet1PeXPeeU->AddEntry(gr750mu3AlSciDet1PeXU,"P_{e->X}","lp");
-   leg750mu3AlSciDet1PeXPeeU->AddEntry(gr750mu3AlSciDet1PeeU,"P_{e->e}","lp");
-   leg750mu3AlSciDet1PeXPeeU->Draw();
+   TGraph *gr750x3AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr750x3AlU); 
+   gr750x3AlSciDet1PXXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
+   gr750x3AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr750x3AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr750x3AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr750x3AlSciDet1PXXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
+   gr750x3AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr750x3AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr750x3AlSciDet1PXXU->SetMarkerStyle(33);
+   gr750x3AlSciDet1PXXU->SetLineColor(kBlack);
+   gr750x3AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr750x3AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr750x3AlU); 
+   gr750x3AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr750x3AlSciDet1PXeU->SetMarkerStyle(31);
+   gr750x3AlSciDet1PXeU->SetLineColor(kRed);
+   gr750x3AlSciDet1PXeU->Draw("LP");
+   leg750x3AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg750x3AlSciDet1PXXPXeU->AddEntry(gr750x3AlSciDet1PXXU,"P_{X->X}","lp");
+   leg750x3AlSciDet1PeXPXeU->AddEntry(gr750x3AlSciDet1PXeU,"P_{X->e}","lp");
+   leg750x3AlSciDet1PeXPXeU->Draw();
   
    d->cd(4);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr250mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr250mu6AlU);
-   gr250mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
-   gr250mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr250mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr250mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr250mu6AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr250mu6AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr250mu6AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr250mu6AlSciDet1PeXU->SetMarkerStyle(33);
-   gr250mu6AlSciDet1PeXU->SetLineColor(kBlack);
-   gr250mu6AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr250mu6AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr250mu6AlU); 
-   gr250mu6AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr250mu6AlSciDet1PeeU->SetMarkerStyle(31);
-   gr250mu6AlSciDet1PeeU->SetLineColor(kRed);
-   gr250mu6AlSciDet1PeeU->Draw("LP");
-   leg250mu6AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg250mu6AlSciDet1PeXPeeU->AddEntry(gr250mu6AlSciDet1PeXU,"P_{e->X}","lp");
-   leg250mu6AlSciDet1PeXPeeU->AddEntry(gr250mu6AlSciDet1PeeU,"P_{e->e}","lp");
-   leg250mu6AlSciDet1PeXPeeU->Draw();
+   TGraph *gr250x6AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr250x6AlU);
+   gr250x6AlSciDet1PXXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
+   gr250x6AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr250x6AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr250x6AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr250x6AlSciDet1PXXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
+   gr250x6AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr250x6AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr250x6AlSciDet1PXXU->SetMarkerStyle(33);
+   gr250x6AlSciDet1PXXU->SetLineColor(kBlack);
+   gr250x6AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr250x6AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr250x6AlU); 
+   gr250x6AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr250x6AlSciDet1PXeU->SetMarkerStyle(31);
+   gr250x6AlSciDet1PXeU->SetLineColor(kRed);
+   gr250x6AlSciDet1PXeU->Draw("LP");
+   leg250x6AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg250x6AlSciDet1PXXPXeU->AddEntry(gr250x6AlSciDet1PXXU,"P_{X->X}","lp");
+   leg250x6AlSciDet1PXXPXeU->AddEntry(gr250x6AlSciDet1PXeU,"P_{X->e}","lp");
+   leg250x6AlSciDet1PXXPXeU->Draw();
     
    d->cd(5);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr500mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr500mu6AlU);
-   gr500mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
-   gr500mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr500mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr500mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr500mu6AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr500mu6AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr500mu6AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr500mu6AlSciDet1PeXU->SetMarkerStyle(33);
-   gr500mu6AlSciDet1PeXU->SetLineColor(kBlack);
-   gr500mu6AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr500mu6AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr500mu6AlU); 
-   gr500mu6AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr500mu6AlSciDet1PeeU->SetMarkerStyle(31);
-   gr500mu6AlSciDet1PeeU->SetLineColor(kRed);
-   gr500mu6AlSciDet1PeeU->Draw("LP");
-   leg500mu6AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg500mu6AlSciDet1PeXPeeU->AddEntry(gr500mu6AlSciDet1PeXU,"P_{e->X}","lp");
-   leg500mu6AlSciDet1PeXPeeU->AddEntry(gr500mu6AlSciDet1PeeU,"P_{e->e}","lp");
-   leg500mu6AlSciDet1PeXPeeU->Draw();
+   TGraph *gr500x6AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr500x6AlU);
+   gr500x6AlSciDet1PXXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
+   gr500x6AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr500x6AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr500x6AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr500x6AlSciDet1PXXU->GetYaxis()->SetTitle("P_{X->X/e}(E_{THR})");
+   gr500x6AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr500x6AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr500x6AlSciDet1PXXU->SetMarkerStyle(33);
+   gr500x6AlSciDet1PXXU->SetLineColor(kBlack);
+   gr500x6AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr500x6AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr500x6AlU); 
+   gr500x6AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr500x6AlSciDet1PXeU->SetMarkerStyle(31);
+   gr500x6AlSciDet1PXeU->SetLineColor(kRed);
+   gr500x6AlSciDet1PXeU->Draw("LP");
+   leg500x6AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg500x6AlSciDet1PXXPXeU->AddEntry(gr500x6AlSciDet1PXXU,"P_{X->X}","lp");
+   leg500x6AlSciDet1PXXPXeU->AddEntry(gr500x6AlSciDet1PXeU,"P_{X->e}","lp");
+   leg500x6AlSciDet1PXXPXeU->Draw();
     
    d->cd(6);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *gr750mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr750mu6AlU);
-   gr750mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
-   gr750mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   gr750mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
-   gr750mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
-   gr750mu6AlSciDet1PeXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
-   gr750mu6AlSciDet1PeXU->GetYaxis()->SetTitleOffset(1.8);
-   gr750mu6AlSciDet1PeXU->SetMarkerColor(kBlack);
-   gr750mu6AlSciDet1PeXU->SetMarkerStyle(33);
-   gr750mu6AlSciDet1PeXU->SetLineColor(kBlack);
-   gr750mu6AlSciDet1PeXU->Draw("ALP");
-   TGraph *gr750mu6AlSciDet1PeeU = new TGraph(nsamps,Ethrmu,Peearr750mu6AlU); 
-   gr750mu6AlSciDet1PeeU->SetMarkerColor(kRed);
-   gr750mu6AlSciDet1PeeU->SetMarkerStyle(31);
-   gr750mu6AlSciDet1PeeU->SetLineColor(kRed);
-   gr750mu6AlSciDet1PeeU->Draw("LP");
-   leg750mu6AlSciDet1PeXPeeU = new TLegend(0.2,-0.005,0.4,0.08);
-   leg750mu6AlSciDet1PeXPeeU->AddEntry(gr750mu6AlSciDet1PeXU,"P_{e->X}","lp");
-   leg750mu6AlSciDet1PeXPeeU->AddEntry(gr750mu6AlSciDet1PeeU,"P_{e->e}","lp");
-   leg750mu6AlSciDet1PeXPeeU->Draw();
+   TGraph *gr750x6AlSciDet1PXXU = new TGraph(nsamps,Ethrx,PXXarr750x6AlU);
+   gr750x6AlSciDet1PXXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
+   gr750x6AlSciDet1PXXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   gr750x6AlSciDet1PXXU->GetXaxis()->SetRangeUser(0,2.05);
+   gr750x6AlSciDet1PXXU->GetYaxis()->SetRangeUser(1e-6,1.1);
+   gr750x6AlSciDet1PXXU->GetYaxis()->SetTitle("P_{e->X/e}(E_{THR})");
+   gr750x6AlSciDet1PXXU->GetYaxis()->SetTitleOffset(1.8);
+   gr750x6AlSciDet1PXXU->SetMarkerColor(kBlack);
+   gr750x6AlSciDet1PXXU->SetMarkerStyle(33);
+   gr750x6AlSciDet1PXXU->SetLineColor(kBlack);
+   gr750x6AlSciDet1PXXU->Draw("ALP");
+   TGraph *gr750x6AlSciDet1PXeU = new TGraph(nsamps,Ethrx,PXearr750x6AlU); 
+   gr750x6AlSciDet1PXeU->SetMarkerColor(kRed);
+   gr750x6AlSciDet1PXeU->SetMarkerStyle(31);
+   gr750x6AlSciDet1PXeU->SetLineColor(kRed);
+   gr750x6AlSciDet1PXeU->Draw("LP");
+   leg750x6AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
+   leg750x6AlSciDet1PXXPXeU->AddEntry(gr750x6AlSciDet1PXXU,"P_{X->X}","lp");
+   leg750x6AlSciDet1PXXPXeU->AddEntry(gr750x6AlSciDet1PXeU,"P_{X->e}","lp");
+   leg750x6AlSciDet1PXXPXeU->Draw();
 
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.pdf");
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.png");
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.C");
+   d->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_U_stream.pdf");
+   d->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_U_stream.png");
+   d->SaveAs("Bubble4BinPlot_PXX_PXe_3mm_6mm_10_MeV_U_stream.C");
  
-*/  
+
   
   
  }
