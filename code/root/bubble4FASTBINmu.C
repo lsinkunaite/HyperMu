@@ -139,7 +139,8 @@ void bubble4FASTBINmu(){
    std::vector< std::vector< double > > allvEdep3;
 
    float Ethr;
-   float tPex, tPeeB, tPexC; 
+   float tPex, tPeeB, tPexC;
+   int counter; 
    int Xray = 0;
    int elec = 0;
    
@@ -235,6 +236,14 @@ void bubble4FASTBINmu(){
       std::cout << "\033[1;31m----------------------- Method A -------------------------\033[0m" << std::endl;
       std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
+      counter = 0;
+      for (int a=0; a<allvEvID3[0].size(); a++) {
+         if (allvEdep3[i][a] >= Ethr3) {
+			counter++;
+	     }
+	  }
+	  std::cout << "test1 = " << allvEvID1[0].size() << " test2 = " << counter << std::endl;
+
 	
       for (int m=0; m < nsamps; m++) {
 	     Ethr = Ethrmu[m];
@@ -244,30 +253,33 @@ void bubble4FASTBINmu(){
          std::vector<double> vPee;
 
 		 for (int j=0; j<allvEvID1[0].size(); j++) {
-			  
-			tPex = 0;
-			//iEventID = allvEvID1[i][j];
-		   
-			if (allvEdep1[i][j] < Ethr) {
-			   tPex += 1;   
-			}
-			
-			if (allvEdep2[i][j] < Ethr) {
-			   tPex += 1;
-		    }
-			
-			//if (allvEvID3[i][j] != iEventID) std::cout << "EventID3 = " << allvEvID3[i][j] << " iEventID = " << iEventID << std::endl;
-			if ((allvEdep3[i][j] >= Ethr3) && (allvEdep3[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
-			   Xray += 1;
-			} else {
-			   elec += 1;
-			}	
-		 }   
+			if (allvEdep3[i][j] >= Ethr3) {
+			   tPex = 0;
+			   //iEventID = allvEvID1[i][j];
+			   
+			   if (allvEdep1[i][j] < Ethr) {
+				  tPex += 1;   
+			   }
+				
+			   if (allvEdep2[i][j] < Ethr) {
+				  tPex += 1;
+			   }
+				
+			   //if (allvEvID3[i][j] != iEventID) std::cout << "EventID3 = " << allvEvID3[i][j] << " iEventID = " << iEventID << std::endl;
+			   if ((allvEdep3[i][j] >= Ethr3) && (allvEdep3[i][j] < 10) && ((tPex == 2) || (tPex == 1))) {
+				  Xray += 1;
+			   } else {
+				  elec += 1;
+			   }	
+			}   
+         }
 
-      PeXvector[i][m] = Xray/(double)(allvEvID1[0].size());
-      Peevector[i][m] = elec/(double)(allvEvID1[0].size()); 
+         PeXvector[i][m] = Xray/(double)(counter);
+         Peevector[i][m] = elec/(double)(counter);
+         //PeXvector[i][m] = Xray/(double)(allvEvID1[0].size());
+         //Peevector[i][m] = elec/(double)(allvEvID1[0].size()); 
        
-      std::cout << " PeX[" << i << "][" << m << "] = " << PeXvector[i][m] << " Pee[" << i << "][" << m << "] = " << Peevector[i][m] << std::endl;
+         std::cout << " PeX[" << i << "][" << m << "] = " << PeXvector[i][m] << " Pee[" << i << "][" << m << "] = " << Peevector[i][m] << std::endl;
      
 
       }   

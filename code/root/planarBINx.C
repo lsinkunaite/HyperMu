@@ -681,7 +681,7 @@ void planarBINx(){
    gr250x3AlSciDet1PXeU->Draw("LP");
    leg250x3AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
    leg250x3AlSciDet1PXXPXeU->AddEntry(gr250x3AlSciDet1PXXU,"P_{X->X}","lp");
-   leg250x3AlSciDet1PeXPXeU->AddEntry(gr250x3AlSciDet1PXeU,"P_{X->e}","lp");
+   leg250x3AlSciDet1PXXPXeU->AddEntry(gr250x3AlSciDet1PXeU,"P_{X->e}","lp");
    leg250x3AlSciDet1PXXPXeU->Draw();
   
    d->cd(2);
@@ -729,8 +729,8 @@ void planarBINx(){
    gr750x3AlSciDet1PXeU->Draw("LP");
    leg750x3AlSciDet1PXXPXeU = new TLegend(0.2,-0.005,0.4,0.08);
    leg750x3AlSciDet1PXXPXeU->AddEntry(gr750x3AlSciDet1PXXU,"P_{X->X}","lp");
-   leg750x3AlSciDet1PeXPXeU->AddEntry(gr750x3AlSciDet1PXeU,"P_{X->e}","lp");
-   leg750x3AlSciDet1PeXPXeU->Draw();
+   leg750x3AlSciDet1PXXPXeU->AddEntry(gr750x3AlSciDet1PXeU,"P_{X->e}","lp");
+   leg750x3AlSciDet1PXXPXeU->Draw();
   
    d->cd(4);
    gPad->SetLogy();
