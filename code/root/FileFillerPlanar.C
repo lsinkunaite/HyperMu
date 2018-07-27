@@ -25,19 +25,19 @@ using namespace std;
 void FileFillerPlanar(){	
 	
    // X-ray cascade
-   std::string file3Alx250 = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6goldcascade.root"; // 3-mm
-   std::string file3Alx500 = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6goldcascade.root";
-   std::string file3Alx750 = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6goldcascade.root";
-   std::string file6Alx250 = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6goldcascade.root"; // 6-mm
-   std::string file6Alx500 = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6goldcascade.root";
-   std::string file6Alx750 = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6goldcascade.root";   
+   std::string file3Alx250 = "../../simdata/planar/planar_SMALL_2x5mm_250mm_SciD_3mm_Al_1e6goldcascade.root"; // 3-mm
+   std::string file3Alx500 = "../../simdata/planar/planar_SMALL_2x5mm_500mm_SciD_3mm_Al_1e6goldcascade.root";
+   std::string file3Alx750 = "../../simdata/planar/planar_SMALL_2x5mm_750mm_SciD_3mm_Al_1e6goldcascade.root";
+   std::string file6Alx250 = "../../simdata/planar/planar_SMALL_2x5mm_250mm_SciD_6mm_Al_1e6goldcascade.root"; // 6-mm
+   std::string file6Alx500 = "../../simdata/planar/planar_SMALL_2x5mm_500mm_SciD_6mm_Al_1e6goldcascade.root";
+   std::string file6Alx750 = "../../simdata/planar/planar_SMALL_2x5mm_750mm_SciD_6mm_Al_1e6goldcascade.root";   
    // Mu-decay
-   std::string file3Almu250 = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay.root"; // 3-mm
-   std::string file3Almu500 = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay.root";
-   std::string file3Almu750 = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay.root";
-   std::string file6Almu250 = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay.root"; // 6-mm
-   std::string file6Almu500 = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay.root";
-   std::string file6Almu750 = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay.root";
+   std::string file3Almu250 = "../../simdata/planar/planar_SMALL_2x5mm_250mm_SciD_3mm_Al_1e6mudecay.root"; // 3-mm
+   std::string file3Almu500 = "../../simdata/planar/planar_SMALL_2x5mm_500mm_SciD_3mm_Al_1e6mudecay.root";
+   std::string file3Almu750 = "../../simdata/planar/planar_SMALL_2x5mm_750mm_SciD_3mm_Al_1e6mudecay.root";
+   std::string file6Almu250 = "../../simdata/planar/planar_SMALL_2x5mm_250mm_SciD_6mm_Al_1e6mudecay.root"; // 6-mm
+   std::string file6Almu500 = "../../simdata/planar/planar_SMALL_2x5mm_500mm_SciD_6mm_Al_1e6mudecay.root";
+   std::string file6Almu750 = "../../simdata/planar/planar_SMALL_2x5mm_750mm_SciD_6mm_Al_1e6mudecay.root";
    
    std::vector<std::string> Xfiles;
    std::vector<std::string> mufiles;
