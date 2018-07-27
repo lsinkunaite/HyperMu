@@ -18,30 +18,30 @@ include definitions.g4bl    #definitions
 #number of simulated events
 param evts=1e6
 
-param lengthSciD3=500.0
+param lengthSciD3=250.0
 param lengthAlBox=6.0
 
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
-#param name=mudecay
-param name=goldcascade
+param name=mudecay
+#param name=goldcascade
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_$evts$name.root
+param histoFile=../../simdata/planar/planar_IN_2x5mm_250mm_SciD_6mm_Al_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 
 #Define source
 # (1) muon decay
-#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
@@ -61,10 +61,10 @@ detector SciDet3U solid=SciBox3 format=rootExtended material=Scintillator color=
 place AlBox z=(20-(($lengthAlBox)/2))
 place AlBox z=(-20+(($lengthAlBox)/2))
 
-place SciDet1D z=22.5
-place SciDet1U z=-22.5
-place SciDet2D z=27.5
-place SciDet2U z=-27.5
+place SciDet1D z=6.5
+place SciDet1U z=-6.5
+place SciDet2D z=11.5
+place SciDet2U z=-11.5
 place SciDet3D z=(30+(($lengthSciD3)/2))
 place SciDet3U z=(-30-(($lengthSciD3)/2))
 
