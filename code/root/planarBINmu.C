@@ -71,43 +71,43 @@ void planarBINmu(){
 
    // Names of the files
    // Mu-decay 3-mm
-   std::string file3Almu250SciD1D = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file3Almu250SciD2D = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file3Almu250SciD3D = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file3Almu250SciD1U = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file3Almu250SciD2U = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file3Almu250SciD3U = "../../simdata/planar/planar_2x5mm_250mm_SciD_3mm_Al_1e6mudecay_SciD3U.txt";
-   std::string file3Almu500SciD1D = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file3Almu500SciD2D = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file3Almu500SciD3D = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file3Almu500SciD1U = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file3Almu500SciD2U = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file3Almu500SciD3U = "../../simdata/planar/planar_2x5mm_500mm_SciD_3mm_Al_1e6mudecay_SciD3U.txt";
-   std::string file3Almu750SciD1D = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file3Almu750SciD2D = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file3Almu750SciD3D = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file3Almu750SciD1U = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file3Almu750SciD2U = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file3Almu750SciD3U = "../../simdata/planar/planar_2x5mm_750mm_SciD_3mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file3Almu250SciD1D = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file3Almu250SciD2D = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file3Almu250SciD3D = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file3Almu250SciD1U = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file3Almu250SciD2U = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file3Almu250SciD3U = "../../simdata/planar/planar_2x5mm_250mm_SciD_0mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file3Almu500SciD1D = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file3Almu500SciD2D = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file3Almu500SciD3D = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file3Almu500SciD1U = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file3Almu500SciD2U = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file3Almu500SciD3U = "../../simdata/planar/planar_2x5mm_500mm_SciD_0mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file3Almu750SciD1D = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file3Almu750SciD2D = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file3Almu750SciD3D = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file3Almu750SciD1U = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file3Almu750SciD2U = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file3Almu750SciD3U = "../../simdata/planar/planar_2x5mm_750mm_SciD_0mm_Al_1e6mudecay_SciD3U.txt";
    // Mu-decay 6-mm
-   std::string file6Almu250SciD1D = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file6Almu250SciD2D = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file6Almu250SciD3D = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file6Almu250SciD1U = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file6Almu250SciD2U = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file6Almu250SciD3U = "../../simdata/planar/planar_2x5mm_250mm_SciD_6mm_Al_1e6mudecay_SciD3U.txt";
-   std::string file6Almu500SciD1D = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file6Almu500SciD2D = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file6Almu500SciD3D = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file6Almu500SciD1U = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file6Almu500SciD2U = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file6Almu500SciD3U = "../../simdata/planar/planar_2x5mm_500mm_SciD_6mm_Al_1e6mudecay_SciD3U.txt";
-   std::string file6Almu750SciD1D = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD1D.txt";
-   std::string file6Almu750SciD2D = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD2D.txt";
-   std::string file6Almu750SciD3D = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD3D.txt";
-   std::string file6Almu750SciD1U = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD1U.txt";
-   std::string file6Almu750SciD2U = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD2U.txt";
-   std::string file6Almu750SciD3U = "../../simdata/planar/planar_2x5mm_750mm_SciD_6mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file6Almu250SciD1D = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file6Almu250SciD2D = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file6Almu250SciD3D = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file6Almu250SciD1U = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file6Almu250SciD2U = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file6Almu250SciD3U = "../../simdata/planar/planar_2x5mm_250mm_SciD_10mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file6Almu500SciD1D = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file6Almu500SciD2D = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file6Almu500SciD3D = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file6Almu500SciD1U = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file6Almu500SciD2U = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file6Almu500SciD3U = "../../simdata/planar/planar_2x5mm_500mm_SciD_10mm_Al_1e6mudecay_SciD3U.txt";
+   std::string file6Almu750SciD1D = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD1D.txt";
+   std::string file6Almu750SciD2D = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD2D.txt";
+   std::string file6Almu750SciD3D = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD3D.txt";
+   std::string file6Almu750SciD1U = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD1U.txt";
+   std::string file6Almu750SciD2U = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD2U.txt";
+   std::string file6Almu750SciD3U = "../../simdata/planar/planar_2x5mm_750mm_SciD_10mm_Al_1e6mudecay_SciD3U.txt";
    
  
    std::vector<std::string> mufiles;
@@ -509,7 +509,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr250mu3AlD);
-   gr250mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
+   gr250mu3AlSciDet1PeXD->SetTitle("10 MeV: 0-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
    gr250mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr250mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -533,7 +533,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr500mu3AlD);  
-   gr500mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
+   gr500mu3AlSciDet1PeXD->SetTitle("10 MeV: 0-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
    gr500mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr500mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -557,7 +557,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750mu3AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr750mu3AlD); 
-   gr750mu3AlSciDet1PeXD->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
+   gr750mu3AlSciDet1PeXD->SetTitle("10 MeV: 0-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
    gr750mu3AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750mu3AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr750mu3AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -581,7 +581,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr250mu6AlD);
-   gr250mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
+   gr250mu6AlSciDet1PeXD->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} D-stream [10^6 events]");
    gr250mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr250mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -605,7 +605,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr500mu6AlD);
-   gr500mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
+   gr500mu6AlSciDet1PeXD->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} D-stream [10^6 events]");
    gr500mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr500mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -629,7 +629,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750mu6AlSciDet1PeXD = new TGraph(nsamps,Ethrmu,PeXarr750mu6AlD);
-   gr750mu6AlSciDet1PeXD->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
+   gr750mu6AlSciDet1PeXD->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} D-stream [10^6 events]");
    gr750mu6AlSciDet1PeXD->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750mu6AlSciDet1PeXD->GetXaxis()->SetRangeUser(0,2.05);
    gr750mu6AlSciDet1PeXD->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -649,9 +649,9 @@ void planarBINmu(){
    leg750mu6AlSciDet1PeXPeeD->AddEntry(gr750mu6AlSciDet1PeeD,"P_{e->e}","lp");
    leg750mu6AlSciDet1PeXPeeD->Draw();
 
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.pdf");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.png");
-   c->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_D_stream.C");
+   c->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_D_stream.pdf");
+   c->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_D_stream.png");
+   c->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_D_stream.C");
  
   
   
@@ -661,7 +661,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr250mu3AlU);
-   gr250mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
+   gr250mu3AlSciDet1PeXU->SetTitle("10 MeV: 0-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
    gr250mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr250mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -685,7 +685,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr500mu3AlU);  
-   gr500mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
+   gr500mu3AlSciDet1PeXU->SetTitle("10 MeV: 0-mm Al + 2x5-mm SCiD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
    gr500mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr500mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -709,7 +709,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750mu3AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr750mu3AlU); 
-   gr750mu3AlSciDet1PeXU->SetTitle("10 MeV: 3-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
+   gr750mu3AlSciDet1PeXU->SetTitle("10 MeV: 0-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
    gr750mu3AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750mu3AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr750mu3AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -733,7 +733,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr250mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr250mu6AlU);
-   gr250mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
+   gr250mu6AlSciDet1PeXU->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 250-mm SciD_{3} U-stream [10^6 events]");
    gr250mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr250mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr250mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -757,7 +757,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr500mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr500mu6AlU);
-   gr500mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
+   gr500mu6AlSciDet1PeXU->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 500-mm SciD_{3} U-stream [10^6 events]");
    gr500mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr500mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr500mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -781,7 +781,7 @@ void planarBINmu(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *gr750mu6AlSciDet1PeXU = new TGraph(nsamps,Ethrmu,PeXarr750mu6AlU);
-   gr750mu6AlSciDet1PeXU->SetTitle("10 MeV: 6-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
+   gr750mu6AlSciDet1PeXU->SetTitle("10 MeV: 10-mm Al + 2x5-mm SciD_{1,2} + 750-mm SciD_{3} U-stream [10^6 events]");
    gr750mu6AlSciDet1PeXU->GetXaxis()->SetTitle("E_{THR} [MeV]");
    gr750mu6AlSciDet1PeXU->GetXaxis()->SetRangeUser(0,2.05);
    gr750mu6AlSciDet1PeXU->GetYaxis()->SetRangeUser(1e-6,1.1);
@@ -801,9 +801,9 @@ void planarBINmu(){
    leg750mu6AlSciDet1PeXPeeU->AddEntry(gr750mu6AlSciDet1PeeU,"P_{e->e}","lp");
    leg750mu6AlSciDet1PeXPeeU->Draw();
 
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.pdf");
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.png");
-   d->SaveAs("Bubble4BinPlot_PeX_Pee_3mm_6mm_10_MeV_U_stream.C");
+   d->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_U_stream.pdf");
+   d->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_U_stream.png");
+   d->SaveAs("Planar_THICKNESS_PeX_Pee_0mm_10mm_10_MeV_U_stream.C");
  
   
   
