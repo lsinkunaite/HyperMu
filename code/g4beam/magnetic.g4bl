@@ -1,0 +1,63 @@
+#######################################################
+##                                                   ##
+##                   magnetic.g4bl                   ##
+##                                                   ##
+##  Simulation of a beam source of:                  ##
+##    (1) muon decay                                 ##
+##    (2) gold cascade                               ##
+##  positioned in the 5T magnetic field. Simplified  ##
+##  geometry.                                        ##
+##                                                   ##
+#######################################################
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e6
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+
+#Define some parameters
+param name=mudecay
+#param name=goldcascade
+#param det=NaI
+param det=BGO
+
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param histoFile=../../simdata/magnetic/Bfield_5T_simple_4mm_Al_det_$det$evts$name.root
+
+trackcuts keep=e-,e+,gamma,mu-,mu+
+
+
+# Define source
+# (1) muon decay
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+# Geometry
+box H2Box width=200.0 height=200.0 length=50.0 material=H2 color=$H2Color
+box AlBox width=200.0 height=200.0 length=4.0 material=Al color=$AlColor
+tube NaItube innerRadius=45.0 outerRadius=95.0 initialPhi=0 finalPhi=360 length=300.0 material=SODIUM_IODIDE color=$BGOColor
+tube BGOtube innerRadius=45.0 outerRadius=95.0 initialPhi=0 finalPhi=360 length=300.0 material=BGO color=$BGOColor
+
+
+# Detectors
+detector TubeDet solid=BGOtube format=rootExtended material=BGO color=$BGOColor
+
+# Cylindrical B-field
+fieldexpr Bfield radius=95 length=300 Bz=5.0
+place Bfield z=179
+
+place H2Box z=0
+place AlBox z=27
+place TubeDet z=179
+
+
+
+
