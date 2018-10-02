@@ -28,7 +28,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_$det$evts$name.root
+param histoFile=../../simdata/magnetic/adBfield_5T_wider_4mm_Al_det_$det$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -45,8 +45,8 @@ box SciBoxFront width=200.0 height=200.0 length=4.0 material=Scintillator color=
 box SciBoxEnd width=100.0 height=100.0 length=200.0 material=Scintillator color=$SciColor
 box H2Box width=200.0 height=200.0 length=50.0 material=H2 color=$H2Color
 box AlBox width=200.0 height=200.0 length=4.0 material=Al color=$AlColor
-tube NaItube innerRadius=45.0 outerRadius=95.0 initialPhi=0 finalPhi=360 length=300.0 material=SODIUM_IODIDE color=$BGOColor
-tube BGOtube innerRadius=45.0 outerRadius=95.0 initialPhi=0 finalPhi=360 length=300.0 material=BGO color=$BGOColor
+tube NaItube innerRadius=60.0 outerRadius=100.0 initialPhi=0 finalPhi=360 length=300.0 material=SODIUM_IODIDE color=$BGOColor
+tube BGOtube innerRadius=60.0 outerRadius=100.0 initialPhi=0 finalPhi=360 length=300.0 material=BGO color=$BGOColor
 
 
 # Detectors
