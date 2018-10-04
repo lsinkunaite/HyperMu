@@ -61,15 +61,15 @@ void Bfield_5T_MULTI(){
    /*********************************/
 
    // Names of the files
-   std::string filemu = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5mudecay.root";
-   std::string filex = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5goldcascade.root";
+   std::string filemu = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5mudecay.root";
+   std::string filex = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5goldcascade.root";
 
-   std::string filemuSciDF = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5mudecay_SciDF.txt";
-   std::string filexSciDF = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5goldcascade_SciDF.txt";
-   std::string filemuTubeD = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5mudecay_TubeD.txt";
-   std::string filexTubeD = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5goldcascade_TubeD.txt";
-   std::string filemuSciDE = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5mudecay_SciDE.txt";
-   std::string filexSciDE = "../../simdata/magnetic/adBfield_5T_simple_4mm_Al_det_BGO1e5goldcascade_SciDE.txt";
+   std::string filemuSciDF = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5mudecay_SciDF.txt";
+   std::string filexSciDF = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5goldcascade_SciDF.txt";
+   std::string filemuTubeD = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5mudecay_TubeD.txt";
+   std::string filexTubeD = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5goldcascade_TubeD.txt";
+   std::string filemuSciDE = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5mudecay_SciDE.txt";
+   std::string filexSciDE = "../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_BGO1e5goldcascade_SciDE.txt";
 
    
    const int nbins = 150;
@@ -230,7 +230,7 @@ void Bfield_5T_MULTI(){
    c->Divide(3,3);
    c->cd(1);
    gPad->SetLogy();
-   hmuSciDF->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
+   hmuSciDF->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
    hmuSciDF->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDF->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDF->GetYaxis()->SetTitleOffset(2.0);
@@ -246,7 +246,7 @@ void Bfield_5T_MULTI(){
  
    c->cd(2);
    gPad->SetLogy();
-   hmuTubeD->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
+   hmuTubeD->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
    hmuTubeD->GetXaxis()->SetTitle("Edep [MeV]");
    hmuTubeD->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuTubeD->GetYaxis()->SetTitleOffset(2.0);
@@ -262,7 +262,7 @@ void Bfield_5T_MULTI(){
 
    c->cd(3);
    gPad->SetLogy();
-   hmuSciDE->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
+   hmuSciDE->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
    hmuSciDE->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDE->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDE->GetYaxis()->SetTitleOffset(2.0);
@@ -278,7 +278,7 @@ void Bfield_5T_MULTI(){
 
    c->cd(4);
    gPad->SetLogy();
-   hmuSciDFZ->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
+   hmuSciDFZ->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
    hmuSciDFZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDFZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDFZ->GetYaxis()->SetTitleOffset(2.0);
@@ -294,7 +294,7 @@ void Bfield_5T_MULTI(){
 
    c->cd(5);
    gPad->SetLogy();
-   hmuTubeDZ->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
+   hmuTubeDZ->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
    hmuTubeDZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuTubeDZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuTubeDZ->GetYaxis()->SetTitleOffset(2.0);
@@ -310,7 +310,7 @@ void Bfield_5T_MULTI(){
    
    c->cd(6);
    gPad->SetLogy();
-   hmuSciDEZ->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
+   hmuSciDEZ->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
    hmuSciDEZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDEZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDEZ->GetYaxis()->SetTitleOffset(2.0);
@@ -328,12 +328,13 @@ void Bfield_5T_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmu1 = new TGraph(nsamps,Ethrmu,EdepmuSciDF);
-   grmu1->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
+   grmu1->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 200-mm x 200-mm 4-mm SciDF");
    grmu1->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmu1->GetXaxis()->SetRangeUser(0,2);
    grmu1->GetYaxis()->SetRangeUser(0,1);
    grmu1->GetYaxis()->SetTitle("E_{dep}(E_{THR})");
    grmu1->GetYaxis()->SetTitleOffset(1.8);
+   grmu1->GetYaxis()->SetMoreLogLabels(1);
    grmu1->SetMarkerColor(kBlack);
    grmu1->SetMarkerStyle(33);
    grmu1->Draw("ALP");
@@ -348,12 +349,13 @@ void Bfield_5T_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmu2 = new TGraph(nsamps,Ethrmu,EdepmuTubeD);
-   grmu2->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
+   grmu2->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 50-mm round BGO");
    grmu2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmu2->GetXaxis()->SetRangeUser(0,2);
    grmu2->GetYaxis()->SetRangeUser(0,1);
    grmu2->GetYaxis()->SetTitle("E_{dep}(E_{THR})");
    grmu2->GetYaxis()->SetTitleOffset(1.8);
+   grmu2->GetYaxis()->SetMoreLogLabels(1);
    grmu2->SetMarkerColor(kBlack);
    grmu2->SetMarkerStyle(33);
    grmu2->Draw("ALP");
@@ -368,12 +370,13 @@ void Bfield_5T_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmu3 = new TGraph(nsamps,Ethrmu,EdepmuSciDE);
-   grmu3->SetTitle("Bfield_5T_4mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
+   grmu3->SetTitle("Bfield_5T_5mmAlBGO_2mm_Al: #mu-decay vs X-ray cascade: 100-mm x 100-mm 200-mm SciDE");
    grmu3->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmu3->GetXaxis()->SetRangeUser(0,2);
    grmu3->GetYaxis()->SetRangeUser(0,1);
    grmu3->GetYaxis()->SetTitle("E_{dep}(E_{THR})");
    grmu3->GetYaxis()->SetTitleOffset(1.8);
+   grmu3->GetYaxis()->SetMoreLogLabels(1);
    grmu3->SetMarkerColor(kBlack);
    grmu3->SetMarkerStyle(33);
    grmu3->Draw("ALP");
@@ -384,9 +387,9 @@ void Bfield_5T_MULTI(){
    grx3->SetLineColor(kGreen-2);
    grx3->Draw("LP");
 
-   c->SaveAs("ad_3dets_Bfield_5T_MULTI_Edep.pdf");
-   c->SaveAs("ad_3dets_Bfield_5T_MULTI_Edep.png");
-   c->SaveAs("ad_3dets_Bfield_5T_MULTI_Edep.C");
+   c->SaveAs("ad_3dets_smSDE_5mmAlBGO_2mm_Al_Bfield_5T_MULTI_Edep.pdf");
+   c->SaveAs("ad_3dets_smSDE_5mmAlBGO_2mm_Al_Bfield_5T_MULTI_Edep.png");
+   c->SaveAs("ad_3dets_smSDE_5mmAlBGO_2mm_Al_Bfield_5T_MULTI_Edep.C");
 
 
 }
