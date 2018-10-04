@@ -28,7 +28,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/magnetic/adBfield_5T_smSDE_5mmAlBGO_2mm_Al_det_$det$evts$name.root
+param histoFile=../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_$det$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -42,6 +42,7 @@ beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # Geometry
 box SciBoxFront width=200.0 height=200.0 length=4.0 material=Scintillator color=$SciColor
+box SciBoxFrontIn width=200.0 height=200.0 length=1.0 material=Scintillator color=$SciColor
 box SciBoxEnd width=100.0 height=100.0 length=10.0 material=Scintillator color=$SciColor
 box H2Box width=200.0 height=200.0 length=50.0 material=H2 color=$H2Color
 box AlBox width=200.0 height=200.0 length=2.0 material=Al color=$AlColor
@@ -56,14 +57,20 @@ tube Altube innerRadius=60.0 outerRadius=65.0 initialPhi=0 finalPhi=360 length=2
 detector TubeDet solid=BGOtube format=rootExtended material=BGO color=$BGOColor
 detector SciDetFront solid=SciBoxFront format=rootExtended material=Scintillator color=$SciColor
 detector SciDetEnd solid=SciBoxEnd format=rootExtended material=Scintillator color=$SciColor
+detector SciDetFrontIn1 solid=SciBoxFrontIn format=rootExtended material=Scintillator color=$SciColor
+detector SciDetFrontIn2 solid=SciBoxFrontIn format=rootExtended material=Scintillator color=$SciColor
+
 
 # Cylindrical B-field
 fieldexpr Bfield radius=500 length=1000 Bz=5.0
 place Bfield z=0
 
+
+place SciDetFrontIn1 z=12.25 parent=H2Box
+place SciDetFrontIn2 z=12.75 parent=H2Box
 place H2Box z=0
 place AlBox z=27
-place SciDetFront z=31
+#place SciDetFront z=31
 place AlDisk z=35.5
 place Altube z=183
 place TubeDet z=183
