@@ -71,13 +71,17 @@ void magneticMULTIeff(){
 
    // Names of the files
    // Mu-decay
-   //std::string filemuSciDF = "../../simdata/magnetic/adBfield_5T_wider_4mm_Al_det_BGO1e5mudecay_SciDF.txt";
-   std::string filemuTubeD = "../../simdata/magnetic/adBfield_5T_wider_noSDF_4mm_Al_det_BGO1e5mudecay_TubeD.txt";
-   std::string filemuSciDE = "../../simdata/magnetic/adBfield_5T_wider_noSDF_4mm_Al_det_BGO1e5mudecay_SciDE.txt";
+   std::string filemuSciDFIn1 = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5mudecay_SciDFIn1.txt";
+   std::string filemuSciDFIn2 = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5mudecay_SciDFIn2.txt";
+   //std::string filemuSciDF = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5mudecay_SciDF.txt";
+   std::string filemuTubeD = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5mudecay_TubeD.txt";
+   std::string filemuSciDE = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5mudecay_SciDE.txt";
    // X-ray cascade
-   //std::string filexSciDF = "../../simdata/magnetic/adBfield_5T_wider_4mm_Al_det_BGO1e5goldcascade_SciDF.txt";
-   std::string filexTubeD = "../../simdata/magnetic/adBfield_5T_wider_noSDF_4mm_Al_det_BGO1e5goldcascade_TubeD.txt";
-   std::string filexSciDE = "../../simdata/magnetic/adBfield_5T_wider_noSDF_4mm_Al_det_BGO1e5goldcascade_SciDE.txt";
+   std::string filexSciDFIn1 = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5goldcascade_SciDFIn1.txt";
+   std::string filexSciDFIn2 = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5goldcascade_SciDFIn2.txt";
+   //std::string filexSciDF = "../../simdata/magnetic/adBfield_5T_5mmAlTD_2mm_Al_det_Scintillator1e5goldcascade_SciDF.txt";
+   std::string filexTubeD = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5goldcascade_TubeD.txt";
+   std::string filexSciDE = "../../simdata/magnetic/adBfield_5T_SDFInx2_2mm_Al_det_BGO1e5goldcascade_SciDE.txt";
 
 
    // Vectors with filenames   
@@ -85,10 +89,14 @@ void magneticMULTIeff(){
    std::vector<std::string> Xfiles;
 
    // Mu-decay
+   mufiles.push_back(filemuSciDFIn1);
+   mufiles.push_back(filemuSciDFIn2);
    //mufiles.push_back(filemuSciDF);
    mufiles.push_back(filemuTubeD);
    mufiles.push_back(filemuSciDE);
    // X-ray cascade
+   Xfiles.push_back(filexSciDFIn1);
+   Xfiles.push_back(filexSciDFIn2);
    //Xfiles.push_back(filexSciDF);
    Xfiles.push_back(filexTubeD);
    Xfiles.push_back(filexSciDE);
@@ -111,18 +119,22 @@ void magneticMULTIeff(){
    
    // Storage vectors
    // Normalisation 1 [rel = intrinsic]
-   std::vector< std::vector<double> > PeevectorN1(mufiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvectorN1(mufiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXevectorN1(Xfiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvectorN1(Xfiles.size()/2,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeevectorN1(mufiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeXvectorN1(mufiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXevectorN1(Xfiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXXvectorN1(Xfiles.size()/4,std::vector<double>(nsamps));
    // Normalisation 2 [abs = total]
-   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/2,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/2,std::vector<double>(nsamps));      
+   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/4,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/4,std::vector<double>(nsamps));      
 
 
    // Mu-decay
+   std::vector< std::vector< double > > allvEvIDSDFIn1mu;
+   std::vector< std::vector< double > > allvEdepSDFIn1mu;
+   std::vector< std::vector< double > > allvEvIDSDFIn2mu;
+   std::vector< std::vector< double > > allvEdepSDFIn2mu;
    //std::vector< std::vector< double > > allvEvIDSDFmu;
    //std::vector< std::vector< double > > allvEdepSDFmu;
    std::vector< std::vector< double > > allvEvIDTDmu;
@@ -131,6 +143,10 @@ void magneticMULTIeff(){
    std::vector< std::vector< double > > allvEdepSDEmu;
 
    // X-ray cascade
+   std::vector< std::vector< double > > allvEvIDSDFIn1x;
+   std::vector< std::vector< double > > allvEdepSDFIn1x;
+   std::vector< std::vector< double > > allvEvIDSDFIn2x;
+   std::vector< std::vector< double > > allvEdepSDFIn2x;
    //std::vector< std::vector< double > > allvEvIDSDFx;
    //std::vector< std::vector< double > > allvEdepSDFx;
    std::vector< std::vector< double > > allvEvIDTDx;
@@ -166,7 +182,9 @@ void magneticMULTIeff(){
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   for (int k=0; k<((mufiles.size())/2); k++) {
+
+//   for (int k=0; k<((mufiles.size())/2); k++) {
+   for (int k=0; k<((mufiles.size())/4); k++) {
 /*      
       // SciDF
       std::ifstream mufSciDF(TString(mufiles[k*3]));
@@ -185,10 +203,47 @@ void magneticMULTIeff(){
       mufSciDF.close();
       allvEvIDSDFmu.push_back(vEvIDSDFmu);
       allvEdepSDFmu.push_back(vEdepSDFmu);
-*/      
+*/
+      // SciDFIn1
+      std::ifstream mufSciDFIn1(TString(mufiles[k*4]));
+      std::vector<double> vEvIDSDFIn1mu;
+      std::vector<double> vEdepSDFIn1mu;
+      
+      while (!mufSciDFIn1.eof()) {
+	     double EvIDSDFIn1, EdepSDFIn1;
+	     mufSciDFIn1 >> EvIDSDFIn1 >> EdepSDFIn1;
+	     vEvIDSDFIn1mu.push_back(EvIDSDFIn1);
+	     vEdepSDFIn1mu.push_back(EdepSDFIn1);
+	  }
+	  vEvIDSDFIn1mu.pop_back(); vEdepSDFIn1mu.pop_back();
+	  vEvIDSDFIn1mu.pop_back(); vEdepSDFIn1mu.pop_back();
+	  
+	  mufSciDFIn1.close();
+	  allvEvIDSDFIn1mu.push_back(vEvIDSDFIn1mu);
+	  allvEdepSDFIn1mu.push_back(vEdepSDFIn1mu);
+	  
+
+      // SciDFIn2
+      std::ifstream mufSciDFIn2(TString(mufiles[(k*4)+1]));
+      std::vector<double> vEvIDSDFIn2mu;
+      std::vector<double> vEdepSDFIn2mu;
+      
+      while (!mufSciDFIn2.eof()) {
+	     double EvIDSDFIn2, EdepSDFIn2;
+	     mufSciDFIn2 >> EvIDSDFIn2 >> EdepSDFIn2;
+	     vEvIDSDFIn2mu.push_back(EvIDSDFIn2);
+	     vEdepSDFIn2mu.push_back(EdepSDFIn2);
+	  }
+	  vEvIDSDFIn2mu.pop_back(); vEdepSDFIn2mu.pop_back();
+	  vEvIDSDFIn2mu.pop_back(); vEdepSDFIn2mu.pop_back();
+	  
+	  mufSciDFIn2.close();
+	  allvEvIDSDFIn2mu.push_back(vEvIDSDFIn2mu);
+	  allvEdepSDFIn2mu.push_back(vEdepSDFIn2mu); 
+	   
        
       // TubeD
-      std::ifstream mufTubeD(TString(mufiles[k*2]));      
+      std::ifstream mufTubeD(TString(mufiles[(k*4)+2]));      
       std::vector<double> vEvIDTDmu;
       std::vector<double> vEdepTDmu;
       
@@ -204,10 +259,10 @@ void magneticMULTIeff(){
 	  mufTubeD.close();
 	  allvEvIDTDmu.push_back(vEvIDTDmu);
 	  allvEdepTDmu.push_back(vEdepTDmu);   
-      
+	  
 
       // SciDE
-      std::ifstream mufSciDE(TString(mufiles[(k*2)+1]));
+      std::ifstream mufSciDE(TString(mufiles[(k*4)+3]));
       std::vector<double> vEvIDSDEmu;
       std::vector<double> vEdepSDEmu;
       
@@ -234,7 +289,46 @@ void magneticMULTIeff(){
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   for (int k=0; k<((Xfiles.size())/2); k++) {
+//   for (int k=0; k<((Xfiles.size())/2); k++) {
+   for (int k=0; k<((Xfiles.size())/4); k++) {
+      
+      // SciDFIn1
+      std::ifstream xfSciDFIn1(TString(Xfiles[k*4]));
+      std::vector<double> vEvIDSDFIn1x;
+      std::vector<double> vEdepSDFIn1x;
+      
+      while (!xfSciDFIn1.eof()) {
+	     double EvIDSDFIn1, EdepSDFIn1;
+	     xfSciDFIn1 >> EvIDSDFIn1 >> EdepSDFIn1;
+	     vEvIDSDFIn1x.push_back(EvIDSDFIn1);
+	     vEdepSDFIn1x.push_back(EdepSDFIn1);
+	  }
+	  vEvIDSDFIn1x.pop_back(); vEdepSDFIn1x.pop_back();
+	  vEvIDSDFIn1x.pop_back(); vEdepSDFIn1x.pop_back();
+	  
+	  xfSciDFIn1.close();
+	  allvEvIDSDFIn1x.push_back(vEvIDSDFIn1x);
+	  allvEdepSDFIn1x.push_back(vEdepSDFIn1x);
+	  
+	  
+	  // SciDFIn2
+      std::ifstream xfSciDFIn2(TString(Xfiles[(k*4)+1]));
+      std::vector<double> vEvIDSDFIn2x;
+      std::vector<double> vEdepSDFIn2x;
+      
+      while (!xfSciDFIn2.eof()) {
+	     double EvIDSDFIn2, EdepSDFIn2;
+	     xfSciDFIn2 >> EvIDSDFIn2 >> EdepSDFIn2;
+	     vEvIDSDFIn2x.push_back(EvIDSDFIn2);
+	     vEdepSDFIn2x.push_back(EdepSDFIn2);
+	  }
+	  vEvIDSDFIn2x.pop_back(); vEdepSDFIn2x.pop_back();
+	  vEvIDSDFIn2x.pop_back(); vEdepSDFIn2x.pop_back();
+	  
+	  xfSciDFIn2.close();
+	  allvEvIDSDFIn2x.push_back(vEvIDSDFIn2x);
+	  allvEdepSDFIn2x.push_back(vEdepSDFIn2x);
+	  
 /*
 	  // SciDF
       std::ifstream xfSciDF(TString(Xfiles[k*3]));
@@ -256,7 +350,7 @@ void magneticMULTIeff(){
 */ 
 	   
       // TubeD
-      std::ifstream xfTubeD(TString(Xfiles[k*2]));
+      std::ifstream xfTubeD(TString(Xfiles[(k*4)+2]));
       std::vector<double> vEvIDTDx;
       std::vector<double> vEdepTDx;	   
 	   
@@ -275,7 +369,7 @@ void magneticMULTIeff(){
 
 
       // SciDE
-      std::ifstream xfSciDE(TString(Xfiles[(k*2)+1]));   
+      std::ifstream xfSciDE(TString(Xfiles[(k*4)+3]));   
       std::vector<double> vEvIDSDEx;
       std::vector<double> vEdepSDEx;	   
 	   
@@ -334,6 +428,7 @@ void magneticMULTIeff(){
          for (int a=0; a<allvEvIDSDEmu[0].size(); a++) {
          
 //            if (allvEdepSDFmu[i][a] < Ethr1) {					
+            if ((allvEdepSDFIn1mu[i][a] < Ethr1) || (allvEdepSDFIn2mu[i][a] < Ethr1)) {
 			   if (((allvEdepTDmu[i][a]) > Ethr) && (allvEdepTDmu[i][a] < Ethr22)) {
 			      if (allvEdepSDEmu[i][a] < Ethr3) {
 				     eXrayN1 += 1;
@@ -341,7 +436,7 @@ void magneticMULTIeff(){
 				     eelecN1 += 1;
 				  }
 			   } else { eelecN1 += 1; }
-//			} else { eelecN1 += 1; }
+			} else { eelecN1 += 1; }
 		 }
 		 
          PeXvectorN1[i][m] = eXrayN1/(double)(counteree);
@@ -361,6 +456,7 @@ void magneticMULTIeff(){
          for (int a=0; a<allvEvIDSDEmu[0].size(); a++) {
 
 //            if (allvEdepSDFmu[i][a] < Ethr1) {
+            if ((allvEdepSDFIn1mu[i][a] < Ethr1) || (allvEdepSDFIn2mu[i][a])) {
 			   if (((allvEdepTDmu[i][a]) > Ethr) && (allvEdepTDmu[i][a] < Ethr22)) {
 			      if (allvEdepSDEmu[i][a] < Ethr3) {
 				     eXrayN2 += 1;
@@ -368,7 +464,7 @@ void magneticMULTIeff(){
 				     eelecN2 += 1;
 				  }
 			   } else { eelecN2 += 1; }
-//			} else { eelecN2 += 1; }
+			} else { eelecN2 += 1; }
 		 }
 			   
          PeXvectorN2[i][m] = eXrayN2/(double)(countereeN2);
@@ -417,12 +513,13 @@ void magneticMULTIeff(){
          for (int a=0; a<allvEvIDTDx[0].size(); a++) {
 
 //            if (allvEdepSDFx[i][a] < Ethr1) {
+            if ((allvEdepSDFIn1x[i][a] < Ethr1) || (allvEdepSDFIn2x[i][a])) {
 			   if (((allvEdepTDx[i][a]) > Ethr) && (allvEdepTDx[i][a] < Ethr22)) {
 			      if (allvEdepSDEx[i][a] < Ethr3) {
 				     XXrayN1 += 1;
 				  } else { XelecN1 += 1; }
 			   } else { XelecN1 += 1; }
-//			} else { XelecN1 += 1; }
+			} else { XelecN1 += 1; }
 		 }
 		 
          PXXvectorN1[i][m] = XXrayN1/(double)(counterXX);
@@ -442,12 +539,13 @@ void magneticMULTIeff(){
          for (int a=0; a<allvEvIDTDx[0].size(); a++) {
 
 //            if (allvEdepSDFx[i][a] < Ethr1) {
+            if ((allvEdepSDFIn1x[i][a] < Ethr1) || (allvEdepSDFIn2x[i][a] < Ethr1)) {
 			   if (((allvEdepTDx[i][a]) > Ethr) && (allvEdepTDx[i][a] < Ethr22)) {
 			      if (allvEdepSDEx[i][a] < Ethr3) {
 				     XXrayN2 += 1;
 				  } else { XelecN2 += 1; }
 			   } else { XelecN2 += 1; }
-//			} else { XelecN2 += 1; }
+			} else { XelecN2 += 1; }
 		 }
 		 
          PXXvectorN2[i][m] = XXrayN2/(double)(counterXXN2);
@@ -512,7 +610,7 @@ void magneticMULTIeff(){
    
    
    TCanvas *c = new TCanvas("c","E_{THR}",800,600);
-   c->Divide(3,3);
+   c->Divide(2,1);
 /*
    c->cd(1);
    gPad->SetLogy();
@@ -542,20 +640,22 @@ void magneticMULTIeff(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grPXXN2 = new TGraph(nsamps,Ethrmu,PXXarrN2);
-   grPXXN2->SetTitle("N2 normalisation {absolute}: 50-mm round BGO [10^6 events]");
+   grPXXN2->SetTitle("N2 normalisation {absolute} OR: 50-mm round BGO 5mmAlTD, SDFInx2 [2-mm Al] [10^5 events]");
    grPXXN2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grPXXN2->GetXaxis()->SetRangeUser(0,2.05);
-   grPXXN2->GetYaxis()->SetRangeUser(1e-6,1.1);
+   grPXXN2->GetYaxis()->SetRangeUser(1e-4,1.1);
    grPXXN2->GetYaxis()->SetTitle("P_{e/X->X}(E_{THR})");
    grPXXN2->GetYaxis()->SetTitleOffset(1.8);
-   grPXXN2->SetMarkerColor(kRed);
-   grPXXN2->SetMarkerStyle(31);
+   //grPXXN2->SetMarkerColor(kRed);
+   //grPXXN2->SetMarkerStyle(31);
    grPXXN2->SetLineColor(kRed);
+   grPXXN2->SetLineWidth(3);
    grPXXN2->Draw("ALP");
    TGraph *grPeXN2 = new TGraph(nsamps,Ethrmu,PeXarrN2); 
-   grPeXN2->SetMarkerColor(kBlack);
-   grPeXN2->SetMarkerStyle(33);
+   //grPeXN2->SetMarkerColor(kBlack);
+   //grPeXN2->SetMarkerStyle(33);
    grPeXN2->SetLineColor(kBlack);
+   grPeXN2->SetLineWidth(3);
    grPeXN2->Draw("LP");
    legPXXPeXN2 = new TLegend(0.2,-0.005,0.4,0.08);
    legPXXPeXN2->AddEntry(grPXXN2,"P_{X->X}","lp");
@@ -568,7 +668,7 @@ void magneticMULTIeff(){
    TGraph *grPeXXXN2r = new TGraph(nsamps,Ethrmu,PeXXXarrN2r);
    grPeXXXN2r->SetTitle("Ratio of P_{e->X} / P_{X->X} vs (E_{THR})");
    grPeXXXN2r->GetXaxis()->SetRangeUser(0,2.05);
-   grPeXXXN2r->GetYaxis()->SetRangeUser(1e-2,3e-2);
+   //grPeXXXN2r->GetYaxis()->SetRangeUser(1e-2,3e-2);
    grPeXXXN2r->GetYaxis()->SetTitle("#frac{P_{e->X}}{P_{X->X}}(E_{THR})");
    grPeXXXN2r->GetYaxis()->SetTitleOffset(1.6);
    grPeXXXN2r->GetYaxis()->SetMoreLogLabels(1);
@@ -580,9 +680,9 @@ void magneticMULTIeff(){
    legPeXXXN2r->Draw();
 
 
-   c->SaveAs("Bfield_5T_wider_noSDF_MULTIplicities_eff.pdf");
-   c->SaveAs("Bfield_5T_wider_noSDF_MULTIplicities_eff.png");
-   c->SaveAs("Bfield_5T_wider_noSDF_MULTIplicities_eff.C");
+   c->SaveAs("Bfield_5T_SDFInx2_OR_2mm_Al_BGO_MULTIplicities_eff.pdf");
+   c->SaveAs("Bfield_5T_SDFInx2_OR_2mm_Al_BGO_MULTIplicities_eff.png");
+   c->SaveAs("Bfield_5T_SDFInx2_OR_2mm_Al_BGO_MULTIplicities_eff.C");
   
   
  }
