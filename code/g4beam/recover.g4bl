@@ -18,9 +18,6 @@ include definitions.g4bl    #definitions
 #number of simulated events
 param evts=1e5
 
-param lengthSciD3=250.0
-param lengthAlBox=6.0
-
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
@@ -31,7 +28,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_$evts$name.root
+param histoFile=../../simdata/recover/6xSciDs_4mm_StSt_4mm_Al_300mm_BGO_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -45,20 +42,30 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
-box SciBox width=200.0 height=200.0 length=4.0 material=Scintillator color=$SciColor
-box AlBox width=200.0 height=200.0 length=4.0 material=Al color=$AlColor
-box BGOBox width=200.0 height=200.0 length=300.0 material=BGO color=$BGOColor
-box SciPlate width=200.0 height=10.0 length=300.0 material=Scintillator color=$SciColor
+box SciBox width=400.0 height=400.0 length=4.0 material=Scintillator color=$SciColor
+box AlBox width=400.0 height=400.0 length=4.0 material=Al color=$AlColor
+#box CuBox width=400.0 height=400.0 length=4.0 material=Cu color=45/256,140/256,20/256,0.3
+box StStBox width=400.0 height=400.0 length=4.0 material=STAINLESS-STEEL color=45/256,140/256,20/256,0.3
+box BGOBox width=400.0 height=400.0 length=300.0 material=BGO color=$BGOColor
+box SciPlateTB width=400.0 height=10.0 length=300.0 material=Scintillator color=$SciColor
+box SciPlateLR width=10.0 height=420.0 length=300.0 material=Scintillator color=$SciColor
 
 detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
-detector SciDet2 solid=SciPlate format=rootExtended material=Scintillator color=$SciColor
-detector SciDet3 solid=SciPlate format=rootExtended material=Scintillator color=$SciColor
+detector SciDet2 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
+detector SciDetT solid=SciPlateTB format=rootExtended material=Scintillator color=$SciColor
+detector SciDetB solid=SciPlateTB format=rootExtended material=Scintillator color=$SciColor
+detector SciDetL solid=SciPlateLR format=rootExtended material=Scintillator color=$SciColor
+detector SciDetR solid=SciPlateLR format=rootExtended material=Scintillator color=$SciColor 
 detector BGODet1 solid=BGOBox format=rootExtended material=BGO color=$BGOColor
 
 
-place AlBox z=37.0
-place SciDet1 z=41.0
+#place CuBox z=33.0
+place StStBox z=33.0
+place SciDet1 z=37.0
+place SciDet2 z=41.0
 place AlBox z=45.0
 place BGODet1 z=197.0
-place SciDet2 z=197.0 y=105.0
-place SciDet3 z=197.0 y=-105.0
+place SciDetT z=197.0 y=205.0
+place SciDetB z=197.0 y=-205.0
+place SciDetL z=197.0 x=205.0
+place SciDetR z=197.0 x=-205.0
