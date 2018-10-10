@@ -21,31 +21,32 @@ param evts=1e5
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
-#param name=mudecay
-param name=goldcascade
+param name=mudecay
+#param name=goldcascade
 
 param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/recover/6xSciDs_4mm_StSt_4mm_Al_300mm_BGO_$evts$name.root
+param histoFile=../../simdata/recover/6xSciDs_8mm_Al_4mm_Al_300mm_BGO_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 
 #Define source
 # (1) muon decay
-#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
 box SciBox width=400.0 height=400.0 length=4.0 material=Scintillator color=$SciColor
 box AlBox width=400.0 height=400.0 length=4.0 material=Al color=$AlColor
 #box CuBox width=400.0 height=400.0 length=4.0 material=Cu color=45/256,140/256,20/256,0.3
-box StStBox width=400.0 height=400.0 length=4.0 material=STAINLESS-STEEL color=45/256,140/256,20/256,0.3
+#box StStBox width=400.0 height=400.0 length=4.0 material=STAINLESS-STEEL color=45/256,140/256,20/256,0.3
+box AlBox2 width=400.0 height=400.0 length=8.0 material=Al color=$AlColor
 box BGOBox width=400.0 height=400.0 length=300.0 material=BGO color=$BGOColor
 box SciPlateTB width=400.0 height=10.0 length=300.0 material=Scintillator color=$SciColor
 box SciPlateLR width=10.0 height=420.0 length=300.0 material=Scintillator color=$SciColor
@@ -60,7 +61,8 @@ detector BGODet1 solid=BGOBox format=rootExtended material=BGO color=$BGOColor
 
 
 #place CuBox z=33.0
-place StStBox z=33.0
+#place StStBox z=33.0
+place AlBox2 z=31.0
 place SciDet1 z=37.0
 place SciDet2 z=41.0
 place AlBox z=45.0
