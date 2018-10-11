@@ -25,9 +25,9 @@ using namespace std;
 void FileFillerRecover(){	
 	
    // X-ray cascade
-   std::string filex = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_1e5goldcascade.root";
+   std::string filex = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade.root";
    // Mu-decay
-   std::string filemu = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_1e5mudecay.root";
+   std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay.root";
    
    std::vector<std::string> Xfiles;
    std::vector<std::string> mufiles;
@@ -52,6 +52,7 @@ void FileFillerRecover(){
       TFile *fmu = new TFile(TString(mufiles[k]));
       
       TTree *tSciD1 = (TTree*)fmu->Get("Detector/SciDet1"); // D-stream
+      TTree *tSciD2 = (TTree*)fmu->Get("Detector/SciDet2");
       TTree *tSciDT = (TTree*)fmu->Get("Detector/SciDetT");
       TTree *tSciDB = (TTree*)fmu->Get("Detector/SciDetB");
       TTree *tSciDL = (TTree*)fmu->Get("Detector/SciDetL");
@@ -62,6 +63,8 @@ void FileFillerRecover(){
 
       tSciD1->SetBranchAddress("EventID",&EventID); // D-stream 
       tSciD1->SetBranchAddress("Edep",&Edep);
+      tSciD2->SetBranchAddress("EventID",&EventID);
+      tSciD2->SetBranchAddress("Edep",&Edep);
       tSciDT->SetBranchAddress("EventID",&EventID);
       tSciDT->SetBranchAddress("Edep",&Edep);
       tSciDB->SetBranchAddress("EventID",&EventID);
@@ -96,6 +99,18 @@ void FileFillerRecover(){
       std::cout << std::endl << "File: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt" << " written!" << std::endl;
 
       
+      // SciD2
+      ofstream tmpSciD2;
+      tmpSciD2.open(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
+      tmpSciD2 << "EventID        Edep\n";
+      for (int i=0; i<tSciD2->GetEntries(); i++){
+	     tSciD2->GetEntry(i);
+	     tmpSciD2 << EventID << " " << Edep << "\n";
+	  }
+      tmpSciD2.close();
+      std::cout << std::endl << "File: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt" << " written!" << std::endl;
+
+
       // SciDT
       ofstream tmpSciDT;
       tmpSciDT.open(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciDT.txt"));
@@ -201,6 +216,44 @@ void FileFillerRecover(){
 
       if ((remove(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD1.txt"))) == 0) {
          std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD1.txt") << " generated! " << std::endl;
+      }
+
+
+
+      // SciD2     
+      std::ifstream inputSciD2(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"));
+      std::string lineSciD2;
+      std::getline(inputSciD2, lineSciD2);
+     
+      ifstream ifileSD2(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      if (ifileSD2) {
+         remove(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt" << " successfully removed!" << std::endl;
+	  }
+     
+      ofstream finSciD2;
+      finSciD2.open(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      
+      int ncounterSD2 = 1;
+      while (!inputSciD2.eof()) {
+         double EvIDSD2, EdepSD2;
+	     inputSciD2 >> EvIDSD2 >> EdepSD2;
+	     if (EvIDSD2 == ncounterSD2) {
+		    finSciD2 << EvIDSD2 << " " << EdepSD2 << "\n";
+		    ncounterSD2++;
+	     } else {
+		      int diffSD2 = EvIDSD2 - ncounterSD2;
+		      for (int i=0; i<diffSD2; i++) {
+			     finSciD2 << ncounterSD2+i << " " << 0.0 << "\n"; 
+			  }
+			  finSciD2 << EvIDSD2 << " " << EdepSD2 << "\n";
+		      ncounterSD2 = ncounterSD2 + diffSD2 + 1;
+	     }   
+      }
+      finSciD2.close();
+
+      if ((remove(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciD2.txt"))) == 0) {
+         std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_SciD2.txt") << " generated! " << std::endl;
       }
 
 
@@ -318,6 +371,7 @@ void FileFillerRecover(){
       }
 
 
+
       // SciDR     
       std::ifstream inputSciDR(TString("../../simdata/recover/"+((mufiles[k]).substr(22,((mufiles[k]).find(".root"))-22))+"_tmpSciDR.txt"));
       std::string lineSciDR;
@@ -412,6 +466,7 @@ void FileFillerRecover(){
       TFile *fx = new TFile(TString(Xfiles[k]));
       
       TTree *txSciD1 = (TTree*)fx->Get("Detector/SciDet1"); // D-stream
+      TTree *txSciD2 = (TTree*)fx->Get("Detector/SciDet2");
       TTree *txSciDT = (TTree*)fx->Get("Detector/SciDetT");
       TTree *txSciDB = (TTree*)fx->Get("Detector/SciDetB");
       TTree *txSciDL = (TTree*)fx->Get("Detector/SciDetL");
@@ -422,6 +477,8 @@ void FileFillerRecover(){
 
       txSciD1->SetBranchAddress("EventID",&EventID); // D-stream 
       txSciD1->SetBranchAddress("Edep",&Edep);
+      txSciD2->SetBranchAddress("EventID",&EventID);
+      txSciD2->SetBranchAddress("Edep",&Edep);
       txSciDT->SetBranchAddress("EventID",&EventID);
       txSciDT->SetBranchAddress("Edep",&Edep);
       txSciDB->SetBranchAddress("EventID",&EventID);
@@ -454,6 +511,18 @@ void FileFillerRecover(){
 	  }
       tmpxSciD1.close();
       std::cout << std::endl << "File: " << ((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD1.txt" << " written!" << std::endl;
+
+
+      // SciD2 
+      ofstream tmpxSciD2;
+      tmpxSciD2.open(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD2.txt"));
+      tmpxSciD2 << "EventID        Edep\n";
+      for (int i=0; i<txSciD2->GetEntries(); i++){
+	     txSciD2->GetEntry(i);
+	     tmpxSciD2 << EventID << " " << Edep << "\n";
+	  }
+      tmpxSciD2.close();
+      std::cout << std::endl << "File: " << ((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD2.txt" << " written!" << std::endl;
 
       
       // SciDT 
@@ -561,6 +630,43 @@ void FileFillerRecover(){
 
       if ((remove(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD1.txt"))) == 0) {
          std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD1.txt") << " generated! " << std::endl;
+      }
+
+
+      // SciD2     
+      std::ifstream inputSciD2x(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD2.txt"));
+      std::string lineSciD2x;
+      std::getline(inputSciD2x, lineSciD2x);
+     
+      ifstream ifileSD2x(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      if (ifileSD2x) {
+         remove(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD2.txt"));
+         std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD2.txt" << " successfully removed!" << std::endl;
+	  }
+     
+      ofstream finSciD2x;
+      finSciD2x.open(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD2.txt"));
+      
+      int ncounterSD2x = 1;
+      while (!inputSciD2x.eof()) {
+         double EvIDSD2x, EdepSD2x;
+	     inputSciD2x >> EvIDSD2x >> EdepSD2x;
+	     if (EvIDSD2x == ncounterSD2x) {
+		    finSciD2x << EvIDSD2x << " " << EdepSD2x << "\n";
+		    ncounterSD2x++;
+	     } else {
+		      int diffSD2x = EvIDSD2x - ncounterSD2x;
+		      for (int i=0; i<diffSD2x; i++) {
+			     finSciD2x << ncounterSD2x+i << " " << 0.0 << "\n"; 
+			  }
+			  finSciD2x << EvIDSD2x << " " << EdepSD2x << "\n";
+		      ncounterSD2x = ncounterSD2x + diffSD2x + 1;
+	     }   
+      }
+      finSciD2x.close();
+
+      if ((remove(TString("../../simdata/recover/"+((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_tmpxSciD2.txt"))) == 0) {
+         std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(22,((Xfiles[k]).find(".root"))-22))+"_SciD2.txt") << " generated! " << std::endl;
       }
 
 
