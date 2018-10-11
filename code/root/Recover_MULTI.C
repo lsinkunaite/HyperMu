@@ -61,21 +61,23 @@ void Recover_MULTI(){
    /*********************************/
 
    // Names of the files
-   std::string filemu = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay.root";
-   std::string filex = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade.root";
+   std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay.root";
+   std::string filex = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade.root";
 
-   std::string filemuSciD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_SciD1.txt";
-   std::string filexSciD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_SciD1.txt";
-   std::string filemuSciDT = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_SciDT.txt";
-   std::string filexSciDT = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_SciDT.txt";
-   std::string filemuSciDB = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_SciDB.txt";
-   std::string filexSciDB = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_SciDB.txt";
-   std::string filemuSciDL = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_SciDL.txt";
-   std::string filexSciDL = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_SciDL.txt";
-   std::string filemuSciDR = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_SciDR.txt";
-   std::string filexSciDR = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_SciDR.txt";
-   std::string filemuBGOD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5mudecay_BGOD1.txt";
-   std::string filexBGOD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_BGO_BIG_1e5goldcascade_BGOD1.txt";
+   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciD1.txt";
+   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciD1.txt";
+   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciD2.txt";
+   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciD2.txt";
+   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciDT.txt";
+   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciDT.txt";
+   std::string filemuSciDB = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciDB.txt";
+   std::string filexSciDB = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciDB.txt";
+   std::string filemuSciDL = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciDL.txt";
+   std::string filexSciDL = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciDL.txt";
+   std::string filemuSciDR = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciDR.txt";
+   std::string filexSciDR = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciDR.txt";
+   std::string filemuBGOD1 = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_BGOD1.txt";
+   std::string filexBGOD1 = "../../simdata/recover/5xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_BGOD1.txt";
 
    
    const int nbins = 150;
@@ -88,6 +90,8 @@ void Recover_MULTI(){
    // Histograms
    TH1F *hmuSciD1 = new TH1F("hmuSciD1","Edep",4*nbins+1,-0.05,60);
    TH1F *hxSciD1 = new TH1F("hxSciD1","Edep",nbins+1,-0.05,15);
+   TH1F *hmuSciD2 = new TH1F("hmuSciD2","Edep",4*nbins+1,-0.05,60);
+   TH1F *hxSciD2 = new TH1F("hxSciD2","Edep",nbins+1,-0.05,15);
    TH1F *hmuSciDT = new TH1F("hmuSciDT","Edep",4*nbins+1,-0.05,60);
    TH1F *hxSciDT = new TH1F("hxSciDT","Edep",nbins+1,-0.05,15);
    TH1F *hmuSciDB = new TH1F("hmuSciDB","Edep",4*nbins+1,-0.05,60);
@@ -101,6 +105,8 @@ void Recover_MULTI(){
    
    TH1F *hmuSciD1Z = new TH1F("hmuSciD1Z","Edep",3*nbins+1,-0.05,5);
    TH1F *hxSciD1Z = new TH1F("hxSciD1Z","Edep",nbins+1,-0.05,15);
+   TH1F *hmuSciD2Z = new TH1F("hmuSciD2Z","Edep",3*nbins+1,-0.05,5);
+   TH1F *hxSciD2Z = new TH1F("hxSciD2Z","Edep",nbins+1,-0.05,15);
    TH1F *hmuSciDTZ = new TH1F("hmuSciDTZ","Edep",3*nbins+1,-0.05,15);
    TH1F *hxSciDTZ = new TH1F("hxSciDTZ","Edep",nbins+1,-0.05,15);
    TH1F *hmuSciDBZ = new TH1F("hmuSciDBZ","Edep",3*nbins+1,-0.05,15);
@@ -116,6 +122,8 @@ void Recover_MULTI(){
    // TTrees
    TTree *tmuSciD1 = (TTree*)fmu->Get("Detector/SciDet1");
    TTree *txSciD1 = (TTree*)fx->Get("Detector/SciDet1");
+   TTree *tmuSciD2 = (TTree*)fmu->Get("Detector/SciDet2");
+   TTree *txSciD2 = (TTree*)fx->Get("Detector/SciDet2");
    TTree *tmuSciDT = (TTree*)fmu->Get("Detector/SciDetT");
    TTree *txSciDT = (TTree*)fx->Get("Detector/SciDetT");
    TTree *tmuSciDB = (TTree*)fmu->Get("Detector/SciDetB");
@@ -130,6 +138,8 @@ void Recover_MULTI(){
    // Drawings
    tmuSciD1->Draw("Edep>>hmuSciD1","","");
    txSciD1->Draw("Edep>>hxSciD1","","");
+   tmuSciD2->Draw("Edep>>hmuSciD2","","");
+   txSciD2->Draw("Edep>>hxSciD2","","");
    tmuSciDT->Draw("Edep>>hmuSciDT","","");
    txSciDT->Draw("Edep>>hxSciDT","","");
    tmuSciDB->Draw("Edep>>hmuSciDB","","");
@@ -143,6 +153,8 @@ void Recover_MULTI(){
    
    tmuSciD1->Draw("Edep>>hmuSciD1Z","","");
    txSciD1->Draw("Edep>>hxSciD1Z","","");
+   tmuSciD2->Draw("Edep>>hmuSciD2Z","","");
+   txSciD2->Draw("Edep>>hxSciD2Z","","");
    tmuSciDT->Draw("Edep>>hmuSciDTZ","","");
    txSciDT->Draw("Edep>>hxSciDTZ","","");
    tmuSciDB->Draw("Edep>>hmuSciDBZ","","");
@@ -160,6 +172,7 @@ void Recover_MULTI(){
 
    // Mu-decay
    mufiles.push_back(filemuSciD1);
+   mufiles.push_back(filemuSciD2);
    mufiles.push_back(filemuSciDT);
    mufiles.push_back(filemuSciDB);
    mufiles.push_back(filemuSciDL);
@@ -167,6 +180,7 @@ void Recover_MULTI(){
    mufiles.push_back(filemuBGOD1);
    // X-ray cascade
    Xfiles.push_back(filexSciD1);
+   Xfiles.push_back(filexSciD2);
    Xfiles.push_back(filexSciDT);
    Xfiles.push_back(filexSciDB);
    Xfiles.push_back(filexSciDL);
@@ -188,24 +202,26 @@ void Recover_MULTI(){
    Ethrmu[0] = 0;
    for (int i=1; i<nsamps; i++) Ethrmu[i] = Ethrmu[i-1] + Estep;
 
-   std::vector< std::vector<double> > TotEdepmuSD1(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxSD1(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepmuSDT(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxSDT(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepmuSDB(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxSDB(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepmuSDL(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxSDL(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepmuSDR(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxSDR(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepmuBD1(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > TotEdepxBD1(Xfiles.size()/6,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSD1(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSD1(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSD2(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSD2(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSDT(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSDT(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSDB(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSDB(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSDL(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSDL(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuSDR(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxSDR(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepmuBD1(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > TotEdepxBD1(Xfiles.size()/7,std::vector<double>(nsamps));
 
 
-   int binmuSD1, binmuSDT, binmuSDB, binmuSDL, binmuSDR, binmuBD1;
-   int binxSD1, binxSDT, binxSDB, binxSDL, binxSDR, binxBD1;
-   double integralmuSD1, integralmuSDT, integralmuSDB, integralmuSDL, integralmuSDR, integralmuBD1;
-   double integralxSD1, integralxSDT, integralxSDB, integralxSDL, integralxSDR, integralxBD1;
+   int binmuSD1, binmuSD2, binmuSDT, binmuSDB, binmuSDL, binmuSDR, binmuBD1;
+   int binxSD1, binxSD2, binxSDT, binxSDB, binxSDL, binxSDR, binxBD1;
+   double integralmuSD1, integralmuSD2, integralmuSDT, integralmuSDB, integralmuSDL, integralmuSDR, integralmuBD1;
+   double integralxSD1, integralxSD2, integralxSDT, integralxSDB, integralxSDL, integralxSDR, integralxBD1;
    
    for (int m=0; m < nsamps; m++) {
 	   
@@ -216,6 +232,11 @@ void Recover_MULTI(){
       integralmuSD1 = hmuSciD1->Integral(0,binmuSD1,"");
       binxSD1 = hxSciD1->GetXaxis()->FindBin(Ethr);
       integralxSD1 = hxSciD1->Integral(0,binxSD1,"");
+      // SciD2
+      binmuSD2 = hmuSciD2->GetXaxis()->FindBin(Ethr);
+      integralmuSD2 = hmuSciD2->Integral(0,binmuSD2,"");
+      binxSD2 = hxSciD2->GetXaxis()->FindBin(Ethr);
+      integralxSD2 = hxSciD2->Integral(0,binxSD2,"");
       // SciDT
       binmuSDT = hmuSciDT->GetXaxis()->FindBin(Ethr);
       integralmuSDT = hmuSciDT->Integral(0,binmuSDT,"");
@@ -244,6 +265,8 @@ void Recover_MULTI(){
 
       TotEdepmuSD1[0][m] = integralmuSD1;
       TotEdepxSD1[0][m] = integralxSD1;
+      TotEdepmuSD2[0][m] = integralmuSD2;
+      TotEdepxSD2[0][m] = integralxSD2;
       TotEdepmuSDT[0][m] = integralmuSDT;
       TotEdepxSDT[0][m] = integralxSDT;
       TotEdepmuSDB[0][m] = integralmuSDB;
@@ -259,6 +282,8 @@ void Recover_MULTI(){
    	 
    float EdepmuSciD1[nsamps] = {};
    float EdepxSciD1[nsamps] = {};
+   float EdepmuSciD2[nsamps] = {};
+   float EdepxSciD2[nsamps] = {};
    float EdepmuSciDT[nsamps] = {};
    float EdepxSciDT[nsamps] = {};
    float EdepmuSciDB[nsamps] = {};
@@ -274,6 +299,8 @@ void Recover_MULTI(){
    for (int i=0; i<nsamps; i++) {
       EdepmuSciD1[i] = TotEdepmuSD1[0][i]/TotEdepmuSD1[0][nsamps-1];
       EdepxSciD1[i] = TotEdepxSD1[0][i]/TotEdepxSD1[0][nsamps-1];
+      EdepmuSciD2[i] = TotEdepmuSD2[0][i]/TotEdepmuSD2[0][nsamps-1];
+      EdepxSciD2[i] = TotEdepxSD2[0][i]/TotEdepxSD2[0][nsamps-1];
       EdepmuSciDT[i] = TotEdepmuSDT[0][i]/TotEdepmuSDT[0][nsamps-1];
       EdepxSciDT[i] = TotEdepxSDT[0][i]/TotEdepxSDT[0][nsamps-1];
       EdepmuSciDB[i] = TotEdepmuSDB[0][i]/TotEdepmuSDB[0][nsamps-1];
@@ -290,6 +317,8 @@ void Recover_MULTI(){
    // Colours
    hmuSciD1->SetLineColor(kBlack);
    hxSciD1->SetLineColor(kGreen-2);
+   hmuSciD2->SetLineColor(kBlack);
+   hxSciD2->SetLineColor(kGreen-2);
    hmuSciDT->SetLineColor(kBlack);
    hxSciDT->SetLineColor(kGreen-2);
    hmuSciDB->SetLineColor(kBlack);
@@ -303,6 +332,8 @@ void Recover_MULTI(){
 
    hmuSciD1Z->SetLineColor(kBlack);
    hxSciD1Z->SetLineColor(kGreen-2);
+   hmuSciD2Z->SetLineColor(kBlack);
+   hxSciD2Z->SetLineColor(kGreen-2);
    hmuSciDTZ->SetLineColor(kBlack);
    hxSciDTZ->SetLineColor(kGreen-2);
    hmuSciDBZ->SetLineColor(kBlack);
@@ -320,10 +351,10 @@ void Recover_MULTI(){
    /********************************/
 
    TCanvas *c = new TCanvas("c","Edep",800,600);
-   c->Divide(6,3);
+   c->Divide(7,3);
    c->cd(1);
    gPad->SetLogy();
-   hmuSciD1->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{1}");
+   hmuSciD1->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
    hmuSciD1->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD1->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD1->GetYaxis()->SetTitleOffset(2.0);
@@ -339,7 +370,23 @@ void Recover_MULTI(){
  
    c->cd(2);
    gPad->SetLogy();
-   hmuSciDT->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{T}");
+   hmuSciD2->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   hmuSciD2->GetXaxis()->SetTitle("Edep [MeV]");
+   hmuSciD2->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmuSciD2->GetYaxis()->SetTitleOffset(2.0);
+   hmuSciD2->Draw();
+   c->Update();
+   TPaveStats *stmuSciD2 = (TPaveStats*)hmuSciD2->GetListOfFunctions()->FindObject("stats");
+   stmuSciD2->SetY1NDC(0.63); stmuSciD2->SetY2NDC(0.78);
+   hxSciD2->Draw("sames");
+   c->Update();
+   TPaveStats *stxSciD2 = (TPaveStats*)hxSciD2->GetListOfFunctions()->FindObject("stats");
+   stxSciD2->SetTextColor(kGreen-2);
+   stxSciD2->Draw();
+
+   c->cd(3);
+   gPad->SetLogy();
+   hmuSciDT->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
    hmuSciDT->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDT->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDT->GetYaxis()->SetTitleOffset(2.0);
@@ -353,9 +400,9 @@ void Recover_MULTI(){
    stxSciDT->SetTextColor(kGreen-2);
    stxSciDT->Draw();
    
-   c->cd(3);
+   c->cd(4);
    gPad->SetLogy();
-   hmuSciDB->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{B}");
+   hmuSciDB->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
    hmuSciDB->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDB->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDB->GetYaxis()->SetTitleOffset(2.0);
@@ -369,9 +416,9 @@ void Recover_MULTI(){
    stxSciDB->SetTextColor(kGreen-2);
    stxSciDB->Draw();
 
-   c->cd(4);
+   c->cd(5);
    gPad->SetLogy();
-   hmuSciDL->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{L}");
+   hmuSciDL->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
    hmuSciDL->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDL->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDL->GetYaxis()->SetTitleOffset(2.0);
@@ -385,9 +432,9 @@ void Recover_MULTI(){
    stxSciDL->SetTextColor(kGreen-2);
    stxSciDL->Draw();
    
-   c->cd(5);
+   c->cd(6);
    gPad->SetLogy();
-   hmuSciDR->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{R}");
+   hmuSciDR->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
    hmuSciDR->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDR->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDR->GetYaxis()->SetTitleOffset(2.0);
@@ -401,9 +448,9 @@ void Recover_MULTI(){
    stxSciDR->SetTextColor(kGreen-2);
    stxSciDR->Draw();
    
-   c->cd(6);
+   c->cd(7);
    gPad->SetLogy();
-   hmuBGOD1->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade BGOD_{1}");
+   hmuBGOD1->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
    hmuBGOD1->GetXaxis()->SetTitle("Edep [MeV]");
    hmuBGOD1->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuBGOD1->GetYaxis()->SetTitleOffset(2.0);
@@ -417,9 +464,9 @@ void Recover_MULTI(){
    stxBGOD1->SetTextColor(kGreen-2);
    stxBGOD1->Draw();
 
-   c->cd(7);
+   c->cd(8);
    gPad->SetLogy();
-   hmuSciD1Z->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{1}");
+   hmuSciD1Z->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
    hmuSciD1Z->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD1Z->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD1Z->GetYaxis()->SetTitleOffset(2.0);
@@ -433,9 +480,25 @@ void Recover_MULTI(){
    stxSciD1Z->SetTextColor(kGreen-2);
    stxSciD1Z->Draw();
  
-   c->cd(8);
+   c->cd(9);
    gPad->SetLogy();
-   hmuSciDTZ->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{T}");
+   hmuSciD2Z->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   hmuSciD2Z->GetXaxis()->SetTitle("Edep [MeV]");
+   hmuSciD2Z->GetYaxis()->SetTitle("# of counts [a.u.]");
+   hmuSciD2Z->GetYaxis()->SetTitleOffset(2.0);
+   hmuSciD2Z->Draw();
+   c->Update();
+   TPaveStats *stmuSciD2Z = (TPaveStats*)hmuSciD2Z->GetListOfFunctions()->FindObject("stats");
+   stmuSciD2Z->SetY1NDC(0.63); stmuSciD2Z->SetY2NDC(0.78);
+   hxSciD2Z->Draw("sames");
+   c->Update();
+   TPaveStats *stxSciD2Z = (TPaveStats*)hxSciD2Z->GetListOfFunctions()->FindObject("stats");
+   stxSciD2Z->SetTextColor(kGreen-2);
+   stxSciD2Z->Draw();
+
+   c->cd(10);
+   gPad->SetLogy();
+   hmuSciDTZ->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
    hmuSciDTZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDTZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDTZ->GetYaxis()->SetTitleOffset(2.0);
@@ -449,9 +512,9 @@ void Recover_MULTI(){
    stxSciDTZ->SetTextColor(kGreen-2);
    stxSciDTZ->Draw();
    
-   c->cd(9);
+   c->cd(11);
    gPad->SetLogy();
-   hmuSciDBZ->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{B}");
+   hmuSciDBZ->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
    hmuSciDBZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDBZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDBZ->GetYaxis()->SetTitleOffset(2.0);
@@ -465,9 +528,9 @@ void Recover_MULTI(){
    stxSciDBZ->SetTextColor(kGreen-2);
    stxSciDBZ->Draw();
    
-   c->cd(10);
+   c->cd(12);
    gPad->SetLogy();
-   hmuSciDLZ->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{L}");
+   hmuSciDLZ->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
    hmuSciDLZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDLZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDLZ->GetYaxis()->SetTitleOffset(2.0);
@@ -481,9 +544,9 @@ void Recover_MULTI(){
    stxSciDLZ->SetTextColor(kGreen-2);
    stxSciDLZ->Draw();
    
-   c->cd(11);
+   c->cd(13);
    gPad->SetLogy();
-   hmuSciDRZ->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{R}");
+   hmuSciDRZ->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
    hmuSciDRZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDRZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDRZ->GetYaxis()->SetTitleOffset(2.0);
@@ -497,9 +560,9 @@ void Recover_MULTI(){
    stxSciDRZ->SetTextColor(kGreen-2);
    stxSciDRZ->Draw();
    
-   c->cd(12);
+   c->cd(14);
    gPad->SetLogy();
-   hmuBGOD1Z->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade BGOD_{1}");
+   hmuBGOD1Z->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
    hmuBGOD1Z->GetXaxis()->SetTitle("Edep [MeV]");
    hmuBGOD1Z->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuBGOD1Z->GetYaxis()->SetTitleOffset(2.0);
@@ -513,11 +576,11 @@ void Recover_MULTI(){
    stxBGOD1Z->SetTextColor(kGreen-2);
    stxBGOD1Z->Draw();
 
-   c->cd(13);
+   c->cd(15);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSD1 = new TGraph(nsamps,Ethrmu,EdepmuSciD1);
-   grmuSD1->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{1}");
+   grmuSD1->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
    grmuSD1->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSD1->GetXaxis()->SetRangeUser(0,2);
    grmuSD1->GetYaxis()->SetRangeUser(0,1);
@@ -534,11 +597,32 @@ void Recover_MULTI(){
    grxSD1->SetLineColor(kGreen-2);
    grxSD1->Draw("LP");
 
-   c->cd(14);
+   c->cd(16);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   TGraph *grmuSD2 = new TGraph(nsamps,Ethrmu,EdepmuSciD2);
+   grmuSD2->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   grmuSD2->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   grmuSD2->GetXaxis()->SetRangeUser(0,2);
+   grmuSD2->GetYaxis()->SetRangeUser(0,1);
+   grmuSD2->GetYaxis()->SetTitle("E_{dep}(E_{THR})");
+   grmuSD2->GetYaxis()->SetTitleOffset(1.8);
+   grmuSD2->GetYaxis()->SetMoreLogLabels(1);
+   grmuSD2->SetMarkerColor(kBlack);
+   grmuSD2->SetMarkerStyle(33);
+   grmuSD2->Draw("ALP");
+   c->Update();
+   TGraph *grxSD2 = new TGraph(nsamps,Ethrmu,EdepxSciD2);
+   grxSD2->SetMarkerColor(kGreen-2);
+   grxSD2->SetMarkerStyle(33);
+   grxSD2->SetLineColor(kGreen-2);
+   grxSD2->Draw("LP");
+
+   c->cd(17);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDT = new TGraph(nsamps,Ethrmu,EdepmuSciDT);
-   grmuSDT->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{T}");
+   grmuSDT->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
    grmuSDT->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDT->GetXaxis()->SetRangeUser(0,2);
    grmuSDT->GetYaxis()->SetRangeUser(0,1);
@@ -555,11 +639,11 @@ void Recover_MULTI(){
    grxSDT->SetLineColor(kGreen-2);
    grxSDT->Draw("LP");
 
-   c->cd(15);
+   c->cd(18);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDB = new TGraph(nsamps,Ethrmu,EdepmuSciDB);
-   grmuSDB->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{B}");
+   grmuSDB->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
    grmuSDB->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDB->GetXaxis()->SetRangeUser(0,2);
    grmuSDB->GetYaxis()->SetRangeUser(0,1);
@@ -576,11 +660,11 @@ void Recover_MULTI(){
    grxSDB->SetLineColor(kGreen-2);
    grxSDB->Draw("LP");
 
-   c->cd(16);
+   c->cd(19);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDL = new TGraph(nsamps,Ethrmu,EdepmuSciDL);
-   grmuSDL->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{L}");
+   grmuSDL->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
    grmuSDL->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDL->GetXaxis()->SetRangeUser(0,2);
    grmuSDL->GetYaxis()->SetRangeUser(0,1);
@@ -597,11 +681,11 @@ void Recover_MULTI(){
    grxSDL->SetLineColor(kGreen-2);
    grxSDL->Draw("LP");
 
-   c->cd(17);
+   c->cd(20);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDR = new TGraph(nsamps,Ethrmu,EdepmuSciDR);
-   grmuSDR->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade SciD_{R}");
+   grmuSDR->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
    grmuSDR->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDR->GetXaxis()->SetRangeUser(0,2);
    grmuSDR->GetYaxis()->SetRangeUser(0,1);
@@ -618,11 +702,11 @@ void Recover_MULTI(){
    grxSDR->SetLineColor(kGreen-2);
    grxSDR->Draw("LP");
 
-   c->cd(18);
+   c->cd(21);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuBD1 = new TGraph(nsamps,Ethrmu,EdepmuBGOD1);
-   grmuBD1->SetTitle("BIG PLATES 2 x 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO: #mu-decay vs X-ray cascade BGOD_{1}");
+   grmuBD1->SetTitle("2 x 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
    grmuBD1->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuBD1->GetXaxis()->SetRangeUser(0,2);
    grmuBD1->GetYaxis()->SetRangeUser(0,1);
@@ -640,9 +724,9 @@ void Recover_MULTI(){
    grxBD1->Draw("LP");
  
  
-   c->SaveAs("Recover_Planar_5xSDs_BGO_BIG_MULTI_Edep.pdf");
-   c->SaveAs("Recover_Planar_5xSDs_BGO_BIG_MULTI_Edep.png");
-   c->SaveAs("Recover_Planar_5xSDs_BGO_BIG_MULTI_Edep.C");
+   c->SaveAs("Recover_Planar_6xSDs_Scintillator_4mm_Al_4mm_Al_MULTI_Edep.pdf");
+   c->SaveAs("Recover_Planar_6xSDs_Scintillator_4mm_Al_4mm_Al_MULTI_Edep.png");
+   c->SaveAs("Recover_Planar_6xSDs_Scintillator_4mm_Al_4mm_Al_MULTI_Edep.C");
 
 
 }
