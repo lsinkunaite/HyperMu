@@ -71,15 +71,21 @@ void recoverMULTIeff(){
 
    // Names of the files
    // Mu-decay
-   std::string filemuSciD1 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5mudecay_SciD1.txt";
-   std::string filemuSciD2 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5mudecay_SciD2.txt";
-   std::string filemuSciD3 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5mudecay_SciD3.txt";
-   std::string filemuBGOD1 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5mudecay_BGOD1.txt";
+   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciD1.txt";
+   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciD2.txt";
+   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciDT.txt";
+   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciDB.txt";
+   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciDL.txt";
+   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_SciDR.txt";
+   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5mudecay_BGOD1.txt";
    // X-ray cascade
-   std::string filexSciD1 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5goldcascade_SciD1.txt";
-   std::string filexSciD2 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5goldcascade_SciD2.txt";
-   std::string filexSciD3 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5goldcascade_SciD3.txt";
-   std::string filexBGOD1 = "../../simdata/recover/4mm_Al_4mm_SciD_4mm_Al_300mm_BGO_10mm_SciD_TB_1e5goldcascade_BGOD1.txt";
+   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciD1.txt";
+   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciD2.txt";
+   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciDT.txt";
+   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciDB.txt";
+   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciDL.txt";
+   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_SciDR.txt";
+   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_1e5goldcascade_BGOD1.txt";
 
 
    // Vectors with filenames   
@@ -89,12 +95,18 @@ void recoverMULTIeff(){
    // Mu-decay
    mufiles.push_back(filemuSciD1);
    mufiles.push_back(filemuSciD2);
-   mufiles.push_back(filemuSciD3);
+   mufiles.push_back(filemuSciDT);
+   mufiles.push_back(filemuSciDB);
+   mufiles.push_back(filemuSciDL);
+   mufiles.push_back(filemuSciDR);
    mufiles.push_back(filemuBGOD1);
    // X-ray cascade
    Xfiles.push_back(filexSciD1);
    Xfiles.push_back(filexSciD2);
-   Xfiles.push_back(filexSciD3);
+   Xfiles.push_back(filexSciDT);
+   Xfiles.push_back(filexSciDB);
+   Xfiles.push_back(filexSciDL);
+   Xfiles.push_back(filexSciDR);
    Xfiles.push_back(filexBGOD1);
 
 
@@ -115,10 +127,10 @@ void recoverMULTIeff(){
    
    // Storage vectors
    // Normalisation 2 [abs = total]
-   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/4,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/4,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/4,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/4,std::vector<double>(nsamps));      
+   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/7,std::vector<double>(nsamps));      
 
 
    // Mu-decay
@@ -126,8 +138,14 @@ void recoverMULTIeff(){
    std::vector< std::vector< double > > allvEdepSD1mu;
    std::vector< std::vector< double > > allvEvIDSD2mu;
    std::vector< std::vector< double > > allvEdepSD2mu;
-   std::vector< std::vector< double > > allvEvIDSD3mu;
-   std::vector< std::vector< double > > allvEdepSD3mu;
+   std::vector< std::vector< double > > allvEvIDSDTmu;
+   std::vector< std::vector< double > > allvEdepSDTmu;
+   std::vector< std::vector< double > > allvEvIDSDBmu;
+   std::vector< std::vector< double > > allvEdepSDBmu;
+   std::vector< std::vector< double > > allvEvIDSDLmu;
+   std::vector< std::vector< double > > allvEdepSDLmu;
+   std::vector< std::vector< double > > allvEvIDSDRmu;
+   std::vector< std::vector< double > > allvEdepSDRmu;
    std::vector< std::vector< double > > allvEvIDBD1mu;
    std::vector< std::vector< double > > allvEdepBD1mu;
 
@@ -136,8 +154,14 @@ void recoverMULTIeff(){
    std::vector< std::vector< double > > allvEdepSD1x;
    std::vector< std::vector< double > > allvEvIDSD2x;
    std::vector< std::vector< double > > allvEdepSD2x;
-   std::vector< std::vector< double > > allvEvIDSD3x;
-   std::vector< std::vector< double > > allvEdepSD3x;
+   std::vector< std::vector< double > > allvEvIDSDTx;
+   std::vector< std::vector< double > > allvEdepSDTx;
+   std::vector< std::vector< double > > allvEvIDSDBx;
+   std::vector< std::vector< double > > allvEdepSDBx;
+   std::vector< std::vector< double > > allvEvIDSDLx;
+   std::vector< std::vector< double > > allvEdepSDLx;
+   std::vector< std::vector< double > > allvEvIDSDRx;
+   std::vector< std::vector< double > > allvEdepSDRx;
    std::vector< std::vector< double > > allvEvIDBD1x;
    std::vector< std::vector< double > > allvEdepBD1x;
    
@@ -165,10 +189,10 @@ void recoverMULTIeff(){
 
 
 
-   for (int k=0; k<((mufiles.size())/4); k++) {
+   for (int k=0; k<((mufiles.size())/7); k++) {
    
       // SciD1
-      std::ifstream mufSciD1(TString(mufiles[k*4]));
+      std::ifstream mufSciD1(TString(mufiles[k*7]));
       std::vector<double> vEvIDSD1mu;
       std::vector<double> vEdepSD1mu;
       
@@ -184,10 +208,10 @@ void recoverMULTIeff(){
 	  mufSciD1.close();
 	  allvEvIDSD1mu.push_back(vEvIDSD1mu);
 	  allvEdepSD1mu.push_back(vEdepSD1mu);
-	  
+
 
       // SciD2
-      std::ifstream mufSciD2(TString(mufiles[(k*4)+1]));
+      std::ifstream mufSciD2(TString(mufiles[(k*7)+1]));
       std::vector<double> vEvIDSD2mu;
       std::vector<double> vEdepSD2mu;
       
@@ -202,30 +226,87 @@ void recoverMULTIeff(){
 	  
 	  mufSciD2.close();
 	  allvEvIDSD2mu.push_back(vEvIDSD2mu);
-	  allvEdepSD2mu.push_back(vEdepSD2mu); 
-	   
-
-      // SciD3
-      std::ifstream mufSciD3(TString(mufiles[(k*4)+2]));
-      std::vector<double> vEvIDSD3mu;
-      std::vector<double> vEdepSD3mu;
-      
-      while (!mufSciD3.eof()) {
-	     double EvIDSD3, EdepSD3;
-	     mufSciD3 >> EvIDSD3 >> EdepSD3;
-	     vEvIDSD3mu.push_back(EvIDSD3);
-	     vEdepSD3mu.push_back(EdepSD3);
-	  }
-	  vEvIDSD3mu.pop_back(); vEdepSD3mu.pop_back();
-	  vEvIDSD3mu.pop_back(); vEdepSD3mu.pop_back();
+	  allvEdepSD2mu.push_back(vEdepSD2mu);
 	  
-	  mufSciD3.close();
-	  allvEvIDSD3mu.push_back(vEvIDSD3mu);
-	  allvEdepSD3mu.push_back(vEdepSD3mu); 
-
-
-      // BGOD1
-      std::ifstream mufBGOD1(TString(mufiles[(k*4)+3]));
+	  
+	  // SciDT
+      std::ifstream mufSciDT(TString(mufiles[(k*7)+2]));
+      std::vector<double> vEvIDSDTmu;
+      std::vector<double> vEdepSDTmu;
+      
+      while (!mufSciDT.eof()) {
+	     double EvIDSDT, EdepSDT;
+	     mufSciDT >> EvIDSDT >> EdepSDT;
+	     vEvIDSDTmu.push_back(EvIDSDT);
+	     vEdepSDTmu.push_back(EdepSDT);
+	  }
+	  vEvIDSDTmu.pop_back(); vEdepSDTmu.pop_back();
+	  vEvIDSDTmu.pop_back(); vEdepSDTmu.pop_back();
+	  
+	  mufSciDT.close();
+	  allvEvIDSDTmu.push_back(vEvIDSDTmu);
+	  allvEdepSDTmu.push_back(vEdepSDTmu);
+	  
+	  
+	  // SciDB
+      std::ifstream mufSciDB(TString(mufiles[(k*7)+3]));
+      std::vector<double> vEvIDSDBmu;
+      std::vector<double> vEdepSDBmu;
+      
+      while (!mufSciDB.eof()) {
+	     double EvIDSDB, EdepSDB;
+	     mufSciDB >> EvIDSDB >> EdepSDB;
+	     vEvIDSDBmu.push_back(EvIDSDB);
+	     vEdepSDBmu.push_back(EdepSDB);
+	  }
+	  vEvIDSDBmu.pop_back(); vEdepSDBmu.pop_back();
+	  vEvIDSDBmu.pop_back(); vEdepSDBmu.pop_back();
+	  
+	  mufSciDB.close();
+	  allvEvIDSDBmu.push_back(vEvIDSDBmu);
+	  allvEdepSDBmu.push_back(vEdepSDBmu);
+	  
+	  
+	  // SciDL
+      std::ifstream mufSciDL(TString(mufiles[(k*7)+4]));
+      std::vector<double> vEvIDSDLmu;
+      std::vector<double> vEdepSDLmu;
+      
+      while (!mufSciDL.eof()) {
+	     double EvIDSDL, EdepSDL;
+	     mufSciDL >> EvIDSDL >> EdepSDL;
+	     vEvIDSDLmu.push_back(EvIDSDL);
+	     vEdepSDLmu.push_back(EdepSDL);
+	  }
+	  vEvIDSDLmu.pop_back(); vEdepSDLmu.pop_back();
+	  vEvIDSDLmu.pop_back(); vEdepSDLmu.pop_back();
+	  
+	  mufSciDL.close();
+	  allvEvIDSDLmu.push_back(vEvIDSDLmu);
+	  allvEdepSDLmu.push_back(vEdepSDLmu);
+	  
+	  
+	  // SciDR
+      std::ifstream mufSciDR(TString(mufiles[(k*7)+5]));
+      std::vector<double> vEvIDSDRmu;
+      std::vector<double> vEdepSDRmu;
+      
+      while (!mufSciDR.eof()) {
+	     double EvIDSDR, EdepSDR;
+	     mufSciDR >> EvIDSDR >> EdepSDR;
+	     vEvIDSDRmu.push_back(EvIDSDR);
+	     vEdepSDRmu.push_back(EdepSDR);
+	  }
+	  vEvIDSDRmu.pop_back(); vEdepSDRmu.pop_back();
+	  vEvIDSDRmu.pop_back(); vEdepSDRmu.pop_back();
+	  
+	  mufSciDR.close();
+	  allvEvIDSDRmu.push_back(vEvIDSDRmu);
+	  allvEdepSDRmu.push_back(vEdepSDRmu);
+	  
+	  
+	  // BGOD1
+      std::ifstream mufBGOD1(TString(mufiles[(k*7)+6]));
       std::vector<double> vEvIDBD1mu;
       std::vector<double> vEdepBD1mu;
       
@@ -240,7 +321,7 @@ void recoverMULTIeff(){
 	  
 	  mufBGOD1.close();
 	  allvEvIDBD1mu.push_back(vEvIDBD1mu);
-	  allvEdepBD1mu.push_back(vEdepBD1mu); 
+	  allvEdepBD1mu.push_back(vEdepBD1mu);
 
    }
    
@@ -251,10 +332,10 @@ void recoverMULTIeff(){
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   for (int k=0; k<((Xfiles.size())/4); k++) {
+   for (int k=0; k<((Xfiles.size())/7); k++) {
       
       // SciD1
-      std::ifstream xfSciD1(TString(Xfiles[k*4]));
+      std::ifstream xfSciD1(TString(Xfiles[k*7]));
       std::vector<double> vEvIDSD1x;
       std::vector<double> vEdepSD1x;
       
@@ -270,10 +351,10 @@ void recoverMULTIeff(){
 	  xfSciD1.close();
 	  allvEvIDSD1x.push_back(vEvIDSD1x);
 	  allvEdepSD1x.push_back(vEdepSD1x);
-	  
-	  
-	  // SciD2
-      std::ifstream xfSciD2(TString(Xfiles[(k*4)+1]));
+
+
+      // SciD2
+      std::ifstream xfSciD2(TString(Xfiles[(k*7)+1]));
       std::vector<double> vEvIDSD2x;
       std::vector<double> vEdepSD2x;
       
@@ -289,29 +370,86 @@ void recoverMULTIeff(){
 	  xfSciD2.close();
 	  allvEvIDSD2x.push_back(vEvIDSD2x);
 	  allvEdepSD2x.push_back(vEdepSD2x);
-
-
-	  // SciD3
-      std::ifstream xfSciD3(TString(Xfiles[(k*4)+2]));
-      std::vector<double> vEvIDSD3x;
-      std::vector<double> vEdepSD3x;
+	  
+	  
+	  // SciDT
+      std::ifstream xfSciDT(TString(Xfiles[(k*7)+2]));
+      std::vector<double> vEvIDSDTx;
+      std::vector<double> vEdepSDTx;
       
-      while (!xfSciD3.eof()) {
-	     double EvIDSD3, EdepSD3;
-	     xfSciD3 >> EvIDSD3 >> EdepSD3;
-	     vEvIDSD3x.push_back(EvIDSD3);
-	     vEdepSD3x.push_back(EdepSD3);
+      while (!xfSciDT.eof()) {
+	     double EvIDSDT, EdepSDT;
+	     xfSciDT >> EvIDSDT >> EdepSDT;
+	     vEvIDSDTx.push_back(EvIDSDT);
+	     vEdepSDTx.push_back(EdepSDT);
 	  }
-	  vEvIDSD3x.pop_back(); vEdepSD3x.pop_back();
-	  vEvIDSD3x.pop_back(); vEdepSD3x.pop_back();
+	  vEvIDSDTx.pop_back(); vEdepSDTx.pop_back();
+	  vEvIDSDTx.pop_back(); vEdepSDTx.pop_back();
 	  
-	  xfSciD3.close();
-	  allvEvIDSD3x.push_back(vEvIDSD3x);
-	  allvEdepSD3x.push_back(vEdepSD3x);
+	  xfSciDT.close();
+	  allvEvIDSDTx.push_back(vEvIDSDTx);
+	  allvEdepSDTx.push_back(vEdepSDTx);
+
+
+      // SciDB
+      std::ifstream xfSciDB(TString(Xfiles[(k*7)+3]));
+      std::vector<double> vEvIDSDBx;
+      std::vector<double> vEdepSDBx;
+      
+      while (!xfSciDB.eof()) {
+	     double EvIDSDB, EdepSDB;
+	     xfSciDB >> EvIDSDB >> EdepSDB;
+	     vEvIDSDBx.push_back(EvIDSDB);
+	     vEdepSDBx.push_back(EdepSDB);
+	  }
+	  vEvIDSDBx.pop_back(); vEdepSDBx.pop_back();
+	  vEvIDSDBx.pop_back(); vEdepSDBx.pop_back();
 	  
+	  xfSciDB.close();
+	  allvEvIDSDBx.push_back(vEvIDSDBx);
+	  allvEdepSDBx.push_back(vEdepSDBx);
+
+
+      // SciDL
+      std::ifstream xfSciDL(TString(Xfiles[(k*7)+4]));
+      std::vector<double> vEvIDSDLx;
+      std::vector<double> vEdepSDLx;
+      
+      while (!xfSciDL.eof()) {
+	     double EvIDSDL, EdepSDL;
+	     xfSciDL >> EvIDSDL >> EdepSDL;
+	     vEvIDSDLx.push_back(EvIDSDL);
+	     vEdepSDLx.push_back(EdepSDL);
+	  }
+	  vEvIDSDLx.pop_back(); vEdepSDLx.pop_back();
+	  vEvIDSDLx.pop_back(); vEdepSDLx.pop_back();
 	  
-	  // BGOD1
-      std::ifstream xfBGOD1(TString(Xfiles[(k*4)+3]));
+	  xfSciDL.close();
+	  allvEvIDSDLx.push_back(vEvIDSDLx);
+	  allvEdepSDLx.push_back(vEdepSDLx);
+
+
+      // SciDR
+      std::ifstream xfSciDR(TString(Xfiles[(k*7)+5]));
+      std::vector<double> vEvIDSDRx;
+      std::vector<double> vEdepSDRx;
+      
+      while (!xfSciDR.eof()) {
+	     double EvIDSDR, EdepSDR;
+	     xfSciDR >> EvIDSDR >> EdepSDR;
+	     vEvIDSDRx.push_back(EvIDSDR);
+	     vEdepSDRx.push_back(EdepSDR);
+	  }
+	  vEvIDSDRx.pop_back(); vEdepSDRx.pop_back();
+	  vEvIDSDRx.pop_back(); vEdepSDRx.pop_back();
+	  
+	  xfSciDR.close();
+	  allvEvIDSDRx.push_back(vEvIDSDRx);
+	  allvEdepSDRx.push_back(vEdepSDRx);
+
+
+      // BGOD1
+      std::ifstream xfBGOD1(TString(Xfiles[(k*7)+6]));
       std::vector<double> vEvIDBD1x;
       std::vector<double> vEdepBD1x;
       
@@ -360,9 +498,9 @@ void recoverMULTIeff(){
       
          for (int a=0; a<allvEvIDBD1mu[0].size(); a++) {
 
-            if (allvEdepSD1mu[i][a] < Ethr1) {
+            if ((allvEdepSD1mu[i][a] < Ethr1) && (allvEdepSD2mu[i][a] < Ethr1)) {
 		       if ((allvEdepBD1mu[i][a] > Ethr) && (allvEdepBD1mu[i][a] < Ethr22)) {
-			      if ((allvEdepSD2mu[i][a] < Ethr3) && (allvEdepSD3mu[i][a] < Ethr3)) {
+			      if ((allvEdepSDTmu[i][a] < Ethr3) || (allvEdepSDBmu[i][a] < Ethr3) || (allvEdepSDLmu[i][a] < Ethr3) || (allvEdepSDRmu[i][a] < Ethr3)) {
 				     eXrayN2 += 1;
 				  } else {
 				     eelecN2 += 1;
@@ -405,9 +543,9 @@ void recoverMULTIeff(){
       
          for (int a=0; a<allvEvIDBD1x[0].size(); a++) {
 
-            if (allvEdepSD1x[i][a] < Ethr1) {
+            if ((allvEdepSD1x[i][a] < Ethr1) && (allvEdepSD2x[i][a] < Ethr1)) {
 		       if ((allvEdepBD1x[i][a] > Ethr) && (allvEdepBD1x[i][a] < Ethr22)) {
-			      if ((allvEdepSD2x[i][a] < Ethr3) && (allvEdepSD3x[i][a] < Ethr3)) {
+			      if ((allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDLx[i][a] < Ethr3) || (allvEdepSDRx[i][a] < Ethr3)) {
 				     XXrayN2 += 1;
 				  } else {
 				     XelecN2 += 1;
@@ -471,7 +609,7 @@ void recoverMULTIeff(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grPXXN2 = new TGraph(nsamps,Ethrmu,PXXarrN2);
-   grPXXN2->SetTitle("N2 normalisation {absolute} AND: 2 x 4-mm Al, 4-mm SciD_{1}, 2 x 10-mm SciD_{2,3}, 300-mm BGO [10^5 events]");
+   grPXXN2->SetTitle("N2 normalisation {absolute} OR: 4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO [10^5 events]");
    grPXXN2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grPXXN2->GetXaxis()->SetRangeUser(0,2.05);
    grPXXN2->GetYaxis()->SetRangeUser(1e-4,1.1);
@@ -511,11 +649,11 @@ void recoverMULTIeff(){
    legPeXXXN2r->Draw();
 
 
-   c->SaveAs("Recover_Planar_AND_MULTIplicities_eff.pdf");
-   c->SaveAs("Recover_Planar_AND_MULTIplicities_eff.png");
-   c->SaveAs("Recover_Planar_AND_MULTIplicities_eff.C");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_BGO_MULTIplicities_eff.pdf");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_BGO_MULTIplicities_eff.png");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_BGO_MULTIplicities_eff.C");
   
-  
+
  }
  
  
