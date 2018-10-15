@@ -71,21 +71,21 @@ void recoverMULTIeff(){
 
    // Names of the files
    // Mu-decay
-   std::string filemuSciD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_SciD1.txt";
-   //std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5mudecay_SciD2.txt";
-   std::string filemuSciDT = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_SciDT.txt";
-   std::string filemuSciDB = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_SciDB.txt";
-   std::string filemuSciDL = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_SciDL.txt";
-   std::string filemuSciDR = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_SciDR.txt";
-   std::string filemuBGOD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5mudecay_BGOD1.txt";
+   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciD1.txt";
+   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciD2.txt";
+   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDT.txt";
+   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDB.txt";
+   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDL.txt";
+   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDR.txt";
+   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_BGOD1.txt";
    // X-ray cascade
-   std::string filexSciD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_SciD1.txt";
-   //std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_Scintillator_1e5goldcascade_SciD2.txt";
-   std::string filexSciDT = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_SciDT.txt";
-   std::string filexSciDB = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_SciDB.txt";
-   std::string filexSciDL = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_SciDL.txt";
-   std::string filexSciDR = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_SciDR.txt";
-   std::string filexBGOD1 = "../../simdata/recover/5xSciDs_2x4mm_Al_300mm_Scintillator_1e5goldcascade_BGOD1.txt";
+   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciD1.txt";
+   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciD2.txt";
+   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDT.txt";
+   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDB.txt";
+   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDL.txt";
+   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDR.txt";
+   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_BGOD1.txt";
 
 
    // Vectors with filenames   
@@ -94,7 +94,7 @@ void recoverMULTIeff(){
 
    // Mu-decay
    mufiles.push_back(filemuSciD1);
-//   mufiles.push_back(filemuSciD2);
+   mufiles.push_back(filemuSciD2);
    mufiles.push_back(filemuSciDT);
    mufiles.push_back(filemuSciDB);
    mufiles.push_back(filemuSciDL);
@@ -102,7 +102,7 @@ void recoverMULTIeff(){
    mufiles.push_back(filemuBGOD1);
    // X-ray cascade
    Xfiles.push_back(filexSciD1);
-//   Xfiles.push_back(filexSciD2);
+   Xfiles.push_back(filexSciD2);
    Xfiles.push_back(filexSciDT);
    Xfiles.push_back(filexSciDB);
    Xfiles.push_back(filexSciDL);
@@ -127,17 +127,17 @@ void recoverMULTIeff(){
    
    // Storage vectors
    // Normalisation 2 [abs = total]
-   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/6,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/6,std::vector<double>(nsamps));      
+   std::vector< std::vector<double> > PeevectorN2(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeXvectorN2(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/7,std::vector<double>(nsamps));      
 
 
    // Mu-decay
    std::vector< std::vector< double > > allvEvIDSD1mu;
    std::vector< std::vector< double > > allvEdepSD1mu;
-//   std::vector< std::vector< double > > allvEvIDSD2mu;
-//   std::vector< std::vector< double > > allvEdepSD2mu;
+   std::vector< std::vector< double > > allvEvIDSD2mu;
+   std::vector< std::vector< double > > allvEdepSD2mu;
    std::vector< std::vector< double > > allvEvIDSDTmu;
    std::vector< std::vector< double > > allvEdepSDTmu;
    std::vector< std::vector< double > > allvEvIDSDBmu;
@@ -152,8 +152,8 @@ void recoverMULTIeff(){
    // X-ray cascade
    std::vector< std::vector< double > > allvEvIDSD1x;
    std::vector< std::vector< double > > allvEdepSD1x;
-//   std::vector< std::vector< double > > allvEvIDSD2x;
-//   std::vector< std::vector< double > > allvEdepSD2x;
+   std::vector< std::vector< double > > allvEvIDSD2x;
+   std::vector< std::vector< double > > allvEdepSD2x;
    std::vector< std::vector< double > > allvEvIDSDTx;
    std::vector< std::vector< double > > allvEdepSDTx;
    std::vector< std::vector< double > > allvEvIDSDBx;
@@ -189,10 +189,10 @@ void recoverMULTIeff(){
 
 
 
-   for (int k=0; k<((mufiles.size())/6); k++) {
+   for (int k=0; k<((mufiles.size())/7); k++) {
    
       // SciD1
-      std::ifstream mufSciD1(TString(mufiles[k*6]));
+      std::ifstream mufSciD1(TString(mufiles[k*7]));
       std::vector<double> vEvIDSD1mu;
       std::vector<double> vEdepSD1mu;
       
@@ -209,7 +209,7 @@ void recoverMULTIeff(){
 	  allvEvIDSD1mu.push_back(vEvIDSD1mu);
 	  allvEdepSD1mu.push_back(vEdepSD1mu);
 
-/*
+
       // SciD2
       std::ifstream mufSciD2(TString(mufiles[(k*7)+1]));
       std::vector<double> vEvIDSD2mu;
@@ -227,10 +227,10 @@ void recoverMULTIeff(){
 	  mufSciD2.close();
 	  allvEvIDSD2mu.push_back(vEvIDSD2mu);
 	  allvEdepSD2mu.push_back(vEdepSD2mu);
-*/	  
+	  
 	  
 	  // SciDT
-      std::ifstream mufSciDT(TString(mufiles[(k*6)+1]));
+      std::ifstream mufSciDT(TString(mufiles[(k*7)+2]));
       std::vector<double> vEvIDSDTmu;
       std::vector<double> vEdepSDTmu;
       
@@ -249,7 +249,7 @@ void recoverMULTIeff(){
 	  
 	  
 	  // SciDB
-      std::ifstream mufSciDB(TString(mufiles[(k*6)+2]));
+      std::ifstream mufSciDB(TString(mufiles[(k*7)+3]));
       std::vector<double> vEvIDSDBmu;
       std::vector<double> vEdepSDBmu;
       
@@ -268,7 +268,7 @@ void recoverMULTIeff(){
 	  
 	  
 	  // SciDL
-      std::ifstream mufSciDL(TString(mufiles[(k*6)+3]));
+      std::ifstream mufSciDL(TString(mufiles[(k*7)+4]));
       std::vector<double> vEvIDSDLmu;
       std::vector<double> vEdepSDLmu;
       
@@ -287,7 +287,7 @@ void recoverMULTIeff(){
 	  
 	  
 	  // SciDR
-      std::ifstream mufSciDR(TString(mufiles[(k*6)+4]));
+      std::ifstream mufSciDR(TString(mufiles[(k*7)+5]));
       std::vector<double> vEvIDSDRmu;
       std::vector<double> vEdepSDRmu;
       
@@ -306,7 +306,7 @@ void recoverMULTIeff(){
 	  
 	  
 	  // BGOD1
-      std::ifstream mufBGOD1(TString(mufiles[(k*6)+5]));
+      std::ifstream mufBGOD1(TString(mufiles[(k*7)+6]));
       std::vector<double> vEvIDBD1mu;
       std::vector<double> vEdepBD1mu;
       
@@ -332,10 +332,10 @@ void recoverMULTIeff(){
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   for (int k=0; k<((Xfiles.size())/6); k++) {
+   for (int k=0; k<((Xfiles.size())/7); k++) {
       
       // SciD1
-      std::ifstream xfSciD1(TString(Xfiles[k*6]));
+      std::ifstream xfSciD1(TString(Xfiles[k*7]));
       std::vector<double> vEvIDSD1x;
       std::vector<double> vEdepSD1x;
       
@@ -352,7 +352,7 @@ void recoverMULTIeff(){
 	  allvEvIDSD1x.push_back(vEvIDSD1x);
 	  allvEdepSD1x.push_back(vEdepSD1x);
 
-/*
+
       // SciD2
       std::ifstream xfSciD2(TString(Xfiles[(k*7)+1]));
       std::vector<double> vEvIDSD2x;
@@ -370,10 +370,10 @@ void recoverMULTIeff(){
 	  xfSciD2.close();
 	  allvEvIDSD2x.push_back(vEvIDSD2x);
 	  allvEdepSD2x.push_back(vEdepSD2x);
-*/	  
+	  
 	  
 	  // SciDT
-      std::ifstream xfSciDT(TString(Xfiles[(k*6)+1]));
+      std::ifstream xfSciDT(TString(Xfiles[(k*7)+2]));
       std::vector<double> vEvIDSDTx;
       std::vector<double> vEdepSDTx;
       
@@ -392,7 +392,7 @@ void recoverMULTIeff(){
 
 
       // SciDB
-      std::ifstream xfSciDB(TString(Xfiles[(k*6)+2]));
+      std::ifstream xfSciDB(TString(Xfiles[(k*7)+3]));
       std::vector<double> vEvIDSDBx;
       std::vector<double> vEdepSDBx;
       
@@ -411,7 +411,7 @@ void recoverMULTIeff(){
 
 
       // SciDL
-      std::ifstream xfSciDL(TString(Xfiles[(k*6)+3]));
+      std::ifstream xfSciDL(TString(Xfiles[(k*7)+4]));
       std::vector<double> vEvIDSDLx;
       std::vector<double> vEdepSDLx;
       
@@ -430,7 +430,7 @@ void recoverMULTIeff(){
 
 
       // SciDR
-      std::ifstream xfSciDR(TString(Xfiles[(k*6)+4]));
+      std::ifstream xfSciDR(TString(Xfiles[(k*7)+5]));
       std::vector<double> vEvIDSDRx;
       std::vector<double> vEdepSDRx;
       
@@ -449,7 +449,7 @@ void recoverMULTIeff(){
 
 
       // BGOD1
-      std::ifstream xfBGOD1(TString(Xfiles[(k*6)+5]));
+      std::ifstream xfBGOD1(TString(Xfiles[(k*6)+6]));
       std::vector<double> vEvIDBD1x;
       std::vector<double> vEdepBD1x;
       
@@ -498,8 +498,8 @@ void recoverMULTIeff(){
       
          for (int a=0; a<allvEvIDBD1mu[0].size(); a++) {
 
-            if (allvEdepSD1mu[i][a] < Ethr1) {
-//            if ((allvEdepSD1mu[i][a] < Ethr1) && (allvEdepSD2mu[i][a] < Ethr1)) {
+//            if (allvEdepSD1mu[i][a] < Ethr1) {
+            if ((allvEdepSD1mu[i][a] < Ethr1) && (allvEdepSD2mu[i][a] < Ethr1)) {
 		       if ((allvEdepBD1mu[i][a] > Ethr) && (allvEdepBD1mu[i][a] < Ethr22)) {
 			      if ((allvEdepSDTmu[i][a] < Ethr3) || (allvEdepSDBmu[i][a] < Ethr3) || (allvEdepSDLmu[i][a] < Ethr3) || (allvEdepSDRmu[i][a] < Ethr3)) {
 				     eXrayN2 += 1;
@@ -544,8 +544,8 @@ void recoverMULTIeff(){
       
          for (int a=0; a<allvEvIDBD1x[0].size(); a++) {
 
-            if (allvEdepSD1x[i][a] < Ethr1) {
-//            if ((allvEdepSD1x[i][a] < Ethr1) && (allvEdepSD2x[i][a] < Ethr1)) {
+//            if (allvEdepSD1x[i][a] < Ethr1) {
+            if ((allvEdepSD1x[i][a] < Ethr1) && (allvEdepSD2x[i][a] < Ethr1)) {
 		       if ((allvEdepBD1x[i][a] > Ethr) && (allvEdepBD1x[i][a] < Ethr22)) {
 			      if ((allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDLx[i][a] < Ethr3) || (allvEdepSDRx[i][a] < Ethr3)) {
 				     XXrayN2 += 1;
@@ -611,7 +611,7 @@ void recoverMULTIeff(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grPXXN2 = new TGraph(nsamps,Ethrmu,PXXarrN2);
-   grPXXN2->SetTitle("N2 normalisation {absolute} OR: 4-mm Al, 4-mm Al, 4-mm SciD_{1}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm Scintillator [10^5 events]");
+   grPXXN2->SetTitle("N2 normalisation {absolute} OR: BIG PLATES 4-mm Al, 4-mm Al, 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 20-mm Cu Cavity Ring [10^5 events]");
    grPXXN2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grPXXN2->GetXaxis()->SetRangeUser(0,2.05);
    grPXXN2->GetYaxis()->SetRangeUser(1e-4,1.1);
@@ -651,9 +651,9 @@ void recoverMULTIeff(){
    legPeXXXN2r->Draw();
 
 
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_5xSDs_Scintillator_MULTIplicities_eff.pdf");
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_5xSDs_Scintillator_MULTIplicities_eff.png");
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_5xSDs_Scintillator_MULTIplicities_eff.C");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.pdf");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.png");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.C");
   
 
  }
