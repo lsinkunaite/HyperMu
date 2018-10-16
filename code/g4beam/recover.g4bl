@@ -28,7 +28,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_GLASS_PLATE_Cav_$evts$name.root
+param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -51,7 +51,8 @@ box BGOBox width=400.0 height=400.0 length=300.0 material=BGO color=$BGOColor
 box SciPlateTB width=400.0 height=10.0 length=300.0 material=Scintillator color=$SciColor
 box SciPlateLR width=10.0 height=420.0 length=300.0 material=Scintillator color=$SciColor
 #Cavity
-tube CavTube innerRadius=100.0 outerRadius=140.0 initialPhi=0 finalPhi=360 length=20.0 material=GLASS_PLATE color=45/256,140/256,20/256,0.3
+#tube CavTube innerRadius=100.0 outerRadius=140.0 initialPhi=0 finalPhi=360 length=20.0 material=Cu color=45/256,140/256,20/256,0.3
+tube CavTube innerRadius=100.0 outerRadius=200.0 initialPhi=0 finalPhi=360 length=40.0 material=Al color=$AlColor
 
 
 detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
