@@ -61,23 +61,23 @@ void Recover_MULTI(){
    /*********************************/
 
    // Names of the files
-   std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay.root";
-   std::string filex = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade.root";
+   std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay.root";
+   std::string filex = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade.root";
 
-   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciD1.txt";
-   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciD1.txt";
-   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciD2.txt";
-   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciD2.txt";
-   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciDT.txt";
-   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciDT.txt";
-   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciDB.txt";
-   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciDB.txt";
-   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciDL.txt";
-   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciDL.txt";
-   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_SciDR.txt";
-   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_SciDR.txt";
-   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5mudecay_BGOD1.txt";
-   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_500mm_Scintillator_1e5goldcascade_BGOD1.txt";
+   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciD1.txt";
+   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciD1.txt";
+   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciD2.txt";
+   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciD2.txt";
+   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciDT.txt";
+   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciDT.txt";
+   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciDB.txt";
+   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciDB.txt";
+   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciDL.txt";
+   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciDL.txt";
+   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_SciDR.txt";
+   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_SciDR.txt";
+   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5mudecay_BGOD1.txt";
+   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_1e5goldcascade_BGOD1.txt";
 
    
    const int nbins = 150;
@@ -354,7 +354,7 @@ void Recover_MULTI(){
    c->Divide(7,3);
    c->cd(1);
    gPad->SetLogy();
-   hmuSciD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
+   hmuSciD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{1}");
    hmuSciD1->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD1->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD1->GetYaxis()->SetTitleOffset(2.0);
@@ -370,7 +370,7 @@ void Recover_MULTI(){
  
    c->cd(2);
    gPad->SetLogy();
-   hmuSciD2->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   hmuSciD2->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{2}");
    hmuSciD2->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD2->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD2->GetYaxis()->SetTitleOffset(2.0);
@@ -386,7 +386,7 @@ void Recover_MULTI(){
 
    c->cd(3);
    gPad->SetLogy();
-   hmuSciDT->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
+   hmuSciDT->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{T}");
    hmuSciDT->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDT->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDT->GetYaxis()->SetTitleOffset(2.0);
@@ -402,7 +402,7 @@ void Recover_MULTI(){
    
    c->cd(4);
    gPad->SetLogy();
-   hmuSciDB->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
+   hmuSciDB->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{B}");
    hmuSciDB->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDB->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDB->GetYaxis()->SetTitleOffset(2.0);
@@ -418,7 +418,7 @@ void Recover_MULTI(){
 
    c->cd(5);
    gPad->SetLogy();
-   hmuSciDL->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
+   hmuSciDL->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{L}");
    hmuSciDL->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDL->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDL->GetYaxis()->SetTitleOffset(2.0);
@@ -434,7 +434,7 @@ void Recover_MULTI(){
    
    c->cd(6);
    gPad->SetLogy();
-   hmuSciDR->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
+   hmuSciDR->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{R}");
    hmuSciDR->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDR->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDR->GetYaxis()->SetTitleOffset(2.0);
@@ -450,7 +450,7 @@ void Recover_MULTI(){
    
    c->cd(7);
    gPad->SetLogy();
-   hmuBGOD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
+   hmuBGOD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade BGOD_{1}");
    hmuBGOD1->GetXaxis()->SetTitle("Edep [MeV]");
    hmuBGOD1->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuBGOD1->GetYaxis()->SetTitleOffset(2.0);
@@ -466,7 +466,7 @@ void Recover_MULTI(){
 
    c->cd(8);
    gPad->SetLogy();
-   hmuSciD1Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
+   hmuSciD1Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{1}");
    hmuSciD1Z->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD1Z->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD1Z->GetYaxis()->SetTitleOffset(2.0);
@@ -482,7 +482,7 @@ void Recover_MULTI(){
  
    c->cd(9);
    gPad->SetLogy();
-   hmuSciD2Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   hmuSciD2Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{2}");
    hmuSciD2Z->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciD2Z->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciD2Z->GetYaxis()->SetTitleOffset(2.0);
@@ -498,7 +498,7 @@ void Recover_MULTI(){
 
    c->cd(10);
    gPad->SetLogy();
-   hmuSciDTZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
+   hmuSciDTZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{T}");
    hmuSciDTZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDTZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDTZ->GetYaxis()->SetTitleOffset(2.0);
@@ -514,7 +514,7 @@ void Recover_MULTI(){
    
    c->cd(11);
    gPad->SetLogy();
-   hmuSciDBZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
+   hmuSciDBZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{B}");
    hmuSciDBZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDBZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDBZ->GetYaxis()->SetTitleOffset(2.0);
@@ -530,7 +530,7 @@ void Recover_MULTI(){
    
    c->cd(12);
    gPad->SetLogy();
-   hmuSciDLZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
+   hmuSciDLZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{L}");
    hmuSciDLZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDLZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDLZ->GetYaxis()->SetTitleOffset(2.0);
@@ -546,7 +546,7 @@ void Recover_MULTI(){
    
    c->cd(13);
    gPad->SetLogy();
-   hmuSciDRZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
+   hmuSciDRZ->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{R}");
    hmuSciDRZ->GetXaxis()->SetTitle("Edep [MeV]");
    hmuSciDRZ->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuSciDRZ->GetYaxis()->SetTitleOffset(2.0);
@@ -562,7 +562,7 @@ void Recover_MULTI(){
    
    c->cd(14);
    gPad->SetLogy();
-   hmuBGOD1Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
+   hmuBGOD1Z->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade BGOD_{1}");
    hmuBGOD1Z->GetXaxis()->SetTitle("Edep [MeV]");
    hmuBGOD1Z->GetYaxis()->SetTitle("# of counts [a.u.]");
    hmuBGOD1Z->GetYaxis()->SetTitleOffset(2.0);
@@ -580,7 +580,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSD1 = new TGraph(nsamps,Ethrmu,EdepmuSciD1);
-   grmuSD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{1}");
+   grmuSD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{1}");
    grmuSD1->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSD1->GetXaxis()->SetRangeUser(0,2);
    grmuSD1->GetYaxis()->SetRangeUser(0,1);
@@ -601,7 +601,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSD2 = new TGraph(nsamps,Ethrmu,EdepmuSciD2);
-   grmuSD2->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{2}");
+   grmuSD2->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{2}");
    grmuSD2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSD2->GetXaxis()->SetRangeUser(0,2);
    grmuSD2->GetYaxis()->SetRangeUser(0,1);
@@ -622,7 +622,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDT = new TGraph(nsamps,Ethrmu,EdepmuSciDT);
-   grmuSDT->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{T}");
+   grmuSDT->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{T}");
    grmuSDT->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDT->GetXaxis()->SetRangeUser(0,2);
    grmuSDT->GetYaxis()->SetRangeUser(0,1);
@@ -643,7 +643,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDB = new TGraph(nsamps,Ethrmu,EdepmuSciDB);
-   grmuSDB->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{B}");
+   grmuSDB->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{B}");
    grmuSDB->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDB->GetXaxis()->SetRangeUser(0,2);
    grmuSDB->GetYaxis()->SetRangeUser(0,1);
@@ -664,7 +664,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDL = new TGraph(nsamps,Ethrmu,EdepmuSciDL);
-   grmuSDL->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{L}");
+   grmuSDL->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{L}");
    grmuSDL->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDL->GetXaxis()->SetRangeUser(0,2);
    grmuSDL->GetYaxis()->SetRangeUser(0,1);
@@ -685,7 +685,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuSDR = new TGraph(nsamps,Ethrmu,EdepmuSciDR);
-   grmuSDR->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SciD_{R}");
+   grmuSDR->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade SciD_{R}");
    grmuSDR->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuSDR->GetXaxis()->SetRangeUser(0,2);
    grmuSDR->GetYaxis()->SetRangeUser(0,1);
@@ -706,7 +706,7 @@ void Recover_MULTI(){
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grmuBD1 = new TGraph(nsamps,Ethrmu,EdepmuBGOD1);
-   grmuBD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 500-mm Scintillator: #mu-decay vs X-ray cascade SDBGOD_{1}");
+   grmuBD1->SetTitle("4-mm Al, 4-mm Al, 2 x 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity, 15-mm z-shift + 50-mm phi-shift: #mu-decay vs X-ray cascade BGOD_{1}");
    grmuBD1->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grmuBD1->GetXaxis()->SetRangeUser(0,2);
    grmuBD1->GetYaxis()->SetRangeUser(0,1);
@@ -724,9 +724,9 @@ void Recover_MULTI(){
    grxBD1->Draw("LP");
  
  
-   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_500mm_Scintillator_MULTI_Edep.pdf");
-   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_500mm_Scintillator_MULTI_Edep.png");
-   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_500mm_Scintillator_MULTI_Edep.C");
+   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTI_Edep.pdf");
+   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTI_Edep.png");
+   c->SaveAs("Recover_Planar_6xSDs_BGO_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTI_Edep.C");
 
 
 }

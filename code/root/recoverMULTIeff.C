@@ -71,21 +71,21 @@ void recoverMULTIeff(){
 
    // Names of the files
    // Mu-decay
-   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciD1.txt";
-   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciD2.txt";
-   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDT.txt";
-   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDB.txt";
-   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDL.txt";
-   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_SciDR.txt";
-   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5mudecay_BGOD1.txt";
+   std::string filemuSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciD1.txt";
+   std::string filemuSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciD2.txt";
+   std::string filemuSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciDT.txt";
+   std::string filemuSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciDB.txt";
+   std::string filemuSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciDL.txt";
+   std::string filemuSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_SciDR.txt";
+   std::string filemuBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5mudecay_BGOD1.txt";
    // X-ray cascade
-   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciD1.txt";
-   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciD2.txt";
-   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDT.txt";
-   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDB.txt";
-   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDL.txt";
-   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_SciDR.txt";
-   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_Cu_Cav_1e5goldcascade_BGOD1.txt";
+   std::string filexSciD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciD1.txt";
+   std::string filexSciD2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciD2.txt";
+   std::string filexSciDT = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciDT.txt";
+   std::string filexSciDB = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciDB.txt";
+   std::string filexSciDL = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciDL.txt";
+   std::string filexSciDR = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_SciDR.txt";
+   std::string filexBGOD1 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_shifted_1e5goldcascade_BGOD1.txt";
 
 
    // Vectors with filenames   
@@ -132,6 +132,13 @@ void recoverMULTIeff(){
    std::vector< std::vector<double> > PXevectorN2(Xfiles.size()/7,std::vector<double>(nsamps));
    std::vector< std::vector<double> > PXXvectorN2(Xfiles.size()/7,std::vector<double>(nsamps));      
 
+   // Normalisation 3 [abs = total modified (w\o SD1)]
+   std::vector< std::vector<double> > PeevectorN3(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PeXvectorN3(mufiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXevectorN3(Xfiles.size()/7,std::vector<double>(nsamps));
+   std::vector< std::vector<double> > PXXvectorN3(Xfiles.size()/7,std::vector<double>(nsamps));      
+
+
 
    // Mu-decay
    std::vector< std::vector< double > > allvEvIDSD1mu;
@@ -172,6 +179,11 @@ void recoverMULTIeff(){
    int XelecN2 = 0; // X-rays i-fied as electrons
    int eXrayN2 = 0; // electrons i-fied as X-rays
    int eelecN2 = 0; // electrons i-fied as electrons
+
+   int XXrayN3 = 0;
+   int XelecN3 = 0;
+   int eXrayN3 = 0;
+   int eelecN3 = 0;
    
    Ethrmu[0] = 0;
    for (int i=1; i<nsamps; i++) Ethrmu[i] = Ethrmu[i-1] + Estep;
@@ -517,8 +529,37 @@ void recoverMULTIeff(){
          //std::cout << "TEST: eX + ee = " << eXrayN2 << " + " << eelecN2 << " and total = " << eXrayN2+eelecN2 << " / " << countereeN2 << " = " << (eXrayN2+eelecN2)/((double)(countereeN2)) << std::endl;
          std::cout << "PeXvectorN2[" << i << "][" << m << "] = " << PeXvectorN2[i][m] << std::endl;
         
+
+
+         //--------------------------------------------------
+         // Normalisation 3 [absolute modified]
+         //--------------------------------------------------         
+         eXrayN3 = 0; eelecN3 = 0;
+
+         for (int a=0; a<allvEvIDBD1mu[0].size(); a++) {
+            if (allvEdepSD2mu[i][a] < Ethr1) {
+		       if ((allvEdepBD1mu[i][a] > Ethr) && (allvEdepBD1mu[i][a] < Ethr22)) {
+			      if ((allvEdepSDTmu[i][a] < Ethr3) || (allvEdepSDBmu[i][a] < Ethr3) || (allvEdepSDLmu[i][a] < Ethr3) || (allvEdepSDRmu[i][a] < Ethr3)) {
+				     eXrayN3 += 1;
+				  } else {
+				     eelecN3 += 1;
+	        	  }
+			   } else { eelecN3 += 1; }
+			} else { eelecN3 += 1; }
+	     }
+
+
+         PeXvectorN3[i][m] = eXrayN3/(double)(countereeN2);
+         PeevectorN3[i][m] = eelecN3/(double)(countereeN2); 
+        
+         //std::cout << "TEST: eX + ee = " << eXrayN2 << " + " << eelecN2 << " and total = " << eXrayN2+eelecN2 << " / " << countereeN2 << " = " << (eXrayN2+eelecN2)/((double)(countereeN2)) << std::endl;
+         std::cout << "PeXvectorN3[" << i << "][" << m << "] = " << PeXvectorN3[i][m] << std::endl;
+
+
       
       }   
+
+
         
    }
 
@@ -562,6 +603,31 @@ void recoverMULTIeff(){
          //std::cout << "TEST: XX + Xe = " << XXrayN2 << " + " << XelecN2 << " and total = " << XXrayN2+XelecN2 << " / " << counterXXN2 << " = " << (XXrayN2+XelecN2)/((double)(counterXXN2)) << std::endl;
          std::cout << "PXXvectorN2[" << i << "][" << m << "] = " << PXXvectorN2[i][m] << std::endl;
 
+
+
+         //--------------------------------------------------
+         // Normalisation 3 [absolute modified]
+         //-------------------------------------------------- 
+         XXrayN3 = 0; XelecN3 = 0;
+      
+         for (int a=0; a<allvEvIDBD1x[0].size(); a++) {
+            if (allvEdepSD2x[i][a] < Ethr1) {
+		       if ((allvEdepBD1x[i][a] > Ethr) && (allvEdepBD1x[i][a] < Ethr22)) {
+			      if ((allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDTx[i][a] < Ethr3) || (allvEdepSDLx[i][a] < Ethr3) || (allvEdepSDRx[i][a] < Ethr3)) {
+				     XXrayN3 += 1;
+				  } else {
+				     XelecN3 += 1;
+				  } else { XelecN3 += 1; }
+			   } else {XelecN3 += 1; }
+			} else {XelecN3 += 1; }
+		 }
+		 
+         PXXvectorN3[i][m] = XXrayN3/(double)(counterXXN2);
+         PXevectorN3[i][m] = XelecN3/(double)(counterXXN2); 
+
+         //std::cout << "TEST: XX + Xe = " << XXrayN2 << " + " << XelecN2 << " and total = " << XXrayN2+XelecN2 << " / " << counterXXN2 << " = " << (XXrayN2+XelecN2)/((double)(counterXXN2)) << std::endl;
+         std::cout << "PXXvectorN3[" << i << "][" << m << "] = " << PXXvectorN3[i][m] << std::endl;
+
         
       
       } 
@@ -589,6 +655,15 @@ void recoverMULTIeff(){
    // Ratio of N2 [absolute]
    float PeXXXarrN2r[nsamps] = {};
    
+   // Normalisation 3 [abs modified]
+   float PeXarrN3[nsamps] = {}; // Mu-decay 
+   float PeearrN3[nsamps] = {};
+   float PXXarrN3[nsamps] = {}; // X-ray cascade
+   float PXearrN3[nsamps] = {};
+   // Ratio of N3 [absolute]
+   float PeXXXarrN3r[nsamps] = {};
+
+
        
    for (int i=0; i<nsamps; i++) {
       // Normalisation 2 [absolute]
@@ -599,6 +674,16 @@ void recoverMULTIeff(){
       // Ratio of N2 [absolute]
       PeXXXarrN2r[i] = (PeXvectorN2[0][i])/(double)(PXXvectorN2[0][i]);
       
+      // Normalisation 3 [absolute modified]
+      PeXarrN3[i] = PeXvectorN3[0][i];
+      PeearrN3[i] = PeevectorN3[0][i];
+      PXXarrN3[i] = PXXvectorN3[0][i];
+      PXearrN3[i] = PXevectorN3[0][i];
+      // Ratio of N3 [absolute modified]
+      PeXXXarrN3r[i] = (PeXvectorN3[0][i])/(double)(PXXvectorN3[0][i]);
+      
+      
+      
       
    }	   
 	   
@@ -606,12 +691,12 @@ void recoverMULTIeff(){
    
    
    TCanvas *c = new TCanvas("c","E_{THR}",800,600);
-   c->Divide(2,1);
+   c->Divide(2,2);
    c->cd(1);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grPXXN2 = new TGraph(nsamps,Ethrmu,PXXarrN2);
-   grPXXN2->SetTitle("N2 normalisation {absolute} OR: BIG PLATES 4-mm Al, 4-mm Al, 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 20-mm Cu Cavity Ring [10^5 events]");
+   grPXXN2->SetTitle("N2 normalisation {absolute} OR: 4-mm Al, 4-mm Al, 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity Ring, 50-mm #Phi-shift [10^5 events]");
    grPXXN2->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grPXXN2->GetXaxis()->SetRangeUser(0,2.05);
    grPXXN2->GetYaxis()->SetRangeUser(1e-4,1.1);
@@ -650,10 +735,47 @@ void recoverMULTIeff(){
    legPeXXXN2r->AddEntry(grPeXXXN2r,"P_{e->X} / P_{X->X}","lp");
    legPeXXXN2r->Draw();
 
+   c->cd(3);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   TGraph *grPXXN3 = new TGraph(nsamps,Ethrmu,PXXarrN3);
+   grPXXN3->SetTitle("N2 normalisation {no SD_{1}} OR: 4-mm Al, 4-mm Al, 4-mm SciD_{1,2}, 4 x 10-mm SciD_{T,B,L,R}, 300-mm BGO, 40-mm Al Cavity Ring, 50-mm #Phi-shift [10^5 events]");
+   grPXXN3->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   grPXXN3->GetXaxis()->SetRangeUser(0,2.05);
+   grPXXN3->GetYaxis()->SetRangeUser(1e-4,1.1);
+   grPXXN3->GetYaxis()->SetTitle("P_{e/X->X}(E_{THR})");
+   grPXXN3->GetYaxis()->SetTitleOffset(1.8);
+   grPXXN3->SetLineColor(kRed);
+   grPXXN3->SetLineWidth(3);
+   grPXXN3->Draw("ALP");
+   TGraph *grPeXN3 = new TGraph(nsamps,Ethrmu,PeXarrN3); 
+   grPeXN3->SetLineColor(kBlack);
+   grPeXN3->SetLineWidth(3);
+   grPeXN3->Draw("LP");
+   legPXXPeXN3 = new TLegend(0.2,-0.005,0.4,0.08);
+   legPXXPeXN3->AddEntry(grPXXN3,"P_{X->X}","lp");
+   legPXXPeXN3->AddEntry(grPeXN3,"P_{e->X}","lp");
+   legPXXPeXN3->Draw();
 
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.pdf");
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.png");
-   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_Cu_Cav_MULTIplicities_eff.C");
+   c->cd(4);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   TGraph *grPeXXXN3r = new TGraph(nsamps,Ethrmu,PeXXXarrN3r);
+   grPeXXXN3r->SetTitle("Ratio of P_{e->X} / P_{X->X} vs (E_{THR})");
+   grPeXXXN3r->GetXaxis()->SetRangeUser(0,2.05);
+   grPeXXXN3r->GetYaxis()->SetTitle("#frac{P_{e->X}}{P_{X->X}}(E_{THR})");
+   grPeXXXN3r->GetYaxis()->SetTitleOffset(1.6);
+   grPeXXXN3r->GetYaxis()->SetMoreLogLabels(1);
+   grPeXXXN3r->SetLineColor(kBlue+1);
+   grPeXXXN3r->SetLineWidth(3);
+   grPeXXXN3r->Draw("ALP");
+   legPeXXXN3r = new TLegend(0.2,-0.005,0.4,0.08);
+   legPeXXXN3r->AddEntry(grPeXXXN3r,"P_{e->X} / P_{X->X}","lp");
+   legPeXXXN3r->Draw();
+
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTIplicities_eff.pdf");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTIplicities_eff.png");
+   c->SaveAs("Recover_Planar_4mm_Al_4mm_Al_6xSDs_300mm_BGO_40mm_Al_Cav_50mm_phi_shift_MULTIplicities_eff.C");
   
 
  }
