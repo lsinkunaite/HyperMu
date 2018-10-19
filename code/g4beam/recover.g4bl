@@ -28,7 +28,9 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_phi_z_shifted_$evts$name.root
+param zshift=0.0
+param phishift=100.0
+param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_100mm_phi_shifted_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -52,7 +54,7 @@ box SciPlateTB width=400.0 height=10.0 length=300.0 material=Scintillator color=
 box SciPlateLR width=10.0 height=420.0 length=300.0 material=Scintillator color=$SciColor
 #Cavity
 #tube CavTube innerRadius=100.0 outerRadius=140.0 initialPhi=0 finalPhi=360 length=20.0 material=Cu color=45/256,140/256,20/256,0.3
-tube CavTube innerRadius=150.0 outerRadius=250.0 initialPhi=0 finalPhi=360 length=40.0 material=Al color=$AlColor
+tube CavTube innerRadius=(100.0+$phishift) outerRadius=(200.0+$phishift) initialPhi=0 finalPhi=360 length=40.0 material=Al color=$AlColor
 
 
 detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
@@ -67,12 +69,12 @@ detector BGODet1 solid=BGOBox format=rootExtended material=BGO color=$BGOColor
 #place CuBox z=33.0
 #place StStBox z=33.0
 place CavTube z=0
-place AlBox2 z=48.0
-place SciDet1 z=52.0
-place SciDet2 z=56.0
-place AlBox z=60.0
-place BGODet1 z=212.0
-place SciDetT z=212.0 y=205.0
-place SciDetB z=212.0 y=-205.0
-place SciDetL z=212.0 x=205.0
-place SciDetR z=212.0 x=-205.0
+place AlBox2 z=(33.0+$zshift)
+place SciDet1 z=(37.0+$zshift)
+place SciDet2 z=(41.0+$zshift)
+place AlBox z=(45.0+$zshift)
+place BGODet1 z=(197.0+$zshift)
+place SciDetT z=(197.0+$zshift) y=205.0
+place SciDetB z=(197.0+$zshift) y=-205.0
+place SciDetL z=(197.0+$zshift) x=205.0
+place SciDetR z=(197.0+$zshift) x=-205.0
