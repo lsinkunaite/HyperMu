@@ -28,9 +28,9 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param zshift=0.0
-param phishift=100.0
-param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_100mm_phi_shifted_$evts$name.root
+param zshift=30.0
+param phishift=25.0
+param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_25mm_phi_30mm_z_shifted_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
