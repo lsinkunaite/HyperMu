@@ -1,0 +1,36 @@
+G4BL_DIR=/home/laura/programs/g4bl/build
+G4beamline Process ID 17427
+
+*************************************************************
+ g4beamline version: 3.04                        (Jun 11 2018)
+                      Copyright : Tom Roberts, Muons, Inc.
+                        License : Gnu Public License
+                            WWW : http://g4beamline.muonsinc.com
+*************************************************************
+ Geant4 version Name: geant4-10-03-patch-03    (20-October-2017)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+param        viewer        best,1
+geometry                   nPoints=100 printGeometry=0 visual=0
+                           tolerance=0.002
+**************************************************************************
+*** G4Exception: printError
+***    severity: Warning
+***   issued by: 
+*** description: Cannot open file ''
+**************************************************************************
+**************************************************************************
+*** G4Exception: Input Errors
+***    severity: Fatal Exception
+***   issued by: main
+*** description: There were 1 errors in the input
+**************************************************************************
+g4beamline: attempting to close up after fatal G4Exception...
+
+Exceptions: 1 Fatal, 0 Events Aborted, 0 Stuck Tracks (stopped), 1 Warnings
+      1 times: Input Errors
+      1 times: printError
+g4beamline: simulation aborted
