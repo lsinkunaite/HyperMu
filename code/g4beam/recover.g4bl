@@ -18,7 +18,7 @@ include definitions.g4bl    #definitions
 #number of simulated events
 param evts=1e5
 
-physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest spinTracking=1
 
 #Define some parameters
 param name=mudecay
@@ -29,13 +29,13 @@ param size=200
 param worldMaterial=Vacuum maxStep=100.0
 param zshift=0
 param phishift=0
-param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_0mm_phi_0mm_z_shifted_polX1Y1Z1_$evts$name.root
+param histoFile=../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_0mm_phi_0mm_z_shifted_polX0Y0Z0_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 
 #Define source
-beam gaussian polarization=1,1,1 beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+beam gaussian polarization=0,0,0 beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 #Geometry
 box SciBox width=400.0 height=400.0 length=4.0 material=Scintillator color=$SciColor
