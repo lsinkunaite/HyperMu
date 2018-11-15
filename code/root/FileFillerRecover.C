@@ -48,6 +48,7 @@ void FileFillerRecover(){
 		 //std::string filex = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_fixed_1e5goldcascade.root";
 		 // Mu-decay
 		 //std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_fixed_1e5mudecay.root";
+         std::string filemu0 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_polX0Y0Z0_noST_1e5mudecay.root";
          std::string filemu = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_polX0Y0Z0_1e5mudecay.root";
          std::string filemu2 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_polX0Y0Z1_1e5mudecay.root";
          std::string filemu3 = "../../simdata/recover/6xSciDs_4mm_Al_4mm_Al_300mm_BGO_40mm_Al_Cav_"+TString(phishiftss.str())+"mm_phi_"+TString(zshiftss.str())+"mm_z_shifted_polX0Y1Z0_1e5mudecay.root";
@@ -61,6 +62,7 @@ void FileFillerRecover(){
 		 std::vector<std::string> mufiles;
 		   
 //		 Xfiles.push_back(filex);
+         mufiles.push_back(filemu0);
 		 mufiles.push_back(filemu);
 		 mufiles.push_back(filemu2);
 		 mufiles.push_back(filemu3);
