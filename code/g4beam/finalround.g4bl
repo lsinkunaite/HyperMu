@@ -1,0 +1,89 @@
+##########################################################
+##                                                      ##
+##                   finalround.g4bl                    ##
+##                                                      ##
+##  Simulation of a beam source of:                     ##
+##    (1) muon decay                                    ##
+##    (2) gold cascade                                  ##
+##  positioned at the center of two rectangular-shaped  ##
+##  5-mm plastic scintillator detectors plus a 250-mm/  ##
+##  500-mm/750-mm plastic scintillator detector, with   ##
+##  a 3-mm/6-mm Aluminium layer in between. 40-mm gap   ##
+##  between the Al plates; planar geometry.             ##
+##                                                      ##
+##########################################################
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e5
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+
+#Define some parameters
+param name=mudecay
+#param name=goldcascade
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param zshift=0
+param phishift=0
+param histoFile=../../simdata/final/round_both_sides_NaI_$evts$name.root
+
+trackcuts keep=e-,e+,gamma,mu-,mu+
+
+# Define source
+# (1) muon decay
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+
+
+
+#Geometry
+tube SciBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=4.0 material=Scintillator color=$SciColor
+tube SciBoxOut innerRadius=0.0 outerRadius=10.0 initialPhi=0 finalPhi=360 length=4.01 material=Vacuum color=$VacColor
+boolean op=subtraction SciBox2 SciBox SciBoxOut material=Scintillator color=$SciColor
+tube AlBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
+tube BGOSciBox innerRadius=0.0 outerRadius=(100.0+$phishift) length=250.0 material=Scintillator color=$SciColor
+tube BGONaIBox innerRadius=0.0 outerRadius=(100.0+$phishift) length=250.0 material=SODIUM_IODIDE color=$BGOColor
+tube BGOSciBox2 innerRadius=34.0 outerRadius=(100.0+$phishift) length=250.0 material=Scintillator color=$SciColor
+tube BGONaIBox2 innerRadius=34.0 outerRadius=(100.0+$phishift) length=250.0 material=SODIUM_IODIDE color=$BGOColor
+tube SciBox3 innerRadius=30.0 outerRadius=34.0 initialPhi=0 finalPhi=360 length=250.0 material=Al color=$AlColor
+
+tube SciSurround innerRadius=(100.0+$phishift) outerRadius=(110.0+$phishift) initialPhi=0 finalPhi=360 length=250.0 material=Scintillator color=$SciColor
+tube AlTube innerRadius=120.0 outerRadius=130.0 initialPhi=0 finalPhi=360 length=588.0 material=Al color=$AlColor
+
+#Cavity
+tube CavTube innerRadius=(50.0+$phishift) outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=40.0 material=Al color=$AlColor
+tube CavPlate innerRadius=0.0 outerRadius=50.0 initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
+
+
+detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
+detector SciDet2 solid=SciBox2 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet3 solid=SciBox3 format=rootExtended material=Scintillator color=$SciColor
+detector SciDetSur1 solid=SciSurround format=rootExtended material=Scintillator color=$SciColor
+detector SciDetSur2 solid=SciSurround format=rootExtended material=Scintillator color=$SciColor
+detector BGOSciDet1 solid=BGOSciBox format=rootExtended material=Scintillator color=$SciColor
+detector BGONaIDet1 solid=BGONaIBox format=rootExtended material=SODIUM_IODIDE color=$BGOColor
+detector BGOSciDet2 solid=BGOSciBox2 format=rootExtended material=Scintillator color=$SciColor
+detector BGONaIDet2 solid=BGONaIBox2 format=rootExtended material=SODIUM_IODIDE color=$BGOColor
+
+place CavTube z=0
+place CavPlate z=9.0
+place CavPlate z=-9.0
+place AlBox z=34.0
+place SciDet1 z=(42.0+$zshift)
+place SciDet2 z=(-42.0+$zshift)
+#place BGOSciDet1 z=(169.0+$zshift)
+place BGONaIDet1 z=(169.0+$zshift)
+#place BGOSciDet2 z=(-169.0-$zshift)
+place BGONaIDet2 z=(-169.0-$zshift)
+place SciDet3 z=(-169.0-$zshift)
+place SciDetSur1 z=(169.0+$zshift)
+place SciDetSur2 z=(-169.0-$zshift)
+place AlTube z=0
