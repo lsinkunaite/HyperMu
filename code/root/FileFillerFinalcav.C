@@ -27,24 +27,24 @@ void FileFillerFinalcav(){
    // Path name
    std::string path = "../../simdata/final/";
    int pathL = path.length();
-   std::string phishift = "50";
-   std::string zshift = "30";
+   std::string phishift = "0";
+   std::string zshift = "0";
    std::string material = "Cu";	
 	
    // X-ray cascade
-   std::string filex = path+material+"_cav_NaI_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade.root";
-   std::string filex2 = path+material+"_cav_NaI_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade2.root";
-   std::string filex3 = path+material+"_cav_NaI_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade3.root";
+   std::string filex = path+material+"_cav_NaI_noveto_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade.root";
+//   std::string filex2 = path+material+"_cav_NaI_noveto"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade2.root";
+//   std::string filex3 = path+material+"_cav_NaI_noveto"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5goldcascade3.root";
    
    // Mu-decay
-   std::string filemu = path+material+"_cav_NaI_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5mudecay.root";
+   std::string filemu = path+material+"_cav_NaI_noveto_"+phishift+"mm_phi_"+zshift+"mm_z_no_Al_1e5mudecay.root";
    
    std::vector<std::string> Xfiles;
    std::vector<std::string> mufiles;
 		   
    Xfiles.push_back(filex);
-   Xfiles.push_back(filex2);
-   Xfiles.push_back(filex3);
+//   Xfiles.push_back(filex2);
+//   Xfiles.push_back(filex3);
    mufiles.push_back(filemu);
 
    //-------------------------------------------------------------------
@@ -65,7 +65,7 @@ void FileFillerFinalcav(){
 	  TTree *tSciDS2 = (TTree*)fmu->Get("Detector/SciDetSur2"); // U-stream
 	  TTree *tBGOD1 = (TTree*)fmu->Get("Detector/BGONaIDet1"); // D-stream
 	  TTree *tBGOD2 = (TTree*)fmu->Get("Detector/BGONaIDet2"); // U-stream
-	  TTree *tSciVeto = (TTree*)fmu->Get("Detector/SciVetoDet"); 
+//	  TTree *tSciVeto = (TTree*)fmu->Get("Detector/SciVetoDet"); 
 	  	  
 	  float EventID,Edep; 
 
@@ -83,8 +83,8 @@ void FileFillerFinalcav(){
 	  tBGOD1->SetBranchAddress("Edep",&Edep);
 	  tBGOD2->SetBranchAddress("EventID",&EventID);
 	  tBGOD2->SetBranchAddress("Edep",&Edep);
-	  tSciVeto->SetBranchAddress("EventID",&EventID);
-	  tSciVeto->SetBranchAddress("Edep",&Edep);
+//	  tSciVeto->SetBranchAddress("EventID",&EventID);
+//	  tSciVeto->SetBranchAddress("Edep",&Edep);
 
 		  
 	  //----------------------------------------------------------------
@@ -179,7 +179,7 @@ void FileFillerFinalcav(){
 	  tmpBGOD2.close();
 	  std::cout << std::endl << "File: " << ((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpBGOD2.txt" << " written!" << std::endl;
 
-
+/*
       // SciVeto 
 	  ofstream tmpSciVeto;
 	  tmpSciVeto.open(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciVeto.txt"));
@@ -190,7 +190,7 @@ void FileFillerFinalcav(){
 	  }
 	  tmpSciVeto.close();
 	  std::cout << std::endl << "File: " << ((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciVeto.txt" << " written!" << std::endl;
-				
+*/				
 						   
 	  //----------------------------------------------------------------
 	  //                          Rewriting
@@ -465,7 +465,7 @@ void FileFillerFinalcav(){
 	  }		 
 
 
-
+/*
       // SciVeto     
 	  std::ifstream inputSciVeto(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciVeto.txt"));
 	  std::string lineSciVeto;
@@ -501,7 +501,7 @@ void FileFillerFinalcav(){
 	  if ((remove(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciVeto.txt"))) == 0) {
 	     std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciVeto.txt") << " generated! " << std::endl;
 	  }		 
-		 
+*/		 
    }
 
 
@@ -524,7 +524,7 @@ void FileFillerFinalcav(){
 	  TTree *txSciDS2 = (TTree*)fx->Get("Detector/SciDetSur2"); // U-stream
 	  TTree *txBGOD1 = (TTree*)fx->Get("Detector/BGONaIDet1"); // D-stream
 	  TTree *txBGOD2 = (TTree*)fx->Get("Detector/BGONaIDet2"); // U-stream
-      TTree *txSciVeto = (TTree*)fx->Get("Detector/SciVetoDet"); 
+//      TTree *txSciVeto = (TTree*)fx->Get("Detector/SciVetoDet"); 
 			  
 	  float EventID,Edep; 
 
@@ -542,8 +542,8 @@ void FileFillerFinalcav(){
 	  txBGOD1->SetBranchAddress("Edep",&Edep);
 	  txBGOD2->SetBranchAddress("EventID",&EventID); // U-stream
 	  txBGOD2->SetBranchAddress("Edep",&Edep);
-	  txSciVeto->SetBranchAddress("EventID",&EventID); 
-	  txSciVeto->SetBranchAddress("Edep",&Edep);
+//	  txSciVeto->SetBranchAddress("EventID",&EventID); 
+//	  txSciVeto->SetBranchAddress("Edep",&Edep);
 		  
 		  
 	  //----------------------------------------------------------------
@@ -637,7 +637,7 @@ void FileFillerFinalcav(){
 	  tmpxBGOD2.close();
 	  std::cout << std::endl << "File: " << ((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxBGOD2.txt" << " written!" << std::endl;
 		  
-
+/*
 	  // SciVeto 
 	  ofstream tmpxSciVeto;
 	  tmpxSciVeto.open(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciVeto.txt"));
@@ -648,7 +648,7 @@ void FileFillerFinalcav(){
 	  }
 	  tmpxSciVeto.close();
 	  std::cout << std::endl << "File: " << ((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciVeto.txt" << " written!" << std::endl;
-
+*/
 		   
 	  //----------------------------------------------------------------
 	  //                          Rewriting
@@ -924,7 +924,7 @@ void FileFillerFinalcav(){
 	  }
 
 
-
+/*
       // SciVeto     
 	  std::ifstream inputSciVetox(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciVeto.txt"));
 	  std::string lineSciVetox;
@@ -960,7 +960,7 @@ void FileFillerFinalcav(){
 	  if ((remove(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciVeto.txt"))) == 0) {
 	     std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciVeto.txt") << " generated! " << std::endl;
 	  }
-		 
+*/		 
    }
 
 
