@@ -30,7 +30,7 @@ param size=200
 param worldMaterial=Vacuum maxStep=100.0
 param zshift=0
 param phishift=0
-param histoFile=../../simdata/final/Glass_cav_Sci_0mm_phi_0mm_z_dB_7mm_$evts$name.root
+param histoFile=../../simdata/final/Cu_cav_Sci_0mm_phi_0mm_z_dB_10mm_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -45,22 +45,23 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 
 #Geometry
-tube SciBox innerRadius=0.0 outerRadius=(200.0+$phishift) initialPhi=0 finalPhi=360 length=7.0 material=Scintillator color=$SciColor
-tube SciBoxOut innerRadius=0.0 outerRadius=10.0 initialPhi=0 finalPhi=360 length=7.01 material=Vacuum color=$VacColor
-boolean op=subtraction SciBox2 SciBox SciBoxOut material=Scintillator color=$SciColor
+tube SciBox innerRadius=0.0 outerRadius=(200.0+$phishift) initialPhi=0 finalPhi=360 length=10.0 material=Scintillator color=$SciColor
+#tube SciBoxOut innerRadius=0.0 outerRadius=10.0 initialPhi=0 finalPhi=360 length=7.01 material=Vacuum color=$VacColor
+#boolean op=subtraction SciBox2 SciBox SciBoxOut material=Scintillator color=$SciColor
+tube SciBox2 innerRadius=10.0 outerRadius=(200.0+$phishift) initialPhi=0 finalPhi=360 length=10.0 material=Scintillator color=$SciColor
 tube AlBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
 tube BGOSciBox innerRadius=0.0 outerRadius=(200.0+$phishift) length=500.0 material=Scintillator color=$SciColor
 tube BGONaIBox innerRadius=0.0 outerRadius=(200.0+$phishift) length=250.0 material=SODIUM_IODIDE color=$BGOColor
-tube BGOSciBox2 innerRadius=37.0 outerRadius=(200.0+$phishift) length=500.0 material=Scintillator color=$SciColor
+tube BGOSciBox2 innerRadius=40.0 outerRadius=(200.0+$phishift) length=500.0 material=Scintillator color=$SciColor
 tube BGONaIBox2 innerRadius=34.0 outerRadius=(200.0+$phishift) length=250.0 material=SODIUM_IODIDE color=$BGOColor
-tube SciBox3 innerRadius=30.0 outerRadius=37.0 initialPhi=0 finalPhi=360 length=500.0 material=Al color=$AlColor
+tube SciBox3 innerRadius=30.0 outerRadius=40.0 initialPhi=0 finalPhi=360 length=500.0 material=Al color=$AlColor
 
-tube SciSurround innerRadius=(200.0+$phishift) outerRadius=(210.0+$phishift) initialPhi=0 finalPhi=360 length=507.0 material=Scintillator color=$SciColor
+tube SciSurround innerRadius=(200.0+$phishift) outerRadius=(210.0+$phishift) initialPhi=0 finalPhi=360 length=510.0 material=Scintillator color=$SciColor
 tube SciVeto innerRadius=(200.0+$phishift) outerRadius=(210.0+$phishift) initialPhi=0 finalPhi=360 length=80.0 material=Scintillator color=$SciColor
 tube AlTube innerRadius=220.0 outerRadius=230.0 initialPhi=0 finalPhi=360 length=588.0 material=Al color=$AlColor
 
 #Cavity
-tube CavTube innerRadius=(60.0+$phishift) outerRadius=(90.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Pyrex_Glass color=0.1,0.8,0.4,1.0
+tube CavTube innerRadius=(60.0+$phishift) outerRadius=(90.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Cu color=0.1,0.8,0.4,1.0
 tube AlTubeD innerRadius=(50.0+$phishift) outerRadius=(60.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Al color=$AlColor
 tube AlTubeU innerRadius=(90.0+$phishift) outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Al color=$AlColor
 tube AlTubeS innerRadius=(50.0+$phishift) outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=10.0 material=Al color=$AlColor
@@ -90,14 +91,14 @@ place CavPlate z=-9.0
 
 place AlBox z=34.0
 
-place SciDet1 z=(43.5+$zshift)
-place SciDet2 z=(-43.5-$zshift)
+place SciDet1 z=(45.0+$zshift)
+place SciDet2 z=(-45.0-$zshift)
 #place BGOSciDet1 z=(169.0+$zshift)
-place BGONaIDet1 z=(297.0+$zshift)
+place BGONaIDet1 z=(300.0+$zshift)
 #place BGOSciDet2 z=(-169.0-$zshift)
-place BGONaIDet2 z=(-297.0-$zshift)
-place SciDet3 z=(-297.0-$zshift)
-place SciDetSur1 z=(293.5+$zshift)
-place SciDetSur2 z=(-293.5-$zshift)
+place BGONaIDet2 z=(-300.0-$zshift)
+place SciDet3 z=(-300.0-$zshift)
+place SciDetSur1 z=(295.0+$zshift)
+place SciDetSur2 z=(-295.0-$zshift)
 place SciVetoDet z=0
 #place AlTube z=0
