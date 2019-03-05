@@ -1,0 +1,104 @@
+##########################################################
+##                                                      ##
+##                     gascav.g4bl                      ##
+##                                                      ##
+##  Simulation of a beam source of:                     ##
+##    (1) muon decay                                    ##
+##    (2) gold cascade                                  ##
+##  positioned at the center of two rectangular-shaped  ##
+##  5-mm plastic scintillator detectors plus a 250-mm/  ##
+##  500-mm/750-mm plastic scintillator detector, with   ##
+##  a 3-mm/6-mm Aluminium layer in between. 40-mm gap   ##
+##  between the Al plates; planar geometry.             ##
+##                                                      ##
+##########################################################
+
+include definitions.g4bl    #definitions
+
+#number of simulated events
+param evts=1e5
+
+physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
+
+#Define some parameters
+param name=mudecay
+#param name=goldcascade
+
+param P=0
+param size=200
+#param steppingVerbose=1
+param worldMaterial=Vacuum maxStep=100.0
+param zshift=0
+param phishift=0
+param dB=10
+param dA1=400
+param histoFile=../../simdata/gas/Cu_cav_dB_10mm_dA1_400mm_with_25mum_wires_$evts$name.root
+
+trackcuts keep=e-,e+,gamma,mu-,mu+
+
+# Define source
+# (1) muon decay
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+
+# (2) gold cascade
+#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+
+#Geometry
+tube SciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=$dB material=Ar color=$SciColor
+tube SciBox2 innerRadius=10.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=$dB material=Ar color=$SciColor
+tube AlBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
+tube BGOSciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) length=500.0 material=Scintillator color=$SciColor
+tube BGOSciBox2 innerRadius=(30.0+($dB)) outerRadius=((0.5*($dA1))+$phishift) length=500.0 material=Scintillator color=$SciColor
+tube SciBox3 innerRadius=30.0 outerRadius=(30.0+($dB)) initialPhi=0 finalPhi=360 length=500.0 material=Ar color=$SciColor
+tube Wire innerRadius=0 outerRadius=0.025 initialPhi=0 finalPhi=360 length=400 material=Ti color=0.2,0.8,0.8,1.0
+
+#tube SciSurround innerRadius=(200.0+$phishift) outerRadius=(210.0+$phishift) initialPhi=0 finalPhi=360 length=510.0 material=Scintillator color=$SciColor
+#tube SciVeto innerRadius=(200.0+$phishift) outerRadius=(210.0+$phishift) initialPhi=0 finalPhi=360 length=80.0 material=Scintillator color=$SciColor
+#tube AlTube innerRadius=220.0 outerRadius=230.0 initialPhi=0 finalPhi=360 length=588.0 material=Al color=$AlColor
+
+#Cavity
+tube CavTube innerRadius=(60.0+$phishift) outerRadius=(90.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Cu color=0.1,0.8,0.4,1.0
+tube AlTubeD innerRadius=(50.0+$phishift) outerRadius=(60.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Al color=$AlColor
+tube AlTubeU innerRadius=(90.0+$phishift) outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=15.0 material=Al color=$AlColor
+tube AlTubeS innerRadius=(50.0+$phishift) outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=10.0 material=Al color=$AlColor
+
+tube CavPlate innerRadius=0.0 outerRadius=(50.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
+
+
+#detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
+#detector SciDet2 solid=SciBox2 format=rootExtended material=Scintillator color=$SciColor
+#detector SciDet3 solid=SciBox3 format=rootExtended material=Scintillator color=$SciColor
+detector SciDet1 solid=SciBox format=rootExtended material=Ar color=0.9,0.6,0.1,1.0
+detector SciDet2 solid=SciBox2 format=rootExtended material=Ar color=0.9,0.6,0.1,1.0
+detector SciDet3 solid=SciBox3 format=rootExtended material=Ar color=0.9,0.6,0.1,1.0
+#detector SciDetSur1 solid=SciSurround format=rootExtended material=Scintillator color=$SciColor
+#detector SciDetSur2 solid=SciSurround format=rootExtended material=Scintillator color=$SciColor
+detector BGONaIDet1 solid=BGOSciBox format=rootExtended material=Scintillator color=$SciColor
+detector BGONaIDet2 solid=BGOSciBox2 format=rootExtended material=Scintillator color=$SciColor
+detector SciVetoDet solid=SciVeto format=rootExtended material=Scintillator color=$SciColor
+
+place AlTubeD z=0
+place CavTube z=0
+place AlTubeU z=0
+place AlTubeS z=-12.5
+place AlTubeS z=12.5
+
+place CavPlate z=9.0
+place CavPlate z=-9.0
+
+place AlBox z=34.0
+
+
+do i 0 40 1
+#place Wire z=(40.0+(0.5*($dB))+$zshift) x=-200.0+10*$i rotation=X90
+place Wire z=(39.975+$zshift) x=-200.0+10*$i rotation=X90
+enddo
+
+place SciDet1 z=(40.0+(0.5*($dB))+$zshift)
+place SciDet2 z=(-40.0-(0.5*($dB))-$zshift)
+place BGONaIDet1 z=(290.0+$dB+$zshift)
+place BGONaIDet2 z=(-290.0-$dB-$zshift)
+place SciDet3 z=(-290.0-$dB-$zshift)
+##place SciDetSur1 z=(295.0+$zshift)
+##place SciDetSur2 z=(-295.0-$zshift)
+##place SciVetoDet z=0
