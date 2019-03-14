@@ -25,18 +25,20 @@ using namespace std;
 void FileFillerGas(){	
 	
    // Path name
-   std::string path = "../../simdata/gas/";
+   std::string path = "../../simdata/order/";
    int pathL = path.length();
    std::string phishift = "0";
    std::string zshift = "0";
-   std::string material = "Cu";	
-   std::string wire = "with_250mum_wires";
+   std::string cavmaterial = "Cu";
+   std::string BGOmaterial = "plastic";	
+   std::string dA1 = "500";
+   std::string dL1 = "450";
 	
    // X-ray cascade
-   std::string filex = path+material+"_cav_dB_10mm_dA1_400mm_"+wire+"_1e5goldcascade.root";
+   std::string filex = path+cavmaterial+"_cav_"+BGOmaterial+"_dA1_"+dA1+"mm_dL1_"+dL1+"mm_1e5goldcascade.root";
    
    // Mu-decay
-   std::string filemu = path+material+"_cav_dB_10mm_dA1_400mm_"+wire+"_1e5mudecay.root";
+   std::string filemu = path+cavmaterial+"_cav_"+BGOmaterial+"_dA1_"+dA1+"mm_dL1_"+dL1+"mm_1e5mudecay.root";
    
    std::vector<std::string> Xfiles;
    std::vector<std::string> mufiles;
