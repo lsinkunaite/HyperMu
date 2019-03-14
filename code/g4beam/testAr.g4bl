@@ -32,8 +32,7 @@ param zshift=0
 param phishift=0
 param dB=10
 param dA1=400
-#param histoFile=../../simdata/gas/test_Ar_$evts$name.root
-param histoFile=../../simdata/gas/test_Ar_$evts$name.root
+param histoFile=../../simdata/gas/Ar_case1_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -47,9 +46,11 @@ beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 #Geometry
 tube SciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=$dB material=gAr color=$SciColor
 tube AlBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
+tube plBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=5.0 material=Scintillator color=$SciColor
 
 
 detector SciDet1 solid=SciBox format=rootExtended material=gAr color=0.9,0.6,0.1,1.0
 
-place AlBox z=34.0
+#place AlBox z=34.0
+#place plBox z=37.5
 place SciDet1 z=(40.0+(0.5*($dB))+$zshift)
