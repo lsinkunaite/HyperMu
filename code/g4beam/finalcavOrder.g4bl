@@ -33,8 +33,8 @@ param zshift=0
 param phishift=0
 param dB=4
 param dA1=500
-param dL1=450
-param histoFile=../../simdata/order/Cu_cav_plastic_dA1_500mm_dL1_450mm_$evts$name.root
+param dL1=200
+param histoFile=../../simdata/order/Cu_cav_NaI_dA1_500mm_dL1_200mm_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -49,8 +49,8 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 tube SciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=$dB material=Scintillator color=$SciColor
 tube SciBox2 innerRadius=10.0 outerRadius=((0.5*($dA1))+$phishift) initialPhi=0 finalPhi=360 length=$dB material=Scintillator color=$SciColor
 tube AlBox innerRadius=0.0 outerRadius=(100.0+$phishift) initialPhi=0 finalPhi=360 length=2.0 material=Al color=$AlColor
-tube BGOSciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) length=$dL1 material=Scintillator color=$SciColor
-tube BGOSciBox2 innerRadius=(30.0+($dB)) outerRadius=((0.5*($dA1))+$phishift) length=$dL1 material=Scintillator color=$SciColor
+tube BGOSciBox innerRadius=0.0 outerRadius=((0.5*($dA1))+$phishift) length=$dL1 material=SODIUM_IODIDE color=$SciColor
+tube BGOSciBox2 innerRadius=(30.0+($dB)) outerRadius=((0.5*($dA1))+$phishift) length=$dL1 material=SODIUM_IODIDE color=$SciColor
 tube SciBox3 innerRadius=30.0 outerRadius=(30.0+($dB)) initialPhi=0 finalPhi=360 length=$dL1 material=Scintillator color=$SciColor
 
 #Cavity
@@ -65,9 +65,8 @@ tube CavPlate innerRadius=0.0 outerRadius=(50.0+$phishift) initialPhi=0 finalPhi
 detector SciDet1 solid=SciBox format=rootExtended material=Scintillator color=$SciColor
 detector SciDet2 solid=SciBox2 format=rootExtended material=Scintillator color=$SciColor
 detector SciDet3 solid=SciBox3 format=rootExtended material=Scintillator color=$SciColor
-detector BGONaIDet1 solid=BGOSciBox format=rootExtended material=Scintillator color=$SciColor
-detector BGONaIDet2 solid=BGOSciBox2 format=rootExtended material=Scintillator color=$SciColor
-detector SciVetoDet solid=SciVeto format=rootExtended material=Scintillator color=$SciColor
+detector BGONaIDet1 solid=BGOSciBox format=rootExtended material=SODIUM_IODIDE color=$SciColor
+detector BGONaIDet2 solid=BGOSciBox2 format=rootExtended material=SODIUM_IODIDE color=$SciColor
 
 place AlTubeD z=0
 place CavTube z=0
