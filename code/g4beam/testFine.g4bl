@@ -21,34 +21,34 @@ param evts=1e5
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
-param name=mudecay
-#param name=goldcascade
+#param name=mudecay
+param name=electron
 
-param P=47.04
+param P=15.50
 param CuD=40
-param d=5
+param d=1
 
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/finead/d_5mm_Cu_40mm_P_47_04MeV_BGO_$evts$name.root
+param histoFile=../../simdata/finead/Cu_40mm_P_15_50MeV_BGO_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 # Define source
 # (1) muon decay
-beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
-# (2) gold cascade
-#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+# (2) electron
+beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=e-
 
 # Geometry
 box CuBox width=200.0 height=200.0 length=$CuD.0 material=Cu color=45/256,140/256,20/256,0.3
-box SciBox width=200.0 height=200.0 length=100.0 material=BGO color=88/256,100/256,30/256,0.3
+box SciBox width=400.0 height=400.0 length=55.0 material=BGO color=88/256,100/256,30/256,0.3
 
 # Detectors
 detector BGOD1 solid=SciBox format=rootExtended material=BGO color=108/256,52/256,70/256,0.3
 
 # Positioning
 place CuBox z=$d+(0.5*$CuD)
-place BGOD1 z=$d+$CuD+(0.5*100)
+place BGOD1 z=$d+$CuD+150+(0.5*55)
