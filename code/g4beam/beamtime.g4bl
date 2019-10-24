@@ -21,30 +21,30 @@ param evts=1e5
 physics QGSP_BERT_EMX disable=muMinusCaptureAtRest
 
 #Define some parameters
-param name=mudecay
-#param name=goldcascade
+#param name=mudecay
+param name=goldcascade
 
 param P=0
 
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/beamtime/Cu_cav_black_$evts$name.root
+param histoFile=../../simdata/beamtime/Cu_cav_pink_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
 # Define source
 # (1) muon decay
-beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
+#beam gaussian beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=mu-
 
 # (2) gold cascade
-#beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
+beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 #Geometry
 tube CavTube innerRadius=50.0 outerRadius=85.0 length=20.0 material=Cu color=0.1,0.8,0.4,1.0
-tube AlTubeMain innerRadius=85.0 outerRadius=105.0 length=20.0 material=Al color=$AlColor
-tube AlTubeSide innerRadius=50.0 outerRadius=105.0 length=2.5 material=Al color=$AlColor
-tube AlTubeFrame innerRadius=130.0 outerRadius=165.0 length=25.0 material=Al color=$AlColor
+tube AlTubeMain innerRadius=85.0 outerRadius=97.5 length=20.0 material=Al color=$AlColor
+tube AlTubeSide innerRadius=50.0 outerRadius=97.5 length=2.5 material=Al color=$AlColor
+tube AlTubeFrame innerRadius=145.0 outerRadius=165.0 length=25.0 material=Al color=$AlColor
 tube AlDisk innerRadius=0.0 outerRadius=50.0 length=2.0 material=Al color=$AlColor
 
 box FrameIn width=410.0 height=410.0 length=80.1 material=Al color=$AlColor
@@ -80,3 +80,6 @@ place AlFrame z=-42.1
 
 place BGODet1 z=750.0
 place BGODet2 z=-750.0
+
+
+
