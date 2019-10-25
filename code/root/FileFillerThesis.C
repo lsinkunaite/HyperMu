@@ -25,21 +25,15 @@ using namespace std;
 void FileFillerThesis(){	
 	
    // Path name
-   std::string path = "../../simdata/thesis/";
+   std::string path = "../../simdata/beamtime/";
    int pathL = path.length();
-   std::string phishift = "0";
-   std::string zshift = "0";
-   std::string cavmaterial = "Glass";
-   std::string Almaterial = "Al2";
-   std::string BGOmaterial = "NaI";	
-   std::string dA1 = "400";
-   std::string dL1 = "100";
+   std::string cavmaterial = "Cu";
 	
    // X-ray cascade
-   std::string filex = path+cavmaterial+"_cav_"+Almaterial+"_"+BGOmaterial+"_dA1_"+dA1+"mm_dL1_"+dL1+"mm_1e5goldcascade.root";
+   std::string filex = path+cavmaterial+"_cav_pink_1e5goldcascade.root";
    
    // Mu-decay
-   std::string filemu = path+cavmaterial+"_cav_"+Almaterial+"_"+BGOmaterial+"_dA1_"+dA1+"mm_dL1_"+dL1+"mm_1e5mudecay.root";
+   std::string filemu = path+cavmaterial+"_cav_pink_1e5mudecay.root";
    
    std::vector<std::string> Xfiles;
    std::vector<std::string> mufiles;
@@ -60,9 +54,8 @@ void FileFillerThesis(){
 			  
       TTree *tSciD1 = (TTree*)fmu->Get("Detector/SciDet1"); // D-stream
 	  TTree *tSciD2 = (TTree*)fmu->Get("Detector/SciDet2"); // U-stream
-	  TTree *tSciD3 = (TTree*)fmu->Get("Detector/SciDet3"); // U-stream
-	  TTree *tBGOD1 = (TTree*)fmu->Get("Detector/BGONaIDet1"); // D-stream
-	  TTree *tBGOD2 = (TTree*)fmu->Get("Detector/BGONaIDet2"); // U-stream
+	  TTree *tBGOD1 = (TTree*)fmu->Get("Detector/BGODet1"); // D-stream
+	  TTree *tBGOD2 = (TTree*)fmu->Get("Detector/BGODet2"); // U-stream
 	  	  
 	  float EventID,Edep; 
 
@@ -70,8 +63,6 @@ void FileFillerThesis(){
 	  tSciD1->SetBranchAddress("Edep",&Edep);
 	  tSciD2->SetBranchAddress("EventID",&EventID);
 	  tSciD2->SetBranchAddress("Edep",&Edep);
-	  tSciD3->SetBranchAddress("EventID",&EventID);
-	  tSciD3->SetBranchAddress("Edep",&Edep);
 	  tBGOD1->SetBranchAddress("EventID",&EventID);
 	  tBGOD1->SetBranchAddress("Edep",&Edep);
 	  tBGOD2->SetBranchAddress("EventID",&EventID);
@@ -108,19 +99,6 @@ void FileFillerThesis(){
 	  }
 	  tmpSciD2.close();
 	  std::cout << std::endl << "File: " << ((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciD2.txt" << " written!" << std::endl;
-
-
-      // SciD3
-	  ofstream tmpSciD3;
-	  ofstream tmpSciD3;
-	  tmpSciD3.open(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciD3.txt"));
-	  tmpSciD3 << "EventID        Edep\n";
-	  for (int i=0; i<tSciD3->GetEntries(); i++){
-	     tSciD3->GetEntry(i);
-		 tmpSciD3 << EventID << " " << Edep << "\n";
-	  }
-	  tmpSciD3.close();
-	  std::cout << std::endl << "File: " << ((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciD3.txt" << " written!" << std::endl;
 
 
 	  // BGOD1 
@@ -231,44 +209,6 @@ void FileFillerThesis(){
 
 
 
-	  // SciD3     
-	  std::ifstream inputSciD3(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciD3.txt"));
-	  std::string lineSciD3;
-	  std::getline(inputSciD3, lineSciD3);
-			 
-	  ifstream ifileSD3(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-	  if (ifileSD3) {
-	     remove(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-		 std::cout << std::endl << "Previously existing output file: " << ((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciD3.txt" << " successfully removed!" << std::endl;
-	  }
-			 
-	  ofstream finSciD3;
-	  finSciD3.open(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-			  
-	  int ncounterSD3 = 1;
-	  while (!inputSciD3.eof()) {
-	     double EvIDSD3, EdepSD3;
-		 inputSciD3 >> EvIDSD3 >> EdepSD3;
-		 if (EvIDSD3 == ncounterSD3) {
-		    finSciD3 << EvIDSD3 << " " << EdepSD3 << "\n";
-			ncounterSD3++;
-		 } else {
-		    int diffSD3 = EvIDSD3 - ncounterSD3;
-			for (int i=0; i<diffSD3; i++) {
-			   finSciD3 << ncounterSD3+i << " " << 0.0 << "\n"; 
-			}
-			finSciD3 << EvIDSD3 << " " << EdepSD3 << "\n";
-			ncounterSD3 = ncounterSD3 + diffSD3 + 1;
-		 }   
-	  }
-	  finSciD3.close();
-
-	  if ((remove(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpSciD3.txt"))) == 0) {
-	     std::cout << std::endl << "File: " << TString(((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_SciD3.txt") << " generated! " << std::endl;
-	  }
-
-
-
       // BGOD1     
 	  std::ifstream inputBGOD1(TString(path+((mufiles[k]).substr(pathL,((mufiles[k]).find(".root"))-pathL))+"_tmpBGOD1.txt"));
 	  std::string lineBGOD1;
@@ -361,9 +301,8 @@ void FileFillerThesis(){
 			  
 	  TTree *txSciD1 = (TTree*)fx->Get("Detector/SciDet1"); // D-stream
 	  TTree *txSciD2 = (TTree*)fx->Get("Detector/SciDet2"); // U-stream
-	  TTree *txSciD3 = (TTree*)fx->Get("Detector/SciDet3"); // U-stream
-	  TTree *txBGOD1 = (TTree*)fx->Get("Detector/BGONaIDet1"); // D-stream
-	  TTree *txBGOD2 = (TTree*)fx->Get("Detector/BGONaIDet2"); // U-stream
+	  TTree *txBGOD1 = (TTree*)fx->Get("Detector/BGODet1"); // D-stream
+	  TTree *txBGOD2 = (TTree*)fx->Get("Detector/BGODet2"); // U-stream
 			  
 	  float EventID,Edep; 
 
@@ -371,8 +310,6 @@ void FileFillerThesis(){
 	  txSciD1->SetBranchAddress("Edep",&Edep);
 	  txSciD2->SetBranchAddress("EventID",&EventID); // U-stream
 	  txSciD2->SetBranchAddress("Edep",&Edep);
-	  txSciD3->SetBranchAddress("EventID",&EventID); // U-stream
-	  txSciD3->SetBranchAddress("Edep",&Edep);
 	  txBGOD1->SetBranchAddress("EventID",&EventID); // D-stream
 	  txBGOD1->SetBranchAddress("Edep",&Edep);
 	  txBGOD2->SetBranchAddress("EventID",&EventID); // U-stream
@@ -409,18 +346,6 @@ void FileFillerThesis(){
 	  }
 	  tmpxSciD2.close();
 	  std::cout << std::endl << "File: " << ((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD2.txt" << " written!" << std::endl;
-
-
-	  // SciD3 
-	  ofstream tmpxSciD3;
-	  tmpxSciD3.open(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD3.txt"));
-	  tmpxSciD3 << "EventID        Edep\n";
-	  for (int i=0; i<txSciD3->GetEntries(); i++){
-	     txSciD3->GetEntry(i);
-		 tmpxSciD3 << EventID << " " << Edep << "\n";
-	  }
-	  tmpxSciD3.close();
-	  std::cout << std::endl << "File: " << ((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD3.txt" << " written!" << std::endl;
 
 			  
 	  // BGOD1 
@@ -528,44 +453,6 @@ void FileFillerThesis(){
 
 	  if ((remove(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD2.txt"))) == 0) {
 	     std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD2.txt") << " generated! " << std::endl;
-	  }
-
-
-
-	  // SciD3     
-	  std::ifstream inputSciD3x(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD3.txt"));
-	  std::string lineSciD3x;
-	  std::getline(inputSciD3x, lineSciD3x);
-			 
-	  ifstream ifileSD3x(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-	  if (ifileSD3x) {
-	     remove(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-		 std::cout << std::endl << "Previously existing output file: " << ((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD3.txt" << " successfully removed!" << std::endl;
-	  }
-			 
-	  ofstream finSciD3x;
-	  finSciD3x.open(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD3.txt"));
-			  
-	  int ncounterSD3x = 1;
-	  while (!inputSciD3x.eof()) {
-	     double EvIDSD3x, EdepSD3x;
-		 inputSciD3x >> EvIDSD3x >> EdepSD3x;
-		 if (EvIDSD3x == ncounterSD3x) {
-		    finSciD3x << EvIDSD3x << " " << EdepSD3x << "\n";
-			ncounterSD3x++;
-		 } else {
-		    int diffSD3x = EvIDSD3x - ncounterSD3x;
-			for (int i=0; i<diffSD3x; i++) {
-			   finSciD3x << ncounterSD3x+i << " " << 0.0 << "\n"; 
-			}
-		    finSciD3x << EvIDSD3x << " " << EdepSD3x << "\n";
-		    ncounterSD3x = ncounterSD3x + diffSD3x + 1;
-		 }   
-	  }
-	  finSciD3x.close();
-
-	  if ((remove(TString(path+((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_tmpxSciD3.txt"))) == 0) {
-	     std::cout << std::endl << "File: " << TString(((Xfiles[k]).substr(pathL,((Xfiles[k]).find(".root"))-pathL))+"_SciD3.txt") << " generated! " << std::endl;
 	  }
 
 
