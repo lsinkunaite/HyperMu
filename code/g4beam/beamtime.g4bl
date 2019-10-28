@@ -29,7 +29,7 @@ param P=0
 param size=200
 #param steppingVerbose=1
 param worldMaterial=Vacuum maxStep=100.0
-param histoFile=../../simdata/beamtime/Cu_cav_pink_BGOshift_$evts$name.root
+param histoFile=../../simdata/beamtime/No_cav_black_$evts$name.root
 
 trackcuts keep=e-,e+,gamma,mu-,mu+
 
@@ -42,9 +42,9 @@ beam goldcascade beamX=0 beamY=0 beamZ=0 meanP=$P nEvents=$evts particle=gamma
 
 #Geometry
 tube CavTube innerRadius=50.0 outerRadius=85.0 length=20.0 material=Cu color=0.1,0.8,0.4,1.0
-tube AlTubeMain innerRadius=85.0 outerRadius=97.5 length=20.0 material=Al color=$AlColor
-tube AlTubeSide innerRadius=50.0 outerRadius=97.5 length=2.5 material=Al color=$AlColor
-tube AlTubeFrame innerRadius=145.0 outerRadius=165.0 length=25.0 material=Al color=$AlColor
+tube AlTubeMain innerRadius=85.0 outerRadius=105.0 length=20.0 material=Al color=$AlColor
+tube AlTubeSide innerRadius=50.0 outerRadius=105.0 length=2.5 material=Al color=$AlColor
+tube AlTubeFrame innerRadius=130.0 outerRadius=165.0 length=25.0 material=Al color=$AlColor
 tube AlDisk innerRadius=0.0 outerRadius=50.0 length=2.0 material=Al color=$AlColor
 
 box FrameIn width=410.0 height=410.0 length=80.1 material=Al color=$AlColor
@@ -63,7 +63,7 @@ detector SciDet2 solid=SciBox format=rootExtended material=Scintillator color=$S
 detector BGODet1 solid=BGOBox format=rootExtended material=BGO color=$BGOColor
 detector BGODet2 solid=BGOBox format=rootExtended material=BGO color=$BGOColor
 
-place CavTube z=0
+#place CavTube z=0
 place AlTubeMain z=0
 place AlTubeSide z=11.25
 place AlTubeSide z=-11.25
@@ -78,7 +78,7 @@ place FrameBox z=0.0
 place AlFrame z=42.1
 place AlFrame z=-42.1
 
-place BGODet1 z=125.0
+place BGODet1 z=75.0
 place BGODet2 z=-75.0
 
 
