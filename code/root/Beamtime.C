@@ -77,28 +77,28 @@ void Beamtime(){
    std::string phishift = "0";
    std::string zshift = "0";
    std::string path = "../../simdata/beamtime/";
-   std::string cavmaterial = "Cu";
+   std::string cavmaterial = "No";
    
    // Names of the files
    // X-ray cascade
-   std::string filexSciD1b = path+cavmaterial+"_cav_black_BGOshift_1e5goldcascade_SciD1.txt";
-   std::string filexSciD2b = path+cavmaterial+"_cav_black_BGOshift_1e5goldcascade_SciD2.txt";
-   std::string filexBGOD1b = path+cavmaterial+"_cav_black_BGOshift_1e5goldcascade_BGOD1.txt";
-   std::string filexBGOD2b = path+cavmaterial+"_cav_black_BGOshift_1e5goldcascade_BGOD2.txt";
-   std::string filexSciD1p = path+cavmaterial+"_cav_pink_BGOshift_1e5goldcascade_SciD1.txt";
-   std::string filexSciD2p = path+cavmaterial+"_cav_pink_BGOshift_1e5goldcascade_SciD2.txt";
-   std::string filexBGOD1p = path+cavmaterial+"_cav_pink_BGOshift_1e5goldcascade_BGOD1.txt";
-   std::string filexBGOD2p = path+cavmaterial+"_cav_pink_BGOshift_1e5goldcascade_BGOD2.txt";
+   std::string filexSciD1b = path+cavmaterial+"_cav_black_BGOwide_1e5goldcascade_SciD1.txt";
+   std::string filexSciD2b = path+cavmaterial+"_cav_black_BGOwide_1e5goldcascade_SciD2.txt";
+   std::string filexBGOD1b = path+cavmaterial+"_cav_black_BGOwide_1e5goldcascade_BGOD1.txt";
+   std::string filexBGOD2b = path+cavmaterial+"_cav_black_BGOwide_1e5goldcascade_BGOD2.txt";
+   std::string filexSciD1p = path+cavmaterial+"_cav_pink_BGOwide_1e5goldcascade_SciD1.txt";
+   std::string filexSciD2p = path+cavmaterial+"_cav_pink_BGOwide_1e5goldcascade_SciD2.txt";
+   std::string filexBGOD1p = path+cavmaterial+"_cav_pink_BGOwide_1e5goldcascade_BGOD1.txt";
+   std::string filexBGOD2p = path+cavmaterial+"_cav_pink_BGOwide_1e5goldcascade_BGOD2.txt";
 
    // Mu-decay
-   std::string filemuSciD1b = path+cavmaterial+"_cav_black_BGOshift_1e5mudecay_SciD1.txt";
-   std::string filemuSciD2b = path+cavmaterial+"_cav_black_BGOshift_1e5mudecay_SciD2.txt";
-   std::string filemuBGOD1b = path+cavmaterial+"_cav_black_BGOshift_1e5mudecay_BGOD1.txt";
-   std::string filemuBGOD2b = path+cavmaterial+"_cav_black_BGOshift_1e5mudecay_BGOD2.txt";
-   std::string filemuSciD1p = path+cavmaterial+"_cav_pink_BGOshift_1e5mudecay_SciD1.txt";
-   std::string filemuSciD2p = path+cavmaterial+"_cav_pink_BGOshift_1e5mudecay_SciD2.txt";
-   std::string filemuBGOD1p = path+cavmaterial+"_cav_pink_BGOshift_1e5mudecay_BGOD1.txt";
-   std::string filemuBGOD2p = path+cavmaterial+"_cav_pink_BGOshift_1e5mudecay_BGOD2.txt";
+   std::string filemuSciD1b = path+cavmaterial+"_cav_black_BGOwide_1e5mudecay_SciD1.txt";
+   std::string filemuSciD2b = path+cavmaterial+"_cav_black_BGOwide_1e5mudecay_SciD2.txt";
+   std::string filemuBGOD1b = path+cavmaterial+"_cav_black_BGOwide_1e5mudecay_BGOD1.txt";
+   std::string filemuBGOD2b = path+cavmaterial+"_cav_black_BGOwide_1e5mudecay_BGOD2.txt";
+   std::string filemuSciD1p = path+cavmaterial+"_cav_pink_BGOwide_1e5mudecay_SciD1.txt";
+   std::string filemuSciD2p = path+cavmaterial+"_cav_pink_BGOwide_1e5mudecay_SciD2.txt";
+   std::string filemuBGOD1p = path+cavmaterial+"_cav_pink_BGOwide_1e5mudecay_BGOD1.txt";
+   std::string filemuBGOD2p = path+cavmaterial+"_cav_pink_BGOwide_1e5mudecay_BGOD2.txt";
 
 
    // Vectors with filenames   
@@ -135,7 +135,7 @@ void Beamtime(){
 
    float Ethr1 = 0.7;
    float Ethr21 = 0.5;
-   float Ethr22 = 7.0;
+   float Ethr22 = 6.5;
    float Ethr3 = 1;
    float Estep = 2.0/(nsamps-1);
    float Ethrmu[nsamps] = {};
@@ -643,6 +643,8 @@ void Beamtime(){
    float PeXarrp[nsamps] = {};
    float PeXXXarrb[nsamps] = {};
    float PeXXXarrp[nsamps] = {};
+   float SNRarrb[nsamps] = {};
+   float SNRarrp[nsamps] = {};
  		 	   
    for (int i=0; i<nsamps; i++) {
       // Normalisation 2 [absolute]
@@ -652,11 +654,13 @@ void Beamtime(){
 	  PeXarrp[i] = PeXvectorp[0][i];
 	  PeXXXarrb[i] = (PeXvectorb[0][i])/(double)(PXXvectorb[0][i]);
 	  PeXXXarrp[i] = (PeXvectorp[0][i])/(double)(PXXvectorp[0][i]);
+	  SNRarrb[i] = (PXXvectorb[0][i])/(double)(sqrt(PeXvectorb[0][i]));
+	  SNRarrp[i] = (PXXvectorp[0][i])/(double)(sqrt(PeXvectorp[0][i]));
    }	   
 
 		  
    TCanvas *f = new TCanvas("f","E_{THR}",800,600);
-   f->Divide(3,1);
+   f->Divide(4,1);
    f->cd(1);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
@@ -674,7 +678,7 @@ void Beamtime(){
    grPXXb->SetLineWidth(3);
    grPXXb->Draw("ALP");
    TGraph *grPXXp = new TGraph(nsamps,Ethrmu,PXXarrp);
-   grPXXp->SetLineColor(kOrange);
+   grPXXp->SetLineColor(kRed);
    grPXXp->SetLineWidth(3);
    grPXXp->Draw("LP");
    
@@ -694,7 +698,7 @@ void Beamtime(){
    grPeXb->SetLineWidth(3);
    grPeXb->Draw("ALP");
    TGraph *grPeXp = new TGraph(nsamps,Ethrmu,PeXarrp);
-   grPeXp->SetLineColor(kOrange);
+   grPeXp->SetLineColor(kRed);
    grPeXp->SetLineWidth(3);
    grPeXp->Draw("LP");
 
@@ -706,7 +710,7 @@ void Beamtime(){
    grPeXXXb->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grPeXXXb->GetXaxis()->SetRangeUser(0,2.04);
    grPeXXXb->GetXaxis()->SetNdivisions(-304);
-   TGaxis::SetMaxDigits(2);
+   TGaxis::SetMaxDigits(3);
    grPeXXXb->GetYaxis()->SetMoreLogLabels(1);
    grPeXXXb->GetYaxis()->SetTitle("#frac{P_{eX}}{P_{XX}}");
    grPeXXXb->GetYaxis()->SetTitleOffset(2.1);
@@ -714,12 +718,32 @@ void Beamtime(){
    grPeXXXb->SetLineWidth(3);
    grPeXXXb->Draw("ALP");
    TGraph *grPeXXXp = new TGraph(nsamps,Ethrmu,PeXXXarrp);
-   grPeXXXp->SetLineColor(kOrange);
+   grPeXXXp->SetLineColor(kRed);
    grPeXXXp->SetLineWidth(3);
    grPeXXXp->Draw("LP");
-   f->SaveAs(TString(cavmaterial)+"_cav_beamtime_BGOshift.pdf");
-   f->SaveAs(TString(cavmaterial)+"_cav_beamtime_BGOshift.png");
-   f->SaveAs(TString(cavmaterial)+"_cav_beamtime_BGOshift.C");
+
+   f->cd(4);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   TGraph *grSNRb = new TGraph(nsamps,Ethrmu,SNRarrb);
+   grSNRb->SetTitle("");
+   grSNRb->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   grSNRb->GetXaxis()->SetRangeUser(0,2.04);
+   grSNRb->GetXaxis()->SetNdivisions(-304);
+   TGaxis::SetMaxDigits(3);
+   grSNRb->GetYaxis()->SetMoreLogLabels(1);
+   grSNRb->GetYaxis()->SetTitle("#frac{P_{XX}}{#sqrt{P_{eX}}}");
+   grSNRb->GetYaxis()->SetTitleOffset(2.1);
+   grSNRb->SetLineColor(kBlue);
+   grSNRb->SetLineWidth(3);
+   grSNRb->Draw("ALP");
+   TGraph *grSNRp = new TGraph(nsamps,Ethrmu,SNRarrp);
+   grSNRp->SetLineColor(kRed);
+   grSNRp->SetLineWidth(3);
+   grSNRp->Draw("LP");
+   f->SaveAs(TString(cavmaterial)+"_cav_BGOwide_beamtime.pdf");
+   f->SaveAs(TString(cavmaterial)+"_cav_BGOwide_beamtime.png");
+   f->SaveAs(TString(cavmaterial)+"_cav_BGOwide_beamtime.C");
 
 } 
  
