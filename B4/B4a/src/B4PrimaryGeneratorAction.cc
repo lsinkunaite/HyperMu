@@ -4,14 +4,15 @@
 
 #include "B4PrimaryGeneratorAction.hh"
 
-#include "G4RunManager.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4LogicalVolume.hh"
 #include "G4Box.hh"
 #include "G4Event.hh"
+#include "G4GeneralParticleSource.hh"
+#include "G4LogicalVolumeStore.hh"
+#include "G4LogicalVolume.hh"
+#include "G4ParticleDefinition.hh"
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
-#include "G4ParticleDefinition.hh"
+#include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
 
@@ -21,16 +22,18 @@ B4PrimaryGeneratorAction::B4PrimaryGeneratorAction()
  : G4VUserPrimaryGeneratorAction(),
    fParticleGun(nullptr)
 {
-  G4int nofParticles = 1;
-  fParticleGun = new G4ParticleGun(nofParticles);
-
+  //G4int nofParticles = 1;
+  //fParticleGun = new G4ParticleGun(nofParticles);
+  fParticleGun = new G4GeneralParticleSource();
+    
   // default particle kinematic
   //
-  auto particleDefinition 
+  /*auto particleDefinition
     = G4ParticleTable::GetParticleTable()->FindParticle("e-");
   fParticleGun->SetParticleDefinition(particleDefinition);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
   fParticleGun->SetParticleEnergy(5.*MeV);
+*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -50,7 +53,7 @@ void B4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // on DetectorConstruction class we get world volume 
   // from G4LogicalVolumeStore
   //
-  G4double worldZHalfLength = 37.5*cm;
+/*  G4double worldZHalfLength = 37.5*cm;
   auto worldLV = G4LogicalVolumeStore::GetInstance()->GetVolume("World");
 
   // Check that the world volume has box shape
@@ -74,7 +77,7 @@ void B4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // Set gun position
   //fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., -worldZHalfLength));
   fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.));
-
+*/
   fParticleGun->GeneratePrimaryVertex(anEvent);
 }
 

@@ -40,6 +40,8 @@ B4RunAction::B4RunAction()
   analysisManager->CreateH1("Tgabs","globalT in absorber", 100, 0., 100*s);
   analysisManager->CreateH1("Tlabs","localT in absorber", 100, 0., 100*s);
   analysisManager->CreateH1("Tpabs","properT in absorber", 100, 0., 100*s);
+    analysisManager->CreateH2("TE","gTime vs Eabs",100, 0., 20*MeV, 100, 0., 2*s);
+    analysisManager->CreateH2("LE","TrackL vs Eabs", 100, 0., 20*MeV, 100, 0., 8*cm);
     
   // Creating ntuple
   //

@@ -39,6 +39,7 @@
 #include "G4UImanager.hh"
 #include "G4UIcommand.hh"
 #include "FTFP_BERT_HP.hh"
+#include "G4OpticalPhysics.hh"
 
 #include "Randomize.hh"
 
@@ -115,10 +116,23 @@ int main(int argc,char** argv)
 
   auto physicsList = new FTFP_BERT_HP;
   runManager->SetUserInitialization(physicsList);
+  
+  // Optical Photon
+  G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
+  opticalPhysics->SetWLSTimeProfile("delta");
+  opticalPhysics->SetScintillationYieldFactor(1.0);
+  opticalPhysics->SetScintillationExcitationRatio(0.0);
+  opticalPhysics->SetMaxNumPhotonsPerStep(100);
+  opticalPhysics->SetMaxBetaChangePerStep(10.0);
+  opticalPhysics->SetTrackSecondariesFirst(kCerenkov, true);
+  opticalPhysics->SetTrackSecondariesFirst(kScintillation, true);
+  //physicsList->ReplacePhysics(new G4EmStandardPhysics_option4());
+  physicsList->RegisterPhysics(opticalPhysics);
+    
     
   auto actionInitialization = new B4aActionInitialization(detConstruction);
   runManager->SetUserInitialization(actionInitialization);
-  
+    
   // Initialize visualization
   //
   auto visManager = new G4VisExecutive;

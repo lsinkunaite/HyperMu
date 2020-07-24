@@ -57,6 +57,10 @@ void B4aEventAction::EndOfEventAction(const G4Event* event)
   analysisManager->FillH1(2, fGlobalTAbs);
   analysisManager->FillH1(3, fLocalTAbs);
   analysisManager->FillH1(4, fProperTAbs);
+    
+    analysisManager->FillH2(0, fEnergyAbs, fGlobalTAbs);
+    analysisManager->FillH2(1, fEnergyAbs,fTrackLAbs);
+    
   
   // fill ntuple
   analysisManager->FillNtupleDColumn(0, fEnergyAbs);

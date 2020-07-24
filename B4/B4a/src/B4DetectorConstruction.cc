@@ -8,13 +8,17 @@
 #include "G4Box.hh"
 #include "G4Colour.hh"
 #include "G4GeometryManager.hh"
+#include "G4LogicalSkinSurface.hh"
 #include "G4LogicalVolume.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4Material.hh"
+#include "G4MaterialTable.hh"
 #include "G4NistManager.hh"
+#include "G4OpticalSurface.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4PhysicalVolumeStore.hh"
 #include "G4PVPlacement.hh"
+#include "G4SDManager.hh"
 #include "G4SolidStore.hh"
 #include "G4Sphere.hh"
 #include "G4SystemOfUnits.hh"
@@ -87,7 +91,8 @@ G4VPhysicalVolume* B4DetectorConstruction::DefineVolumes()
   //auto worldSizeZ  = 1.2 * calorThickness;
   auto worldSizeXY = 2. * calorSizeXY;
   auto worldSizeZ = 2. * calorThickness;
-    
+  //auto worldSizeXY = 6.*cm;
+  //auto worldSizeZ = 6.*cm;
     
   // Get materials
   auto defaultMaterial = G4Material::GetMaterial("Galactic");
@@ -97,6 +102,20 @@ G4VPhysicalVolume* B4DetectorConstruction::DefineVolumes()
     G4Material* carbon_mat = nist->FindOrBuildMaterial("G4_C");
     G4Material* hydrogen_mat = nist->FindOrBuildMaterial("G4_H");
    
+    
+  //plastic_t = new G4MaterialPropertiesTable();
+  //plastic_t->AddProperty("FASTCOMPONENT", 2.58*eV, 0.05, 1);
+  //plastic_t->AddProperty("SLOWCOMPONENT", 2.58*eV, 0.1, 1);
+  //plastic_t->AddProperty("RINDEX", 2.58*eV, 1.58, 1);
+  //plastic_t->AddProperty("ABSLENGTH",2.58*eV, 160.*cm, 1);
+  //plastic_t->AddConstProperty("SCINTILLATIONYIELD",10400./MeV);
+  //plastic_t->AddConstProperty("RESOLUTIONSCALE",1.0);
+  //plastic_t->AddConstProperty("FASTTIMECONSTANT",1.8.*ns);
+  //plastic_t->AddConstProperty("SLOWTIMECONSTANT",45.*ns);
+  //plastic_t->AddConstProperty("YIELDRATIO",1.0);
+  //plastic_mat->SetMaterialPropertiesTable(plastic_t);
+  //plastic_mat->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
+    
   //     
   // World
   //
@@ -135,13 +154,13 @@ G4VPhysicalVolume* B4DetectorConstruction::DefineVolumes()
     
     // Spherical calorimeter
     //G4double shape3_prmin = 200*mm, shape3_prmax = 600*mm;
-    G4double shape3_prmin = 0*mm, shape3_prmax = 6000*cm;
+    G4double shape3_prmin = 0*cm, shape3_prmax = 6000*cm;
     G4double shape3_psphi = 0, shape3_pdphi = 360;
     G4double shape3_pstheta = 0, shape3_pdtheta = 180;
     
     auto CalspheS = new G4Sphere("Calsphe", shape3_prmin, shape3_prmax, shape3_psphi    , shape3_pdphi, shape3_pstheta, shape3_pdtheta);
     
-    auto CalspheLV = new G4LogicalVolume(CalspheS, hydroMaterial, "Calsphe");
+    auto CalspheLV = new G4LogicalVolume(CalspheS, carbon_mat, "Calsphe");
     
     fAbsorberPV = new G4PVPlacement(0,G4ThreeVector(),CalspheLV,"Calsphe",worldLV,    false,0,fCheckOverlaps);
 
