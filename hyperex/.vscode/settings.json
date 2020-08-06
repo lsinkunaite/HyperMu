@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "plotNtuple.C": "cpp",
+        "plotHisto.C": "cpp"
+    }
+}

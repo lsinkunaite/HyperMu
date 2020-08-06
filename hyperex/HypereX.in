@@ -1,0 +1,23 @@
+# Macro file for example HypereX test
+
+/run/initialize
+
+# e+ 300MeV 
+/gps/particle e+
+/gps/energy 300 MeV
+/run/beamOn 1
+#
+# list the existing physics processes
+/process/list
+#
+# switch off MultipleScattering
+/process/inactivate msc
+/run/beamOn 1
+#
+# switch on MultipleScattering
+/process/activate msc 
+#
+# change detector parameter
+/gps/particle gamma
+/gps/energy 500 MeV
+/run/beamOn 1
