@@ -87,8 +87,8 @@ void VetoEff(){
 
    // Names of the files
    // Electron Vetos
-   std::string fileVeto4A = runnumber+"_Veto6_B_prep.txt";
-   std::string fileVeto4B = runnumber+"_Veto6_B_prep.txt";   
+   std::string fileVeto4A = runnumber+"_Veto4_A_prep.txt";
+   std::string fileVeto4B = runnumber+"_Veto4_B_prep.txt";   
    // BGOs
    std::string fileBGOBackA = runnumber+"_BGO_Back_A_prep.txt";
    std::string fileBGOBackB = runnumber+"_BGO_Back_B_prep.txt";
@@ -117,31 +117,6 @@ void VetoEff(){
    float EventID, Instance, Energy, Time;
    float iEventID;
 
-/*
-   float Edep, EventID;
-   float iEventID;
-
-   float Ethr1 = 0.5;
-   float Ethr21 = 0.5;
-   float Ethr22 = 8.0;
-   float Ethr3 = 1;
-   float Estep = 2.0/(nsamps-1);
-   float Ethrmu[nsamps] = {};
-		   
-   // Storage vectors
-   // Normalisation 2 [abs = total] :: X-ray cascade
-   std::vector< std::vector<double> > PXevector(Xfiles.size()/5,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvector(Xfiles.size()/5,std::vector<double>(nsamps));          
-   std::vector< std::vector<double> > PXevector2(Xfiles.size()/5,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PXXvector2(Xfiles.size()/5,std::vector<double>(nsamps));          
-
-
-   // Normalisation 2 [abs = total] :: Mu-decay
-   std::vector< std::vector<double> > Peevector(mufiles.size()/5,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvector(mufiles.size()/5,std::vector<double>(nsamps));      
-   std::vector< std::vector<double> > Peevector2(mufiles.size()/5,std::vector<double>(nsamps));
-   std::vector< std::vector<double> > PeXvector2(mufiles.size()/5,std::vector<double>(nsamps));      
-*/
 
    // Elelectron vetos 
    std::vector< std::vector< double > > allEvIDVeto4A;
@@ -151,30 +126,10 @@ void VetoEff(){
    std::vector< std::vector< double > > allEdepVeto4B;
    std::vector< std::vector< double > > allTimeVeto4B;
    // BGOs
-   std::vector< std::vector< double > > allIDBGOBackCluster;
-   std::vector< std::vector< double > > allEnBGOBackCluster;
+//   std::vector< std::vector< double > > allIDBGOBackCluster;
+//   std::vector< std::vector< double > > allEnBGOBackCluster;
 
-/*
-
-   float Ethr;
-   int counterXX = 1e5;
-   int counteree = 1e5;
-   int XXray = 0; // X-rays i-fied as X-rays
-   int Xelec = 0; // X-rays i-fied as electrons
-   int XXray2 = 0;
-   int Xelec2 = 0;
-   int eXray = 0; // Electrons i-fied as X-rays
-   int eelec = 0; // Electrons i-fied as electrons
-   int eXray2 = 0;
-   int eelec2 = 0;
-   	   
-   Ethrmu[0] = 0;
-   for (int i=1; i<nsamps; i++) Ethrmu[i] = Ethrmu[i-1] + Estep;
-
-*/
-   //-------------------------------------------------------------------
-   //                           Reading
-   //-------------------------------------------------------------------
+   
 		   
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
    std::cout << "\033[1;34m---------------------- Reading ---------------------------\033[0m" << std::endl;
@@ -202,14 +157,9 @@ void VetoEff(){
    vEdepV4A.pop_back();
    vTimeV4A.pop_back();
    fVeto4A.close();
-/*
-   std::cout << "size = " << vEvIDV4A.size() << ", " << vEdepV4A.size() << ", " << vTimeV4A.size() << std::endl;
-//   for (int i=vEvIDV4A.size()-10;i<vEvIDV4A.size(); i++) { 
-   for (int i=0; i<11; i++) {
-   std::cout << i << " = " << vEvIDV4A[i] << " " << vEdepV4A[i] << " " << vTimeV4A[i] <<std::endl;
-   }
-*/
 
+
+/*
    // Veto4_B
    std::ifstream fVeto4B(Vetofiles[1]); 
    std::vector<double> vEvIDV4B;
@@ -226,6 +176,7 @@ void VetoEff(){
    vEdepV4B.pop_back();
    vTimeV4B.pop_back();
    fVeto4B.close();
+*/
 
 
    // BGO_Back_A
@@ -253,7 +204,7 @@ void VetoEff(){
    fBGOBackA.close();
 
 
-
+/*
    // BGO_Back_B
    std::ifstream fBGOBackB(BGOfiles[1]);
    std::vector<double> vEvIDBGOBackB;
@@ -327,22 +278,31 @@ void VetoEff(){
    vTimeBGOBackE.pop_back();
    vEkeVBGOBackE.pop_back();
    fBGOBackE.close();
+*/
 
 
-
-
-   for (int g=0; g<timemin.size(); g++) {
 
    std::cout << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;35m-------------------- Reading II --------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;35m---------------------- Reading II --------:----------------\033[0m" << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
 
    
    // BGO_Back_A
-   std::vector<double> vPureEnBGOBackA;
-   std::vector<double> vPureIDBGOBackA;
+   std::vector<double> vEnBGOBackA;
+   std::vector<double> vIDBGOBackA;
+   std::vector<double> vTmBGOBackA;
    int cBackBGOA;
+   for (int s=0; s<vTimeBGOBackA.size(); s++) {
+      if ((vTimeBGOBackA[s] > timemin[0]) && (vTimeBGOBackA[s] <timemax[0])) {
+         if (vEkeVBGOBackA[s] < 100000) {
+            vIDBGOBackA.push_back(vEvIDBGOBackA[s]);
+            vEnBGOBackA.push_back(vEkeVBGOBackA[s]);
+            vTmBGOBackA.push_back(vTimeBGOBackA[s]);
+         }
+      }
+   }
+/*
    for (int s=0; s<vTimeBGOBackA.size(); s++) {
       if ((vTimeBGOBackA[s] > timemin[g]) && (vTimeBGOBackA[s] <timemax[g])) {
          if (vEkeVBGOBackA[s] < 100000) {    
@@ -359,8 +319,8 @@ void VetoEff(){
          }
       }
    }
-
-
+*/
+/*
    // BGO_Back_B
    std::vector<double> vPureEnBGOBackB;
    std::vector<double> vPureIDBGOBackB;
@@ -425,121 +385,14 @@ void VetoEff(){
          }  
       }
    }
-   
+ */  
 
-   std::cout << std::endl; 
-   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;36m-------------------- Clustering --------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
-
-
-
-   // BGO_Back_Cluster: A
-   std::vector<double> vPureEnBGOBackCluster = vPureEnBGOBackA;
-   std::vector<double> vPureIDBGOBackCluster = vPureIDBGOBackA;
-   std::cout << "Cluster contains: A" << std::endl;   
-
-   // BGO_Back_Cluster: A + B
-   for (int s=0; s <vPureIDBGOBackB.size(); s++) {
-      auto it = find(vPureIDBGOBackCluster.begin(), vPureIDBGOBackCluster.end(), vPureIDBGOBackB[s]);
-      if (it != vPureIDBGOBackCluster.end()) {
-         int index = it - vPureIDBGOBackCluster.begin();
-         vPureEnBGOBackCluster[index] = vPureEnBGOBackCluster[index] + vPureEnBGOBackB[s];
-      } else {
-         vPureIDBGOBackCluster.push_back(vPureIDBGOBackB[s]);
-         vPureEnBGOBackCluster.push_back(vPureEnBGOBackB[s]);
-      }
-   }      
-   std::cout << "Cluster contains: A, B" << std::endl;
-
-   // BGO_Back_Cluster: A + B + C
-   for (int s=0; s <vPureIDBGOBackC.size(); s++) {
-      auto it = find(vPureIDBGOBackCluster.begin(), vPureIDBGOBackCluster.end(), vPureIDBGOBackC[s]);
-      if (it != vPureIDBGOBackCluster.end()) {
-         int index = it - vPureIDBGOBackCluster.begin();
-         vPureEnBGOBackCluster[index] = vPureEnBGOBackCluster[index] + vPureEnBGOBackC[s];
-      } else {
-         vPureIDBGOBackCluster.push_back(vPureIDBGOBackC[s]);
-         vPureEnBGOBackCluster.push_back(vPureEnBGOBackC[s]);
-      }
-   }
-   std::cout << "Cluster contains: A, B, C" << std::endl;
-
-   // BGO_Back_Cluster: A + B + C + E 
-   for (int s=0; s <vPureIDBGOBackE.size(); s++) {
-      auto it = find(vPureIDBGOBackCluster.begin(), vPureIDBGOBackCluster.end(), vPureIDBGOBackC[s]);
-      if (it != vPureIDBGOBackCluster.end()) {
-         int index = it - vPureIDBGOBackCluster.begin();
-         vPureEnBGOBackCluster[index] = vPureEnBGOBackCluster[index] + vPureEnBGOBackE[s];
-      } else {
-         vPureIDBGOBackCluster.push_back(vPureIDBGOBackE[s]);
-         vPureEnBGOBackCluster.push_back(vPureEnBGOBackE[s]);
-      }
-   }
-   std::cout << "Cluster contains: A, B, C, E" << std::endl; 
- 
-
-      
-/* 
-   std::vector<int> avector;
-   std::vector<int> bvector;
-
-   avector.push_back(14); bvector.push_back(0);
-   avector.push_back(11); bvector.push_back(1);
-   avector.push_back(16); bvector.push_back(2);
-   avector.push_back(8); bvector.push_back(3);
-   avector.push_back(1); bvector.push_back(4);
-
-
-   for (int i=0; i<avector.size(); i++) {
-      std::cout << avector[i] << " " <<bvector[i] << std::endl;
-   }
-
-
-   std::vector<int> cvector = avector;
-   std::vector<int> newindex;
-   std::vector<int> dvector;
-   std::sort(avector.begin(), avector.end());  
-   for (int i =0; i<cvector.size(); i++) {
-      auto itt = find(cvector.begin(), cvector.end(), avector[i]);
-      newindex.push_back(itt-cvector.begin());
-      std::cout <<" new index= "<< newindex[i] <<" c = " << cvector[i]<< std::endl;
-   }
-   
-   for (int i=0; i<newindex.size(); i++) {
-      dvector.push_back(bvector[newindex[i]]);
-   }
-
-   std::cout << std::endl;
-   for (int i=0; i<avector.size(); i++) {
-      std::cout << "a = " << avector[i] << ", b = " << dvector[i] << std::endl;
-   }    
-*/
 
 
    std::cout << std::endl;
-   std::cout << "\033[1;32m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;32m---------------------- Sorting ---------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;32m----------------------------------------------------------\033[0m" << std::endl;
-
-
-   std::vector<double> SortedIndex;
-   std::vector<double> SortedClusterID = vPureIDBGOBackCluster;
-   std::vector<double> SortedClusterEn;
-
-   std::sort(SortedClusterID.begin(),SortedClusterID.end());
-   for (int i=0; i<SortedClusterID.size(); i++) {
-      auto it = find(vPureIDBGOBackCluster.begin(), vPureIDBGOBackCluster.end(),SortedClusterID[i]);
-      SortedIndex.push_back(it-vPureIDBGOBackCluster.begin());
-      SortedClusterEn.push_back(vPureEnBGOBackCluster[SortedIndex[i]]);
-   }
-
-   std::cout << "The cluster is sorted! " <<std::endl;
-
-   allEnBGOBackCluster.push_back(SortedClusterEn);
-   allIDBGOBackCluster.push_back(SortedClusterID);
-   }
-
+   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;36m---------------------- Matching --------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
 
 
    const int nsamps = 100;
@@ -548,25 +401,37 @@ void VetoEff(){
    Ethr.push_back(0.0);
    for (int i=1; i<nsamps; i++) Ethr.push_back(Ethr[i-1]+Estep);
    std::vector<double> EffVeto4A;
+   std::vector<double> EffVeto4A2;
+   std::vector<double> EffVeto4A3;
 
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounter=0;
       double TotalCounter=0;
-      for (int n=0; n<allIDBGOBackCluster[0].size(); n++) {
+      double MatchCounter2=0;
+      double MatchCounter3=0;
+      for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
-         if (allEnBGOBackCluster[0][n] >= Ethr[m]) {
-            auto it = find(vEvIDV4A.begin(), vEvIDV4A.end(), allIDBGOBackCluster[0][n]);
-            int index = it-vEvIDV4A.begin();
-            if (index < vEvIDV4A.size()) {
-               if ((vTimeV4A[index] > (timemin[0]-30)) && (vTimeV4A[index] < (timemax[0]+30))) {
-                  MatchCounter++;
+         if (vEnBGOBackA[n] >= Ethr[m]) {
+            for (int k=0; k<vEvIDV4A.size(); k++) {
+               if (vEvIDV4A[k] == vIDBGOBackA[n]) {
+                  if ((vTimeV4A[k] >= (vTmBGOBackA[n]-100)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+100))) {
+                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
+                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
+                           MatchCounter++;
+                        }
+                        MatchCounter2++;
+                     }
+                     MatchCounter3++;
+                  }
                }
             }
             TotalCounter++;
          }
       }
-      //std::cout << "Ethr = " << Ethr[m] << ", Efficiency = " << MatchCounter/TotalCounter << std::endl;
-      EffVeto4A.push_back(MatchCounter/TotalCounter);               
+      std::cout << "Ethr = " << Ethr[m] << ", Eff1 = " << MatchCounter/TotalCounter << ", Eff2 = " << MatchCounter2/TotalCounter << ", Eff3 = " << MatchCounter3/TotalCounter << std::endl;
+      EffVeto4A.push_back(MatchCounter/TotalCounter);
+      EffVeto4A2.push_back(MatchCounter2/TotalCounter);
+      EffVeto4A3.push_back(MatchCounter3/TotalCounter);               
    }      
 
 
@@ -580,29 +445,47 @@ void VetoEff(){
 
 
    float EffV4Aarr[nsamps] = {}; // Efficiency
+   float EffV4Aarr2[nsamps] = {};
+   float EffV4Aarr3[nsamps] = {};
    float EthrV4Aarr[nsamps] = {};
    for (int i=0; i<nsamps; i++) {
       EffV4Aarr[i] = EffVeto4A[i];
+      EffV4Aarr2[i] = EffVeto4A2[i];
+      EffV4Aarr3[i] = EffVeto4A3[i];
       EthrV4Aarr[i] = Ethr[i]/1000.0;
    }
    TCanvas *f = new TCanvas("f","E_{THR}",800,600);
    //gPad->SetLogy();
    gPad->SetGrid(1,1);
+   TGraph *grV4A3 = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr3);
+   grV4A3->SetTitle("Efficiency of Veto_4_A");
+   grV4A3->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   grV4A3->GetYaxis()->SetTitle("Eff");
+   grV4A3->GetYaxis()->SetTitleOffset(2.1);
+   grV4A3->SetLineColor(kGray+3);
+   grV4A3->SetLineWidth(2);
+   grV4A3->SetFillColor(kViolet-5);
+   grV4A3->SetFillStyle(3002);
+   grV4A3->Draw("ALB1");
+   TGraph *grV4A2 = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr2);
+   grV4A2->SetLineColor(kGray+3);
+   grV4A2->SetLineWidth(2);
+   grV4A2->SetFillColor(kTeal-5);
+   grV4A2->SetFillStyle(3002);
+   grV4A2->Draw("LB1");
    TGraph *grV4A = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr);
-   grV4A->SetTitle("Efficiency of Veto_6_B");
-   grV4A->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   //grV4A->GetXaxis()->SetRangeUser(0,2.03);
-//487    grPXX->GetXaxis()->SetNdivisions(-304);
-   //grV4A->GetYaxis()->SetMoreLogLabels(1);
-   grV4A->GetYaxis()->SetTitle("Eff");
-   grV4A->GetYaxis()->SetTitleOffset(2.1);
    grV4A->SetLineColor(kGray+3);
    grV4A->SetLineWidth(2);
-   grV4A->SetFillColor(kViolet-5);
+   grV4A->SetFillColor(kOrange-4);
    grV4A->SetFillStyle(3002);
-   grV4A->Draw("ALB1");
+   grV4A->Draw("LB1");
 
-   f->SaveAs("EffV6B_100_400_ns.pdf");
+   auto legend = new TLegend(0.71,0.71,0.87,0.87); 
+   legend->AddEntry(grV4A3,"t=[-100, 100] ns","f");
+   legend->AddEntry(grV4A2,"t=[-65, 65] ns","f");
+   legend->AddEntry(grV4A,"t=[-30, 30] ns", "f");
+   legend->Draw();
+   f->SaveAs("EffV4A_new.pdf");
 
 
 
@@ -617,14 +500,6 @@ void VetoEff(){
    TH1F *hbgoc = new TH1F("hbgoc","C",100,0,28.0);
    TH1F *hbgoe = new TH1F("hbgoe","E",100,0,28.0);   
 */
-
-   for (int i=0; i<allEnBGOBackCluster[0].size(); i++) {
-      ht1->Fill((allEnBGOBackCluster[0][i])/(1000.0));
-   }
-  
-   for (int i=0; i<vEvIDV4A.size(); i++) {
-      hv4a->Fill((vEdepV4A[i])/(2000.0));
-   }
 
    //for (int i=0; i<allEnBGOBackCluster[1].size(); i++) {
    //   ht2->Fill((allEnBGOBackCluster[1][i])/(1000.0));
@@ -739,213 +614,7 @@ void VetoEff(){
    //legend->AddEntry(h2,"adc","l");
    //legend->Draw();
 
-
-
-
-
-
-		  		 
-		
-   //-------------------------------------------------------------------
-   //                     Bin-by-bin analysis
-   //                          Mu-decay
-   //-------------------------------------------------------------------     
-/*			
-   // X-ray cascade	  
-   for (int i=0; i<allvEvIDBD1mu.size(); i++) {
-      
-      std::cout << std::endl;
-	  std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
-	  std::cout << "\033[1;31m-------------------- Analysis Loop  " << i+1 << " --------------------\033[0m" << std::endl;
-	  std::cout << "\033[1;31m--------------------- X-ray cascade ----------------------\033[0m" << std::endl;
-	  std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
-
-      for (int m=0; m<nsamps; m++) {
-
-	     Ethr = Ethrmu[m];
-
-		 //--------------------------------------------------
-		 // Normalisation 2 [absolute] :: cascade Cu - Al
-		 //-------------------------------------------------- 
-		 XXray = 0; Xelec = 0;
-			  
-		 for (int a=0; a<allvEvIDBD1x[0].size(); a++) {
-
-		    if ((allvEdepSD1x[i][a] < Ethr1) && (allvEdepSD2x[i][a] < Ethr1) && (allvEdepSD3x[i][a] < Ethr1)) {
-			   if (((allvEdepBD1x[i][a] > Ethr) && (allvEdepBD1x[i][a] < Ethr22)) || ((allvEdepBD2x[i][a] > Ethr) && (allvEdepBD2x[i][a] < Ethr22))) {
-				  XXray += 1;
-			   } else { Xelec += 1; }
-		    } else { Xelec += 1; }
-		 }
-				 
-		 PXXvector[i][m] = XXray/(double)(counterXX);
-		 PXevector[i][m] = Xelec/(double)(counterXX); 
-
-
-		 //--------------------------------------------------
-	     // Normalisation 2 [absolute] :: mu-decay Cu - Al
-		 //-------------------------------------------------- 
-		 eXray = 0; eelec = 0;
-			  
-		 for (int a=0; a<allvEvIDBD1mu[0].size(); a++) {
-
-		    if ((allvEdepSD1mu[i][a] < Ethr1) && (allvEdepSD2mu[i][a] < Ethr1) && (allvEdepSD3mu[i][a] < Ethr1)) {
-		       if (((allvEdepBD1mu[i][a] > Ethr) && (allvEdepBD1mu[i][a] < Ethr22))) || ((allvEdepBD2mu[i][a] > Ethr) && (allvEdepBD2mu[i][a] < Ethr22))) {
-				  eXray += 1;
-			   } else { eelec += 1; }
-		    } else { eelec += 1; }
-		 }
-				 
-		 PeXvector[i][m] = eXray/(double)(counteree);
-		 Peevector[i][m] = eelec/(double)(counteree); 
-
-	  
-	     //----------------------------------------------------
-		 // Normalisation 2 [absolute] :: cascade Glass - Al2
-		 //---------------------------------------------------- 
-		 XXray2 = 0; Xelec2 = 0;
-			  
-		 for (int a=0; a<allvEvIDBD12x[0].size(); a++) {
-
-		    if ((allvEdepSD12x[i][a] < Ethr1) && (allvEdepSD22x[i][a] < Ethr1) && (allvEdepSD32x[i][a] < Ethr1)) {
-			   if (((allvEdepBD12x[i][a] > Ethr) && (allvEdepBD12x[i][a] < Ethr22)) || ((allvEdepBD22x[i][a] > Ethr) && (allvEdepBD22x[i][a] < Ethr22))) {
-				  XXray2 += 1;
-			   } else { Xelec2 += 1; }
-		    } else { Xelec2 += 1; }
-		 }
-				 
-		 PXXvector2[i][m] = XXray2/(double)(counterXX);
-		 PXevector2[i][m] = Xelec2/(double)(counterXX); 
-
-
-		 //----------------------------------------------------
-	     // Normalisation 2 [absolute] :: mu-decay Glass - Al2
-		 //---------------------------------------------------- 
-		 eXray2 = 0; eelec2 = 0;
-			  
-		 for (int a=0; a<allvEvIDBD12mu[0].size(); a++) {
-
-		    if ((allvEdepSD12mu[i][a] < Ethr1) && (allvEdepSD22mu[i][a] < Ethr1) && (allvEdepSD32mu[i][a] < Ethr1)) {
-		       if (((allvEdepBD12mu[i][a] > Ethr) && (allvEdepBD12mu[i][a] < Ethr22))) || ((allvEdepBD22mu[i][a] > Ethr) && (allvEdepBD22mu[i][a] < Ethr22))) {
-				  eXray2 += 1;
-			   } else { eelec2 += 1; }
-		    } else { eelec2 += 1; }
-		 }
-				 
-		 PeXvector2[i][m] = eXray2/(double)(counteree);
-		 Peevector2[i][m] = eelec2/(double)(counteree); 
-
-	  
-	  } 
-
 				
-   }  
-*/
-   //-------------------------------------------------------------------
-   //                     Plotting business
-   //-------------------------------------------------------------------     
-/*						
-   std::cout << std::endl;
-   std::cout << "\033[1;33m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;33m-------------------- Plotting business -------------------\033[0m" << std::endl;
-   std::cout << "\033[1;33m----------------------------------------------------------\033[0m" << std::endl;
-
-   // Array declarations
-   // Normalisation 2 [abs]
-   float PXXarr[nsamps] = {}; // X-ray cascade
-   float PXXarr2[nsamps] = {};
-   float PeXarr[nsamps] = {};
-   float PeXarr2[nsamps] = {};
-   float PeXXXarr[nsamps] = {};
-   float PeXXXarr2[nsamps] = {};
- 		 	   
-   for (int i=0; i<nsamps; i++) {
-      // Normalisation 2 [absolute]
-	  PXXarr[i] = PXXvector[0][i];
-	  PXXarr2[i] = PXXvector2[0][i];
-	  PeXarr[i] = PeXvector[0][i];
-	  PeXarr2[i] = PeXvector2[0][i];
-	  PeXXXarr[i] = (PeXvector[0][i])/(double)(PXXvector[0][i]);
-	  PeXXXarr2[i] = (PeXvector2[0][i])/(double)(PXXvector2[0][i]);
-   }	   
-
-
-   TCanvas *c = new TCanvas("c","test",800,600);
-   TH2F *h3 = new TH2F("h3","",nsamps,0.001,0.04,nsamps,0.45,0.8);
-   for (int i=0; i < nsamps; i++) {
-      h3->Fill(PeXarr[i],PXXarr[i]);
-   }
-   h3->Draw("COLZ");	
-*/
-/*		  
-   TCanvas *f = new TCanvas("f","E_{THR}",800,600);
-   f->Divide(3,1);
-   f->cd(1);
-   gPad->SetLogy();
-   gPad->SetGrid(1,1);
-   //gPad->SetFixedAspectRatio();
-   TGraph *grPXX = new TGraph(nsamps,Ethrmu,PXXarr);
-   grPXX->SetTitle(""); 
-   grPXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   grPXX->GetXaxis()->SetRangeUser(0,2.01);
-   grPXX->GetXaxis()->SetNdivisions(-304);
-   grPXX->GetYaxis()->SetMoreLogLabels(1);
-   grPXX->GetYaxis()->SetTitle("P_{XX}");
-   grPXX->GetYaxis()->SetTitleOffset(2.1);
-   grPXX->SetLineColor(kRed);
-   grPXX->SetLineWidth(3);
-   grPXX->Draw("ALP");
-   TGraph *grPXX2 = new TGraph(nsamps,Ethrmu,PXXarr2);
-   grPXX2->SetLineColor(kBlack);
-   grPXX2->SetLineWidth(3);
-   grPXX2->Draw("LP");
-
-   f->cd(2);
-   gPad->SetLogy();
-   gPad->SetGrid(1,1);
-   TGraph *grPeX = new TGraph(nsamps,Ethrmu,PeXarr);
-   grPeX->SetTitle("");
-   grPeX->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   grPeX->GetXaxis()->SetRangeUser(0,2.01);
-   grPeX->GetYaxis()->SetRangeUser(9.5e-4,3.5e-2);
-   grPeX->GetXaxis()->SetNdivisions(-304);
-   //TGaxis::SetMaxDigits(2);
-   grPeX->GetYaxis()->SetMoreLogLabels(1);
-   grPeX->GetYaxis()->SetTitle("P_{eX}");
-   grPeX->GetYaxis()->SetTitleOffset(2.1);
-   grPeX->SetLineColor(kRed);
-   grPeX->SetLineWidth(3);
-   grPeX->Draw("ALP");
-   TGraph *grPeX2 = new TGraph(nsamps,Ethrmu,PeXarr2);
-   grPeX2->SetLineColor(kBlack);
-   grPeX2->SetLineWidth(3);
-   grPeX2->Draw("LP");
-   
-   f->cd(3);
-   gPad->SetLogy();
-   gPad->SetGrid(1,1);
-   TGraph *grPeXXX = new TGraph(nsamps,Ethrmu,PeXXXarr);
-   grPeXXX->SetTitle("");
-   grPeXXX->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   grPeXXX->GetXaxis()->SetRangeUser(0,2.01);
-   grPeXXX->GetYaxis()->SetRangeUser(1.9e-3,4.7e-2);
-   grPeXXX->GetXaxis()->SetNdivisions(-304);
-   TGaxis::SetMaxDigits(2);
-   grPeXXX->GetYaxis()->SetMoreLogLabels(1);
-   grPeXXX->GetYaxis()->SetTitle("#frac{P_{eX}}{P_{XX}}");
-   grPeXXX->GetYaxis()->SetTitleOffset(2.1);
-   grPeXXX->SetLineColor(kRed);
-   grPeXXX->SetLineWidth(3);
-   grPeXXX->Draw("ALP");
-   TGraph *grPeXXX2 = new TGraph(nsamps,Ethrmu,PeXXXarr2);
-   grPeXXX2->SetLineColor(kBlack);
-   grPeXXX2->SetLineWidth(3);
-   grPeXXX2->Draw("LP");
-
-   f->SaveAs("Cu_Al_vs_Glass_Al2_dA1_"+TString(dA1)+"mm_dL1_"+TString(dL1)+"mm.pdf");
-   f->SaveAs("Cu_Al_vs_Glass_Al2_dA1_"+TString(dA1)+"mm_dL1_"+TString(dL1)+"mm.png");
-   f->SaveAs("Cu_Al_vs_Glass_Al2_dA1_"+TString(dA1)+"mm_dL1_"+TString(dL1)+"mm.C");
-*/
 
 } 
  
