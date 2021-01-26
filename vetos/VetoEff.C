@@ -287,7 +287,30 @@ void VetoEff(){
    std::cout << "\033[1;35m---------------------- Reading II --------:----------------\033[0m" << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
 
-   
+   // Veto4_A
+   std::vector<double> vInstV4A; // Vector of repeating instances
+   int EvIDV4A;
+   for (int s=0; s<vEvIDV4A.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV4A.size()-1))) {
+         if ((vEvIDV4A[s] == vEvIDV4A[s+1]) || (vEvIDV4A[s] == vEvIDV4A[s-1])) {
+            vInstV4A.push_back(1);
+         } else {
+            vInstV4A.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV4A[s] == vEvIDV4A[s+1]) {
+            vInstV4A.push_back(1);
+         } else {
+            vInstV4A.push_back(0);
+         }
+      } else if (vEvIDV4A[s] == vEvIDV4A[s-1]) {
+         vInstV4A.push_back(1);
+      } else {
+         vInstV4A.push_back(0);
+      }
+   }
+      
+
    // BGO_Back_A
    std::vector<double> vEnBGOBackA;
    std::vector<double> vIDBGOBackA;
@@ -412,20 +435,27 @@ void VetoEff(){
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
          if (vEnBGOBackA[n] >= Ethr[m]) {
+            int GoodEvent = 0;
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
-                  if ((vTimeV4A[k] >= (vTmBGOBackA[n]-100)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+100))) {
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
-                           MatchCounter++;
+                  if (vInstV4A[k] == 0) {
+                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-100)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+100))) {
+                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
+                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
+                              MatchCounter++;
+                           }
+                           MatchCounter2++;
                         }
-                        MatchCounter2++;
+                        MatchCounter3++;
                      }
-                     MatchCounter3++;
+                  } else {
+                     GoodEvent = 1;
                   }
                }
             }
-            TotalCounter++;
+            if (GoodEvent == 0) {
+               TotalCounter++;
+            }
          }
       }
       std::cout << "Ethr = " << Ethr[m] << ", Eff1 = " << MatchCounter/TotalCounter << ", Eff2 = " << MatchCounter2/TotalCounter << ", Eff3 = " << MatchCounter3/TotalCounter << std::endl;
@@ -465,19 +495,19 @@ void VetoEff(){
    grV4A3->SetLineColor(kGray+3);
    grV4A3->SetLineWidth(2);
    grV4A3->SetFillColor(kViolet-5);
-   grV4A3->SetFillStyle(3002);
+   //grV4A3->SetFillStyle(3002);
    grV4A3->Draw("ALB1");
    TGraph *grV4A2 = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr2);
    grV4A2->SetLineColor(kGray+3);
    grV4A2->SetLineWidth(2);
    grV4A2->SetFillColor(kTeal-5);
-   grV4A2->SetFillStyle(3002);
+   //grV4A2->SetFillStyle(3002);
    grV4A2->Draw("LB1");
    TGraph *grV4A = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr);
    grV4A->SetLineColor(kGray+3);
    grV4A->SetLineWidth(2);
    grV4A->SetFillColor(kOrange-4);
-   grV4A->SetFillStyle(3002);
+   //grV4A->SetFillStyle(3002);
    grV4A->Draw("LB1");
 
    auto legend = new TLegend(0.71,0.71,0.87,0.87); 
@@ -485,7 +515,7 @@ void VetoEff(){
    legend->AddEntry(grV4A2,"t=[-65, 65] ns","f");
    legend->AddEntry(grV4A,"t=[-30, 30] ns", "f");
    legend->Draw();
-   f->SaveAs("EffV4A_new.pdf");
+   f->SaveAs("EffV4A_new2.pdf");
 
 
 
