@@ -83,7 +83,7 @@ void VetoEff(){
    std::vector<int> timemax;
 
    timemin.push_back(100);
-   timemax.push_back(400);
+   timemax.push_back(1000);
 
    // Names of the files
    // Electron Vetos
@@ -427,6 +427,9 @@ void VetoEff(){
    std::vector<double> EffVeto4A2;
    std::vector<double> EffVeto4A3;
 
+   std::vector<double> vMatchedEnergyV4A;
+   std::vector<double> vMatchedEnergyV4A2;
+   std::vector<double> vMatchedEnergyV4A3;
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounter=0;
       double TotalCounter=0;
@@ -443,10 +446,13 @@ void VetoEff(){
                         if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
                            if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
                               MatchCounter++;
+                              vMatchedEnergyV4A.push_back(vEdepV4A[k]);
                            }
                            MatchCounter2++;
+                           vMatchedEnergyV4A2.push_back(vEdepV4A[k]);
                         }
                         MatchCounter3++;
+                        vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
                      }
                   } else {
                      GoodEvent = 1;
@@ -515,8 +521,47 @@ void VetoEff(){
    legend->AddEntry(grV4A2,"t=[-65, 65] ns","f");
    legend->AddEntry(grV4A,"t=[-30, 30] ns", "f");
    legend->Draw();
-   f->SaveAs("EffV4A_new2.pdf");
+   f->SaveAs("EffV4A_new_100_1000.pdf");
 
+
+
+   TH1F *hMatched = new TH1F("hMatched","Veto4A",100,0,10.0);
+   TH1F *hMatched2 = new TH1F("hMatched2","Veto4A",100,0,10.0);
+   TH1F *hMatched3 = new TH1F("hMatched3","Veto4A",100,0,10.0); 
+
+   for (int i=0; i<vMatchedEnergyV4A.size(); i++) {
+      hMatched->Fill((vMatchedEnergyV4A[i])/(1000.0));
+   }
+   for (int i=0; i<vMatchedEnergyV4A2.size(); i++) {
+      hMatched2->Fill((vMatchedEnergyV4A2[i])/(1000.0));
+   }
+   for (int i=0; i<vMatchedEnergyV4A3.size(); i++) {
+      hMatched3->Fill((vMatchedEnergyV4A3[i])/(1000.0));
+   }
+
+   TCanvas *z = new TCanvas("z","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   hMatched3->GetXaxis()->SetTitle("E [adc #times 10^3]");
+   hMatched3->SetTitle("Veto_4_A");
+   hMatched3->SetLineColor(kGray+3);
+   hMatched3->SetLineWidth(3);
+   hMatched3->SetFillColor(kViolet-5);
+   hMatched3->Draw();
+   hMatched2->SetLineColor(kGray+2);
+   hMatched2->SetLineWidth(3);
+   hMatched2->SetFillColor(kTeal-5);
+   hMatched2->Draw("same");
+   hMatched2->SetLineColor(kGray+3);
+   hMatched2->SetLineWidth(3);
+   hMatched->SetFillColor(kOrange-5);
+   hMatched->Draw("same");
+   auto legend2 = new TLegend(0.75,0.61,0.91,0.77);
+   legend2->AddEntry(hMatched3, "t = [-100, 100] ns","f");
+   legend2->AddEntry(hMatched2, "t = [-65, 65] ns", "f");
+   legend2->AddEntry(hMatched, " t = [-30, 30] ns","f");
+   legend2->Draw();
+   z->SaveAs("Veto4_A_energy.pdf");
 
 
    TH1F *hbgoaadc = new TH1F("hbgoaadc","BGO-A adc",250,0,16.0);
@@ -529,10 +574,12 @@ void VetoEff(){
    TH1F *hbgoc = new TH1F("hbgoc","C",100,0,28.0);
    TH1F *hbgoe = new TH1F("hbgoe","E",100,0,28.0);   
 */
+/*
    for (int i=0; i<vEdepBGOBackA.size(); i++) {
       hbgoaadc->Fill((vEdepBGOBackA[i])/(1000.0));
       hbgoakev->Fill((vEkeVBGOBackA[i])/(1000.0));
    }
+
 
    TCanvas *d = new TCanvas("d","BGO-A",800,600);
    gPad->SetLogy();
@@ -551,7 +598,7 @@ void VetoEff(){
    hbgoakev->SetLineColor(kGreen-2);
    hbgoakev->Draw();
    l->SaveAs("BGO_Back_A_keV.pdf");
-
+*/
 
    //for (int i=0; i<allEnBGOBackCluster[1].size(); i++) {
    //   ht2->Fill((allEnBGOBackCluster[1][i])/(1000.0));
