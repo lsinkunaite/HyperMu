@@ -519,10 +519,9 @@ void VetoEff(){
 
 
 
-   //TH1F *ht3 = new TH1F("ht3","Cluster",250,0,70.0);
-   //TH1F *ht2 = new TH1F("ht2","Cluster",250,0,70.0);
-   TH1F *ht1 = new TH1F("ht1","Cluster",250,0,50.0);
-   TH1F *hv4a = new TH1F("hv4a","Veto 4 A",250,0,5.0);
+   TH1F *hbgoaadc = new TH1F("hbgoaadc","BGO-A adc",250,0,16.0);
+   TH1F *hbgoakev = new TH1F("hbgoakev","BGO-A keV",250,0,30.0);
+   //TH1F *hv4a = new TH1F("hv4a","Veto 4 A",250,0,5.0);
 /*
    TH1F *h3 = new TH1F("h3","E keV",250,0,55.0);
    TH1F *hbgoa = new TH1F("hbgoa","BGO A",100,0,28.0);
@@ -530,6 +529,29 @@ void VetoEff(){
    TH1F *hbgoc = new TH1F("hbgoc","C",100,0,28.0);
    TH1F *hbgoe = new TH1F("hbgoe","E",100,0,28.0);   
 */
+   for (int i=0; i<vEdepBGOBackA.size(); i++) {
+      hbgoaadc->Fill((vEdepBGOBackA[i])/(1000.0));
+      hbgoakev->Fill((vEkeVBGOBackA[i])/(1000.0));
+   }
+
+   TCanvas *d = new TCanvas("d","BGO-A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   hbgoaadc->GetXaxis()->SetTitle("E [adc #times 10^3]");
+   hbgoaadc->SetTitle("BGO Back A");
+   hbgoaadc->SetLineColor(kBlack);
+   hbgoaadc->Draw();
+   d->SaveAs("BGO_Back_A_adc.pdf");
+   
+   TCanvas *l = new TCanvas("l","BGO-A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid();
+   hbgoakev->GetXaxis()->SetTitle("E [MeV]");
+   hbgoakev->SetTitle("BGO Back A");
+   hbgoakev->SetLineColor(kGreen-2);
+   hbgoakev->Draw();
+   l->SaveAs("BGO_Back_A_keV.pdf");
+
 
    //for (int i=0; i<allEnBGOBackCluster[1].size(); i++) {
    //   ht2->Fill((allEnBGOBackCluster[1][i])/(1000.0));
