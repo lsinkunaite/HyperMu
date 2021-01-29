@@ -159,7 +159,7 @@ void VetoEff(){
    fVeto4A.close();
 
 
-/*
+
    // Veto4_B
    std::ifstream fVeto4B(Vetofiles[1]); 
    std::vector<double> vEvIDV4B;
@@ -176,7 +176,7 @@ void VetoEff(){
    vEdepV4B.pop_back();
    vTimeV4B.pop_back();
    fVeto4B.close();
-*/
+
 
 
    // BGO_Back_A
@@ -307,6 +307,30 @@ void VetoEff(){
          vInstV4A.push_back(1);
       } else {
          vInstV4A.push_back(0);
+      }
+   }
+
+
+   // Veto4_B
+   std::vector<double> vInstV4B; // Vector of repeating instances
+   int EvIDV4B;
+   for (int s=0; s<vEvIDV4B.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV4B.size()-1))) {
+         if ((vEvIDV4B[s] == vEvIDV4B[s+1]) || (vEvIDV4B[s] == vEvIDV4B[s-1])) {
+            vInstV4B.push_back(1);
+         } else {
+            vInstV4B.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV4B[s] == vEvIDV4B[s+1]) {
+            vInstV4B.push_back(1);
+         } else {
+            vInstV4B.push_back(0);
+         }
+      } else if (vEvIDV4B[s] == vEvIDV4B[s-1]) {
+         vInstV4B.push_back(1);
+      } else {
+         vInstV4B.push_back(0);
       }
    }
       
@@ -445,33 +469,33 @@ void VetoEff(){
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
          if (vEnBGOBackA[n] >= Ethr[m]) {
             int GoodEvent = 0;
-            for (int k=0; k<vEvIDV4A.size(); k++) {
-               if (vEvIDV4A[k] == vIDBGOBackA[n]) {
-                  if (vInstV4A[k] == 0) {
+            for (int k=0; k<vEvIDV4B.size(); k++) {
+               if (vEvIDV4B[k] == vIDBGOBackA[n]) {
+                  if (vInstV4B[k] == 0) {
                      if (Ethr[m] == 5000) {
-                        vMatchedTimeV4A5MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                        vMatchedTimeV4A5MeV.push_back(vTimeV4B[k]-vTmBGOBackA[n]);
                      } else if (Ethr[m] == 10000) {
-                        vMatchedTimeV4A10MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                        vMatchedTimeV4A10MeV.push_back(vTimeV4B[k]-vTmBGOBackA[n]);
                      } else if (Ethr[m] == 15000) {
-                        vMatchedTimeV4A15MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                        vMatchedTimeV4A15MeV.push_back(vTimeV4B[k]-vTmBGOBackA[n]);
                      }
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+250))) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
-                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
+                     if ((vTimeV4B[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+250))) {
+                        if ((vTimeV4B[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+65))) {
+                           if ((vTimeV4B[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+30))) {
                               MatchCounter++;
-                              vMatchedEnergyV4A.push_back(vEdepV4A[k]);
+                              vMatchedEnergyV4A.push_back(vEdepV4B[k]);
                            }
                            MatchCounter2++;
-                           vMatchedEnergyV4A2.push_back(vEdepV4A[k]);
+                           vMatchedEnergyV4A2.push_back(vEdepV4B[k]);
                         }
                         MatchCounter3++;
-                        vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
-                        if ((vEdepV4A[k] >= 2400) && (vEdepV4A[k] <= 2600)) {
-                           vMatchedTime2500.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
-                        } else if ((vEdepV4A[k] >= 4900) && (vEdepV4A[k] <= 5100)) {
-                           vMatchedTime5000.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
-                        } else if ((vEdepV4A[k] >= 7400) && (vEdepV4A[k] <= 7600)) {
-                           vMatchedTime7500.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
+                        vMatchedEnergyV4A3.push_back(vEdepV4B[k]);
+                        if ((vEdepV4B[k] >= 2400) && (vEdepV4B[k] <= 2600)) {
+                           vMatchedTimeV4A2500.push_back(vTimeV4B[k] - vTimeBGOBackA[n]);
+                        } else if ((vEdepV4B[k] >= 4900) && (vEdepV4B[k] <= 5100)) {
+                           vMatchedTimeV4A5000.push_back(vTimeV4B[k] - vTimeBGOBackA[n]);
+                        } else if ((vEdepV4B[k] >= 7400) && (vEdepV4B[k] <= 7600)) {
+                           vMatchedTimeV4A7500.push_back(vTimeV4B[k] - vTimeBGOBackA[n]);
                         }
                      }
                   } else {
@@ -500,7 +524,7 @@ void VetoEff(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
   
-/*
+
    float EffV4Aarr[nsamps] = {}; // Efficiency
    float EffV4Aarr2[nsamps] = {};
    float EffV4Aarr3[nsamps] = {};
@@ -515,7 +539,7 @@ void VetoEff(){
    //gPad->SetLogy();
    gPad->SetGrid(1,1);
    TGraph *grV4A3 = new TGraph(nsamps,EthrV4Aarr,EffV4Aarr3);
-   grV4A3->SetTitle("Efficiency of Veto_4_A");
+   grV4A3->SetTitle("Efficiency of Veto_4_B");
    grV4A3->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grV4A3->GetYaxis()->SetTitle("Eff");
    grV4A3->GetYaxis()->SetTitleOffset(2.1);
@@ -542,8 +566,22 @@ void VetoEff(){
    legend->AddEntry(grV4A2,"t=[-65, 65] ns","f");
    legend->AddEntry(grV4A,"t=[-30, 30] ns", "f");
    legend->Draw();
-   f->SaveAs("EffV4A_expanded_100_1000.pdf");
-*/
+   f->SaveAs("EffV4B_expanded_100_1000.pdf");
+
+
+   TH1F *hTime2500 = new TH1F("hTime2500","Veto4A",50,-1000.0,1000.0);
+   TH1F *hTime5000 = new TH1F("hTime5000","Veto4A",50,-1000.0,1000.0);
+   TH1F *hTime7500 = new TH1F("hTime7500","Veto4A",50,-1000.0,1000.0);
+
+   for (int i=0; i<vMatchedTimeV4A2500.size(); i++) {
+      hTime2500->Fill(vMatchedTimeV4A2500[i]);
+   }
+   for (int i=0; i<vMatchedTimeV4A5000.size(); i++) {
+      hTime5000->Fill(vMatchedTimeV4A5000[i]);
+   }
+   for (int i=0; i<vMatchedTimeV4A7500.size(); i++) {
+      hTime7500->Fill(vMatchedTimeV4A7500[i]);
+   }
 
 
    TH1F *hMatched = new TH1F("hMatched","Veto4A",100,0,10.0);
@@ -573,7 +611,7 @@ void VetoEff(){
    for (int i=0; i<vMatchedTimeV4A15MeV.size(); i++) {
       hTime15MeV->Fill(vMatchedTimeV4A15MeV[i]);
    }
-
+/*
    TCanvas *w = new TCanvas("w","Veto4A",800,600);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
@@ -594,7 +632,28 @@ void VetoEff(){
    legend3->AddEntry(hTime15MeV,"E_{BGO} >= 15 MeV","f");
    legend3->Draw();
    w->SaveAs("Veto4_A_time_exp.pdf");
+*/
 
+   TCanvas *u = new TCanvas("u","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   hTime2500->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hTime2500->SetTitle("Veto_4_A");
+   hTime2500->SetLineColor(kViolet-5);
+   hTime2500->SetLineWidth(3);
+   hTime2500->Draw();
+   hTime5000->SetLineColor(kTeal-5);
+   hTime5000->SetLineWidth(3);
+   hTime5000->Draw("SAME");
+   hTime7500->SetLineColor(kOrange-5);
+   hTime7500->SetLineWidth(3);
+   hTime7500->Draw("SAME");
+   auto legend4 = new TLegend(0.83,0.61,0.97,0.77);
+   legend4->AddEntry(hTime2500,"E_{V4_A} = 2500 adc","f");
+   legend4->AddEntry(hTime5000,"E_{V4_A} = 5000 adc","f");
+   legend4->AddEntry(hTime7500,"E_{V4_A} = 7500 adc","f");
+   legend4->Draw();
+   u->SaveAs("Veto4_A_time_indiv.pdf");
 
 /*
    TCanvas *z = new TCanvas("z","Veto4A",800,600);
