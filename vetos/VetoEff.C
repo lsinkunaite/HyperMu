@@ -60,10 +60,10 @@ void VetoEff(){
    gStyle->SetLegendBorderSize(1);
    //gStyle->SetPadBottomMargin(0.32);
    gStyle->SetPadBottomMargin(0.12);
-   gStyle->SetPadLeftMargin(0.24);
+   gStyle->SetPadLeftMargin(0.18);
    //gStyle->SetPadTopMargin(0.32);
    gStyle->SetPadTopMargin(0.12);
-   //gStyle->SetPadRightMargin(0.05);
+   gStyle->SetPadRightMargin(0.16);
    gStyle->SetCanvasColor(0);
    gStyle->SetPadColor(0);
    gStyle->SetPalette(1,0);
@@ -284,7 +284,7 @@ void VetoEff(){
 
    std::cout << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;35m---------------------- Reading II --------:----------------\033[0m" << std::endl;
+   std::cout << "\033[1;35m---------------------- Reading II ------------------------\033[0m" << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
 
    // Veto4_A
@@ -460,6 +460,9 @@ void VetoEff(){
    std::vector<double> vMatchedTimeV4A2500;
    std::vector<double> vMatchedTimeV4A5000;
    std::vector<double> vMatchedTimeV4A7500;
+   std::vector<double> vMatchedBGOEn0;
+   std::vector<double> vMatchedBGOTm0;
+
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounter=0;
       double TotalCounter=0;
@@ -496,6 +499,10 @@ void VetoEff(){
                            vMatchedTimeV4A5000.push_back(vTimeV4B[k] - vTimeBGOBackA[n]);
                         } else if ((vEdepV4B[k] >= 7400) && (vEdepV4B[k] <= 7600)) {
                            vMatchedTimeV4A7500.push_back(vTimeV4B[k] - vTimeBGOBackA[n]);
+                        }
+                        if (m == 0) {
+                           vMatchedBGOEn0.push_back(vEnBGOBackA[n]);
+                           vMatchedBGOTm0.push_back(vTimeV4B[k]-vTmBGOBackA[n]);
                         }
                      }
                   } else {
@@ -611,6 +618,14 @@ void VetoEff(){
    for (int i=0; i<vMatchedTimeV4A15MeV.size(); i++) {
       hTime15MeV->Fill(vMatchedTimeV4A15MeV[i]);
    }
+   TH2F *hMatchedBGOEnTm = new TH2F("hMatchedBGOEnTm","En-Time",50,-250.0,65.0,50,0,25.0);
+   for (int i=0; i<vMatchedBGOTm0.size(); i++) {
+      for (int j=0; j<vMatchedBGOEn0.size(); j++) {
+         hMatchedBGOEnTm->Fill(vMatchedBGOTm0[i],(vMatchedBGOEn0[j]/1000.0));
+      }
+   }
+
+
 /*
    TCanvas *w = new TCanvas("w","Veto4A",800,600);
    gPad->SetLogy();
@@ -634,6 +649,17 @@ void VetoEff(){
    w->SaveAs("Veto4_A_time_exp.pdf");
 */
 
+
+   TCanvas *u = new TCanvas("u","En-Tm BGO Veto4B",800,600);
+   //gPad->SetLogy();
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   hMatchedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGP}");
+   hMatchedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
+   hMatchedBGOEnTm->SetTitle("En Tm BGO");
+   hMatchedBGOEnTm->Draw("COLZ");
+   u->SaveAs("BGOBackA2D.pdf");
+/*
    TCanvas *u = new TCanvas("u","Veto4A",800,600);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
@@ -654,7 +680,7 @@ void VetoEff(){
    legend4->AddEntry(hTime7500,"E_{V4_A} = 7500 adc","f");
    legend4->Draw();
    u->SaveAs("Veto4_A_time_indiv.pdf");
-
+*/
 /*
    TCanvas *z = new TCanvas("z","Veto4A",800,600);
    gPad->SetLogy();
