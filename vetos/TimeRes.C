@@ -83,7 +83,7 @@ void TimeRes(){
 
    // Names of the files
    // Electron Vetos
-   std::string fileVeto4A = runnumber+"_Veto4_A_prep.txt";
+   std::string fileVeto4A = runnumber+"_Veto6_B_prep.txt";
    std::string fileVeto4B = runnumber+"_Veto4_B_prep.txt";
    std::string fileVeto5A = runnumber+"_Veto5_A_prep.txt";
    std::string fileVeto5B = runnumber+"_Veto5_B_prep.txt";
@@ -527,34 +527,67 @@ void TimeRes(){
 
 
 
-   TH1F *hTime5MeV = new TH1F("hTime5MeV","Veto4A",100,-1000.0,1000.0);
-   TH1F *hTime10MeV = new TH1F("hTime10MeV","Veto4A",100,-1000.0,1000.0);
-   TH1F *hTime15MeV = new TH1F("hTime15MeV","Veto4A",100,-1000.0,1000.0);
+   TH1F *hTime5MeV = new TH1F("hTime5MeV","Veto6B",100,-800.0,800.0);
+   TH1F *hTime10MeV = new TH1F("hTime10MeV","Veto6B",100,-800.0,800.0);
+   TH1F *hTime15MeV = new TH1F("hTime15MeV","Veto6B",100,-800.0,800.0);
 
    for (int i=0; i<vMatchedTimeV4A5MeV.size(); i++)  hTime5MeV->Fill(vMatchedTimeV4A5MeV[i]);
    for (int i=0; i<vMatchedTimeV4A10MeV.size(); i++) hTime10MeV->Fill(vMatchedTimeV4A10MeV[i]);
    for (int i=0; i<vMatchedTimeV4A15MeV.size(); i++) hTime15MeV->Fill(vMatchedTimeV4A15MeV[i]);
 
 
-   TCanvas *w = new TCanvas("w","Veto4A",800,600);
+   TCanvas *w = new TCanvas("w","Veto6B",800,600);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
    hTime5MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
-   hTime5MeV->SetTitle("Veto_4_A");
+   hTime5MeV->SetTitle("Veto_6_B");
    hTime5MeV->SetLineColor(kViolet-5);
    hTime5MeV->SetLineWidth(3);
    hTime5MeV->Draw();
    hTime10MeV->SetLineColor(kTeal-5);
    hTime10MeV->SetLineWidth(3);
+   hTime10MeV->Draw("SAME");
    hTime15MeV->SetLineColor(kOrange-5);
    hTime15MeV->SetLineWidth(3);
    hTime15MeV->Draw("SAME");
-   auto legend3 = new TLegend(0.83,0.61,0.97,0.77);
-   legend3->AddEntry(hTime5MeV,"E_{BGO} >= 5 MeV","f");
-   legend3->AddEntry(hTime10MeV,"E_{BGO} >= 10 MeV","f");
-   legend3->AddEntry(hTime15MeV,"E_{BGO} >= 15 MeV","f");
-   legend3->Draw();
-   w->SaveAs("Veto4_A_time_cum_full.pdf");
+   auto legend = new TLegend(0.84,0.81,0.98,0.97);
+   legend->AddEntry(hTime5MeV,"E_{BGO} >= 5 MeV","f");
+   legend->AddEntry(hTime10MeV,"E_{BGO} >= 10 MeV","f");
+   legend->AddEntry(hTime15MeV,"E_{BGO} >= 15 MeV","f");
+   legend->Draw();
+   w->SaveAs("Veto6_B_time_cum_full.pdf");
+
+
+   TH1F *hTime5MeVp = new TH1F("hTime5MeVp","Veto6B",50,-250.0,50.0);
+   TH1F *hTime10MeVp = new TH1F("hTime10MeVp","Veto6B",50,-250.0,50.0);
+   TH1F *hTime15MeVp = new TH1F("hTime15MeVp","Veto6B",50,-250.0,50.0);
+
+   for (int i=0; i<vMatchedTimeV4A5MeV.size(); i++)  hTime5MeVp->Fill(vMatchedTimeV4A5MeV[i]);
+   for (int i=0; i<vMatchedTimeV4A10MeV.size(); i++) hTime10MeVp->Fill(vMatchedTimeV4A10MeV[i]);
+   for (int i=0; i<vMatchedTimeV4A15MeV.size(); i++) hTime15MeVp->Fill(vMatchedTimeV4A15MeV[i]);
+
+   TCanvas *wp = new TCanvas("wp","Veto6B",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hTime5MeVp->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hTime5MeVp->SetTitle("Veto_6_B");
+   hTime5MeVp->SetLineColor(kViolet-5);
+   hTime5MeVp->SetLineWidth(3);
+   hTime5MeVp->Draw();
+   hTime10MeVp->SetLineColor(kTeal-5);
+   hTime10MeVp->SetLineWidth(3);
+   hTime10MeVp->Draw("SAME");
+   hTime15MeVp->SetLineColor(kOrange-5);
+   hTime15MeVp->SetLineWidth(3);
+   hTime15MeVp->Draw("SAME");
+   auto legendp = new TLegend(0.84,0.81,0.98,0.97);
+   legendp->AddEntry(hTime5MeVp,"E_{BGO} >= 5 MeV","f");
+   legendp->AddEntry(hTime10MeVp,"E_{BGO} >= 10 MeV","f");
+   legendp->AddEntry(hTime15MeVp,"E_{BGO} >= 15 MeV","f");
+   legendp->Draw();
+   wp->SaveAs("Veto6_B_time_cum_part.pdf");
 
    
 }
