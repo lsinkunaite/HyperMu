@@ -59,10 +59,10 @@ void TimeRes(){
    gStyle->SetLegendBorderSize(1);
    gStyle->SetPadBottomMargin(0.32);
    gStyle->SetPadBottomMargin(0.12);
-   gStyle->SetPadLeftMargin(0.24);
+   gStyle->SetPadLeftMargin(0.16);
    gStyle->SetPadTopMargin(0.32);
    gStyle->SetPadTopMargin(0.12);
-   gStyle->SetPadRightMargin(0.05);
+   gStyle->SetPadRightMargin(0.16);
    gStyle->SetCanvasColor(0);
    gStyle->SetPadColor(0);
    gStyle->SetPalette(1,0);
@@ -83,7 +83,7 @@ void TimeRes(){
 
    // Names of the files
    // Electron Vetos
-   std::string fileVeto4A = runnumber+"_Veto6_B_prep.txt";
+   std::string fileVeto4A = runnumber+"_Veto4_B_prep.txt";
    std::string fileVeto4B = runnumber+"_Veto4_B_prep.txt";
    std::string fileVeto5A = runnumber+"_Veto5_A_prep.txt";
    std::string fileVeto5B = runnumber+"_Veto5_B_prep.txt";
@@ -464,6 +464,12 @@ void TimeRes(){
    std::vector<double> vMatchedTimeV4A5000;
    std::vector<double> vMatchedTimeV4A7500;
 
+   // 2-D Plot
+   std::vector<double> vMatchedBGOEn0;
+   std::vector<double> vMatchedBGOTm0;
+   std::vector<double> vTimedBGOEn0;
+   std::vector<double> vTimedBGOTm0;
+
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounter=0;
       double TotalCounter=0;
@@ -475,6 +481,10 @@ void TimeRes(){
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
+                     if (Ethr[m] == 0) {
+                        vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
+                        vMatchedBGOTm0.push_back(vTimeV4A[k]-vTmBGOBackA[n]); // 2D plot
+                     }                     
                      if (Ethr[m] == 5000) {
                         vMatchedTimeV4A5MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
                      } else if (Ethr[m] == 10000) {
@@ -493,12 +503,18 @@ void TimeRes(){
                         }
                         MatchCounter3++;
                         vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
+                        
+                        if (Ethr[m] == 0) {
+                           vTimedBGOEn0.push_back(vEnBGOBackA[n]); // 2d plot
+                           vTimedBGOTm0.push_back(vTimeV4A[k] - vTmBGOBackA[n]); // 2D plot
+                        }
+
                         if ((vEdepV4A[k] >= 2400) && (vEdepV4A[k] <= 2600)) {
-                           vMatchedTimeV4A2500.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
+                           vMatchedTimeV4A2500.push_back(vTimeV4A[k] - vTmBGOBackA[n]);
                         } else if ((vEdepV4A[k] >= 4900) && (vEdepV4A[k] <= 5100)) {
-                           vMatchedTimeV4A5000.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
+                           vMatchedTimeV4A5000.push_back(vTimeV4A[k] - vTmBGOBackA[n]);
                         } else if ((vEdepV4A[k] >= 7400) && (vEdepV4A[k] <= 7600)) {
-                           vMatchedTimeV4A7500.push_back(vTimeV4A[k] - vTimeBGOBackA[n]);
+                           vMatchedTimeV4A7500.push_back(vTimeV4A[k] - vTmBGOBackA[n]);
                         }   
                      }
                   } else {
@@ -527,6 +543,64 @@ void TimeRes(){
 
 
 
+   // 2D plots of Energy-Time of matched Veto
+   TH2F *hMatchedBGOEnTm = new TH2F("hMatchedBGOEnTm","En-Time",50,-1000.0,1000.0,50,0,25.0);
+   for (int i=0; i<vMatchedBGOTm0.size(); i++) {
+      for (int j=0; j<vMatchedBGOEn0.size(); j++) {
+         hMatchedBGOEnTm->Fill(vMatchedBGOTm0[i],(vMatchedBGOEn0[j]/1000.0));
+      }
+   }
+/*
+   TCanvas *u = new TCanvas("u","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   hMatchedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
+   hMatchedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
+   hMatchedBGOEnTm->SetTitle("Veto_4_A");
+   hMatchedBGOEnTm->Draw("COLZ");
+   u->SaveAs("EnTm_V4_A.pdf");
+*/
+   TCanvas *ul = new TCanvas("ul","Veto4_B",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogz();
+   hMatchedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
+   hMatchedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
+   hMatchedBGOEnTm->SetTitle("Veto_4_B");
+   hMatchedBGOEnTm->Draw("COLZ");
+   ul->SaveAs("EnTm_V4_B_log.pdf");
+
+
+   // 2D plots of Energy-Time of matched and timedVeto
+   TH2F *hTimedBGOEnTm = new TH2F("hTimedBGOEnTm","En-Time",50,-250.0,250.0,50,0,25.0);
+   for (int i=0; i<vTimedBGOTm0.size(); i++) {
+      for (int j=0; j<vTimedBGOEn0.size(); j++) {
+         hTimedBGOEnTm->Fill(vTimedBGOTm0[i],(vTimedBGOEn0[j]/1000.0));
+      }
+   }
+/*   
+   TCanvas *t = new TCanvas("t","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   hTimedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
+   hTimedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
+   hTimedBGOEnTm->SetTitle("Veto_4_A");
+   hTimedBGOEnTm->Draw("COLZ");
+   t->SaveAs("EnTm_timed_V4_A.pdf");
+*/
+   TCanvas *tl = new TCanvas("tl","Veto4_B",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogz();
+   hTimedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
+   hTimedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
+   hTimedBGOEnTm->SetTitle("Veto_4_B");
+   hTimedBGOEnTm->Draw("COLZ");
+   tl->SaveAs("EnTm_timed_V4_B_log.pdf");
+
+
+   // Time resolution of the vetos [cumulative]
+/*
    TH1F *hTime5MeV = new TH1F("hTime5MeV","Veto6B",100,-800.0,800.0);
    TH1F *hTime10MeV = new TH1F("hTime10MeV","Veto6B",100,-800.0,800.0);
    TH1F *hTime15MeV = new TH1F("hTime15MeV","Veto6B",100,-800.0,800.0);
@@ -588,7 +662,7 @@ void TimeRes(){
    legendp->AddEntry(hTime15MeVp,"E_{BGO} >= 15 MeV","f");
    legendp->Draw();
    wp->SaveAs("Veto6_B_time_cum_part.pdf");
-
+*/
    
 }
 
