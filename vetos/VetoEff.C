@@ -83,12 +83,16 @@ void VetoEff(){
    std::vector<int> timemax;
 
    timemin.push_back(100);
-   timemax.push_back(1000);
+   timemax.push_back(130);
 
    // Names of the files
    // Electron Vetos
    std::string fileVeto4A = runnumber+"_Veto4_A_prep.txt";
    std::string fileVeto4B = runnumber+"_Veto4_B_prep.txt";   
+   std::string fileVeto5A = runnumber+"_Veto5_A_prep.txt";
+   std::string fileVeto5B = runnumber+"_Veto5_B_prep.txt";
+   std::string fileVeto6A = runnumber+"_Veto6_A_prep.txt";
+   std::string fileVeto6B = runnumber+"_Veto6_B_prep.txt";
    // BGOs
    std::string fileBGOBackA = runnumber+"_BGO_Back_A_prep.txt";
    std::string fileBGOBackB = runnumber+"_BGO_Back_B_prep.txt";
@@ -103,6 +107,10 @@ void VetoEff(){
    // Electron Vetos
    Vetofiles.push_back(fileVeto4A);
    Vetofiles.push_back(fileVeto4B);
+   Vetofiles.push_back(fileVeto5A);
+   Vetofiles.push_back(fileVeto5B);
+   Vetofiles.push_back(fileVeto6A);
+   Vetofiles.push_back(fileVeto6B);
    // BGOs
    BGOfiles.push_back(fileBGOBackA);
    BGOfiles.push_back(fileBGOBackB);
@@ -125,6 +133,18 @@ void VetoEff(){
    std::vector< std::vector< double > > allEvIDVeto4B;
    std::vector< std::vector< double > > allEdepVeto4B;
    std::vector< std::vector< double > > allTimeVeto4B;
+   std::vector< std::vector< double > > allEvIDVeto5A;
+   std::vector< std::vector< double > > allEdepVeto5A;
+   std::vector< std::vector< double > > allTimeVeto5A;
+   std::vector< std::vector< double > > allEvIDVeto5B;
+   std::vector< std::vector< double > > allEdepVeto5B;
+   std::vector< std::vector< double > > allTimeVeto5B;
+   std::vector< std::vector< double > > allEvIDVeto6A;
+   std::vector< std::vector< double > > allEdepVeto6A;
+   std::vector< std::vector< double > > allTimeVeto6A;
+   std::vector< std::vector< double > > allEvIDVeto6B;
+   std::vector< std::vector< double > > allEdepVeto6B;
+   std::vector< std::vector< double > > allTimeVeto6B;
    // BGOs
 //   std::vector< std::vector< double > > allIDBGOBackCluster;
 //   std::vector< std::vector< double > > allEnBGOBackCluster;
@@ -176,6 +196,82 @@ void VetoEff(){
    vEdepV4B.pop_back();
    vTimeV4B.pop_back();
    fVeto4B.close();
+
+
+
+   // Veto5_A
+   std::ifstream fVeto5A(Vetofiles[2]);
+   std::vector<double> vEvIDV5A;
+   std::vector<double> vEdepV5A;
+   std::vector<double> vTimeV5A;
+   while (!fVeto5A.eof()) {
+      double EvIDV5A, InstV5A, EdepV5A, TimeV5A;
+      fVeto5A >> EvIDV5A >> InstV5A >> EdepV5A >> TimeV5A;
+      vEvIDV5A.push_back(EvIDV5A);
+      vEdepV5A.push_back(EdepV5A);
+      vTimeV5A.push_back(TimeV5A);
+   }
+   vEvIDV5A.pop_back();
+   vEdepV5A.pop_back();
+   vTimeV5A.pop_back();
+   fVeto5A.close();
+
+
+
+   // Veto5_B
+   std::ifstream fVeto5B(Vetofiles[3]);
+   std::vector<double> vEvIDV5B;
+   std::vector<double> vEdepV5B;
+   std::vector<double> vTimeV5B;
+   while (!fVeto5B.eof()) {
+      double EvIDV5B, InstV5B, EdepV5B, TimeV5B;
+      fVeto5B >> EvIDV5B >> InstV5B >> EdepV5B >> TimeV5B;
+      vEvIDV5B.push_back(EvIDV5B);
+      vEdepV5B.push_back(EdepV5B);
+      vTimeV5B.push_back(TimeV5B);
+   }
+   vEvIDV5B.pop_back();
+   vEdepV5B.pop_back();
+   vTimeV5B.pop_back();
+   fVeto5B.close();
+
+
+                                  
+   // Veto6_A
+   std::ifstream fVeto6A(Vetofiles[4]);
+   std::vector<double> vEvIDV6A;
+   std::vector<double> vEdepV6A;
+   std::vector<double> vTimeV6A;
+   while (!fVeto6A.eof()) {
+      double EvIDV6A, InstV6A, EdepV6A, TimeV6A;
+      fVeto6A >> EvIDV6A >> InstV6A >> EdepV6A >> TimeV6A;
+      vEvIDV6A.push_back(EvIDV6A);
+      vEdepV6A.push_back(EdepV6A);
+      vTimeV6A.push_back(TimeV6A);
+   }
+   vEvIDV6A.pop_back();
+   vEdepV6A.pop_back();
+   vTimeV6A.pop_back();
+   fVeto6A.close();
+
+
+
+   // Veto6_B
+   std::ifstream fVeto6B(Vetofiles[5]);
+   std::vector<double> vEvIDV6B;
+   std::vector<double> vEdepV6B;
+   std::vector<double> vTimeV6B;
+   while (!fVeto6B.eof()) {
+      double EvIDV6B, InstV6B, EdepV6B, TimeV6B;
+      fVeto6B >> EvIDV6B >> InstV6B >> EdepV6B >> TimeV6B;
+      vEvIDV6B.push_back(EvIDV6B);
+      vEdepV6B.push_back(EdepV6B);
+      vTimeV6B.push_back(TimeV6B);
+   }
+   vEvIDV6B.pop_back();
+   vEdepV6B.pop_back();
+   vTimeV6B.pop_back();
+   fVeto6B.close();
 
 
 
@@ -333,7 +429,103 @@ void VetoEff(){
          vInstV4B.push_back(0);
       }
    }
-      
+
+
+   // Veto5_A
+   std::vector<double> vInstV5A; // Vector of repeating instances
+   int EvIDV5A;
+   for (int s=0; s<vEvIDV5A.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV5A.size()-1))) {
+         if ((vEvIDV5A[s] == vEvIDV5A[s+1]) || (vEvIDV5A[s] == vEvIDV5A[s-1])) {
+            vInstV5A.push_back(1);
+         } else {
+            vInstV5A.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV5A[s] == vEvIDV5A[s+1]) {
+            vInstV5A.push_back(1);
+         } else {
+            vInstV5A.push_back(0);
+         }
+      } else if (vEvIDV5A[s] == vEvIDV5A[s-1]) {
+         vInstV5A.push_back(1);
+      } else {
+         vInstV5A.push_back(0);
+      }
+   }
+
+
+   // Veto5_B
+   std::vector<double> vInstV5B; // Vector of repeating instances
+   int EvIDV5B;
+   for (int s=0; s<vEvIDV5B.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV5B.size()-1))) {
+         if ((vEvIDV5B[s] == vEvIDV5B[s+1]) || (vEvIDV5B[s] == vEvIDV5B[s-1])) {
+            vInstV5B.push_back(1);
+         } else {
+            vInstV5B.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV5B[s] == vEvIDV5B[s+1]) {
+            vInstV5B.push_back(1);
+         } else {
+            vInstV5B.push_back(0);
+         }
+      } else if (vEvIDV5B[s] == vEvIDV5B[s-1]) {
+         vInstV5B.push_back(1);
+      } else {
+         vInstV5B.push_back(0);
+      }
+   }      
+
+
+   // Veto6_A
+   std::vector<double> vInstV6A; // Vector of repeating instances
+   int EvIDV6A;
+   for (int s=0; s<vEvIDV6A.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV6A.size()-1))) {
+         if ((vEvIDV6A[s] == vEvIDV6A[s+1]) || (vEvIDV6A[s] == vEvIDV6A[s-1])) {
+            vInstV6A.push_back(1);
+         } else {
+            vInstV6A.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV6A[s] == vEvIDV6A[s+1]) {
+            vInstV6A.push_back(1);
+         } else {
+            vInstV6A.push_back(0);
+         }
+      } else if (vEvIDV6A[s] == vEvIDV6A[s-1]) {
+         vInstV6A.push_back(1);
+      } else {
+         vInstV6A.push_back(0);
+      }
+   }
+
+
+   // Veto6_B
+   std::vector<double> vInstV6B; // Vector of repeating instances
+   int EvIDV6B;
+   for (int s=0; s<vEvIDV6B.size(); s++) {
+      if ((s > 0) && (s < (vEvIDV6B.size()-1))) {
+         if ((vEvIDV6B[s] == vEvIDV6B[s+1]) || (vEvIDV6B[s] == vEvIDV6B[s-1])) {
+            vInstV6B.push_back(1);
+         } else {
+            vInstV6B.push_back(0);
+         }
+      } else if (s == 0) {
+         if (vEvIDV6B[s] == vEvIDV6B[s+1]) {
+            vInstV6B.push_back(1);
+         } else {
+            vInstV6B.push_back(0);
+         }
+      } else if (vEvIDV6B[s] == vEvIDV6B[s-1]) {
+         vInstV6B.push_back(1);
+      } else {
+         vInstV6B.push_back(0);
+      }
+   }
+
 
    // BGO_Back_A
    std::vector<double> vEnBGOBackA;
@@ -461,13 +653,9 @@ void VetoEff(){
    std::vector<double> vMatchedEnergyV4B2;
    std::vector<double> vMatchedEnergyV4B3;
    
-
-   std::vector<double> EffVeto4AND;
-   std::vector<double> EffVeto4AND2;
-   std::vector<double> EffVeto4AND3;
-   std::vector<double> vMatchedEnergyV4AND;
-   std::vector<double> vMatchedEnergyV4AND2;
-   std::vector<double> vMatchedEnergyV4AND3;
+   std::vector<double> vBGOMatchedV4A;
+   std::vector<double> vBGOMatchedV4B;
+   
 
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounterV4A=0;
@@ -478,49 +666,12 @@ void VetoEff(){
       double MatchCounterV4B=0;
       double MatchCounterV4B2=0;
       double MatchCounterV4B3=0;
-      double TotalCounterV4AND=0;
-      double MatchCounterV4AND=0;
-      double MatchCounterV4AND2=0;
-      double MatchCounterV4AND3=0;
+
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
          if (vEnBGOBackA[n] >= Ethr[m]) {
-            int GoodEventV4AND = 0;
-            for (int k=0; k<vEvIDV4A.size(); k++) {
-               for (int l=0; l<vEvIDV4B.size(); l++) {
-                  if ((vEvIDV4A[k] == vIDBGOBackA[n]) && (vEvIDV4B[l] == vIDBGOBackA[n])) {
-                     if ((vInstV4A[k] == 0) && (vInstV4B[l] == 0)) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65)) && (vTimeV4B[l] >= (vTmBGOBackA[n]-250)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+65))) {
-                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-200)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+35)) && (vTimeV4B[l] >= (vTmBGOBackA[n]-200)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+35))) {
-                              if ((vTimeV4A[k] >= (vTmBGOBackA[n]-150)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+35)) && (vTimeV4B[l] >= (vTmBGOBackA[n]-150)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+35))) {
-                                 MatchCounterV4AND++;
-                                 vMatchedEnergyV4AND.push_back((vEdepV4A[k]+vEdepV4B[l])/2);
-                              }
-                              MatchCounterV4AND2++;
-                              vMatchedEnergyV4AND2.push_back((vEdepV4A[k]+vEdepV4B[l])/2);
-                           }
-                           MatchCounterV4AND3++;
-                           vMatchedEnergyV4AND3.push_back((vEdepV4A[k]+vEdepV4B[l])/2);
-                        }
-                     } else {
-                        GoodEventV4AND = 1;
-                     }
-                  }           
-               }
-            }           
-            if (GoodEventV4AND == 0) {
-               TotalCounterV4AND++;
-            }
-         }
-      }
-      std::cout << "Ethr = " << Ethr[m] << ", V4-AND :: Eff1 = " << MatchCounterV4AND/TotalCounterV4AND << ", Eff2 = " << MatchCounterV4AND2/TotalCounterV4AND << ", Eff3 = " << MatchCounterV4AND3/TotalCounterV4AND << std::endl;
-      EffVeto4AND.push_back(MatchCounterV4AND/TotalCounterV4AND);
-      EffVeto4AND2.push_back(MatchCounterV4AND2/TotalCounterV4AND);
-      EffVeto4AND3.push_back(MatchCounterV4AND3/TotalCounterV4AND);
-   }
 
-
-/*
+            int UnmatchedV4A = 0;
             int GoodEventV4A = 0;
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
@@ -530,23 +681,36 @@ void VetoEff(){
                            if ((vTimeV4A[k] >= (vTmBGOBackA[n]-150)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+35))) {
                               MatchCounterV4A++;
                               vMatchedEnergyV4A.push_back(vEdepV4A[k]);
-                              
                            }
                            MatchCounterV4A2++;
                            vMatchedEnergyV4A2.push_back(vEdepV4A[k]);
                         }
                         MatchCounterV4A3++;
                         vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
+                        UnmatchedV4A = 1;  
                      }
                   } else {
                      GoodEventV4A = 1;
                   }
                }
             }
+            if (m == 0) {
+               if (GoodEventV4A == 0) {
+                  if (UnmatchedV4A == 0) {
+                     vBGOMatchedV4A.push_back(0);
+                  } else {
+                     vBGOMatchedV4A.push_back(1);
+                  }
+               } else {
+                  vBGOMatchedV4A.push_back(-1);
+               }
+            }            
             if (GoodEventV4A == 0) {
                TotalCounterV4A++;
             }
-            
+   
+         
+            int UnmatchedV4B = 0;
             int GoodEventV4B = 0;
             for (int l=0; l<vEvIDV4B.size(); l++) {
                if (vEvIDV4B[l] == vIDBGOBackA[n]) {
@@ -562,14 +726,28 @@ void VetoEff(){
                         }  
                         MatchCounterV4B3++;
                         vMatchedEnergyV4B3.push_back(vEdepV4B[l]);
+                        UnmatchedV4B = 1;
                      }  
                   } else {
                      GoodEventV4B = 1;
                   }
                }  
+            }
+            if (m == 0) {
+               if (GoodEventV4B == 0) {
+                  if (UnmatchedV4B == 0) {
+                     vBGOMatchedV4B.push_back(0);
+                  } else {
+                     vBGOMatchedV4B.push_back(1);
+                  }
+               } else {
+                  vBGOMatchedV4B.push_back(-1);
+               }
             }  
             if (GoodEventV4B == 0) {
                TotalCounterV4B++;
+               if (UnmatchedV4B == 0) {
+               }
             }
          }
 
@@ -584,9 +762,101 @@ void VetoEff(){
       EffVeto4B2.push_back(MatchCounterV4B2/TotalCounterV4B);
       EffVeto4B3.push_back(MatchCounterV4B3/TotalCounterV4B);               
    }      
-*/
 
 
+   std::vector<double> Effand;
+   std::vector<double> Effor;
+
+   int cAND = 0;
+   int cOR = 0;
+   int cBAD = 0;
+   int cELSE = 0;
+   int mandcounter0 = 0; int morcounter0 = 0; int tcounter0 = 0;
+   int mandcounter5 = 0; int morcounter5 = 0; int tcounter5 = 0;
+   int mandcounter10 = 0; int morcounter10 = 0; int tcounter10 = 0;
+   int mandcounter15 = 0; int morcounter15 = 0; int tcounter15 = 0;
+   int mandcounter20 = 0; int morcounter20 = 0; int tcounter20 = 0;
+
+   for (int i=0; i<vEnBGOBackA.size(); i++) {
+      if ((vBGOMatchedV4A[i] == 1) && (vBGOMatchedV4B[i] == 1)) {
+         cAND++;
+         cOR++;
+         if (vEnBGOBackA[i] < 5000) {
+            mandcounter0++;
+            morcounter0++;
+            tcounter0++;
+         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
+            mandcounter5++;
+            morcounter5++;
+            tcounter5++;
+         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
+            mandcounter10++;
+            morcounter10++;
+            tcounter10++;
+         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
+            mandcounter15++;
+            morcounter15++;
+            tcounter15++;
+         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
+            mandcounter20++;
+            morcounter20++;
+            tcounter20++;
+         }
+      } else if ((vBGOMatchedV4A[i] == 1) || (vBGOMatchedV4B[i] == 1)) {
+         cOR++;
+         if (vEnBGOBackA[i] < 5000) {
+            morcounter0++;
+            tcounter0++;
+         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
+            morcounter5++;
+            tcounter5++;
+         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
+            morcounter10++;
+            tcounter10++;
+         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
+            morcounter15++;
+            tcounter15++;
+         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
+            morcounter20++;
+            tcounter20++;
+         }
+      //} else if ((vBGOMatchedV4A[i] == -1) && (vBGOMatchedV4B[i] == -1)) {
+      //   cBAD++;
+      } else if ((vBGOMatchedV4A[i] + vBGOMatchedV4B[i]) == 0) {
+         cELSE++;
+         if (vEnBGOBackA[i] < 5000) {
+            tcounter0++;
+         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
+            tcounter5++;
+         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
+            tcounter10++;
+         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
+            tcounter15++;
+         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
+            tcounter20++;
+         }
+      }
+   }
+
+      Effand.push_back(mandcounter0/tcounter0);
+      Effand.push_back(mandcounter5/tcounter5);
+      Effand.push_back(mandcounter10/tcounter10);
+      Effand.push_back(mandcounter15/tcounter15);
+      Effand.push_back(mandcounter20/tcounter20);
+      Effor.push_back(morcounter0/tcounter0);
+      Effor.push_back(morcounter5/tcounter5);
+      Effor.push_back(morcounter10/tcounter10);
+      Effor.push_back(morcounter15/tcounter15);
+      Effor.push_back(morcounter20/tcounter20);
+
+ 
+
+   std::cout << "AND = " << cAND << ", OR = " << cOR << ", BAD = " << cBAD << ", ELSE = " << cELSE<< std::endl;
+
+
+   std::cout << "size bgomatched v4a = " << vBGOMatchedV4A.size() << std::endl;
+   std::cout << "size bgomatched v4b = " << vBGOMatchedV4B.size() << std::endl;
+   std::cout << "size bgoenergy = " << vEnBGOBackA.size() << std::endl;
 
  
    std::cout << std::endl;
@@ -595,45 +865,40 @@ void VetoEff(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   float EffV4ANDarr[nsamps] = {};
-   float EffV4ANDarr2[nsamps] = {};
-   float EffV4ANDarr3[nsamps] = {};
-   float Ethrarr[nsamps] = {};
 
-   for (int i=0; i<nsamps; i++) {
-      EffV4ANDarr[i] = EffVeto4AND[i];
-      EffV4ANDarr2[i] = EffVeto4AND2[i];
-      EffV4ANDarr3[i] = EffVeto4AND3[i];
-      Ethrarr[i] = Ethr[i]/1000.0;
+   float EffV4ANDarr[5] = {};
+   float EffV4ORarr[5] = {};
+   float EBGOarr[5] = {};
+
+   for (int i=0; i<5; i++) {
+      EffV4ANDarr[i] = Effand[i];
+      EffV4ORarr[i] = Effor[i];
+      EBGOarr[i] = i*0.5;
    }
    
-   TCanvas *fAND = new TCanvas("fAND","E_{THR}",800,600);
+   TCanvas *fcomp = new TCanvas("fcomp","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grV4AND3 = new TGraph(nsamps,Ethrarr,EffV4ANDarr3);
-   grV4AND3->SetTitle("Efficiency of Veto_4_A && Veto_4_B");
-   grV4AND3->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   grV4AND3->GetYaxis()->SetTitle("Eff");
-   grV4AND3->GetYaxis()->SetTitleOffset(2.1);
-   grV4AND3->SetLineColor(kViolet-5);
-   grV4AND3->SetLineWidth(2);
-   grV4AND3->Draw("ALP");
-   TGraph *grV4AND2 = new TGraph(nsamps,Ethrarr,EffV4ANDarr2);
-   grV4AND2->SetLineColor(kTeal-5);
-   grV4AND2->SetLineWidth(2);
-   grV4AND2->Draw("LP");
-   TGraph *grV4AND = new TGraph(nsamps,Ethrarr,EffV4ANDarr);
-   grV4AND->SetLineColor(kOrange-4);
+   TGraph *grV4AND = new TGraph(nsamps,EBGOarr,EffV4ANDarr);
+   grV4AND->SetTitle("Efficiency of Veto_4");
+   grV4AND->GetXaxis()->SetTitle("E_{THR} [MeV]");
+   grV4AND->GetYaxis()->SetTitle("Eff");
+   grV4AND->GetYaxis()->SetTitleOffset(2.1);
+   grV4AND->SetLineColor(kViolet-5);
    grV4AND->SetLineWidth(2);
-   grV4AND->Draw("LP");
-   auto legendV4AND = new TLegend(0.82,0.71,0.94,0.87); 
-   legendV4AND->AddEntry(grV4AND3,"t=[-250, 65] ns","f");
-   legendV4AND->AddEntry(grV4AND2,"t=[-200, 35] ns","f");
-   legendV4AND->AddEntry(grV4AND,"t=[-150, 35] ns", "f");
-   legendV4AND->Draw();
-   fAND->SaveAs("EffV4_AND.pdf");
+   grV4AND->Draw("ALP");
+   TGraph *grV4OR = new TGraph(nsamps,EBGOarr,EffV4ORarr);
+   grV4OR->SetLineColor(kTeal-5);
+   grV4OR->SetLineWidth(2);
+   grV4OR->Draw("LP");
+   auto legendV4comp = new TLegend(0.82,0.71,0.94,0.87); 
+   legendV4comp->AddEntry(grV4AND,"V4_A && V4_B ","f");
+   legendV4comp->AddEntry(grV4OR,"V4_A || V4_B","f");
+   legendV4comp->Draw();
+   fcomp->SaveAs("EffV4_comp.pdf");
+
+
   
-  
-/*
+
    float EffV4Aarr[nsamps] = {}; // Efficiency V4_A
    float EffV4Aarr2[nsamps] = {};
    float EffV4Aarr3[nsamps] = {};
@@ -682,7 +947,7 @@ void VetoEff(){
    legendV4A->AddEntry(grV4A2,"t=[-200, 35] ns","f");
    legendV4A->AddEntry(grV4A,"t=[-150, 35] ns", "f");
    legendV4A->Draw();
-   f->SaveAs("EffV4A_indiv.pdf");
+   //f->SaveAs("EffV6A_indiv.pdf");
    
    TCanvas *f2 = new TCanvas("f2","E_{THR}",800,600);
    gPad->SetGrid(1,1);
@@ -710,8 +975,8 @@ void VetoEff(){
    legendV4B->AddEntry(grV4B2,"t=[-200, 35] ns","f");
    legendV4B->AddEntry(grV4B,"t=[-150, 35] ns", "f");
    legendV4B->Draw();
-   f2->SaveAs("EffV4B_indiv.pdf");
-*/
+   //f2->SaveAs("EffV6B_indiv.pdf");
+
 
 /*
    TH1F *hMatched = new TH1F("hMatched","Veto4A",100,0,10.0);
@@ -874,23 +1139,6 @@ void VetoEff(){
    //   ht3->Fill((allEnBGOBackCluster[2][i])/(1000.0));
    //}
 
-/*
-   for (int i=0; i<SortedClusterEn.size(); i++) {
-      h3->Fill((SortedClusterEn[i])/(1000.0));
-   }
-   for (int i=0; i<vPureEnBGOBackA.size(); i++) {
-      hbgoa->Fill((vPureEnBGOBackA[i])/(1000.0));
-   }
-   for (int i=0; i<vPureEnBGOBackB.size(); i++) {
-      hbgob->Fill((vPureEnBGOBackB[i])/(1000.0));
-   }
-   for (int i=0; i<vPureEnBGOBackC.size(); i++) {
-      hbgoc->Fill((vPureEnBGOBackC[i])/(1000.0));
-   } 
-   for (int i=0; i<vPureEnBGOBackE.size(); i++) {
-      hbgoe->Fill((vPureEnBGOBackE[i])/(1000.0));
-   }
-*/
 
 /*
    TCanvas *c = new TCanvas("c", "BGO Back Cluster",800,600);
@@ -965,20 +1213,6 @@ void VetoEff(){
    legend->Draw();
 */
    //c->SaveAs("BackCluster_100_400ns.pdf");
-
-   //h1->SetTitle("BGO_Back_E");
-   //h1->GetXaxis()->SetTitle("MeV");
-   //h1->SetLineColor(kGreen-2);
-   //h1->SetLineWidth(2);
-   //h1->Draw();
-   //h2->SetLineColor(kBlack);
-   //h2->SetLineWidth(2);
-   //h2->Draw("SAME");
-
-   //auto legend = new TLegend(0.68,0.71,0.85,0.87);
-   //legend->AddEntry(h1,"keV","l");
-   //legend->AddEntry(h2,"adc","l");
-   //legend->Draw();
 
 				
 
