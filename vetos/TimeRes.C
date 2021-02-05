@@ -83,7 +83,7 @@ void TimeRes(){
 
    // Names of the files
    // Electron Vetos
-   std::string fileVeto4A = runnumber+"_Veto5_B_prep.txt";
+   std::string fileVeto4A = runnumber+"_Veto4_A_prep.txt";
    std::string fileVeto4B = runnumber+"_Veto4_B_prep.txt";
    std::string fileVeto5A = runnumber+"_Veto5_A_prep.txt";
    std::string fileVeto5B = runnumber+"_Veto5_B_prep.txt";
@@ -472,6 +472,13 @@ void TimeRes(){
    std::vector<double> vTimedBGOEn0;
    std::vector<double> vTimedBGOTm0;
 
+   std::vector<double> vLowV4A0MeV;
+   std::vector<double> vHighV4A0MeV;
+   std::vector<double> vLowV4A2MeV;
+   std::vector<double> vHighV4A2MeV;
+   std::vector<double> vLowV4A12MeV;
+   std::vector<double> vHighV4A12MeV;
+
    for (int m=0; m<Ethr.size(); m++) {
       double MatchCounter=0;
       double TotalCounter=0;
@@ -487,10 +494,9 @@ void TimeRes(){
                         //vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
                         //vMatchedBGOTm0.push_back(vTimeV4A[k]-vTmBGOBackA[n]); // 2D plot
                      //}
-                     if (Ethr[m] < 500) {
-                     //if ((Ethr[m] >= 2000) && (Ethr[m] < 5000)) {
+                     if (Ethr[m] < 5000) {
                         vMatchedTimeV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
-                     } else if ((Ethr[m] >= 500) && (Ethr[m] < 10000)) {
+                     } else if ((Ethr[m] >= 5000) && (Ethr[m] < 10000)) {
                         vMatchedTimeV4A5MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
                      } else if ((Ethr[m] >= 10000) && (Ethr[m] < 15000)) {
                         vMatchedTimeV4A10MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
@@ -518,10 +524,29 @@ void TimeRes(){
                         MatchCounter3++;
                         vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
                         
-                        if (Ethr[m] == 0) {
-                           vTimedBGOEn0.push_back(vEnBGOBackA[n]); // 2d plot
-                           vTimedBGOTm0.push_back(vTimeV4A[k] - vTmBGOBackA[n]); // 2D plot
-                        }
+                        //if (Ethr[m] == 0) {
+                           //vTimedBGOEn0.push_back(vEnBGOBackA[n]); // 2d plot
+                           //vTimedBGOTm0.push_back(vTimeV4A[k] - vTmBGOBackA[n]); // 2D plot
+                        //}
+                        if (Ethr[m] < 2000) {
+                           if (vEdepV4A[k] <= 500) {
+                              vLowV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           } else {
+                              vHighV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           }
+                        } else if ((Ethr[m] >= 2000) && (Ethr[m] < 12000)) {
+                           if (vEdepV4A[k] <= 500) {
+                              vLowV4A2MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           } else {
+                              vHighV4A2MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           }
+                        } else if ((Ethr[m] >= 12000) && (Ethr[m] < 25000)) {
+                           if (vEdepV4A[k] <= 500) {
+                              vLowV4A12MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           } else {
+                              vHighV4A12MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
+                           }
+                       }
 
                         if ((vEdepV4A[k] >= 2400) && (vEdepV4A[k] <= 2600)) {
                            vMatchedTimeV4A2500.push_back(vTimeV4A[k] - vTmBGOBackA[n]);
@@ -613,8 +638,163 @@ void TimeRes(){
    tl->SaveAs("EnTm_timed_V4_B_log.pdf");
 */
 
-   // Time resolution of the vetos [real]
 
+   // Time resolution of the vetos, for different time cuts
+
+   TH1F *hLowV4A0MeV = new TH1F("hLowV4A0MeV","Low0MeV",50,-250.0,50.0);
+   TH1F *hHighV4A0MeV = new TH1F("hHigh0MeV","High0MeV",50,-250.0,50.0);
+   TH1F *hLowV4A2MeV = new TH1F("hLowV4A2MeV","Low2MeV",50,-250.0,50.0);
+   TH1F *hHighV4A2MeV = new TH1F("hHighV4A2MeV","High2MeV",50,-250.0,50.0);
+   TH1F *hLowV4A12MeV = new TH1F("hLowV4A12MeV","Low12MeV",50,-250.0,50.0);
+   TH1F *hHighV4A12MeV = new TH1F("hHighV4A12MeV","High12Mev",50,-250.0,50.0);
+
+   for (int i=0; i<vLowV4A0MeV.size(); i++)  hLowV4A0MeV->Fill(vLowV4A0MeV[i]);
+   for (int i=0; i<vHighV4A0MeV.size(); i++)  hHighV4A0MeV->Fill(vHighV4A0MeV[i]);
+   for (int i=0; i<vLowV4A2MeV.size(); i++)  hLowV4A2MeV->Fill(vLowV4A2MeV[i]);
+   for (int i=0; i<vHighV4A2MeV.size(); i++)  hHighV4A2MeV->Fill(vHighV4A2MeV[i]);
+   for (int i=0; i<vLowV4A12MeV.size(); i++)  hLowV4A12MeV->Fill(vLowV4A12MeV[i]);
+   for (int i=0; i<vHighV4A12MeV.size(); i++)  hHighV4A12MeV->Fill(vHighV4A12MeV[i]);
+/*
+   TCanvas *rv = new TCanvas("rv","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hHighV4A2MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hHighV4A2MeV->SetTitle("Veto_4_A");
+   hHighV4A2MeV->SetLineColor(kTeal-5);
+   hHighV4A2MeV->SetLineWidth(3);
+   hHighV4A2MeV->Draw();
+   hHighV4A12MeV->SetLineColor(kViolet-5);
+   hHighV4A12MeV->SetLineWidth(3);
+   hHighV4A12MeV->Draw("SAME");
+   hHighV4A0MeV->SetLineColor(kOrange-5);
+   hHighV4A0MeV->SetLineWidth(3);
+   hHighV4A0MeV->Draw("SAME");
+   hLowV4A2MeV->SetLineColor(kRed-7);
+   hLowV4A2MeV->SetLineWidth(3);
+   hLowV4A2MeV->Draw("SAME");
+   hLowV4A12MeV->SetLineColor(kSpring-9);
+   hLowV4A12MeV->SetLineWidth(3);
+   hLowV4A12MeV->Draw("SAME");
+   hLowV4A0MeV->SetLineColor(kYellow-4);
+   hLowV4A0MeV->SetLineWidth(3);
+   hLowV4A0MeV->Draw("SAME");
+   auto legendrv = new TLegend(0.84,0.81,0.98,0.97);
+   legendrv->AddEntry(hLowV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} <= 1 kadc","f");
+   legendrv->AddEntry(hHighV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} > 1 kadc","f");
+   legendrv->AddEntry(hLowV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} <= 1 kadc","f");
+   legendrv->AddEntry(hHighV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} > 1 kadc","f");
+   legendrv->AddEntry(hLowV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} <= 1 kadc","f");
+   legendrv->AddEntry(hHighV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{veto} > 1 kadc","f"); 
+   legendrv->Draw();
+   rv->SaveAs("Veto4_A_time_Encuts.pdf");
+*/
+
+   TCanvas *rvLow = new TCanvas("rvLow","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hLowV4A2MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hLowV4A2MeV->SetTitle("Veto_4_A");
+   hLowV4A2MeV->SetLineColor(kRed-7);
+   hLowV4A2MeV->SetLineWidth(3);
+   hLowV4A2MeV->Draw();
+   hLowV4A12MeV->SetLineColor(kSpring-9);   
+   hLowV4A12MeV->SetLineWidth(3);
+   hLowV4A12MeV->Draw("SAME");
+   hLowV4A0MeV->SetLineColor(kYellow-4);
+   hLowV4A0MeV->SetLineWidth(3);
+   hLowV4A0MeV->Draw("SAME");
+   auto legendrvLow = new TLegend(0.84,0.81,0.98,0.97);
+   legendrvLow->AddEntry(hLowV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} <= 500 adc","f");
+   legendrvLow->AddEntry(hLowV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} <= 500 adc","f");
+   legendrvLow->AddEntry(hLowV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} <= 500 adc","f");
+   legendrvLow->Draw();
+   rvLow->SaveAs("Veto4_A_time_Encuts_Low.pdf");
+
+
+   TCanvas *rvHigh = new TCanvas("rvHigh","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hHighV4A2MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hHighV4A2MeV->SetTitle("Veto_4_A");
+   hHighV4A2MeV->SetLineColor(kTeal-5);
+   hHighV4A2MeV->SetLineWidth(3);
+   hHighV4A2MeV->Draw();
+   hHighV4A12MeV->SetLineColor(kViolet-5);   
+   hHighV4A12MeV->SetLineWidth(3);
+   hHighV4A12MeV->Draw("SAME");
+   hHighV4A0MeV->SetLineColor(kOrange-5);
+   hHighV4A0MeV->SetLineWidth(3);
+   hHighV4A0MeV->Draw("SAME");
+   auto legendrvHigh = new TLegend(0.84,0.81,0.98,0.97);
+   legendrvHigh->AddEntry(hHighV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} > 500 adc","f");
+   legendrvHigh->AddEntry(hHighV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} > 500 adc","f");
+   legendrvHigh->AddEntry(hHighV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} > 500 adc","f");
+   legendrvHigh->Draw();
+   rvHigh->SaveAs("Veto4_A_time_Encuts_High.pdf");
+
+
+   TCanvas *rv0 = new TCanvas("rv0","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hHighV4A0MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hHighV4A0MeV->SetTitle("Veto_4_A");
+   hHighV4A0MeV->SetLineColor(kOrange-5);
+   hHighV4A0MeV->SetLineWidth(3);
+   hHighV4A0MeV->Draw();
+   hLowV4A0MeV->SetLineColor(kYellow-4);
+   hLowV4A0MeV->SetLineWidth(3);
+   hLowV4A0MeV->Draw("SAME");
+   auto legendrv0 = new TLegend(0.84,0.81,0.98,0.97);
+   legendrv0->AddEntry(hHighV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} > 500 adc","f");
+   legendrv0->AddEntry(hLowV4A0MeV,"E_{BGO} #in [0..2) MeV, E_{Veto} <= 500 adc","f");
+   legendrv0->Draw();
+   rv0->SaveAs("Veto4_A_time_Encuts_0MeV.pdf");
+
+
+   TCanvas *rv2 = new TCanvas("rv2","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hHighV4A2MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hHighV4A2MeV->SetTitle("Veto_4_A");
+   hHighV4A2MeV->SetLineColor(kTeal-5);
+   hHighV4A2MeV->SetLineWidth(3);
+   hHighV4A2MeV->Draw();
+   hLowV4A2MeV->SetLineColor(kRed-7);
+   hLowV4A2MeV->SetLineWidth(3);
+   hLowV4A2MeV->Draw("SAME");
+   auto legendrv2 = new TLegend(0.84,0.81,0.98,0.97);
+   legendrv2->AddEntry(hHighV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} > 500 adc","f");
+   legendrv2->AddEntry(hLowV4A2MeV,"E_{BGO} #in [2..12) MeV, E_{Veto} <= 500 adc","f");
+   legendrv2->Draw();
+   rv2->SaveAs("Veto4_A_time_Encuts_2MeV.pdf");
+
+
+   TCanvas *rv12 = new TCanvas("rv12","Veto4A",800,600);
+   gPad->SetLogy();
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   hHighV4A12MeV->GetXaxis()->SetTitle("t_{Veto} - t_{BGO}");
+   hHighV4A12MeV->SetTitle("Veto_4_A");
+   hHighV4A12MeV->SetLineColor(kViolet-5);
+   hHighV4A12MeV->SetLineWidth(3);
+   hHighV4A12MeV->Draw();
+   hLowV4A12MeV->SetLineColor(kSpring-9);
+   hLowV4A12MeV->SetLineWidth(3);
+   hLowV4A12MeV->Draw("SAME");
+   auto legendrv12 = new TLegend(0.84,0.81,0.98,0.97);
+   legendrv12->AddEntry(hHighV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} > 500 adc","f");
+   legendrv12->AddEntry(hLowV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} <= 500 adc","f");
+   legendrv12->Draw();
+   rv12->SaveAs("Veto4_A_time_Encuts_12MeV.pdf");
+
+
+   // Time resolution of the vetos [real]
+/*
    TH1F *hTime0MeV = new TH1F("htime0MeV","0MeV",100,-800.0,800.0);
    TH1F *hTime5MeV = new TH1F("hTime5MeV","5MeV",100,-800.0,800.0);
    TH1F *hTime10MeV = new TH1F("hTime10MeV","10MeV",100,-800.0,800.0);
@@ -700,7 +880,7 @@ void TimeRes(){
    legendp->AddEntry(hTime20MeVp,"E_{BGO} #in [20..25) MeV","f");
    legendp->Draw();
    wp->SaveAs("Veto5_B_time_part.pdf");
-
+*/
    
 }
 
