@@ -83,7 +83,7 @@ void VetoEff(){
    std::vector<int> timemax;
 
    timemin.push_back(100);
-   timemax.push_back(130);
+   timemax.push_back(1000);
 
    // Names of the files
    // Electron Vetos
@@ -634,6 +634,8 @@ void VetoEff(){
    std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
 
 
+   const int nbins = 51;
+   double Eint = 20000.0/nbins;
    const int nsamps = 100;
    double Estep = 25000.0/(nsamps);
    std::vector<double> Ethr;
@@ -764,99 +766,39 @@ void VetoEff(){
    }      
 
 
-   std::vector<double> Effand;
-   std::vector<double> Effor;
+   // AND and OR loop
+   std::vector<double>  Effand;
+   std::vector<double>  Effor;
 
-   int cAND = 0;
-   int cOR = 0;
-   int cBAD = 0;
-   int cELSE = 0;
-   int mandcounter0 = 0; int morcounter0 = 0; int tcounter0 = 0;
-   int mandcounter5 = 0; int morcounter5 = 0; int tcounter5 = 0;
-   int mandcounter10 = 0; int morcounter10 = 0; int tcounter10 = 0;
-   int mandcounter15 = 0; int morcounter15 = 0; int tcounter15 = 0;
-   int mandcounter20 = 0; int morcounter20 = 0; int tcounter20 = 0;
+   std::vector<double> EnBGO;
+   EnBGO.push_back(0.0);
+   for (int i=1; i<nbins; i++) EnBGO.push_back(EnBGO[i-1]+Eint);
 
-   for (int i=0; i<vEnBGOBackA.size(); i++) {
-      if ((vBGOMatchedV4A[i] == 1) && (vBGOMatchedV4B[i] == 1)) {
-         cAND++;
-         cOR++;
-         if (vEnBGOBackA[i] < 5000) {
-            mandcounter0++;
-            morcounter0++;
-            tcounter0++;
-         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
-            mandcounter5++;
-            morcounter5++;
-            tcounter5++;
-         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
-            mandcounter10++;
-            morcounter10++;
-            tcounter10++;
-         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
-            mandcounter15++;
-            morcounter15++;
-            tcounter15++;
-         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
-            mandcounter20++;
-            morcounter20++;
-            tcounter20++;
-         }
-      } else if ((vBGOMatchedV4A[i] == 1) || (vBGOMatchedV4B[i] == 1)) {
-         cOR++;
-         if (vEnBGOBackA[i] < 5000) {
-            morcounter0++;
-            tcounter0++;
-         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
-            morcounter5++;
-            tcounter5++;
-         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
-            morcounter10++;
-            tcounter10++;
-         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
-            morcounter15++;
-            tcounter15++;
-         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
-            morcounter20++;
-            tcounter20++;
-         }
-      //} else if ((vBGOMatchedV4A[i] == -1) && (vBGOMatchedV4B[i] == -1)) {
-      //   cBAD++;
-      } else if ((vBGOMatchedV4A[i] + vBGOMatchedV4B[i]) == 0) {
-         cELSE++;
-         if (vEnBGOBackA[i] < 5000) {
-            tcounter0++;
-         } else if ((vEnBGOBackA[i] >= 5000) && (vEnBGOBackA[i] < 10000)) {
-            tcounter5++;
-         } else if ((vEnBGOBackA[i] >= 10000) && (vEnBGOBackA[i] < 15000)) {
-            tcounter10++;
-         } else if ((vEnBGOBackA[i] >= 15000) && (vEnBGOBackA[i] < 20000)) {
-            tcounter15++;
-         } else if ((vEnBGOBackA[i] >= 20000) && (vEnBGOBackA[i] < 25000)) {
-            tcounter20++;
+   for (int m=1; m<EnBGO.size(); m++) {
+      double ANDCounter=0;
+      double ORCounter=0;
+      double TotalCounter=0;
+ 
+      for (int i=0; i<vEnBGOBackA.size(); i++) {
+         if ((vEnBGOBackA[i] >= EnBGO[m-1]) && (vEnBGOBackA[i] < EnBGO[m])) {
+            if ((vBGOMatchedV4A[i] == 1) && (vBGOMatchedV4B[i] == 1)) {
+               ANDCounter++;
+               ORCounter++;
+               TotalCounter++;
+            } else if ((vBGOMatchedV4A[i] == 1) || (vBGOMatchedV4B[i] == 1)) {
+               ORCounter++;
+               TotalCounter++;
+            } else if ((vBGOMatchedV4A[i] + vBGOMatchedV4B[i]) == 0) {
+               TotalCounter++;
+            }
          }
       }
-   }
 
-      Effand.push_back(mandcounter0/tcounter0);
-      Effand.push_back(mandcounter5/tcounter5);
-      Effand.push_back(mandcounter10/tcounter10);
-      Effand.push_back(mandcounter15/tcounter15);
-      Effand.push_back(mandcounter20/tcounter20);
-      Effor.push_back(morcounter0/tcounter0);
-      Effor.push_back(morcounter5/tcounter5);
-      Effor.push_back(morcounter10/tcounter10);
-      Effor.push_back(morcounter15/tcounter15);
-      Effor.push_back(morcounter20/tcounter20);
-
- 
-
-   std::cout << "AND = " << cAND << ", OR = " << cOR << ", BAD = " << cBAD << ", ELSE = " << cELSE<< std::endl;
+      Effand.push_back(ANDCounter/TotalCounter);
+      Effor.push_back(ORCounter/TotalCounter);
+   }           
 
 
-   std::cout << "size bgomatched v4a = " << vBGOMatchedV4A.size() << std::endl;
-   std::cout << "size bgomatched v4b = " << vBGOMatchedV4B.size() << std::endl;
-   std::cout << "size bgoenergy = " << vEnBGOBackA.size() << std::endl;
 
  
    std::cout << std::endl;
@@ -865,31 +807,41 @@ void VetoEff(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
+   float EffV4ANDarr[nbins-1] = {};
+   float EffV4ORarr[nbins-1] = {};
+   float EBGOarr[nbins-1] = {};
 
-   float EffV4ANDarr[5] = {};
-   float EffV4ORarr[5] = {};
-   float EBGOarr[5] = {};
-
-   for (int i=0; i<5; i++) {
+   for (int i=0; i<Effand.size(); i++) {
       EffV4ANDarr[i] = Effand[i];
       EffV4ORarr[i] = Effor[i];
-      EBGOarr[i] = i*0.5;
+      EBGOarr[i] = EnBGO[i]/1000.0;
+      std::cout << "and = " << Effand[i] << ", or = " << Effor[i] << ", bgoen = " << EBGOarr[i] << std::endl;
    }
    
    TCanvas *fcomp = new TCanvas("fcomp","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grV4AND = new TGraph(nsamps,EBGOarr,EffV4ANDarr);
-   grV4AND->SetTitle("Efficiency of Veto_4");
-   grV4AND->GetXaxis()->SetTitle("E_{THR} [MeV]");
-   grV4AND->GetYaxis()->SetTitle("Eff");
-   grV4AND->GetYaxis()->SetTitleOffset(2.1);
-   grV4AND->SetLineColor(kViolet-5);
-   grV4AND->SetLineWidth(2);
-   grV4AND->Draw("ALP");
-   TGraph *grV4OR = new TGraph(nsamps,EBGOarr,EffV4ORarr);
-   grV4OR->SetLineColor(kTeal-5);
+   TGraph *grV4OR = new TGraph(nbins-1,EBGOarr,EffV4ORarr);
+   grV4OR->SetTitle("Efficiency of Veto_4");
+   grV4OR->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   grV4OR->GetYaxis()->SetTitle("Eff");
+   grV4OR->GetYaxis()->SetTitleOffset(2.1);
+   grV4OR->GetYaxis()->SetRangeUser(0.6,1.01);
+   //grV4OR->SetLineColor(kGray+3);
    grV4OR->SetLineWidth(2);
-   grV4OR->Draw("LP");
+   grV4OR->SetLineColor(kViolet-5);
+   //grV4OR->SetMarkerColor(kViolet-5);
+   //grV4OR->SetMarkerSize(1.5);
+   //grV4OR->SetMarkerStyle(21);
+   grV4OR->Draw("ALP");
+   TGraph *grV4AND = new TGraph(nbins-1,EBGOarr,EffV4ANDarr);
+   //grV4AND->SetLineColor(kGray+3);
+   grV4AND->SetLineWidth(2);
+   grV4AND->SetLineColor(kTeal-5);
+   //grV4AND->SetMarkerColor(kTeal-5);
+   //grV4AND->SetMarkerSize(1.5);
+   //grV4AND->SetMarkerStyle(22);
+   //grV4AND->Draw("CP");
+   grV4AND->Draw("LP");
    auto legendV4comp = new TLegend(0.82,0.71,0.94,0.87); 
    legendV4comp->AddEntry(grV4AND,"V4_A && V4_B ","f");
    legendV4comp->AddEntry(grV4OR,"V4_A || V4_B","f");
@@ -897,7 +849,7 @@ void VetoEff(){
    fcomp->SaveAs("EffV4_comp.pdf");
 
 
-  
+/*  
 
    float EffV4Aarr[nsamps] = {}; // Efficiency V4_A
    float EffV4Aarr2[nsamps] = {};
@@ -976,7 +928,7 @@ void VetoEff(){
    legendV4B->AddEntry(grV4B,"t=[-150, 35] ns", "f");
    legendV4B->Draw();
    //f2->SaveAs("EffV6B_indiv.pdf");
-
+*/
 
 /*
    TH1F *hMatched = new TH1F("hMatched","Veto4A",100,0,10.0);
