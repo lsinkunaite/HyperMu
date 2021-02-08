@@ -634,10 +634,10 @@ void VetoEff(){
    std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   const int nbins = 51;
-   double Eint = 20000.0/nbins;
-   const int nsamps = 100;
-   double Estep = 25000.0/(nsamps);
+   const int nbins = 26;
+   double Eint = 26000.0/(nbins);
+   const int nsamps = 26;
+   double Estep = 26000.0/(nsamps);
    std::vector<double> Ethr;
    Ethr.push_back(0.0);
    for (int i=1; i<nsamps; i++) Ethr.push_back(Ethr[i-1]+Estep);
@@ -659,7 +659,7 @@ void VetoEff(){
    std::vector<double> vBGOMatchedV4B;
    
 
-   for (int m=0; m<Ethr.size(); m++) {
+   for (int m=1; m<Ethr.size(); m++) {
       double MatchCounterV4A=0;
       double TotalCounterV4A=0;
       double MatchCounterV4A2=0;
@@ -671,7 +671,7 @@ void VetoEff(){
 
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
-         if (vEnBGOBackA[n] >= Ethr[m]) {
+         if ((vEnBGOBackA[n] >= Ethr[m-1]) && (vEnBGOBackA[n] < Ethr[m])) {
 
             int UnmatchedV4A = 0;
             int GoodEventV4A = 0;
@@ -696,20 +696,21 @@ void VetoEff(){
                   }
                }
             }
-            if (m == 0) {
-               if (GoodEventV4A == 0) {
-                  if (UnmatchedV4A == 0) {
-                     vBGOMatchedV4A.push_back(0);
-                  } else {
-                     vBGOMatchedV4A.push_back(1);
-                  }
-               } else {
-                  vBGOMatchedV4A.push_back(-1);
-               }
-            }            
+            //if (m == 0) {
             if (GoodEventV4A == 0) {
+               if (UnmatchedV4A == 0) {
+                  vBGOMatchedV4A.push_back(0);
+               } else {
+                  vBGOMatchedV4A.push_back(1);
+               }
                TotalCounterV4A++;
+            } else {
+               vBGOMatchedV4A.push_back(-1);
             }
+            //}            
+            //if (GoodEventV4A == 0) {
+               //TotalCounterV4A++;
+            //}
    
          
             int UnmatchedV4B = 0;
@@ -735,22 +736,21 @@ void VetoEff(){
                   }
                }  
             }
-            if (m == 0) {
-               if (GoodEventV4B == 0) {
-                  if (UnmatchedV4B == 0) {
-                     vBGOMatchedV4B.push_back(0);
-                  } else {
-                     vBGOMatchedV4B.push_back(1);
-                  }
-               } else {
-                  vBGOMatchedV4B.push_back(-1);
-               }
-            }  
+            //if (m == 0) {
             if (GoodEventV4B == 0) {
                TotalCounterV4B++;
                if (UnmatchedV4B == 0) {
+                  vBGOMatchedV4B.push_back(0);
+               } else {
+                  vBGOMatchedV4B.push_back(1);
                }
+            } else {
+               vBGOMatchedV4B.push_back(-1);
             }
+            //}  
+            //if (GoodEventV4B == 0) {
+               //TotalCounterV4B++;
+            //}
          }
 
       }
@@ -762,13 +762,17 @@ void VetoEff(){
       std::cout << "Ethr = " << Ethr[m] << ", V4B :: Eff1 = " << MatchCounterV4B/TotalCounterV4B << ", Eff2 = " << MatchCounterV4B2/TotalCounterV4B << ", Eff3 = " << MatchCounterV4B3/TotalCounterV4B << std::endl;
       EffVeto4B.push_back(MatchCounterV4B/TotalCounterV4B);
       EffVeto4B2.push_back(MatchCounterV4B2/TotalCounterV4B);
-      EffVeto4B3.push_back(MatchCounterV4B3/TotalCounterV4B);               
+      EffVeto4B3.push_back(MatchCounterV4B3/TotalCounterV4B);
+      std::cout << "match counter v4a = " << MatchCounterV4A3 << ", match counter v4b = " << MatchCounterV4B3 << ", total counter v4a = " << TotalCounterV4A << ", total counter v4b = " << TotalCounterV4B << std::endl;               
    }      
 
 
    // AND and OR loop
    std::vector<double>  Effand;
    std::vector<double>  Effor;
+
+   std::cout << "matched v4b = " << vBGOMatchedV4B.size() << ", matched v4a = " << vBGOMatchedV4A.size() << ", enBGO = " << vEnBGOBackA.size() << std::endl;
+
 
    std::vector<double> EnBGO;
    EnBGO.push_back(0.0);
@@ -793,7 +797,7 @@ void VetoEff(){
             }
          }
       }
-
+      std::cout << "E = " << EnBGO[m] << " AND = " << ANDCounter << ", OR = " << ORCounter << ", total = " << TotalCounter << std::endl;
       Effand.push_back(ANDCounter/TotalCounter);
       Effor.push_back(ORCounter/TotalCounter);
    }           
@@ -811,55 +815,21 @@ void VetoEff(){
    float EffV4ORarr[nbins-1] = {};
    float EBGOarr[nbins-1] = {};
 
-   for (int i=0; i<Effand.size(); i++) {
+   for (int i=0; i<(nbins-1); i++) {
       EffV4ANDarr[i] = Effand[i];
       EffV4ORarr[i] = Effor[i];
       EBGOarr[i] = EnBGO[i]/1000.0;
-      std::cout << "and = " << Effand[i] << ", or = " << Effor[i] << ", bgoen = " << EBGOarr[i] << std::endl;
    }
-   
-   TCanvas *fcomp = new TCanvas("fcomp","E_{THR}",800,600);
-   gPad->SetGrid(1,1);
-   TGraph *grV4OR = new TGraph(nbins-1,EBGOarr,EffV4ORarr);
-   grV4OR->SetTitle("Efficiency of Veto_4");
-   grV4OR->GetXaxis()->SetTitle("E_{BGO} [MeV]");
-   grV4OR->GetYaxis()->SetTitle("Eff");
-   grV4OR->GetYaxis()->SetTitleOffset(2.1);
-   grV4OR->GetYaxis()->SetRangeUser(0.6,1.01);
-   //grV4OR->SetLineColor(kGray+3);
-   grV4OR->SetLineWidth(2);
-   grV4OR->SetLineColor(kViolet-5);
-   //grV4OR->SetMarkerColor(kViolet-5);
-   //grV4OR->SetMarkerSize(1.5);
-   //grV4OR->SetMarkerStyle(21);
-   grV4OR->Draw("ALP");
-   TGraph *grV4AND = new TGraph(nbins-1,EBGOarr,EffV4ANDarr);
-   //grV4AND->SetLineColor(kGray+3);
-   grV4AND->SetLineWidth(2);
-   grV4AND->SetLineColor(kTeal-5);
-   //grV4AND->SetMarkerColor(kTeal-5);
-   //grV4AND->SetMarkerSize(1.5);
-   //grV4AND->SetMarkerStyle(22);
-   //grV4AND->Draw("CP");
-   grV4AND->Draw("LP");
-   auto legendV4comp = new TLegend(0.82,0.71,0.94,0.87); 
-   legendV4comp->AddEntry(grV4AND,"V4_A && V4_B ","f");
-   legendV4comp->AddEntry(grV4OR,"V4_A || V4_B","f");
-   legendV4comp->Draw();
-   fcomp->SaveAs("EffV4_comp.pdf");
+  
+   float EffV4Aarr[nsamps-1] = {}; // Efficiency V4_A
+   float EffV4Aarr2[nsamps-1] = {};
+   float EffV4Aarr3[nsamps-1] = {};
+   float Ethrarr[nsamps-1] = {};
+   float EffV4Barr[nsamps-1] = {}; // Efficiency V4_B
+   float EffV4Barr2[nsamps-1] = {};
+   float EffV4Barr3[nsamps-1] = {};
 
-
-/*  
-
-   float EffV4Aarr[nsamps] = {}; // Efficiency V4_A
-   float EffV4Aarr2[nsamps] = {};
-   float EffV4Aarr3[nsamps] = {};
-   float Ethrarr[nsamps] = {};
-   float EffV4Barr[nsamps] = {}; // Efficiency V4_B
-   float EffV4Barr2[nsamps] = {};
-   float EffV4Barr3[nsamps] = {};
-
-   for (int i=0; i<nsamps; i++) {
+   for (int i=0; i<(nsamps-1); i++) {
       EffV4Aarr[i] = EffVeto4A[i];
       EffV4Aarr2[i] = EffVeto4A2[i];
       EffV4Aarr3[i] = EffVeto4A3[i];
@@ -869,10 +839,55 @@ void VetoEff(){
       Ethrarr[i] = Ethr[i]/1000.0;
    }
 
+
+ 
+   TCanvas *fcomp = new TCanvas("fcomp","E_{THR}",800,600);
+   gPad->SetGrid(1,1);
+   TGraph *grV4OR = new TGraph(nbins-1,EBGOarr,EffV4ORarr);
+   grV4OR->SetTitle("Efficiency of Veto_4");
+   grV4OR->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   grV4OR->GetYaxis()->SetTitle("Eff");
+   grV4OR->GetYaxis()->SetTitleOffset(2.1);
+   grV4OR->GetYaxis()->SetRangeUser(0.6,1.01);
+   //grV4OR->SetLineColor(kGray+3);
+   grV4OR->SetLineWidth(3);
+   grV4OR->SetLineColor(kViolet-5);
+   //grV4OR->SetMarkerColor(kViolet-5);
+   //grV4OR->SetMarkerSize(1.5);
+   //grV4OR->SetMarkerStyle(21);
+   grV4OR->Draw("ALP");
+   TGraph *grV4AND = new TGraph(nbins-1,EBGOarr,EffV4ANDarr);
+   //grV4AND->SetLineColor(kGray+3);
+   grV4AND->SetLineWidth(3);
+   grV4AND->SetLineColor(kTeal-5);
+   //grV4AND->SetMarkerColor(kTeal-5);
+   //grV4AND->SetMarkerSize(1.5);
+   //grV4AND->SetMarkerStyle(22);
+   //grV4AND->Draw("CP");
+   grV4AND->Draw("LP");
+   TGraph *grV4a = new TGraph(nsamps-1,Ethrarr,EffV4Aarr3);
+   grV4a->SetLineWidth(3);
+   grV4a->SetLineColor(kOrange-3);
+   grV4a->Draw("LP");
+   TGraph *grV4b = new TGraph(nsamps-1,Ethrarr,EffV4Barr3);
+   grV4b->SetLineWidth(3);
+   grV4b->SetLineColor(kRed-7);
+   grV4b->Draw("LP");
+   auto legendV4comp = new TLegend(0.82,0.71,0.94,0.87); 
+   legendV4comp->AddEntry(grV4AND,"V4_A && V4_B ","f");
+   legendV4comp->AddEntry(grV4OR,"V4_A || V4_B","f");
+   legendV4comp->AddEntry(grV4a,"V4_A","f");
+   legendV4comp->AddEntry(grV4b,"V4_B","f");
+   legendV4comp->Draw();
+   fcomp->SaveAs("EffV4_comp_all.pdf");
+
+
+
+/*
    TCanvas *f = new TCanvas("f","E_{THR}",800,600);
    //gPad->SetLogy();
    gPad->SetGrid(1,1);
-   TGraph *grV4A3 = new TGraph(nsamps,Ethrarr,EffV4Aarr3);
+   TGraph *grV4A3 = new TGraph(nsamps-1,Ethrarr,EffV4Aarr3);
    grV4A3->SetTitle("Efficiency of Veto_4_A");
    grV4A3->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grV4A3->GetYaxis()->SetTitle("Eff");
@@ -882,13 +897,13 @@ void VetoEff(){
    grV4A3->SetFillColor(kViolet-5);
    //grV4A3->SetFillStyle(3002);
    grV4A3->Draw("ALB1");
-   TGraph *grV4A2 = new TGraph(nsamps,Ethrarr,EffV4Aarr2);
+   TGraph *grV4A2 = new TGraph(nsamps-1,Ethrarr,EffV4Aarr2);
    grV4A2->SetLineColor(kGray+3);
    grV4A2->SetLineWidth(2);
    grV4A2->SetFillColor(kTeal-5);
    //grV4A2->SetFillStyle(3002);
    grV4A2->Draw("LB1");
-   TGraph *grV4A = new TGraph(nsamps,Ethrarr,EffV4Aarr);
+   TGraph *grV4A = new TGraph(nsamps-1,Ethrarr,EffV4Aarr);
    grV4A->SetLineColor(kGray+3);
    grV4A->SetLineWidth(2);
    grV4A->SetFillColor(kOrange-4);
@@ -899,11 +914,11 @@ void VetoEff(){
    legendV4A->AddEntry(grV4A2,"t=[-200, 35] ns","f");
    legendV4A->AddEntry(grV4A,"t=[-150, 35] ns", "f");
    legendV4A->Draw();
-   //f->SaveAs("EffV6A_indiv.pdf");
+   f->SaveAs("EffV4A_indiv_en.pdf");
    
    TCanvas *f2 = new TCanvas("f2","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grV4B3 = new TGraph(nsamps,Ethrarr,EffV4Barr3);
+   TGraph *grV4B3 = new TGraph(nsamps-1,Ethrarr,EffV4Barr3);
    grV4B3->SetTitle("Efficiency of Veto_4_B");
    grV4B3->GetXaxis()->SetTitle("E_{THR} [MeV]");
    grV4B3->GetYaxis()->SetTitle("Eff");
@@ -912,12 +927,12 @@ void VetoEff(){
    grV4B3->SetLineWidth(2);
    grV4B3->SetFillColor(kViolet-5);
    grV4B3->Draw("ALB1");
-   TGraph *grV4B2 = new TGraph(nsamps,Ethrarr,EffV4Barr2);
+   TGraph *grV4B2 = new TGraph(nsamps-1,Ethrarr,EffV4Barr2);
    grV4B2->SetLineColor(kGray+3);
    grV4B2->SetLineWidth(2);
    grV4B2->SetFillColor(kTeal-5);
    grV4B2->Draw("LB1");
-   TGraph *grV4B = new TGraph(nsamps,Ethrarr,EffV4Barr);
+   TGraph *grV4B = new TGraph(nsamps-1,Ethrarr,EffV4Barr);
    grV4B->SetLineColor(kGray+3);
    grV4B->SetLineWidth(2);
    grV4B->SetFillColor(kOrange-4);
@@ -927,7 +942,7 @@ void VetoEff(){
    legendV4B->AddEntry(grV4B2,"t=[-200, 35] ns","f");
    legendV4B->AddEntry(grV4B,"t=[-150, 35] ns", "f");
    legendV4B->Draw();
-   //f2->SaveAs("EffV6B_indiv.pdf");
+   f2->SaveAs("EffV6B_indiv_en.pdf");
 */
 
 /*
