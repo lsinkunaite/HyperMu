@@ -655,9 +655,14 @@ void VetoEff(){
    std::vector<double> vMatchedEnergyV4B2;
    std::vector<double> vMatchedEnergyV4B3;
    
-   std::vector<double> vBGOMatchedV4A;
-   std::vector<double> vBGOMatchedV4B;
+   //std::vector<double> vBGOMatchedV4A;
+   //std::vector<double> vBGOMatchedV4B;
    
+
+   // AND and OR loop
+   std::vector<double>  Effand;
+   std::vector<double>  Effor;
+
 
    for (int m=1; m<Ethr.size(); m++) {
       double MatchCounterV4A=0;
@@ -668,6 +673,10 @@ void VetoEff(){
       double MatchCounterV4B=0;
       double MatchCounterV4B2=0;
       double MatchCounterV4B3=0;
+
+
+      std::vector<double> vBGOMatchedV4A;
+      std::vector<double> vBGOMatchedV4B;
 
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
@@ -764,9 +773,30 @@ void VetoEff(){
       EffVeto4B2.push_back(MatchCounterV4B2/TotalCounterV4B);
       EffVeto4B3.push_back(MatchCounterV4B3/TotalCounterV4B);
       std::cout << "match counter v4a = " << MatchCounterV4A3 << ", match counter v4b = " << MatchCounterV4B3 << ", total counter v4a = " << TotalCounterV4A << ", total counter v4b = " << TotalCounterV4B << std::endl;               
+
+
+      std::cout << "\033[1;36m ethr = " << Ethr[m] << ", v4a size = " << vBGOMatchedV4A.size() << ", v4b size = " << vBGOMatchedV4B.size() << "\033[0m" << std::endl;
+
+      double ANDCounter=0;
+      double ORCounter=0;
+      double TotalCounter=0;
+      for (int j=0; j<vBGOMatchedV4A.size(); j++) {
+         if ((vBGOMatchedV4A[j] == 1) && (vBGOMatchedV4B[j] == 1)) {
+            ANDCounter++;
+            ORCounter++;
+            TotalCounter++;
+         } else if ((vBGOMatchedV4A[j] == 1) || (vBGOMatchedV4B[j] == 1)) {
+            ORCounter++;
+            TotalCounter++;
+         } else if ((vBGOMatchedV4A[j] + vBGOMatchedV4B[j]) == 0) {
+            TotalCounter++;
+         }
+      }
+      Effand.push_back(ANDCounter/TotalCounter);
+      Effor.push_back(ORCounter/TotalCounter);
    }      
 
-
+/*
    // AND and OR loop
    std::vector<double>  Effand;
    std::vector<double>  Effor;
@@ -801,7 +831,7 @@ void VetoEff(){
       Effand.push_back(ANDCounter/TotalCounter);
       Effor.push_back(ORCounter/TotalCounter);
    }           
-
+*/
 
 
  
@@ -818,7 +848,7 @@ void VetoEff(){
    for (int i=0; i<(nbins-1); i++) {
       EffV4ANDarr[i] = Effand[i];
       EffV4ORarr[i] = Effor[i];
-      EBGOarr[i] = EnBGO[i]/1000.0;
+      //EBGOarr[i] = EnBGO[i]/1000.0;
    }
   
    float EffV4Aarr[nsamps-1] = {}; // Efficiency V4_A
@@ -843,7 +873,8 @@ void VetoEff(){
  
    TCanvas *fcomp = new TCanvas("fcomp","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grV4OR = new TGraph(nbins-1,EBGOarr,EffV4ORarr);
+   //TGraph *grV4OR = new TGraph(nbins-1,EBGOarr,EffV4ORarr);
+   TGraph *grV4OR = new TGraph(nbins-1,Ethrarr,EffV4ORarr);
    grV4OR->SetTitle("Efficiency of Veto_4");
    grV4OR->GetXaxis()->SetTitle("E_{BGO} [MeV]");
    grV4OR->GetYaxis()->SetTitle("Eff");
@@ -856,7 +887,8 @@ void VetoEff(){
    //grV4OR->SetMarkerSize(1.5);
    //grV4OR->SetMarkerStyle(21);
    grV4OR->Draw("ALP");
-   TGraph *grV4AND = new TGraph(nbins-1,EBGOarr,EffV4ANDarr);
+   //TGraph *grV4AND = new TGraph(nbins-1,EBGOarr,EffV4ANDarr);
+   TGraph *grV4AND = new TGraph(nbins-1,Ethrarr,EffV4ANDarr);
    //grV4AND->SetLineColor(kGray+3);
    grV4AND->SetLineWidth(3);
    grV4AND->SetLineColor(kTeal-5);
@@ -942,7 +974,7 @@ void VetoEff(){
    legendV4B->AddEntry(grV4B2,"t=[-200, 35] ns","f");
    legendV4B->AddEntry(grV4B,"t=[-150, 35] ns", "f");
    legendV4B->Draw();
-   f2->SaveAs("EffV6B_indiv_en.pdf");
+   f2->SaveAs("EffV4B_indiv_en.pdf");
 */
 
 /*
