@@ -531,14 +531,25 @@ void VetoEff(){
    std::vector<double> vEnBGOBackA;
    std::vector<double> vIDBGOBackA;
    std::vector<double> vTmBGOBackA;
+   std::vector<double> vTmBGOBackA2;
+   std::vector<double> vTmBGOBackA3;
+   std::vector<double> vTmBGOBackA4;
    int cBackBGOA;
    for (int s=0; s<vTimeBGOBackA.size(); s++) {
       if ((vTimeBGOBackA[s] > timemin[0]) && (vTimeBGOBackA[s] <timemax[0])) {
-         if (vEkeVBGOBackA[s] < 100000) {
+         //if (vEkeVBGOBackA[s] < 100000) {
+         if ((vEkeVBGOBackA[s] >= 8000) && (vEkeVBGOBackA[s] <= 15000)) {
             vIDBGOBackA.push_back(vEvIDBGOBackA[s]);
             vEnBGOBackA.push_back(vEkeVBGOBackA[s]);
             vTmBGOBackA.push_back(vTimeBGOBackA[s]);
          }
+         /*if (vEkeVBGOBackA[s] <= 1000) {
+            vTmBGOBackA2.push_back(vTimeBGOBackA[s]);
+         } else if ((vEkeVBGOBackA[s] >=20000) && (vEkeVBGOBackA[s] < 100000)) {
+            vTmBGOBackA3.push_back(vTimeBGOBackA[s]);
+         } else if ((vEkeVBGOBackA[s] > 1000) && (vEkeVBGOBackA[s] <20000)) {
+            vTmBGOBackA4.push_back(vTimeBGOBackA[s]);
+         }*/
       }
    }
 /*
@@ -634,12 +645,17 @@ void VetoEff(){
    std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   const int nbins = 26;
-   double Eint = 26000.0/(nbins);
-   const int nsamps = 26;
-   double Estep = 26000.0/(nsamps);
+   //const int nbins = 26;
+   //double Eint = 26000.0/(nbins);
+   //const int nsamps = 26;
+   //double Estep = 26000.0/(nsamps);
+   const int nbins = 25;
+   const int nsamps = 25;
+   double Eint=7000.0/(nbins);
+   double Estep = 7000.0/(nbins);
    std::vector<double> Ethr;
-   Ethr.push_back(0.0);
+   //Ethr.push_back(0.0);
+   Ethr.push_back(8000.0);
    for (int i=1; i<nsamps; i++) Ethr.push_back(Ethr[i-1]+Estep);
    std::vector<double> EffVeto4A;
    std::vector<double> EffVeto4A2;
@@ -655,6 +671,7 @@ void VetoEff(){
    std::vector<double> vMatchedEnergyV4B2;
    std::vector<double> vMatchedEnergyV4B3;
    
+   
    //std::vector<double> vBGOMatchedV4A;
    //std::vector<double> vBGOMatchedV4B;
    
@@ -662,6 +679,11 @@ void VetoEff(){
    // AND and OR loop
    std::vector<double>  Effand;
    std::vector<double>  Effor;
+
+   std::vector<double> EffVeto0;
+   std::vector<double> EffVeto500;
+   std::vector<double> EffVeto1000;
+   std::vector<double> EffVeto1500;
 
 
    for (int m=1; m<Ethr.size(); m++) {
@@ -674,6 +696,11 @@ void VetoEff(){
       double MatchCounterV4B2=0;
       double MatchCounterV4B3=0;
 
+      double MatchEnCount1500=0;
+      double MatchEnCount1000=0;
+      double MatchEnCount500=0;
+      double MatchEnCount0=0;
+      double TotalCount=0;
 
       std::vector<double> vBGOMatchedV4A;
       std::vector<double> vBGOMatchedV4B;
@@ -681,6 +708,32 @@ void VetoEff(){
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
          if ((vEnBGOBackA[n] >= Ethr[m-1]) && (vEnBGOBackA[n] < Ethr[m])) {
+
+            int GoodCount = 0;
+            for (int k=0; k<vEvIDV4A.size(); k++) {
+               if (vEvIDV4A[k] == vIDBGOBackA[n]) {
+                  if (vInstV4A[k] == 0) {
+                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
+                        if (vEdepV4A[k] >= 500) {
+                           if (vEdepV4A[k] >= 1000) {
+                              if (vEdepV4A[k] >= 1200) {
+                                 MatchEnCount1500++;
+                              }
+                              MatchEnCount1000++;
+                           }
+                           MatchEnCount500++;
+                        }
+                        MatchEnCount0++;
+                     }
+                  } else {
+                     GoodCount = 1;
+                  } 
+               }
+            }
+            if (GoodCount == 0) {
+               TotalCount++;
+            }
+
 
             int UnmatchedV4A = 0;
             int GoodEventV4A = 0;
@@ -794,6 +847,15 @@ void VetoEff(){
       }
       Effand.push_back(ANDCounter/TotalCounter);
       Effor.push_back(ORCounter/TotalCounter);
+
+ 
+      // Energy cuts on Veto_4_A
+      EffVeto0.push_back(MatchEnCount0/TotalCount);
+      EffVeto500.push_back(MatchEnCount500/TotalCount);
+      EffVeto1000.push_back(MatchEnCount1000/TotalCount);
+      EffVeto1500.push_back(MatchEnCount1500/TotalCount);      
+
+
    }      
 
 /*
@@ -841,6 +903,65 @@ void VetoEff(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
+
+   float EffVeto0arr[nbins-1] = {};
+   float EffVeto500arr[nbins-1] = {};
+   float EffVeto1000arr[nbins-1] = {};
+   float EffVeto1500arr[nbins-1] = {};
+   float Ethrarr[nbins-1] = {};
+
+   for (int i=0; i<(nbins-1); i++) {
+      EffVeto0arr[i] = EffVeto0[i];
+      EffVeto500arr[i] = EffVeto500[i];
+      EffVeto1000arr[i] = EffVeto1000[i];
+      EffVeto1500arr[i] = EffVeto1500[i];
+      Ethrarr[i] = Ethr[i]/1000.0;
+   }
+
+   TCanvas *fvcut = new TCanvas("fvcut","E_{THR}",800,600);
+   gPad->SetGrid(1,1);
+   TGraph *grv0 = new TGraph(nbins-1,Ethrarr,EffVeto0arr);
+   grv0->SetTitle("Efficiency of Veto_4_A");
+   grv0->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   grv0->GetYaxis()->SetTitle("Eff");
+   grv0->GetYaxis()->SetTitleOffset(2.1);
+   grv0->GetYaxis()->SetRangeUser(0.8,1.01);
+   //grv0->SetLineColor(kGray+3);
+   grv0->SetLineWidth(3);
+   grv0->SetLineColor(kViolet-5);
+   grv0->SetMarkerColor(kViolet-5);
+   grv0->SetMarkerSize(1.5);
+   grv0->SetMarkerStyle(21);
+   grv0->Draw("ALP");
+   TGraph *grv500 = new TGraph(nbins-1,Ethrarr,EffVeto500arr);
+   //grv500->SetLineColor(kGray+3);
+   grv500->SetLineWidth(3);
+   grv500->SetLineColor(kTeal-5);
+   grv500->SetMarkerColor(kTeal-5);
+   grv500->SetMarkerSize(1.5);
+   grv500->SetMarkerStyle(22);
+   //grv500->Draw("CP");
+   grv500->Draw("LP");
+   TGraph *grv1000 = new TGraph(nbins-1,Ethrarr,EffVeto1000arr);
+   grv1000->SetLineWidth(3);
+   grv1000->SetLineColor(kOrange-3);
+   grv1000->Draw("LP");
+   TGraph *grv1500 = new TGraph(nbins-1,Ethrarr,EffVeto1500arr);
+   grv1500->SetLineWidth(3);
+   grv1500->SetLineColor(kRed-7);
+   grv1500->Draw("LP");
+   auto legendvcut = new TLegend(0.82,0.71,0.94,0.87);
+   legendvcut->AddEntry(grv0,"V4_A >= 0 kadc ","f");
+   legendvcut->AddEntry(grv500,"V4_A >= 0.5 kadc","f");
+   legendvcut->AddEntry(grv1000,"V4_A >= 1 kadc","f");
+   legendvcut->AddEntry(grv1500,"V4_A >= 1.2 kadc","f");
+   legendvcut->Draw();
+   fvcut->SaveAs("EffV4_A_vcut2.pdf");
+
+   
+
+
+
    float EffV4ANDarr[nbins-1] = {};
    float EffV4ORarr[nbins-1] = {};
    float EBGOarr[nbins-1] = {};
@@ -854,7 +975,7 @@ void VetoEff(){
    float EffV4Aarr[nsamps-1] = {}; // Efficiency V4_A
    float EffV4Aarr2[nsamps-1] = {};
    float EffV4Aarr3[nsamps-1] = {};
-   float Ethrarr[nsamps-1] = {};
+  // float Ethrarr[nsamps-1] = {};
    float EffV4Barr[nsamps-1] = {}; // Efficiency V4_B
    float EffV4Barr2[nsamps-1] = {};
    float EffV4Barr3[nsamps-1] = {};
@@ -866,7 +987,7 @@ void VetoEff(){
       EffV4Barr[i] = EffVeto4B[i];
       EffV4Barr2[i] = EffVeto4B2[i];
       EffV4Barr3[i] = EffVeto4B3[i];
-      Ethrarr[i] = Ethr[i]/1000.0;
+      //Ethrarr[i] = Ethr[i]/1000.0;
    }
 
 
@@ -911,8 +1032,42 @@ void VetoEff(){
    legendV4comp->AddEntry(grV4a,"V4_A","f");
    legendV4comp->AddEntry(grV4b,"V4_B","f");
    legendV4comp->Draw();
-   fcomp->SaveAs("EffV4_comp_all.pdf");
+   //fcomp->SaveAs("EffV4_comp_all.pdf");
 
+/*
+   TH1F *hTime = new TH1F("hTime","Veto4A",33,0,1100.0);
+   TH1F *hTimeLow = new TH1F("hTimeLow","Veto4A",33,0,1100.0);
+   TH1F *hTimeHigh = new TH1F("hTimeHigh","Veto4A",33,0,1100.0); 
+   TH1F *hTimeMid = new TH1F("hTimeMid","Veto4A",33,0,1100.0);
+   for (int i=0; i<vTmBGOBackA.size(); i++) {
+      hTime->Fill(vTmBGOBackA[i]);
+   }
+   for (int i=0; i<vTmBGOBackA2.size(); i++) {
+      hTimeLow->Fill(vTmBGOBackA2[i]);
+   }
+   for (int i=0; i<vTmBGOBackA3.size(); i++) {
+      hTimeHigh->Fill(vTmBGOBackA3[i]);
+   }
+   for (int i=0; i<vTmBGOBackA4.size(); i++) {
+      hTimeMid->Fill(vTmBGOBackA4[i]);
+   }
+
+   TCanvas *ctime = new TCanvas("ctime","ctime",800,600);
+   hTime->Draw();
+   hTimeLow->SetLineColor(kRed);
+   hTimeLow->Draw("SAME");
+   hTimeHigh->SetLineColor(kGreen-2);
+   hTimeHigh->Draw("SAME");
+   hTimeMid->SetLineColor(kOrange);
+   hTimeMid->Draw("SAME");
+   auto lt = new TLegend(0.82,0.71,0.94,0.87);
+   lt->AddEntry(hTime,"All","f"); 
+   lt->AddEntry(hTimeLow,"E <= 1 MeV","f");
+   lt->AddEntry(hTimeHigh,"E >= 20 MeV","f");
+   lt->AddEntry(hTimeMid,"E = (1..20) MeV","f");
+   lt->Draw();
+   //ctime->SaveAs("test0007.pdf");
+*/
 
 
 /*
