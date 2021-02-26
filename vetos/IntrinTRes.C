@@ -131,7 +131,8 @@ void IntrinTRes(){
    std::vector< std::vector< double > > allEdepVeto6B; 
    std::vector< std::vector< double > > allTimeVeto6B;
 
-
+   double TOffsetV4A = 3.0;
+   double TOffsetV5A = -3.0;
    
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
    std::cout << "\033[1;34m---------------------- Reading ---------------------------\033[0m" << std::endl;
@@ -144,16 +145,19 @@ void IntrinTRes(){
    std::vector<double> vEvIDV4A;
    std::vector<double> vEdepV4A;
    std::vector<double> vTimeV4A;
+   std::vector<double> vTOffV4A;
    while (!fVeto4A.eof()) {
       double EvIDV4A, InstV4A, EdepV4A, TimeV4A;
       fVeto4A >> EvIDV4A >> InstV4A >> EdepV4A >> TimeV4A;
       vEvIDV4A.push_back(EvIDV4A);
       vEdepV4A.push_back(EdepV4A);
       vTimeV4A.push_back(TimeV4A);
+      vTOffV4A.push_back(TimeV4A+TOffsetV4A);
    }
    vEvIDV4A.pop_back();
    vEdepV4A.pop_back();
    vTimeV4A.pop_back();
+   vTOffV4A.pop_back();
    fVeto4A.close();
 
 
@@ -180,16 +184,19 @@ void IntrinTRes(){
    std::vector<double> vEvIDV5A;
    std::vector<double> vEdepV5A;
    std::vector<double> vTimeV5A;
+   std::vector<double> vTOffV5A;
    while (!fVeto5A.eof()) {
       double EvIDV5A, InstV5A, EdepV5A, TimeV5A;
       fVeto5A >> EvIDV5A >> InstV5A >> EdepV5A >> TimeV5A;
       vEvIDV5A.push_back(EvIDV5A);
       vEdepV5A.push_back(EdepV5A);
       vTimeV5A.push_back(TimeV5A);
+      vTOffV5A.push_back(TimeV5A+TOffsetV5A);
    }
    vEvIDV5A.pop_back();
    vEdepV5A.pop_back();
    vTimeV5A.pop_back();
+   vTOffV5A.pop_back();
    fVeto5A.close();
 
 
@@ -454,6 +461,7 @@ void IntrinTRes(){
    // 2-D Plot
    std::vector<double> vEdepSandwich;
    std::vector<double> vTimeSandwich;
+   std::vector<double> vTOffSandwich;
 
    for (int n=0; n<25000; n++) {
       if (vInstV4A[n] == 0) {
@@ -462,6 +470,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                } 
             }
          }
@@ -478,6 +487,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -494,6 +504,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -510,6 +521,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -526,6 +538,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -542,6 +555,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -558,6 +572,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -574,6 +589,7 @@ void IntrinTRes(){
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                }
             }
          }
@@ -589,7 +605,7 @@ void IntrinTRes(){
    std::cout << "\033[1;31m---------------------- Plotting --------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl; 
 
-
+/*
    // 2D plots of Energy-Time of matched Sandwich
    TH2F *hSandwich = new TH2F("hSandwich","Sandwich",12,-22.0,26.0,55,0,11500.0);
    //TH1F *hSandwich = new TH1F("hSandwich","Sandwich",50,-200.0,200.0);
@@ -607,16 +623,18 @@ void IntrinTRes(){
    gPad->SetLogz();
    hSandwich->GetXaxis()->SetTitle("t_{V5A}-t_{V4A}");
    hSandwich->GetYaxis()->SetTitle("E_{Veto4_A}");
-   hSandwich->GetYaxis()->SetTitleOffset(1.0);
+   hSandwich->GetYaxis()->SetTitleOffset(1.5);
    //hSandwich->SetTitle("Sandwich");
    hSandwich->SetTitle("");
    hSandwich->Draw("COLZ");
    u->SaveAs("EnTime_Sandwich.pdf");
-
+*/
 
    TH1F *hSandTime = new TH1F("hSandTime","SandTime",15,-30.0,30.0);
+   TH1F *hSandTOff = new TH1F("hSandTOff","SandTOff",15,-30.0,30.0);
    for (int i=0; i<vTimeSandwich.size(); i++) {
       hSandTime->Fill(vTimeSandwich[i]);
+      hSandTOff->Fill(vTOffSandwich[i]);
    }
    
    TCanvas *w = new TCanvas("w","Sandwich",800,600);
@@ -626,8 +644,12 @@ void IntrinTRes(){
    hSandTime->GetXaxis()->SetTitle("t_{V5A} - t_{V4A}");
    //hSandTime->SetTitle("Intrinsic time resolution");
    hSandTime->SetTitle("");
+   hSandTime->SetLineColor(kBlue+1);
    hSandTime->Draw();
-   w->SaveAs("TimeRes_Sandwich.pdf");
+   hSandTOff->SetLineColor(kRed);
+   hSandTOff->SetLineStyle(kDashed);
+   hSandTOff->Draw("same");
+   w->SaveAs("TimeRes_Sandwich_Offset.pdf");
 
 /*
    TCanvas *ul = new TCanvas("ul","Veto4_B",800,600);
