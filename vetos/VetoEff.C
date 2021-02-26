@@ -76,7 +76,7 @@ void VetoEff(){
    /*         Input files           */
    /*********************************/
 
-   std::string runnumber = "530";
+   std::string runnumber = "run529/529";
   
 
    std::vector<int> timemin;
@@ -198,7 +198,7 @@ void VetoEff(){
    fVeto4B.close();
 
 
-
+/*
    // Veto5_A
    std::ifstream fVeto5A(Vetofiles[2]);
    std::vector<double> vEvIDV5A;
@@ -273,7 +273,7 @@ void VetoEff(){
    vTimeV6B.pop_back();
    fVeto6B.close();
 
-
+*/
 
    // BGO_Back_A
    std::ifstream fBGOBackA(BGOfiles[0]);
@@ -430,7 +430,7 @@ void VetoEff(){
       }
    }
 
-
+/*
    // Veto5_A
    std::vector<double> vInstV5A; // Vector of repeating instances
    int EvIDV5A;
@@ -526,7 +526,7 @@ void VetoEff(){
       }
    }
 
-
+*/
    // BGO_Back_A
    std::vector<double> vEnBGOBackA;
    std::vector<double> vIDBGOBackA;
@@ -684,7 +684,9 @@ void VetoEff(){
    std::vector<double> EffVeto;
    std::vector<double> EffVeto2;
    std::vector<double> EffVeto3;
-
+   std::vector<double> EffVetoerr;
+   std::vector<double> EffVeto2err;
+   std::vector<double> EffVeto3err;
 
    for (int m=1; m<Ethr.size(); m++) {
       double MatchCounterV4A=0;
@@ -701,12 +703,16 @@ void VetoEff(){
       double MatchEnCount3=0;
       double TotalCount=0;
 
+      double Efferr;
+
       std::vector<double> vBGOMatchedV4A;
       std::vector<double> vBGOMatchedV4B;
 
       for (int q=0; q<Eveto.size(); q++) {
-         //MatchEnCount = 0;
-         //TotalCount = 0;
+         MatchEnCount = 0;
+         MatchEnCount2 = 0;
+         MatchEnCount3 = 0;
+         TotalCount = 0;
          std::cout << " q = " << q <<std::endl;
          for (int n=0; n<vIDBGOBackA.size(); n++) {
             int GoodCount = 0;
@@ -714,7 +720,7 @@ void VetoEff(){
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
                      if (vEdepV4A[k] >= Eveto[q]) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-90)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
+                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
                            if ((vTimeV4A[k] >= (vTmBGOBackA[n]-60)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
                               if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
                                  MatchEnCount3++;
@@ -734,9 +740,17 @@ void VetoEff(){
             }
          }
          EffVeto.push_back(MatchEnCount/TotalCount);
+         //Efferr = (sqrt((1.0/MatchEnCount)+(1.0/TotalCount)))*(MatchEnCount/TotalCount);
+         //Efferr = (pow(((sqrt(MatchEnCount))/TotalCount),2));
+         //Efferr = (pow((MatchEnCount*(sqrt(TotalCount))/TotalCount/TotalCount),2));
+         Efferr = sqrt((pow(((sqrt(MatchEnCount))/TotalCount),2)) + (pow((MatchEnCount*(sqrt(TotalCount))/TotalCount/TotalCount),2)));
+         //EffVetoerr.push_back((sqrt((1.0/MatchEnCount)+(1.0/TotalCount)))*(MatchEnCount/TotalCount));
+         EffVetoerr.push_back(Efferr);
          EffVeto2.push_back(MatchEnCount2/TotalCount);
+         EffVeto2err.push_back((sqrt((1.0/MatchEnCount2)+(1.0/TotalCount)))*(MatchEnCount2/TotalCount));
          EffVeto3.push_back(MatchEnCount3/TotalCount);
-         std::cout << "EffVeto = " << MatchEnCount/TotalCount << std::endl;
+         EffVeto3err.push_back((sqrt((1.0/MatchEnCount3)+(1.0/TotalCount)))*(MatchEnCount3/TotalCount));
+         std::cout << "EffVeto = " << MatchEnCount/TotalCount << ", eff error = " << Efferr << ", Total = " << TotalCount << ", Match = " << MatchEnCount << std::endl;
       }
         
 
@@ -839,7 +853,7 @@ void VetoEff(){
 
       std::cout << "\033[1;36m ethr = " << Ethr[m] << ", v4a size = " << vBGOMatchedV4A.size() << ", v4b size = " << vBGOMatchedV4B.size() << "\033[0m" << std::endl;
 
-      double ANDCounter=0;
+/*      double ANDCounter=0;
       double ORCounter=0;
       double TotalCounter=0;
       for (int j=0; j<vBGOMatchedV4A.size(); j++) {
@@ -856,7 +870,7 @@ void VetoEff(){
       }
       Effand.push_back(ANDCounter/TotalCounter);
       Effor.push_back(ORCounter/TotalCounter);    
-
+*/
 
    }      
 
@@ -910,24 +924,35 @@ void VetoEff(){
    float EffVetoarr[nticks] = {};
    float EffVeto2arr[nticks] = {};
    float EffVeto3arr[nticks] = {};
+   float EffVetoerrx[nticks] = {};
+   float EffVetoerry[nticks] = {};
+   float EffVeto2errx[nticks] = {};
+   float EffVeto2erry[nticks] = {};
+   float EffVeto3errx[nticks] = {};
+   float EffVeto3erry[nticks] = {};
    float Evetoarr[nticks] = {};
 
    for (int i=0; i<nticks; i++) {
       EffVetoarr[i] = EffVeto[i];
       EffVeto2arr[i] = EffVeto2[i];
       EffVeto3arr[i] = EffVeto3[i];
+      EffVetoerrx[i] = 0.0;
+      EffVetoerry[i] = EffVetoerr[i];
+      EffVeto2errx[i] = 0.0;
+      EffVeto2erry[i] = EffVeto2err[i];
+      EffVeto3errx[i] = 0.0;
+      EffVeto3erry[i] = EffVeto3err[i];
       Evetoarr[i] = Eveto[i];
    }
 
-
    TCanvas *fvcut = new TCanvas("fvcut","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grv0 = new TGraph(nticks,Evetoarr,EffVetoarr);
+   TGraphErrors *grv0 = new TGraphErrors(nticks,Evetoarr,EffVetoarr,EffVetoerrx,EffVetoerry);
    grv0->SetTitle("Efficiency of Veto_4_A");
    grv0->GetXaxis()->SetTitle("E_{Veto} [adc]");
    grv0->GetYaxis()->SetTitle("Eff");
    grv0->GetYaxis()->SetTitleOffset(1.9);
-   grv0->GetYaxis()->SetRangeUser(0.8,1.01);
+   grv0->GetYaxis()->SetRangeUser(0.78,1.03);
    //grv0->SetLineColor(kGray+3);
    grv0->SetLineWidth(3);
    grv0->SetLineColor(kViolet-5);
@@ -935,26 +960,41 @@ void VetoEff(){
    grv0->SetMarkerSize(1.5);
    grv0->SetMarkerStyle(21);
    grv0->Draw("ALP");
-   TGraph *grv1 = new TGraph(nticks,Evetoarr,EffVeto2arr);
+   TGraphErrors *grv1 = new TGraphErrors(nticks,Evetoarr,EffVeto2arr,EffVeto2errx,EffVeto2erry);
    grv1->SetLineWidth(3);
    grv1->SetLineColor(kTeal-5);
+   grv1->SetLineStyle(kDashed);
+   grv1->SetMarkerColor(kTeal-5);
    grv1->SetMarkerSize(1.5);
    grv1->SetMarkerStyle(22);
    grv1->Draw("LP");
-   TGraph *grv2 = new TGraph(nticks,Evetoarr,EffVeto3arr);
+   TGraphErrors *grv2 = new TGraphErrors(nticks,Evetoarr,EffVeto3arr,EffVeto3errx,EffVeto3erry);
    grv2->SetLineWidth(3);
-   grv2->SetLineColor(kOrange-5);
+   grv2->SetLineColorAlpha(kOrange-5,0.1);
+   grv2->SetMarkerColor(kOrange-5);
    grv2->SetMarkerSize(1.5);
    grv2->SetMarkerStyle(23);
    grv2->Draw("LP");
    auto legendvcut = new TLegend(0.82,0.71,0.94,0.87);
-   legendvcut->AddEntry(grv0,"t = [-90..30] ns","f");
+   legendvcut->AddEntry(grv0,"t = [-250..65] ns","f");
    legendvcut->AddEntry(grv1,"t = [-60..30] ns","f");
    legendvcut->AddEntry(grv2,"t = [-30..30] ns","f");
    legendvcut->Draw();
-   fvcut->SaveAs("EffV4_A_vcuttime.pdf");
+   fvcut->SaveAs("529_EffV4_A_vcuttime_err.pdf");
 
+/* 
   
+   TH1F *hTimeV4A = new TH1F("hTimeV4A","Veto4A",200,-500.0,10000.0); 
+   for (int i=0; i<vTimeV4A.size(); i++) {
+      hTimeV4A->Fill(vTimeV4A[i]);
+   }
+ 
+   TCanvas *newc = new TCanvas("newc","V4A",800,600);
+   gPad->SetLogy();
+   hTimeV4A->SetTitle("Veto_4_A");
+   hTimeV4A->GetXaxis()->SetTitle("Time [ns]");
+   hTimeV4A->Draw();
+*/   
 
 
 /*
