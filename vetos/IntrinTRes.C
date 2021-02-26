@@ -467,67 +467,39 @@ void IntrinTRes(){
 
    double Total = 0;
    double Match = 0;
-   double Match1 = 0;
-   double Match2 = 0;
-   double Match3 = 0;
-   double Match4 = 0;  
-   double Total1 = 0;
-   double Total2 = 0;
-   double Total3 = 0;
-   double Total4 = 0; 
 
    int GoodEvent;
 
-   for (int n=0; n<25000; n++) {
-      if (vInstV4A[n] == 0) {
-         for (int k=0; k<35000; k++) {
-            GoodEvent = 0;
-            if (vEvIDV5A[k] == vEvIDV4A[n]) {
-               if (vInstV5A[k] == 0) {
-                  vEdepSandwich.push_back(vEdepV4A[n]);
-                  vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
-                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
-                  Match++;
+   std::vector<double> EthrV4A = {0.0, 300.0, 600.0, 900.0, 1200.0, 1500.0, 1800.0};
 
-                  if ((vEdepV4A[n] >= 600) && (vEdepV4A[n] < 1000)) {
-                     Match1++;
-                  } else if ((vEdepV4A[n] >= 1000) && (vEdepV4A[n] < 1500)) {
-                     Match2++;
-                  } else if ((vEdepV4A[n] >= 1500) && (vEdepV4A[n] < 2000)) {
-                     Match3++;
-                  } else if (vEdepV4A[n] >= 2000) {
-                     Match4++;
-                  }
-
-               } else {
-                  GoodEvent = 1;
-               } 
+   for (int m=0; m<EthrV4A.size(); m++) {
+      Total = 0;
+      Match = 0;
+      for (int n=0; n<25000; n++) {
+         if ((vInstV4A[n] == 0) && (vEdepV4A[n] >= EthrV4A[m])) {
+            for (int k=0; k<35000; k++) {
+               GoodEvent = 0;
+               if (vEvIDV5A[k] == vEvIDV4A[n]) {
+                  if (vInstV5A[k] == 0) {
+                     vEdepSandwich.push_back(vEdepV4A[n]);
+                     vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                     vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
+                     Match++;
+                  } else {
+                     GoodEvent = 1;
+                  } 
+               }
+            }
+            if (GoodEvent == 0) {
+               Total++;
             }
          }
       }
-      if (GoodEvent == 0) {
-         Total++;
-         if ((vEdepV4A[n] >= 600) && (vEdepV4A[n] < 1000)) {
-            Total1++;
-         } else if ((vEdepV4A[n] >= 1000) && (vEdepV4A[n] < 1500)) {
-            Total2++;
-         } else if ((vEdepV4A[n] >= 1500) && (vEdepV4A[n] < 2000)) {
-            Total3++;
-         } else if (vEdepV4A[n] >= 2000) {
-            Total4++;
-         }
-      }
+      EffSandwich.push_back(Match/Total);
    }
 
    std::cout << "Round [0 .. 25000] finished!" << std::endl;
    std::cout << " time = " << vTimeSandwich.size() << ", edep = " << vEdepSandwich.size() << std::endl;
-
-   std::cout << "total = " << Total << ", match = " << Match << ", m1 = " << Match1 << ",t1 = "<< Total1 << ", m2 = " << Match2 << ", t2 = " << Total2 << ", m3 = " << Match3 << ", t3 = " << Total3 << ", m4 = " << Match4 << ", t4 = " << Total4 << std::endl; 
-
-   EffSandwich.push_back(Match1/Total1);
-   EffSandwich.push_back(Match2/Total2);
-   EffSandwich.push_back(Match3/Total3);
-   EffSandwich.push_back(Match4/Total4);
 
 
    for (int n=25000; n<50000; n++) { 
@@ -685,19 +657,19 @@ void IntrinTRes(){
    u->SaveAs("EnTime_Sandwich.pdf");
 */
 
-   const int nbins = 4;
+   const int nbins = 7;
    float SandEff[nbins] = {};
-   float SandEdep[nbins] = {800.0, 1250.0, 1750.0, 7000.0};
+   float SandEdep[nbins] = {};
    for (int i=0; i<nbins; i++) {
       SandEff[i] = EffSandwich[i];
-      std::cout << EffSandwich[i] << std::endl;
+      SandEdep[i] = EthrV4A[i];
    }
 
    TCanvas *effs = new TCanvas("effs","Efficiency",800,600);
    gPad->SetGrid(1,1);
    TGraph *gr1 = new TGraph(nbins,SandEdep,SandEff);
    gr1->SetTitle("");
-   gr1->GetXaxis()->SetTitle("E_{V4_A} [adc]");
+   gr1->GetXaxis()->SetTitle("ETHR_{V4_A} [adc]");
    gr1->GetXaxis()->SetRange(0,12000.0);
    gr1->SetLineColor(kGray+3);
    gr1->SetLineWidth(3);
@@ -706,7 +678,7 @@ void IntrinTRes(){
    gr1->Draw("ALPF");
    effs->SaveAs("Eff_Sandwich.pdf");
 
-
+/*
    TH1F *hSandTime = new TH1F("hSandTime","SandTime",15,-30.0,30.0);
    TH1F *hSandTOff = new TH1F("hSandTOff","SandTOff",15,-30.0,30.0);
    for (int i=0; i<vTimeSandwich.size(); i++) {
@@ -732,7 +704,7 @@ void IntrinTRes(){
    f1->SetLineColor(kGreen-2);
    f1->Draw("same");
    w->SaveAs("TimeRes_Sandwich_Offset.pdf");
-
+*/
 /*
    TCanvas *ul = new TCanvas("ul","Veto4_B",800,600);
    gStyle->SetOptStat(0);
