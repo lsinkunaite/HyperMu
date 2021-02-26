@@ -636,7 +636,9 @@ void IntrinTRes(){
       hSandTime->Fill(vTimeSandwich[i]);
       hSandTOff->Fill(vTOffSandwich[i]);
    }
-   
+  
+   TF1  *f1 = new TF1("f1","gaus",-20.0,20.0);
+ 
    TCanvas *w = new TCanvas("w","Sandwich",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
@@ -649,6 +651,9 @@ void IntrinTRes(){
    hSandTOff->SetLineColor(kRed);
    hSandTOff->SetLineStyle(kDashed);
    hSandTOff->Draw("same");
+   hSandTOff->Fit(f1,"R");
+   f1->SetLineColor(kGreen-2);
+   f1->Draw("same");
    w->SaveAs("TimeRes_Sandwich_Offset.pdf");
 
 /*
