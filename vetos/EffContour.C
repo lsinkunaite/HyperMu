@@ -59,7 +59,7 @@ void EffContour(){
    gStyle->SetLabelSize(0.045,"XYZ");
    gStyle->SetTitleSize(0.05,"XYZ");
    gStyle->SetHistLineWidth(2);
-/*
+
    // Veto_4_OR Runs: 530, 529, 528
    double q0v41[] = {0.989055,0.986865,0.989792};
    double q0v42[] = {0.966436,0.959517,0.967969};
@@ -90,7 +90,7 @@ void EffContour(){
    double v4y1[] = {TMath::MinElement(3,q0v41) + v4ey1[0], TMath::MinElement(3,q1v41) + v4ey1[1], TMath::MinElement(3,q2v41) + v4ey1[2], TMath::MinElement(3,q3v41) + v4ey1[3], TMath::MinElement(3,q4v41) + v4ey1[4], TMath::MinElement(3,q5v41) + v4ey1[5], TMath::MinElement(3,q6v41) + v4ey1[6]};
    double v4y2[] = {TMath::MinElement(3,q0v42) + v4ey2[0], TMath::MinElement(3,q1v42) + v4ey2[1], TMath::MinElement(3,q2v42) + v4ey2[2], TMath::MinElement(3,q3v42) + v4ey2[3], TMath::MinElement(3,q4v42) + v4ey1[4], TMath::MinElement(3,q5v42) + v4ey2[5], TMath::MinElement(3,q6v42) + v4ey2[6]};
    double v4y3[] = {TMath::MinElement(3,q0v43) + v4ey3[0], TMath::MinElement(3,q1v43) + v4ey3[1], TMath::MinElement(3,q2v43) + v4ey3[2], TMath::MinElement(3,q3v43) + v4ey3[3], TMath::MinElement(3,q4v43) + v4ey3[4], TMath::MinElement(3,q5v43) + v4ey3[5], TMath::MinElement(3,q6v43) + v4ey3[6]};  
-*/
+
 
    // Veto_5_OR Runs: 530, 529, 528
    double q0v51[] = {0.990528,0.988652,0.991907};
@@ -123,7 +123,39 @@ void EffContour(){
    double v5y2[] = {TMath::MinElement(3,q0v52) + v5ey2[0], TMath::MinElement(3,q1v52) + v5ey2[1], TMath::MinElement(3,q2v52) + v5ey2[2], TMath::MinElement(3,q3v52) + v5ey2[3], TMath::MinElement(3,q4v52) + v5ey1[4], TMath::MinElement(3,q5v52) + v5ey2[5], TMath::MinElement(3,q6v52) + v5ey2[6]};
    double v5y3[] = {TMath::MinElement(3,q0v53) + v5ey3[0], TMath::MinElement(3,q1v53) + v5ey3[1], TMath::MinElement(3,q2v53) + v5ey3[2], TMath::MinElement(3,q3v53) + v5ey3[3], TMath::MinElement(3,q4v53) + v5ey3[4], TMath::MinElement(3,q5v53) + v5ey3[5], TMath::MinElement(3,q6v53) + v5ey3[6]};
 
+
+   // Veto_6_OR Runs: 530, 529, 528
+   double q0v61[] = {0.975895,0.973423,0.976728};
+   double q0v62[] = {0.964207,0.961375,0.966855};
+   double q0v63[] = {0.929145,0.926648,0.931946};
+   double q1v61[] = {0.973338,0.972006,0.974965};
+   double q1v62[] = {0.961651,0.959957,0.965092};
+   double q1v63[] = {0.926589,0.92523,0.930183};
+   double q2v61[] = {0.971147,0.970234,0.974612};
+   double q2v62[] = {0.959459,0.958186,0.964739};
+   double q2v63[] = {0.924397,0.923459,0.929831};
+   double q3v61[] = {0.968955,0.969525,0.973554};
+   double q3v62[] = {0.957268,0.957477,0.963681};
+   double q3v63[] = {0.922206,0.92275,0.928773};
+   double q4v61[] = {0.966399,0.965273,0.970733};
+   double q4v62[] = {0.954711,0.953225,0.96086};
+   double q4v63[] = {0.919284,0.918143,0.925952};
+   double q5v61[] = {0.887509,0.89011,0.890691};
+   double q5v62[] = {0.875457,0.878057,0.881171};
+   double q5v63[] = {0.841855,0.844381,0.844499};
+   double q6v61[] = {0.642544,0.656859,0.672426};
+   double q6v62[] = {0.631944,0.647643,0.664669};
+   double q6v63[] = {0.606725,0.623183,0.638928};
+
+   double v6ey1[] = {((TMath::MaxElement(3,q0v61))-(TMath::MinElement(3,q0v61)))/2, ((TMath::MaxElement(3,q1v61))-(TMath::MinElement(3,q1v61)))/2, ((TMath::MaxElement(3,q2v61))-(TMath::MinElement(3,q2v61)))/2, ((TMath::MaxElement(3,q3v61))-(TMath::MinElement(3,q3v61)))/2, ((TMath::MaxElement(3,q4v61))-(TMath::MinElement(3,q4v61)))/2, ((TMath::MaxElement(3,q5v61))-(TMath::MinElement(3,q5v61)))/2, ((TMath::MaxElement(3,q6v61))-(TMath::MinElement(3,q6v61)))/2};
+   double v6ey2[] = {((TMath::MaxElement(3,q0v62))-(TMath::MinElement(3,q0v62)))/2, ((TMath::MaxElement(3,q1v62))-(TMath::MinElement(3,q1v62)))/2, ((TMath::MaxElement(3,q2v62))-(TMath::MinElement(3,q2v62)))/2, ((TMath::MaxElement(3,q3v62))-(TMath::MinElement(3,q3v62)))/2, ((TMath::MaxElement(3,q4v62))-(TMath::MinElement(3,q4v62)))/2, ((TMath::MaxElement(3,q5v62))-(TMath::MinElement(3,q5v62)))/2, ((TMath::MaxElement(3,q6v62))-(TMath::MinElement(3,q6v62)))/2};
+   double v6ey3[] = {((TMath::MaxElement(3,q0v63))-(TMath::MinElement(3,q0v63)))/2, ((TMath::MaxElement(3,q1v63))-(TMath::MinElement(3,q1v63)))/2, ((TMath::MaxElement(3,q2v63))-(TMath::MinElement(3,q2v63)))/2, ((TMath::MaxElement(3,q3v63))-(TMath::MinElement(3,q3v63)))/2, ((TMath::MaxElement(3,q4v63))-(TMath::MinElement(3,q4v63)))/2, ((TMath::MaxElement(3,q5v63))-(TMath::MinElement(3,q5v63)))/2, ((TMath::MaxElement(3,q6v63))-(TMath::MinElement(3,q6v63)))/2};
  
+   double v6y1[] = {TMath::MinElement(3,q0v61) + v6ey1[0], TMath::MinElement(3,q1v61) + v6ey1[1], TMath::MinElement(3,q2v61) + v6ey1[2], TMath::MinElement(3,q3v61) + v6ey1[3], TMath::MinElement(3,q4v61) + v6ey1[4], TMath::MinElement(3,q5v61) + v6ey1[5], TMath::MinElement(3,q6v61) + v6ey1[6]};
+   double v6y2[] = {TMath::MinElement(3,q0v62) + v6ey2[0], TMath::MinElement(3,q1v62) + v6ey2[1], TMath::MinElement(3,q2v62) + v6ey2[2], TMath::MinElement(3,q3v62) + v6ey2[3], TMath::MinElement(3,q4v62) + v6ey1[4], TMath::MinElement(3,q5v62) + v6ey2[5], TMath::MinElement(3,q6v62) + v6ey2[6]};
+   double v6y3[] = {TMath::MinElement(3,q0v63) + v6ey3[0], TMath::MinElement(3,q1v63) + v6ey3[1], TMath::MinElement(3,q2v63) + v6ey3[2], TMath::MinElement(3,q3v63) + v6ey3[3], TMath::MinElement(3,q4v63) + v6ey3[4], TMath::MinElement(3,q5v63) + v6ey3[5], TMath::MinElement(3,q6v63) + v6ey3[6]};
+
+
    double x[] = {0.0, 250.0, 500.0, 750.0, 1000.0, 1250.0, 1500.0};
    double y[] = {0.987763, 0.9870535, 0.9868755, 0.986343, 0.9783565, 0.888993, 0.673808};
    double ex[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -170,7 +202,7 @@ void EffContour(){
    legendv4->Draw();
    //cv4->SaveAs("Eff_V4_OR_Contour_zoom.pdf");
    cv4->SaveAs("Eff_V4_OR_Contour.pdf");
-*/
+
    auto cv5 = new TCanvas("cv5","cv5",800,600);
    gPad->SetGrid(1,1);
    auto gv51 = new TGraphErrors(7, x, v5y1, ex, v5ey1);
@@ -197,6 +229,57 @@ void EffContour(){
    cv5->SaveAs("Eff_V5_OR_Contour_zoom.pdf");
    //cv5->SaveAs("Eff_V5_OR_Contour.pdf");
 
+   auto cv6 = new TCanvas("cv6","cv6",800,600);
+   gPad->SetGrid(1,1);
+   auto gv61 = new TGraphErrors(7, x, v6y1, ex, v6ey1);
+   gv61->SetTitle("");
+   gv61->GetXaxis()->SetTitle("E_{Veto_6} [adc]");
+   gv61->GetXaxis()->SetRangeUser(0.0,1500.0);
+   gv61->GetYaxis()->SetRangeUser(0.88,0.99);
+   gv61->SetFillColor(kViolet-5);
+   gv61->SetFillStyle(3001);
+   gv61->Draw("a3");
+   auto gv62 = new TGraphErrors(7, x, v6y2, ex, v6ey2);
+   gv62->SetFillColor(kTeal-5);
+   gv62->SetFillStyle(3001);
+   gv62->Draw("3");
+   auto gv63 = new TGraphErrors(7, x, v6y3, ex, v6ey3);
+   gv63->SetFillColor(kOrange-3);
+   gv63->SetFillStyle(3001);
+   gv63->Draw("3");
+   auto legendv6 = new TLegend(0.13,0.17,0.42,0.3);
+   legendv6->AddEntry(gv61,"t_{V6} #in [-250, 65] ns","f");
+   legendv6->AddEntry(gv62,"t_{V6} #in [-200, 35] ns","f");
+   legendv6->AddEntry(gv63,"t_{V6} #in [-150, 35] ns","f");
+   legendv6->Draw();
+   cv6->SaveAs("Eff_V6_OR_Contour_zoom.pdf");
+   //cv6->SaveAs("Eff_V6_OR_Contour.pdf");
+*/
+   auto cv456 = new TCanvas("cv456","cv456",800,600);
+   gPad->SetGrid(1,1);
+   auto gv51 = new TGraphErrors(7, x, v5y1, ex, v5ey1); 
+   gv51->SetTitle("");
+   gv51->GetXaxis()->SetTitle("E_{Veto} [adc]");
+   gv51->GetXaxis()->SetRangeUser(0.0,1500.0);
+   gv51->GetYaxis()->SetRangeUser(0.94,1.0);
+   gv51->SetFillColor(kViolet-5);
+   gv51->SetFillStyle(3001);
+   gv51->Draw("a3");
+   auto gv41 = new TGraphErrors(7, x, v4y1, ex, v4ey1);
+   gv41->SetFillColor(kTeal-5);
+   gv41->SetFillStyle(3001);
+   gv41->Draw("3");
+   auto gv61 = new TGraphErrors(7, x, v6y1, ex, v6ey1);
+   gv61->SetFillColor(kOrange-3);
+   gv61->SetFillStyle(3001);
+   gv61->Draw("3");
+   auto legendv456 = new TLegend(0.13,0.17,0.42,0.3);
+   legendv456->AddEntry(gv51,"t_{V5} #in [-250, 65] ns","f");
+   legendv456->AddEntry(gv41,"t_{V4} #in [-250, 65] ns","f");
+   legendv456->AddEntry(gv61,"t_{V6} #in [-250, 65] ns","f");
+   legendv456->Draw();
+   cv456->SaveAs("Eff_V456_OR_Contour_zoom.pdf");
+   //cv456->SaveAs("Eff_V456_OR_Contour.pdf");
 
 }
  
