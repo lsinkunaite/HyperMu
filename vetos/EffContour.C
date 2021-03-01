@@ -111,7 +111,7 @@ void EffContour(){
    ge->GetXaxis()->SetTitle("E_{Veto} [adc]");
 */
 
-   auto cv4 = new TCanvas("cv4","vv4",800,600);
+   auto cv4 = new TCanvas("cv4","cv4",800,600);
    gPad->SetGrid(1,1);
    auto gv41 = new TGraphErrors(7, x, v4y1, ex, v4ey1);
    gv41->SetTitle("");
@@ -134,7 +134,7 @@ void EffContour(){
    legendv4->AddEntry(gv42,"t_{V4} #in [-200, 35] ns","f");
    legendv4->AddEntry(gv43,"t_{V4} #in [-150, 35] ns","f");
    legendv4->Draw();
-   legendv4->SaveAs("Eff_V4_OR_Contour.pdf");
+   cv4->SaveAs("Eff_V4_OR_Contour_zoom.pdf");
 
 
 }
