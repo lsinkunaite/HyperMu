@@ -76,7 +76,7 @@ void VetoEff(){
    /*         Input files           */
    /*********************************/
 
-   std::string runnumber = "run529/529";
+   std::string runnumber = "run530/530";
   
 
    std::vector<int> timemin;
@@ -658,64 +658,80 @@ void VetoEff(){
    Ethr.push_back(-10000.0);
    for (int i=1; i<nsamps; i++) Ethr.push_back(Ethr[i-1]+Estep);
    std::vector<double> Eveto = {0, 250, 500, 750, 1000, 1250, 1500};
-   std::vector<double> EffVeto4A;
-   std::vector<double> EffVeto4A2;
-   std::vector<double> EffVeto4A3;
-   std::vector<double> EffVeto4B;
-   std::vector<double> EffVeto4B2;
-   std::vector<double> EffVeto4B3;
+   //std::vector<double> EffVeto4A;
+   //std::vector<double> EffVeto4A2;
+   //std::vector<double> EffVeto4A3;
+   //std::vector<double> EffVeto4B;
+   //std::vector<double> EffVeto4B2;
+   //std::vector<double> EffVeto4B3;
 
-   std::vector<double> vMatchedEnergyV4A;
-   std::vector<double> vMatchedEnergyV4A2;
-   std::vector<double> vMatchedEnergyV4A3;
-   std::vector<double> vMatchedEnergyV4B;
-   std::vector<double> vMatchedEnergyV4B2;
-   std::vector<double> vMatchedEnergyV4B3;
-   
-   
-   //std::vector<double> vBGOMatchedV4A;
-   //std::vector<double> vBGOMatchedV4B;
+   //std::vector<double> vMatchedEnergyV4A;
+   //std::vector<double> vMatchedEnergyV4A2;
+   //std::vector<double> vMatchedEnergyV4A3;
+   //std::vector<double> vMatchedEnergyV4B;
+   //std::vector<double> vMatchedEnergyV4B2;
+   //std::vector<double> vMatchedEnergyV4B3;
    
 
    // AND and OR loop
-   std::vector<double>  Effand;
-   std::vector<double>  Effor;
+   std::vector<double> Effand;
+   std::vector<double> Effand2;
+   std::vector<double> Effand3;
+   std::vector<double> Effor;
+   std::vector<double> Effor2;
+   std::vector<double> Effor3;
 
-   std::vector<double> EffVeto;
-   std::vector<double> EffVeto2;
-   std::vector<double> EffVeto3;
-   std::vector<double> EffVetoerr;
-   std::vector<double> EffVeto2err;
-   std::vector<double> EffVeto3err;
+   std::vector<double> EffVetoV4A;
+   std::vector<double> EffVeto2V4A;
+   std::vector<double> EffVeto3V4A;
+   std::vector<double> EffVetoV4B;
+   std::vector<double> EffVeto2V4B;
+   std::vector<double> EffVeto3V4B;
 
    for (int m=1; m<Ethr.size(); m++) {
-      double MatchCounterV4A=0;
-      double TotalCounterV4A=0;
-      double MatchCounterV4A2=0;
-      double MatchCounterV4A3=0;
-      double TotalCounterV4B=0;
-      double MatchCounterV4B=0;
-      double MatchCounterV4B2=0;
-      double MatchCounterV4B3=0;
+//      double MatchCounterV4A=0;
+//      double TotalCounterV4A=0;
+//      double MatchCounterV4A2=0;
+//      double MatchCounterV4A3=0;
+//      double TotalCounterV4B=0;
+//      double MatchCounterV4B=0;
+//      double MatchCounterV4B2=0;
+//      double MatchCounterV4B3=0;
 
-      double MatchEnCount=0;
-      double MatchEnCount2=0;
-      double MatchEnCount3=0;
-      double TotalCount=0;
+      double MatchEnCountV4A=0;
+      double MatchEnCount2V4A=0;
+      double MatchEnCount3V4A=0;
+      double TotalCountV4A=0;
+      double MatchEnCountV4B=0;
+      double MatchEnCount2V4B=0;
+      double MatchEnCount3V4B=0;
+      double TotalCountV4B=0;
 
-      double Efferr;
-
-      std::vector<double> vBGOMatchedV4A;
-      std::vector<double> vBGOMatchedV4B;
 
       for (int q=0; q<Eveto.size(); q++) {
-         MatchEnCount = 0;
-         MatchEnCount2 = 0;
-         MatchEnCount3 = 0;
-         TotalCount = 0;
-         std::cout << " q = " << q <<std::endl;
+         MatchEnCountV4A = 0;
+         MatchEnCount2V4A = 0;
+         MatchEnCount3V4A = 0;
+         TotalCountV4A = 0;
+         MatchEnCountV4B = 0;
+         MatchEnCount2V4B = 0;
+         MatchEnCount3V4B = 0;
+         TotalCountV4B = 0;
+         std::cout << " q = " << q << ", Eveto THR = " << Eveto[q] << std::endl;
+
+         std::vector<double> vBGOMatchedV4A;
+         std::vector<double> vBGOMatched2V4A;
+         std::vector<double> vBGOMatched3V4A;
+         std::vector<double> vBGOMatchedV4B;
+         std::vector<double> vBGOMatched2V4B;
+         std::vector<double> vBGOMatched3V4B;
+
          for (int n=0; n<vIDBGOBackA.size(); n++) {
-            int GoodCount = 0;
+            // Veto_4_A
+            int UnmatchedV4A = 0;
+            int Unmatched2V4A = 0;
+            int Unmatched3V4A = 0;
+            int GoodCountV4A = 0;
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
@@ -723,193 +739,168 @@ void VetoEff(){
                         if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
                            if ((vTimeV4A[k] >= (vTmBGOBackA[n]-60)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
                               if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
-                                 MatchEnCount3++;
+                                 MatchEnCount3V4A++;
+                                 Unmatched3V4A = 1;
                               }
-                              MatchEnCount2++;
+                              MatchEnCount2V4A++;
+                              Unmatched2V4A = 1;
                            }
-                           MatchEnCount++;
+                           MatchEnCountV4A++;
+                           UnmatchedV4A = 1;
                         }
                      }
                   } else {
-                     GoodCount = 1;
+                     GoodCountV4A = 1;
                   }
                }
             }
-            if (GoodCount == 0) {
-               TotalCount++;
-            }
-         }
-         EffVeto.push_back(MatchEnCount/TotalCount);
-         //Efferr = (sqrt((1.0/MatchEnCount)+(1.0/TotalCount)))*(MatchEnCount/TotalCount);
-         //Efferr = (pow(((sqrt(MatchEnCount))/TotalCount),2));
-         //Efferr = (pow((MatchEnCount*(sqrt(TotalCount))/TotalCount/TotalCount),2));
-         Efferr = sqrt((pow(((sqrt(MatchEnCount))/TotalCount),2)) + (pow((MatchEnCount*(sqrt(TotalCount))/TotalCount/TotalCount),2)));
-         //EffVetoerr.push_back((sqrt((1.0/MatchEnCount)+(1.0/TotalCount)))*(MatchEnCount/TotalCount));
-         EffVetoerr.push_back(Efferr);
-         EffVeto2.push_back(MatchEnCount2/TotalCount);
-         EffVeto2err.push_back((sqrt((1.0/MatchEnCount2)+(1.0/TotalCount)))*(MatchEnCount2/TotalCount));
-         EffVeto3.push_back(MatchEnCount3/TotalCount);
-         EffVeto3err.push_back((sqrt((1.0/MatchEnCount3)+(1.0/TotalCount)))*(MatchEnCount3/TotalCount));
-         std::cout << "EffVeto = " << MatchEnCount/TotalCount << ", eff error = " << Efferr << ", Total = " << TotalCount << ", Match = " << MatchEnCount << std::endl;
-      }
-        
-
-      for (int n=0; n<vIDBGOBackA.size(); n++) {
-         //std::cout << "Ethr = " << Ethr[m] << " BGOEn = " << allEnBGOBackCluster[0][n] <<std::endl;
-         if ((vEnBGOBackA[n] >= Ethr[m-1]) && (vEnBGOBackA[n] < Ethr[m])) {
-
-            int UnmatchedV4A = 0;
-            int GoodEventV4A = 0;
-            for (int k=0; k<vEvIDV4A.size(); k++) {
-               if (vEvIDV4A[k] == vIDBGOBackA[n]) {
-                  if (vInstV4A[k] == 0) {
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-200)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+35))) {
-                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-150)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+35))) {
-                              MatchCounterV4A++;
-                              vMatchedEnergyV4A.push_back(vEdepV4A[k]);
-                           }
-                           MatchCounterV4A2++;
-                           vMatchedEnergyV4A2.push_back(vEdepV4A[k]);
-                        }
-                        MatchCounterV4A3++;
-                        vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
-                        UnmatchedV4A = 1;  
-                     }
-                  } else {
-                     GoodEventV4A = 1;
-                  }
-               }
-            }
-            //if (m == 0) {
-            if (GoodEventV4A == 0) {
+            if (GoodCountV4A == 0) {
+               TotalCountV4A++;
                if (UnmatchedV4A == 0) {
                   vBGOMatchedV4A.push_back(0);
                } else {
                   vBGOMatchedV4A.push_back(1);
                }
-               TotalCounterV4A++;
+               if (Unmatched2V4A == 0) {
+                  vBGOMatched2V4A.push_back(0);
+               } else {
+                  vBGOMatched2V4A.push_back(1);
+               }
+               if (Unmatched3V4A == 0) {
+                  vBGOMatched3V4A.push_back(0);
+               } else {
+                  vBGOMatched3V4A.push_back(1);
+               }
             } else {
                vBGOMatchedV4A.push_back(-1);
+               vBGOMatched2V4A.push_back(-1);
+               vBGOMatched3V4A.push_back(-1);
             }
-            //}            
-            //if (GoodEventV4A == 0) {
-               //TotalCounterV4A++;
-            //}
-   
-         
+
+            // Veto_4_B
             int UnmatchedV4B = 0;
-            int GoodEventV4B = 0;
+            int Unmatched2V4B = 0;
+            int Unmatched3V4B = 0;
+            int GoodCountV4B = 0;
             for (int l=0; l<vEvIDV4B.size(); l++) {
                if (vEvIDV4B[l] == vIDBGOBackA[n]) {
                   if (vInstV4B[l] == 0) {
-                     if ((vTimeV4B[l] >= (vTmBGOBackA[n]-250)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+65))) {
-                        if ((vTimeV4B[l] >= (vTmBGOBackA[n]-200)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+35))) {
-                           if ((vTimeV4B[l] >= (vTmBGOBackA[n]-150)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+35))) {
-                              MatchCounterV4B++;
-                              vMatchedEnergyV4B.push_back(vEdepV4B[l]);
-                           }  
-                           MatchCounterV4B2++;
-                           vMatchedEnergyV4B2.push_back(vEdepV4B[l]);
-                        }  
-                        MatchCounterV4B3++;
-                        vMatchedEnergyV4B3.push_back(vEdepV4B[l]);
-                        UnmatchedV4B = 1;
-                     }  
+                     if (vEdepV4B[l] >= Eveto[q]) {
+                        if ((vTimeV4B[l] >= (vTmBGOBackA[n]-250)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+65))) {
+                           if ((vTimeV4B[l] >= (vTmBGOBackA[n]-60)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+30))) {
+                              if ((vTimeV4B[l] >= (vTmBGOBackA[n]-30)) && (vTimeV4B[l] <= (vTmBGOBackA[n]+30))) {
+                                 MatchEnCount3V4B++;
+                                 Unmatched3V4B = 1;
+                              }
+                              MatchEnCount2V4B++;
+                              Unmatched2V4B = 1;
+                           }
+                           MatchEnCountV4B++;
+                           UnmatchedV4B = 1;
+                        }
+                     }
                   } else {
-                     GoodEventV4B = 1;
+                     GoodCountV4B = 1;
                   }
-               }  
+               }
             }
-            //if (m == 0) {
-            if (GoodEventV4B == 0) {
-               TotalCounterV4B++;
+            if (GoodCountV4B == 0) {
+               TotalCountV4B++;
                if (UnmatchedV4B == 0) {
                   vBGOMatchedV4B.push_back(0);
                } else {
                   vBGOMatchedV4B.push_back(1);
                }
+               if (Unmatched2V4B == 0) {
+                  vBGOMatched2V4B.push_back(0);
+               } else {
+                  vBGOMatched2V4B.push_back(1);
+               }
+               if (Unmatched3V4B == 0) {
+                  vBGOMatched3V4B.push_back(0);
+               } else {
+                  vBGOMatched3V4B.push_back(1);
+               }
             } else {
                vBGOMatchedV4B.push_back(-1);
+               vBGOMatched2V4B.push_back(-1);
+               vBGOMatched3V4B.push_back(-1);
             }
-            //}  
-            //if (GoodEventV4B == 0) {
-               //TotalCounterV4B++;
-            //}
+
+
          }
 
-      }
-      std::cout << "Ethr = " << Ethr[m] << ", V4A :: Eff1 = " << MatchCounterV4A/TotalCounterV4A << ", Eff2 = " << MatchCounterV4A2/TotalCounterV4A << ", Eff3 = " << MatchCounterV4A3/TotalCounterV4A << std::endl;
-      EffVeto4A.push_back(MatchCounterV4A/TotalCounterV4A);
-      EffVeto4A2.push_back(MatchCounterV4A2/TotalCounterV4A);
-      EffVeto4A3.push_back(MatchCounterV4A3/TotalCounterV4A);
+         EffVetoV4A.push_back(MatchEnCountV4A/TotalCountV4A);
+         EffVeto2V4A.push_back(MatchEnCount2V4A/TotalCountV4A);
+         EffVeto3V4A.push_back(MatchEnCount3V4A/TotalCountV4A);
+         //std::cout << "A :: EffVeto = " << MatchEnCountV4A/TotalCountV4A << ", Total = " << TotalCountV4A << ", Match = " << MatchEnCountV4A << std::endl;
 
-      std::cout << "Ethr = " << Ethr[m] << ", V4B :: Eff1 = " << MatchCounterV4B/TotalCounterV4B << ", Eff2 = " << MatchCounterV4B2/TotalCounterV4B << ", Eff3 = " << MatchCounterV4B3/TotalCounterV4B << std::endl;
-      EffVeto4B.push_back(MatchCounterV4B/TotalCounterV4B);
-      EffVeto4B2.push_back(MatchCounterV4B2/TotalCounterV4B);
-      EffVeto4B3.push_back(MatchCounterV4B3/TotalCounterV4B);
-      std::cout << "match counter v4a = " << MatchCounterV4A3 << ", match counter v4b = " << MatchCounterV4B3 << ", total counter v4a = " << TotalCounterV4A << ", total counter v4b = " << TotalCounterV4B << std::endl;               
-
-
-      std::cout << "\033[1;36m ethr = " << Ethr[m] << ", v4a size = " << vBGOMatchedV4A.size() << ", v4b size = " << vBGOMatchedV4B.size() << "\033[0m" << std::endl;
-
-/*      double ANDCounter=0;
-      double ORCounter=0;
-      double TotalCounter=0;
-      for (int j=0; j<vBGOMatchedV4A.size(); j++) {
-         if ((vBGOMatchedV4A[j] == 1) && (vBGOMatchedV4B[j] == 1)) {
-            ANDCounter++;
-            ORCounter++;
-            TotalCounter++;
-         } else if ((vBGOMatchedV4A[j] == 1) || (vBGOMatchedV4B[j] == 1)) {
-            ORCounter++;
-            TotalCounter++;
-         } else if ((vBGOMatchedV4A[j] + vBGOMatchedV4B[j]) == 0) {
-            TotalCounter++;
-         }
-      }
-      Effand.push_back(ANDCounter/TotalCounter);
-      Effor.push_back(ORCounter/TotalCounter);    
-*/
-
-   }      
-
-/*
-   // AND and OR loop
-   std::vector<double>  Effand;
-   std::vector<double>  Effor;
-
-   std::cout << "matched v4b = " << vBGOMatchedV4B.size() << ", matched v4a = " << vBGOMatchedV4A.size() << ", enBGO = " << vEnBGOBackA.size() << std::endl;
+         EffVetoV4B.push_back(MatchEnCountV4B/TotalCountV4B);
+         EffVeto2V4B.push_back(MatchEnCount2V4B/TotalCountV4B);
+         EffVeto3V4B.push_back(MatchEnCount3V4B/TotalCountV4B);
+         //std::cout << "B :: EffVEto = " << MatchEnCountV4B/TotalCountV4B << ", Total = " << TotalCountV4B << ", Match = " << MatchEnCountV4B << std::endl;
+       
 
 
-   std::vector<double> EnBGO;
-   EnBGO.push_back(0.0);
-   for (int i=1; i<nbins; i++) EnBGO.push_back(EnBGO[i-1]+Eint);
-
-   for (int m=1; m<EnBGO.size(); m++) {
-      double ANDCounter=0;
-      double ORCounter=0;
-      double TotalCounter=0;
- 
-      for (int i=0; i<vEnBGOBackA.size(); i++) {
-         if ((vEnBGOBackA[i] >= EnBGO[m-1]) && (vEnBGOBackA[i] < EnBGO[m])) {
-            if ((vBGOMatchedV4A[i] == 1) && (vBGOMatchedV4B[i] == 1)) {
+         // Veto_4_A && Veto_4_B
+         double ANDCounter=0;
+         double ANDCounter2=0;
+         double ANDCounter3=0;
+         double ORCounter=0;
+         double ORCounter2=0;
+         double ORCounter3=0;
+         double TotalCounter=0;
+         double TotalCounter2=0;
+         double TotalCounter3=0;
+         for (int j=0; j<vBGOMatchedV4A.size(); j++) {
+            // Time window 1
+            if ((vBGOMatchedV4A[j] == 1) && (vBGOMatchedV4B[j] == 1)) {
                ANDCounter++;
                ORCounter++;
                TotalCounter++;
-            } else if ((vBGOMatchedV4A[i] == 1) || (vBGOMatchedV4B[i] == 1)) {
+            } else if ((vBGOMatchedV4A[j] == 1) || (vBGOMatchedV4B[j] == 1)) {
                ORCounter++;
                TotalCounter++;
-            } else if ((vBGOMatchedV4A[i] + vBGOMatchedV4B[i]) == 0) {
+            } else if ((vBGOMatchedV4A[j] + vBGOMatchedV4B[j]) == 0) {
                TotalCounter++;
             }
+            // Time window 2
+            if ((vBGOMatched2V4A[j] == 1) && (vBGOMatched2V4B[j] == 1)) {
+               ANDCounter2++;
+               ORCounter2++;
+               TotalCounter2++;
+            } else if ((vBGOMatched2V4A[j] == 1) || (vBGOMatched2V4B[j] == 1)) {
+               ORCounter2++;
+               TotalCounter2++;
+            } else if ((vBGOMatched2V4A[j] + vBGOMatched2V4B[j]) == 0) {
+               TotalCounter2++;
+            }
+            // Time window 3
+            if ((vBGOMatched3V4A[j] == 1) && (vBGOMatched3V4B[j] == 1)) {
+               ANDCounter3++;
+               ORCounter3++;
+               TotalCounter3++;
+            } else if ((vBGOMatched3V4A[j] == 1) || (vBGOMatched3V4B[j] == 1)) {
+               ORCounter3++;
+               TotalCounter3++;
+            } else if ((vBGOMatched3V4A[j] + vBGOMatched3V4B[j]) == 0) {
+               TotalCounter3++;
+            }
          }
-      }
-      std::cout << "E = " << EnBGO[m] << " AND = " << ANDCounter << ", OR = " << ORCounter << ", total = " << TotalCounter << std::endl;
-      Effand.push_back(ANDCounter/TotalCounter);
-      Effor.push_back(ORCounter/TotalCounter);
-   }           
-*/
+         Effand.push_back(ANDCounter/TotalCounter);
+         Effand2.push_back(ANDCounter2/TotalCounter2);
+         Effand3.push_back(ANDCounter3/TotalCounter3);
+         Effor.push_back(ORCounter/TotalCounter);
+         Effor2.push_back(ORCounter2/TotalCounter2);
+         Effor3.push_back(ORCounter3/TotalCounter3);
+ 
+         std::cout << "1 :: OR = " << ORCounter/TotalCounter << std::endl;
+         std::cout << "2 :: OR = " << ORCounter2/TotalCounter2 << std::endl;
+         std::cout << "3 :: OR = " << ORCounter3/TotalCounter3 << std::endl;
+      }  
+        
+   }
+
 
 
  
@@ -924,35 +915,27 @@ void VetoEff(){
    float EffVetoarr[nticks] = {};
    float EffVeto2arr[nticks] = {};
    float EffVeto3arr[nticks] = {};
-   float EffVetoerrx[nticks] = {};
-   float EffVetoerry[nticks] = {};
-   float EffVeto2errx[nticks] = {};
-   float EffVeto2erry[nticks] = {};
-   float EffVeto3errx[nticks] = {};
-   float EffVeto3erry[nticks] = {};
    float Evetoarr[nticks] = {};
 
    for (int i=0; i<nticks; i++) {
-      EffVetoarr[i] = EffVeto[i];
-      EffVeto2arr[i] = EffVeto2[i];
-      EffVeto3arr[i] = EffVeto3[i];
-      EffVetoerrx[i] = 0.0;
-      EffVetoerry[i] = EffVetoerr[i];
-      EffVeto2errx[i] = 0.0;
-      EffVeto2erry[i] = EffVeto2err[i];
-      EffVeto3errx[i] = 0.0;
-      EffVeto3erry[i] = EffVeto3err[i];
+      //EffVetoarr[i] = EffVetoV4A[i];
+      EffVetoarr[i] = Effor[i];
+      //EffVeto2arr[i] = EffVeto2V4A[i];
+      EffVeto2arr[i] = Effor2[i];
+      //EffVeto3arr[i] = EffVeto3V4A[i];
+      EffVeto3arr[i] = Effor3[i];
       Evetoarr[i] = Eveto[i];
    }
 
    TCanvas *fvcut = new TCanvas("fvcut","E_{THR}",800,600);
    gPad->SetGrid(1,1);
-   TGraphErrors *grv0 = new TGraphErrors(nticks,Evetoarr,EffVetoarr,EffVetoerrx,EffVetoerry);
-   grv0->SetTitle("Efficiency of Veto_4_A");
+   TGraph *grv0 = new TGraph(nticks,Evetoarr,EffVetoarr);
+   grv0->SetTitle("Efficiency of Veto_4 (OR)");
    grv0->GetXaxis()->SetTitle("E_{Veto} [adc]");
    grv0->GetYaxis()->SetTitle("Eff");
    grv0->GetYaxis()->SetTitleOffset(1.9);
-   grv0->GetYaxis()->SetRangeUser(0.78,1.03);
+   grv0->GetYaxis()->SetRangeUser(0.62,1.01);
+   grv0->GetXaxis()->SetRangeUser(0.0,1500.0);
    //grv0->SetLineColor(kGray+3);
    grv0->SetLineWidth(3);
    grv0->SetLineColor(kViolet-5);
@@ -960,15 +943,15 @@ void VetoEff(){
    grv0->SetMarkerSize(1.5);
    grv0->SetMarkerStyle(21);
    grv0->Draw("ALP");
-   TGraphErrors *grv1 = new TGraphErrors(nticks,Evetoarr,EffVeto2arr,EffVeto2errx,EffVeto2erry);
+   TGraph *grv1 = new TGraph(nticks,Evetoarr,EffVeto2arr);
    grv1->SetLineWidth(3);
    grv1->SetLineColor(kTeal-5);
-   grv1->SetLineStyle(kDashed);
+   //grv1->SetLineStyle(kDashed);
    grv1->SetMarkerColor(kTeal-5);
    grv1->SetMarkerSize(1.5);
    grv1->SetMarkerStyle(22);
    grv1->Draw("LP");
-   TGraphErrors *grv2 = new TGraphErrors(nticks,Evetoarr,EffVeto3arr,EffVeto3errx,EffVeto3erry);
+   TGraph *grv2 = new TGraph(nticks,Evetoarr,EffVeto3arr);
    grv2->SetLineWidth(3);
    grv2->SetLineColorAlpha(kOrange-5,0.1);
    grv2->SetMarkerColor(kOrange-5);
@@ -980,7 +963,44 @@ void VetoEff(){
    legendvcut->AddEntry(grv1,"t = [-60..30] ns","f");
    legendvcut->AddEntry(grv2,"t = [-30..30] ns","f");
    legendvcut->Draw();
-   fvcut->SaveAs("529_EffV4_A_vcuttime_err.pdf");
+   fvcut->SaveAs("530_EffV4_OR_vcuttime.pdf");
+
+   
+   double q0v41[] = {0.989055};
+   double q0v42[] = {0.966436};
+   double q0v43[] = {0.915359};
+   double q1v41[] = {0.988325};
+   double q1v42[] = {0.965706};
+   double q1v43[] = {0.91463};
+   double q2v41[] = {0.987961};
+   double q2v42[] = {0.965341};
+   double q2v43[] = {0.91463};
+   double q3v41[] = {0.987961};
+   double q3v42[] = {0.965341};
+   double q3v43[] = {0.91463};
+   double q4v41[] = {0.980664};
+   double q4v42[] = {0.958045};
+   double q4v43[] = {0.907333};
+   double q5v41[] = {0.896275};
+   double q5v42[] = {0.876187};
+   double q5v43[] = {0.829803};
+   double q6v41[] = {0.678127};
+   double q6v42[] = {0.663497};
+   double q6v43[] = {0.632041};
+
+   auto c42 = new TCanvas("c42","c42",800,600);
+   gPad->SetGrid(1,1);
+   double x[] = {0.0, 250.0, 500.0, 750.0, 1000.0, 1250.0, 1500.0};
+   double y[] = {0.987763, 0.9870535, 0.9868755, 0.986343, 0.9783565, 0.888993, 0.673808};
+   double ex[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+   double ey[] = {0.001291, 0.0012935, 0.0014715, 0.001651, 0.0014965, 0.008253, 0.002039};
+   auto ge = new TGraphErrors(7, x, y, ex, ey);
+   ge->SetFillColor(4);
+   ge->SetFillStyle(3010);
+   ge->Draw("a3");
+   ge->GetYaxis()->SetRangeUser(0.8,1.01);
+   ge->GetXaxis()->SetTitle("E_{Veto} [adc]");
+
 
 /* 
   
