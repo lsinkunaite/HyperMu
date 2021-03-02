@@ -156,6 +156,14 @@ void EffContour(){
    double v6y3[] = {TMath::MinElement(3,q0v63) + v6ey3[0], TMath::MinElement(3,q1v63) + v6ey3[1], TMath::MinElement(3,q2v63) + v6ey3[2], TMath::MinElement(3,q3v63) + v6ey3[3], TMath::MinElement(3,q4v63) + v6ey3[4], TMath::MinElement(3,q5v63) + v6ey3[5], TMath::MinElement(3,q6v63) + v6ey3[6]};
 
 
+   // Veto_4_A Best run: 528
+   double bestv4a[] = {0.989054, 0.988347, 0.988347, 0.987994, 0.978107, 0.897246, 0.675847};
+   // Veto_5_A Best run: 528
+   double bestv5a[] = {0.991904, 0.9912, 0.9912, 0.9912, 0.988384, 0.93805, 0.783879};
+   // Veto_6_A Best run: 528
+   double bestv6a[] = {0.97672, 0.974956, 0.974603, 0.97284, 0.926279, 0.675838, 0.420459};
+
+
    double x[] = {0.0, 250.0, 500.0, 750.0, 1000.0, 1250.0, 1500.0};
    double y[] = {0.987763, 0.9870535, 0.9868755, 0.986343, 0.9783565, 0.888993, 0.673808};
    double ex[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -254,7 +262,7 @@ void EffContour(){
    legendv6->Draw();
    cv6->SaveAs("Eff_V6_OR_Contour_zoom.pdf");
    //cv6->SaveAs("Eff_V6_OR_Contour.pdf");
-*/
+
    auto cv456 = new TCanvas("cv456","cv456",800,600);
    gPad->SetGrid(1,1);
    auto gv51 = new TGraphErrors(7, x, v5y1, ex, v5ey1); 
@@ -280,6 +288,74 @@ void EffContour(){
    legendv456->Draw();
    cv456->SaveAs("Eff_V456_OR_Contour_zoom.pdf");
    //cv456->SaveAs("Eff_V456_OR_Contour.pdf");
+
+   auto best456 = new TCanvas("best456","best456",800,600);
+   gPad->SetGrid(1,1);
+   auto gv5a = new TGraph(7, x, bestv5a);
+   gv5a->SetTitle("");
+   gv5a->GetXaxis()->SetTitle("E_{Veto} [adc]");
+   gv5a->GetXaxis()->SetRangeUser(0.0,1500.0);
+   gv5a->GetYaxis()->SetRangeUser(0.94,1.0);
+   gv5a->SetFillColor(kViolet-5);
+   gv5a->SetFillStyle(3001);
+   gv5a->Draw("alf");
+   auto gv4a = new TGraph(7, x, bestv4a);
+   gv4a->SetFillColor(kTeal-5);
+   gv4a->SetFillStyle(3001);
+   gv4a->Draw("lf");
+   auto gv6a = new TGraph(7, x, bestv6a);
+   gv6a->SetFillColor(kOrange-3);
+   gv6a->SetFillStyle(3001);
+   gv6a->Draw("lf");
+   auto lbest456 = new TLegend(0.13,0.17,0.42,0.3);
+   lbest456->AddEntry(gv5a,"t_{V5} #in [-250, 65] ns","f");
+   lbest456->AddEntry(gv4a,"t_{V4} #in [-250, 65] ns","f");
+   lbest456->AddEntry(gv6a,"t_{V6} #in [-250, 65] ns","f");
+   lbest456->Draw();
+   lbest456->SaveAs("Eff_V456_A_Best_Contour_zoom.pdf");
+   //cv456->SaveAs("Eff_V456_OR_Contour.pdf");
+*/
+   auto comp456 = new TCanvas("comp456","comp456",800,600);
+   gPad->SetGrid(1,1);
+   auto gv51 = new TGraphErrors(7, x, v5y1, ex, v5ey1);
+   gv51->SetTitle("");
+   gv51->GetXaxis()->SetTitle("E_{Veto} [adc]");
+   gv51->GetXaxis()->SetRangeUser(0.0,1500.0);
+   gv51->GetYaxis()->SetRangeUser(0.94,1.0);
+   gv51->SetFillColor(kViolet-5);
+   gv51->SetFillStyle(3001); 
+   gv51->Draw("a3");
+   auto gv41 = new TGraphErrors(7, x, v4y1, ex, v4ey1);
+   gv41->SetFillColor(kTeal-5);
+   gv41->SetFillStyle(3001);
+   gv41->Draw("3");
+   auto gv61 = new TGraphErrors(7, x, v6y1, ex, v6ey1);
+   gv61->SetFillColor(kOrange-3);
+   gv61->SetFillStyle(3001);
+   gv61->Draw("3");
+   auto gv5a = new TGraph(7, x, bestv5a);
+   gv5a->SetLineColor(kViolet-5);
+   gv5a->SetLineWidth(4);
+   gv5a->Draw("lp");
+   auto gv4a = new TGraph(7, x, bestv4a);
+   gv4a->SetLineColor(kTeal-5);
+   gv4a->SetLineWidth(4);
+   gv4a->Draw("lp");  
+   auto gv6a = new TGraph(7, x, bestv6a);
+   gv6a->SetLineColor(kOrange-3);
+   gv6a->SetLineWidth(4);
+   gv6a->Draw("lp");
+   auto lc456 = new TLegend(0.13,0.17,0.42,0.3);
+   lc456->AddEntry(gv51,"t_{V5_OR} #in [-250, 65] ns","f");
+   lc456->AddEntry(gv41,"t_{V4_OR} #in [-250, 65] ns","f");
+   lc456->AddEntry(gv61,"t_{V6_OR} #in [-250, 65] ns","f");
+   lc456->AddEntry(gv5a,"t_{V5_A} #in [-250, 65] ns","l");
+   lc456->AddEntry(gv4a,"t_{V4_A} #in [-250, 65] ns","l"); 
+   lc456->AddEntry(gv6a,"t_{V6_A} #in [-250, 65] ns","l");
+   lc456->Draw();
+   comp456->SaveAs("Eff_V456_Comparison.pdf");
+
+
 
 }
  
