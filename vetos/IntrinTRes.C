@@ -75,7 +75,7 @@ void IntrinTRes(){
    /*         Input files           */
    /*********************************/
    
-   std::string runnumber = "run530/530";                                                 
+   std::string runnumber = "run528/528";                                         
    std::vector<int> timemin;
    std::vector<int> timemax;                                                     
    timemin.push_back(100);  // Min time for BGOs                       
@@ -462,41 +462,137 @@ void IntrinTRes(){
    std::vector<double> vEdepSandwich;
    std::vector<double> vTimeSandwich;
    std::vector<double> vTOffSandwich;
+   std::vector<double> vTAllSandwich;
 
-   std::vector<double> EffSandwich;
+   std::vector<double> EffSandwichA;
+   std::vector<double> EffSandwichB;
+   std::vector<double> EffSandwichAND;
+   std::vector<double> EffSandwichOR;
 
-   double Total = 0;
-   double Match = 0;
+   double TotalA = 0;
+   double MatchA = 0;
 
    int GoodEvent;
 
-   std::vector<double> EthrV4A = {0.0, 300.0, 600.0, 900.0, 1200.0, 1500.0, 1800.0};
+   std::vector<double> EthrV5A = {0.0, 250.0, 500.0, 750.0, 1000.0, 1250.0, 1500.0};
 
-   for (int m=0; m<EthrV4A.size(); m++) {
-      Total = 0;
-      Match = 0;
+   std::vector<double> vMatchedV5A;
+   std::vector<double> vMatchedV5B;
+
+   for (int m=0; m<EthrV5A.size(); m++) {
+   //for (int m=0; m<1; m++) {
+      TotalA = 0;
+      MatchA = 0;
       for (int n=0; n<25000; n++) {
-         if ((vInstV4A[n] == 0) && (vEdepV4A[n] >= EthrV4A[m])) {
+         int UnmatchedV5A = 0;
+         if ((vInstV4A[n] == 0) && (vEdepV4A[n] >= 1000)) {
             for (int k=0; k<35000; k++) {
                GoodEvent = 0;
                if (vEvIDV5A[k] == vEvIDV4A[n]) {
                   if (vInstV5A[k] == 0) {
-                     vEdepSandwich.push_back(vEdepV4A[n]);
-                     vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
-                     vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
-                     Match++;
+                     if (vEdepV5A[k] >= EthrV5A[m]) {
+                        if (((vTOffV5A[k]-vTOffV4A[n]) < 30) && ((vTOffV5A[k]-vToffV4A[n]) > -30)) {
+                           //vEdepSandwich.push_back(vEdepV4A[n]);
+                           //vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                           //vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
+                           MatchA++;
+                           UnmatchedV5A = 1;
+                        } 
+                     }
                   } else {
                      GoodEvent = 1;
                   } 
                }
             }
             if (GoodEvent == 0) {
-               Total++;
+               TotalA++;
+               if (UnmatchedV5A == 0) {
+                  vMatchedV5A.push_back(0);
+               } else {
+                  vMatchedV5A.push_back(1);
+               } 
+            } else {
+               vMatchedV5A.push_back(-1);
             }
          }
       }
-      EffSandwich.push_back(Match/Total);
+      EffSandwichA.push_back(MatchA/TotalA);
+
+
+      double MatchB = 0;
+      double TotalB = 0;
+      for (int n=0; n<25000; n++) {
+         int UnmatchedV5B = 0;
+         if ((vInstV4A[n] == 0) && (vEdepV4A[n] >= 1000)) {
+            for (int k=0; k<35000; k++) {
+               GoodEvent = 0;
+               if (vEvIDV5B[k] == vEvIDV4A[n]) {
+                  if (vInstV5B[k] == 0) {
+                     if (vEdepV5B[k] >= EthrV5A[m]) {
+                        if (((vTOffV5B[k]-vTOffV4A[n]) < 30) && ((vTOffV5B[k]-vToffV4A[n]) > -30)) {
+                           UnmatchedV5B = 1;
+                           MatchB++;
+                        }
+                     }
+                  } else {
+                     GoodEvent = 1;
+                  }
+               }
+            }
+            if (GoodEvent == 0) {
+               TotalB++;
+               if (UnmatchedV5B == 0) {
+                  vMatchedV5B.push_back(0);
+               } else {
+                  vMatchedV5B.push_back(1);
+               }
+            } else {
+               vMatchedV5B.push_back(-1);
+            }
+         }
+      }
+      EffSandwichB.push_back(MatchB/TotalB);    
+
+
+      double ANDCounter = 0;
+      double ORCounter = 0;
+      double TotalCounter = 0;
+      for (int j=0; j<vMatchedV5A.size(); j++ ) {
+         if ((vMatchedV5A[j] == 1) && (vMatchedV5B[j] == 1)) {
+            ANDCounter++;
+            ORCounter++;
+            TotalCounter++;
+         } else if ((vMatchedV5A[j] == 1) || (vMatchedV5B[j] == 1)) {
+            ORCounter++;
+            TotalCounter++;
+         } else if ((vMatchedV5A[j] + vMatchedV5B[j]) == 0) {
+            TotalCounter++;
+         }
+      }
+   
+      EffSandwichAND.push_back(ANDCounter/TotalCounter);
+      EffSandwichOR.push_back(ORCounter/TotalCounter);
+
+      std::cout << "m = " << EthrV5A[m] << ", EffA = " << EffSandwichA[m] << ", EffB = " << EffSandwichB[m] << ", EffAND = " << EffSandwichAND[m] << ", EffOR = " << EffSandwichOR[m] << std::endl;
+
    }
+
+
+   for (int n=0; n<25000; n++) {
+      if (vInstV4A[n] == 0) {
+         for (int k=0; k<35000; k++) {
+            if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
+               if (vInstV5A[k] == 0) {
+                  vEdepSandwich.push_back(vEdepV4A[n]);
+                  vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
+                  vTOffSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
+               }
+            }
+         }
+      }
+   }
+
 
    std::cout << "Round [0 .. 25000] finished!" << std::endl;
    std::cout << " time = " << vTimeSandwich.size() << ", edep = " << vEdepSandwich.size() << std::endl;
@@ -506,6 +602,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=18000; k<65000; k++) {
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -523,6 +620,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=40000; k<85000; k++) {
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -540,6 +638,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=65000; k<115000; k++) {
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -557,6 +656,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=85000; k<140000; k++) { 
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -574,6 +674,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=110000; k<165000; k++) { 
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -591,6 +692,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=135000; k<190000; k++) {
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -608,6 +710,7 @@ void IntrinTRes(){
       if (vInstV4A[n] == 0) {
          for (int k=160000; k<vEvIDV5A.size(); k++) {
             if (vEvIDV5A[k] == vEvIDV4A[n]) {
+               vTAllSandwich.push_back(vTOffV5A[k]-vTOffV4A[n]);
                if (vInstV5A[k] == 0) {
                   vEdepSandwich.push_back(vEdepV4A[n]);
                   vTimeSandwich.push_back(vTimeV5A[k]-vTimeV4A[n]);
@@ -621,8 +724,8 @@ void IntrinTRes(){
    std::cout << "Round [125000 .. " << vEvIDV4A.size() << "] finished!" << std::endl;
    std::cout << " time = " << vTimeSandwich.size() << ", edep = " << vEdepSandwich.size(    ) << std::endl;
 
-   for (int i=0; i<EffSandwich.size(); i++) {
-      std::cout << EffSandwich[i] <<std::endl;
+   for (int i=0; i<EffSandwichA.size(); i++) {
+      std::cout << EffSandwichA[i] <<std::endl;
    }
 
 
@@ -661,24 +764,24 @@ void IntrinTRes(){
    float SandEff[nbins] = {};
    float SandEdep[nbins] = {};
    for (int i=0; i<nbins; i++) {
-      SandEff[i] = EffSandwich[i];
-      SandEdep[i] = EthrV4A[i];
+      SandEff[i] = EffSandwichA[i];
+      SandEdep[i] = EthrV5A[i];
    }
 
    TCanvas *effs = new TCanvas("effs","Efficiency",800,600);
    gPad->SetGrid(1,1);
    TGraph *gr1 = new TGraph(nbins,SandEdep,SandEff);
    gr1->SetTitle("");
-   gr1->GetXaxis()->SetTitle("ETHR_{V4_A} [adc]");
+   gr1->GetXaxis()->SetTitle("ETHR_{V5_A} [adc]");
    gr1->GetXaxis()->SetRange(0,12000.0);
    gr1->SetLineColor(kGray+3);
    gr1->SetLineWidth(3);
    gr1->SetFillColor(kTeal-5);
    gr1->SetFillStyle(3004);
    gr1->Draw("ALPF");
-   effs->SaveAs("Eff_Sandwich.pdf");
-
+   effs->SaveAs("Eff_Sandwich_THRv5.pdf");
 /*
+
    TH1F *hSandTime = new TH1F("hSandTime","SandTime",15,-30.0,30.0);
    TH1F *hSandTOff = new TH1F("hSandTOff","SandTOff",15,-30.0,30.0);
    for (int i=0; i<vTimeSandwich.size(); i++) {
@@ -686,23 +789,39 @@ void IntrinTRes(){
       hSandTOff->Fill(vTOffSandwich[i]);
    }
   
+   TH1F *hSandTAll = new TH1F("hSandTAll","SandTAll",100,-1000.0,1000.0);
+   for (int i=0; i<vTAllSandwich.size(); i++) {
+      hSandTAll->Fill(vTAllSandwich[i]);
+   }
+
    TF1  *f1 = new TF1("f1","gaus",-20.0,20.0);
  
    TCanvas *w = new TCanvas("w","Sandwich",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogy();
-   hSandTime->GetXaxis()->SetTitle("t_{V5A} - t_{V4A}");
+   //hSandTime->GetXaxis()->SetTitle("t_{V5A} - t_{V4A}");
    //hSandTime->SetTitle("Intrinsic time resolution");
-   hSandTime->SetTitle("");
-   hSandTime->SetLineColor(kBlue+1);
-   hSandTime->Draw();
+   //hSandTime->SetTitle("");
+   //hSandTime->SetLineColor(kBlue+1);
+   //hSandTime->Draw();
+   hSandTAll->SetTitle("");
+   hSandTAll->GetXaxis()->SetTitle("t_{V5A} - t_{V4A} [ns]");
+   hSandTAll->SetLineColor(kGreen-2);
+   //hSandTAll->Draw();
+   hSandTOff->SetTitle("");
+   hSandTOff->GetXaxis()->SetTitle("t_{V5A} - t_{V4A} [ns]");
    hSandTOff->SetLineColor(kRed);
    hSandTOff->SetLineStyle(kDashed);
-   hSandTOff->Draw("same");
-   hSandTOff->Fit(f1,"R");
-   f1->SetLineColor(kGreen-2);
-   f1->Draw("same");
+   //hSandTOff->Draw("same");
+   hSandTOff->Draw();
+   //hSandTOff->Fit(f1,"R");
+   //f1->SetLineColor(kGreen-2);
+   //f1->Draw("same");
+   auto legendtime = new TLegend(0.73,0.73,0.9,0.92);
+   legendtime->AddEntry(hSandTAll,"All events","l");
+   legendtime->AddEntry(hSandTOff,"V5_A incidence = 1","l");
+   //legendtime->Draw();
    w->SaveAs("TimeRes_Sandwich_Offset.pdf");
 */
 /*
