@@ -55,14 +55,14 @@ void TimeRes(){
    gStyle->SetOptStat(1);
    gStyle->SetTitleXOffset(1.15);
    gStyle->SetTitleYOffset(1.15);
-   gStyle->SetTitleBorderSize(1);
+   gStyle->SetTitleBorderSize(0);
    gStyle->SetLegendBorderSize(1);
    gStyle->SetPadBottomMargin(0.32);
    gStyle->SetPadBottomMargin(0.12);
-   gStyle->SetPadLeftMargin(0.16);
+   gStyle->SetPadLeftMargin(0.12);
    gStyle->SetPadTopMargin(0.32);
    gStyle->SetPadTopMargin(0.12);
-   gStyle->SetPadRightMargin(0.16);
+   gStyle->SetPadRightMargin(0.12);
    gStyle->SetCanvasColor(0);
    gStyle->SetPadColor(0);
    gStyle->SetPalette(1,0);
@@ -75,11 +75,16 @@ void TimeRes(){
    /*         Input files           */
    /*********************************/
    
-   std::string runnumber = "530";                                                 
+   std::string runnumber = "run549/549";                                               
    std::vector<int> timemin;
    std::vector<int> timemax;                                                     
-   timemin.push_back(100);  // Min time for BGOs                       
-   timemax.push_back(1000); // Max time for BGOs
+   //timemin.push_back(100);  // Min time for BGOs                       
+   //timemax.push_back(1000); // Max time for BGOs
+   timemin.push_back(-100);
+   timemax.push_back(100);
+
+   double toffsetV4A = 3.0;
+   double toffsetV5A = -2.0;
 
    // Names of the files
    // Electron Vetos
@@ -144,16 +149,19 @@ void TimeRes(){
    std::vector<double> vEvIDV4A;
    std::vector<double> vEdepV4A;
    std::vector<double> vTimeV4A;
+   std::vector<double> vTOffV4A;
    while (!fVeto4A.eof()) {
       double EvIDV4A, InstV4A, EdepV4A, TimeV4A;
       fVeto4A >> EvIDV4A >> InstV4A >> EdepV4A >> TimeV4A;
       vEvIDV4A.push_back(EvIDV4A);
       vEdepV4A.push_back(EdepV4A);
+      vTOffV4A.push_back(TimeV4A+toffsetV4A);
       vTimeV4A.push_back(TimeV4A);
    }
    vEvIDV4A.pop_back();
    vEdepV4A.pop_back();
    vTimeV4A.pop_back();
+   vTOffV4A.pop_back();
    fVeto4A.close();
 
 
@@ -180,16 +188,19 @@ void TimeRes(){
    std::vector<double> vEvIDV5A;
    std::vector<double> vEdepV5A;
    std::vector<double> vTimeV5A;
+   std::vector<double> vTOffV5A;
    while (!fVeto5A.eof()) {
       double EvIDV5A, InstV5A, EdepV5A, TimeV5A;
       fVeto5A >> EvIDV5A >> InstV5A >> EdepV5A >> TimeV5A;
       vEvIDV5A.push_back(EvIDV5A);
       vEdepV5A.push_back(EdepV5A);
       vTimeV5A.push_back(TimeV5A);
+      vTOffV5A.push_back(TimeV5A+toffsetV5A);
    }
    vEvIDV5A.pop_back();
    vEdepV5A.pop_back();
    vTimeV5A.pop_back();
+   vTOffV5A.pop_back();
    fVeto5A.close();
 
 
@@ -469,6 +480,7 @@ void TimeRes(){
    // 2-D Plot
    std::vector<double> vMatchedBGOEn0;
    std::vector<double> vMatchedBGOTm0;
+   std::vector<double> vMatchedVetoEn0;
    std::vector<double> vTimedBGOEn0;
    std::vector<double> vTimedBGOTm0;
 
@@ -490,10 +502,11 @@ void TimeRes(){
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
-                     //if (Ethr[m] == 0) {
-                        //vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
-                        //vMatchedBGOTm0.push_back(vTimeV4A[k]-vTmBGOBackA[n]); // 2D plot
-                     //}
+                     if (Ethr[m] == 0) {
+                        vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
+                        vMatchedVetoEn0.push_back(vEdepV4A[k]); // 2D plot
+                        vMatchedBGOTm0.push_back(vTOffV4A[k]-vTmBGOBackA[n]); // 2D plot
+                     }
                      if (Ethr[m] < 5000) {
                         vMatchedTimeV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
                      } else if ((Ethr[m] >= 5000) && (Ethr[m] < 10000)) {
@@ -512,9 +525,9 @@ void TimeRes(){
                      //} else if (Ethr[m] == 15000) {
                         //vMatchedTimeV4A15MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
                      //}
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+250))) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-65)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
-                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-30)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+30))) {
+                     if ((vTOffV4A[k] >= (vTmBGOBackA[n]-250)) && (vTOffV4A[k] <= (vTmBGOBackA[n]+250))) {
+                        if ((vTOffV4A[k] >= (vTmBGOBackA[n]-65)) && (vTOffV4A[k] <= (vTmBGOBackA[n]+65))) {
+                           if ((vTOffV4A[k] >= (vTmBGOBackA[n]-30)) && (vTOffV4A[k] <= (vTmBGOBackA[n]+30))) {
                               MatchCounter++;
                               vMatchedEnergyV4A.push_back(vEdepV4A[k]);
                            }   
@@ -524,10 +537,11 @@ void TimeRes(){
                         MatchCounter3++;
                         vMatchedEnergyV4A3.push_back(vEdepV4A[k]);
                         
-                        //if (Ethr[m] == 0) {
-                           //vTimedBGOEn0.push_back(vEnBGOBackA[n]); // 2d plot
+                        if (Ethr[m] == 0) {
+                           vTimedBGOEn0.push_back(vEnBGOBackA[n]); // 2d plot
                            //vTimedBGOTm0.push_back(vTimeV4A[k] - vTmBGOBackA[n]); // 2D plot
-                        //}
+                           vTimedBGOTm0.push_back(vTimeV4A[k]);
+                        }
                         if (Ethr[m] < 2000) {
                            if (vEdepV4A[k] <= 500) {
                               vLowV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
@@ -581,15 +595,75 @@ void TimeRes(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
-/*
+   TH1F *hVetoTime = new TH1F("hVetoTime","Time",15,-16.0,44.0);
+   TH1F *hVetoTOff = new TH1F("hVetoTOff","Time",15,-16.0,44.0);
+   for (int i=0; i<vTimeV4A.size(); i++) {
+      hVetoTime->Fill(vTimeV4A[i]);
+      hVetoTOff->Fill(vTOffV4A[i]);
+   }
+
+   TCanvas *vz = new TCanvas("vz","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hVetoTime->GetXaxis()->SetTitle("t [ns]");
+   hVetoTime->SetTitle("");
+   hVetoTime->SetLineColor(kBlue+1);
+   hVetoTime->Draw();
+   hVetoTOff->SetLineColor(kRed);
+   hVetoTOff->SetLineStyle(kDashed);
+   hVetoTOff->Draw("same");
+   //vz->SaveAs("TOffset_V5A.pdf");
+   //vz->SaveAs("Time_BBGO_A.pdf");
+
+   TH1F *hVetoTime2 = new TH1F("hVetoTime2","Time",15,-16.0,44.0);
+   TH1F *hVetoTOff2 = new TH1F("hVetoTOff2","Time",15,-16.0,44.0);
+   for (int i=0; i<vTimeV5A.size(); i++) {
+      hVetoTime2->Fill(vTimeV5A[i]);
+      hVetoTOff2->Fill(vTOffV5A[i]);
+   }
+ 
+   TCanvas *vz2 = new TCanvas("vz2","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hVetoTime2->GetXaxis()->SetTitle("t [ns]");
+   hVetoTime2->SetTitle("");
+   hVetoTime2->SetLineColor(kBlue+1);
+   hVetoTime2->Draw();
+   hVetoTOff2->SetLineColor(kRed);
+   hVetoTOff2->SetLineStyle(kDashed);
+   hVetoTOff2->Draw("same");
+   //vz2->SaveAs("TOffset_V5A2.pdf");
+
+
+   TH1F *hMatchedTime = new TH1F("hMatchedTimeVeto","Time",100,-500.0,10000.0);
+   for (int i=0; i<vTimedBGOEn0.size(); i++) {
+      hMatchedTime->Fill(vTimedBGOEn0[i]);
+      //hMatchedTime->Fill(vTimeV5A[i]);
+   }
+
+   TCanvas *z = new TCanvas("z","Veto5_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hMatchedTime->SetTitle("Veto5_A");
+   hMatchedTime->Draw();
+   
+
+
    // 2D plots of Energy-Time of matched Veto
-   TH2F *hMatchedBGOEnTm = new TH2F("hMatchedBGOEnTm","En-Time",50,-1000.0,1000.0,50,0,25.0);
+   TH2F *hMatchedBGOEnTm = new TH2F("hMatchedBGOEnTm","En-Time",21,-100.0,100.0,25,0,10.0);
+   TH2F *hMatchedVetoEnTm = new TH2F("hMatchedVetoEnTm","En-Time",21,-100.0,100.0,25,0,8.0);
+   TH2F *hMatchedBGOVeto = new TH2F("hMatchedBGOVeto","En-Time",25,0,10.0,25,0,8.0);
    for (int i=0; i<vMatchedBGOTm0.size(); i++) {
       for (int j=0; j<vMatchedBGOEn0.size(); j++) {
          hMatchedBGOEnTm->Fill(vMatchedBGOTm0[i],(vMatchedBGOEn0[j]/1000.0));
+         hMatchedVetoEnTm->Fill(vMatchedBGOTm0[i],(vMatchedVetoEn0[j]/1000.0));
+         hMatchedBGOVeto->Fill((vMatchedBGOEn0[i]/1000.0),(vMatchedVetoEn0[j]/1000.0));
       }
    }
-
+/*
    TCanvas *u = new TCanvas("u","Veto4_A",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
@@ -598,20 +672,41 @@ void TimeRes(){
    hMatchedBGOEnTm->SetTitle("Veto_4_A");
    hMatchedBGOEnTm->Draw("COLZ");
    u->SaveAs("EnTm_V4_A.pdf");
-
-   TCanvas *ul = new TCanvas("ul","Veto4_B",800,600);
+*/
+   TCanvas *ulbgo = new TCanvas("ulbgo","Veto4_A",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogz();
-   hMatchedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
-   hMatchedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
-   hMatchedBGOEnTm->SetTitle("Veto_4_B");
+   hMatchedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO} [ns]");
+   hMatchedBGOEnTm->GetYaxis()->SetTitle("E_{BGO} [MeV]");
+   hMatchedBGOEnTm->SetTitle("");
    hMatchedBGOEnTm->Draw("COLZ");
-   ul->SaveAs("EnTm_V4_B_log.pdf");
+   ulbgo->SaveAs("549_EnTm_V4_A_BGO.pdf");
 
+   TCanvas *ulveto = new TCanvas("ulveto","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogz();
+   hMatchedVetoEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO} [ns]");
+   hMatchedVetoEnTm->GetYaxis()->SetTitle("E_{Veto} [kadc]");
+   hMatchedVetoEnTm->SetTitle("");
+   hMatchedVetoEnTm->Draw("COLZ");
+   ulveto->SaveAs("549_EnTm_V4_A_Veto.pdf");
+
+   TCanvas *ulbgoveto = new TCanvas("ulbgoveto","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogz();
+   hMatchedBGOVeto->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   hMatchedBGOVeto->GetYaxis()->SetTitle("E_{Veto} [kadc]");
+   hMatchedBGOVeto->SetTitle("");
+   hMatchedBGOVeto->Draw("COLZ");
+   ulbgoveto->SaveAs("549_BGO_Veto_V4_A.pdf");
+
+/*
 
    // 2D plots of Energy-Time of matched and timedVeto
-   TH2F *hTimedBGOEnTm = new TH2F("hTimedBGOEnTm","En-Time",50,-250.0,250.0,50,0,25.0);
+   TH2F *hTimedBGOEnTm = new TH2F("hTimedBGOEnTm","En-Time",25,-200.0,200.0,20,0,10.0);
    for (int i=0; i<vTimedBGOTm0.size(); i++) {
       for (int j=0; j<vTimedBGOEn0.size(); j++) {
          hTimedBGOEnTm->Fill(vTimedBGOTm0[i],(vTimedBGOEn0[j]/1000.0));
@@ -627,18 +722,19 @@ void TimeRes(){
    hTimedBGOEnTm->Draw("COLZ");
    t->SaveAs("EnTm_timed_V4_A.pdf");
 
-   TCanvas *tl = new TCanvas("tl","Veto4_B",800,600);
+   TCanvas *tl = new TCanvas("tl","Veto6_B",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogz();
-   hTimedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO}");
+   hTimedBGOEnTm->GetYaxis()->SetNdivisions(805);
+   hTimedBGOEnTm->GetXaxis()->SetTitle("t_{Veto}-t_{BGO} [ns]");
    hTimedBGOEnTm->GetYaxis()->SetTitle("E_{BGO}");
-   hTimedBGOEnTm->SetTitle("Veto_4_B");
+   hTimedBGOEnTm->SetTitle("Veto_6_B");
    hTimedBGOEnTm->Draw("COLZ");
-   tl->SaveAs("EnTm_timed_V4_B_log.pdf");
+   //tl->SaveAs(TString(runnumber+"_EnTm_timed_V6_B_ROI.pdf"));
 */
 
-
+/*
    // Time resolution of the vetos, for different time cuts
 
    TH1F *hLowV4A0MeV = new TH1F("hLowV4A0MeV","Low0MeV",50,-250.0,50.0);
@@ -654,6 +750,7 @@ void TimeRes(){
    for (int i=0; i<vHighV4A2MeV.size(); i++)  hHighV4A2MeV->Fill(vHighV4A2MeV[i]);
    for (int i=0; i<vLowV4A12MeV.size(); i++)  hLowV4A12MeV->Fill(vLowV4A12MeV[i]);
    for (int i=0; i<vHighV4A12MeV.size(); i++)  hHighV4A12MeV->Fill(vHighV4A12MeV[i]);
+*/
 /*
    TCanvas *rv = new TCanvas("rv","Veto4A",800,600);
    gPad->SetLogy();
@@ -689,7 +786,7 @@ void TimeRes(){
    legendrv->Draw();
    rv->SaveAs("Veto4_A_time_Encuts.pdf");
 */
-
+/*
    TCanvas *rvLow = new TCanvas("rvLow","Veto4A",800,600);
    gPad->SetLogy();
    gPad->SetGrid(1,1);
@@ -791,7 +888,7 @@ void TimeRes(){
    legendrv12->AddEntry(hLowV4A12MeV,"E_{BGO} #in [12..25) MeV, E_{Veto} <= 500 adc","f");
    legendrv12->Draw();
    rv12->SaveAs("Veto4_A_time_Encuts_12MeV.pdf");
-
+*/
 
    // Time resolution of the vetos [real]
 /*
