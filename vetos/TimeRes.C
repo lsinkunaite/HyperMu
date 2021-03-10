@@ -80,8 +80,10 @@ void TimeRes(){
    std::vector<int> timemax;                                                     
    //timemin.push_back(100);  // Min time for BGOs                       
    //timemax.push_back(1000); // Max time for BGOs
-   timemin.push_back(-100);
-   timemax.push_back(100);
+   timemin.push_back(-30);
+   timemax.push_back(30);
+   timemin.push_back(100);
+   timemax.push_back(200);
 
    double toffsetV4A = 3.0;
    double toffsetV5A = -2.0;
@@ -437,7 +439,9 @@ void TimeRes(){
    std::vector<double> vEnBGOBackA;
    std::vector<double> vIDBGOBackA;
    std::vector<double> vTmBGOBackA;
-   int cBackBGOA;
+   std::vector<double> vEnBGOBackAN; // Neutrons
+   std::vector<double> vIDBGOBackAN; // Neutrons
+   std::vector<double> vTmBGOBackAN; // Neutrons
    for (int s=0; s<vTimeBGOBackA.size(); s++) {
       if ((vTimeBGOBackA[s] > timemin[0]) && (vTimeBGOBackA[s] <timemax[0])) {
          if (vEkeVBGOBackA[s] < 100000) {
@@ -446,7 +450,16 @@ void TimeRes(){
             vTmBGOBackA.push_back(vTimeBGOBackA[s]);
          }
       }
+      // Neutron search
+      if ((vTimeBGOBackA[s] > timemin[1]) && (vTimeBGOBackA[s] < timemax[1])) {
+         if (vEkeVBGOBackA[s] < 100000) {
+            vIDBGOBackAN.push_back(vEvIDBGOBackA[s]);
+            vEnBGOBackAN.push_back(vEkeVBGOBackA[s]);
+            vTmBGOBackAN.push_back(vTimeBGOBackA[s]);
+         }
+      }
    }
+
 
 
 
@@ -477,6 +490,9 @@ void TimeRes(){
    std::vector<double> vMatchedTimeV4A5000;
    std::vector<double> vMatchedTimeV4A7500;
 
+   std::vector<double> vMOffV4A; // Matched TOffset
+   std::vector<double> vMOffV4AN; // Matched TOffset for neutron search
+
    // 2-D Plot
    std::vector<double> vMatchedBGOEn0;
    std::vector<double> vMatchedBGOTm0;
@@ -496,6 +512,21 @@ void TimeRes(){
       double TotalCounter=0;
       double MatchCounter2=0;
       double MatchCounter3=0;
+      // Neutron search
+      for (int n=0; n<vIDBGOBackAN.size(); n++) {
+         if ((vEnBGOBackAN[n] >= Ethr[m]) && (Ethr[m] == 0)) {
+            for (int k=0; k<vEvIDV4A.size(); k++) {
+               if (vEvIDV4A[k] == vIDBGOBackAN[n]) {
+                  if (vInstV4A[k] == 0) {
+                     if ((vTOffV4A[k] >= (vTmBGOBackAN[n]-40)) && (vTOffV4A[k] <= (vTmBGOBackAN[n]+40))) {
+                        //vMOffV4AN.push_back(vTOffV4A[k]);
+                        vMOffV4AN.push_back(vEdepV4A[k]);
+                     }
+                  }
+               }
+            }
+         }
+      }
       for (int n=0; n<vIDBGOBackA.size(); n++) {
          if (vEnBGOBackA[n] >= Ethr[m]) {
             int GoodEvent = 0;
@@ -503,9 +534,14 @@ void TimeRes(){
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
                      if (Ethr[m] == 0) {
-                        vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
-                        vMatchedVetoEn0.push_back(vEdepV4A[k]); // 2D plot
-                        vMatchedBGOTm0.push_back(vTOffV4A[k]-vTmBGOBackA[n]); // 2D plot
+                        if ((vTOffV4A[k] >= (vTmBGOBackA[n]-40)) && (vTOffV4A[k] <= (vTmBGOBackA[n]+40))) {
+                           vMatchedBGOEn0.push_back(vEnBGOBackA[n]); // 2D plot
+                           //vMatchedVetoEn0.push_back(vEdepV4A[k]); // 2D plot
+                           vMatchedBGOTm0.push_back(vTOffV4A[k]-vTmBGOBackA[n]); // 2D plot
+                           //vMatchedBGOTm0.push_back(vTOffV4A[k]);
+                           //vMOffV4A.push_back(vTOffV4A[k]);
+                           vMOffV4A.push_back(vEdepV4A[k]);
+                        }
                      }
                      if (Ethr[m] < 5000) {
                         vMatchedTimeV4A0MeV.push_back(vTimeV4A[k]-vTmBGOBackA[n]);
@@ -595,7 +631,10 @@ void TimeRes(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
 
-   TH1F *hVetoTime = new TH1F("hVetoTime","Time",15,-16.0,44.0);
+
+
+   // Time resolution plots
+/*   TH1F *hVetoTime = new TH1F("hVetoTime","Time",15,-16.0,44.0);
    TH1F *hVetoTOff = new TH1F("hVetoTOff","Time",15,-16.0,44.0);
    for (int i=0; i<vTimeV4A.size(); i++) {
       hVetoTime->Fill(vTimeV4A[i]);
@@ -635,7 +674,46 @@ void TimeRes(){
    hVetoTOff2->SetLineStyle(kDashed);
    hVetoTOff2->Draw("same");
    //vz2->SaveAs("TOffset_V5A2.pdf");
+*/
 
+   // Total time vs Matched time
+   TH1F *hVetoTOff = new TH1F("hVetoTOff","Time",75,-100.0,500.0);
+   for (int i=0; i<vTOffV4A.size(); i++) {
+      //hVetoTOff->Fill(vTOffV4A[i]);
+      hVetoTOff->Fill(vEdepV4A[i]);
+   }
+   TH1F *hVetoMOff = new TH1F("hVetoMOff","Time",75,-100.0,500.0);
+   for (int i=0; i<vMOffV4A.size(); i++) {
+      hVetoMOff->Fill(vMOffV4A[i]);
+   }
+   TH1F *hVetoMOffN = new TH1F("hVetoMoffN","Time",75,-100.0,500.0);
+   for (int i=0; i<vMOffV4AN.size(); i++) {
+      hVetoMOffN->Fill(vMOffV4AN[i]);
+   }
+   TCanvas *timecomp = new TCanvas("timecomp","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hVetoTOff->SetTitle("");
+   hVetoTOff->GetXaxis()->SetTitle("E [adc]");
+   hVetoTOff->SetLineColor(kBlack);
+   hVetoTOff->Draw();
+   hVetoMOff->SetLineColor(kGreen-2);
+   hVetoMOff->Draw("same");
+
+   TCanvas *cneutrons = new TCanvas("cneutrons","Veto4_A",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hVetoMOff->SetTitle("");
+   hVetoMOff->GetXaxis()->SetTitle("E [adc]");
+   hVetoMOff->SetLineColor(kGreen-2);
+   hVetoMOff->Draw();
+   hVetoMOffN->SetLineColor(kRed-7);
+   hVetoMOffN->Draw("same");
+
+
+/*
 
    TH1F *hMatchedTime = new TH1F("hMatchedTimeVeto","Time",100,-500.0,10000.0);
    for (int i=0; i<vTimedBGOEn0.size(); i++) {
@@ -662,7 +740,7 @@ void TimeRes(){
          hMatchedVetoEnTm->Fill(vMatchedBGOTm0[i],(vMatchedVetoEn0[j]/1000.0));
          hMatchedBGOVeto->Fill((vMatchedBGOEn0[i]/1000.0),(vMatchedVetoEn0[j]/1000.0));
       }
-   }
+   }*/
 /*
    TCanvas *u = new TCanvas("u","Veto4_A",800,600);
    gStyle->SetOptStat(0);
@@ -673,7 +751,7 @@ void TimeRes(){
    hMatchedBGOEnTm->Draw("COLZ");
    u->SaveAs("EnTm_V4_A.pdf");
 */
-   TCanvas *ulbgo = new TCanvas("ulbgo","Veto4_A",800,600);
+/*   TCanvas *ulbgo = new TCanvas("ulbgo","Veto4_A",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogz();
@@ -702,7 +780,7 @@ void TimeRes(){
    hMatchedBGOVeto->SetTitle("");
    hMatchedBGOVeto->Draw("COLZ");
    ulbgoveto->SaveAs("549_BGO_Veto_V4_A.pdf");
-
+*/
 /*
 
    // 2D plots of Energy-Time of matched and timedVeto
