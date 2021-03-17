@@ -1,11 +1,11 @@
-////////////////////////////////////////////////
-//                                            //
-//               VetoEff2.C                   //
-//                                            //         
-//  Plots Efficiency of a veto for different  //
-//  energies in the E_veto.                   //
-//                                            //
-////////////////////////////////////////////////
+/////////////////////////////////////////////
+//                                         //
+//               VetoEff2.C                //
+//                                         //         
+//  Plots Efficiency of a veto versus the  //
+//  threshold in the BGO.                  //
+//                                         //
+/////////////////////////////////////////////
 
 
 // I/O
@@ -81,8 +81,8 @@ void VetoEff2(){
    std::vector<int> timemin;
    std::vector<int> timemax;
 
-   timemin.push_back(100);
-   timemax.push_back(300);
+   timemin.push_back(-30);
+   timemax.push_back(30);
 
    // Names of the files
    // Electron Vetos
@@ -197,69 +197,53 @@ void VetoEff2(){
    std::cout << "\033[1;36m---------------------- Matching --------------------------\033[0m" << std::endl;
    std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
 
-   const int nbins = 10;
-   double Estep = 10000.0/(nbins);
+   const int nbins = 40;
+   double Estep = 20000.0/(nbins);
    std::vector<double> Ethr;
    Ethr.push_back(0.0);
    for (int i=1; i<=nbins; i++) Ethr.push_back(Ethr[i-1]+Estep);
 
    std::vector<double> EffVeto1;
    std::vector<double> EffVeto2;
-   std::vector<double> EffVeto3;
-   std::vector<double> vMatchedEnVeto1;
-   std::vector<double> vMatchedEnVeto2;
-   std::vector<double> vMatchedEnVeto3;  
+   std::vector<double> EffVeto3; 
    
-   for (int m=1; m<Ethr.size(); m++) {
-      double MatchCounterVeto1=0;
-      double MatchCounterVeto2=0;
-      double MatchCounterVeto3=0;
-      double TotalCounterVeto=0;
+   for (int m=0; m<Ethr.size(); m++) {
+      double MCount1=0;
+      double MCount2=0;
+      double MCount3=0;
+      double TCount=0;
 
       for (int n=0; n<vIDBGOBackA.size(); n++) {
-         if ((vEnBGOBackA[n] >= Ethr[m-1]) && (vEnBGOBackA[n] < Ethr[m])) {
-            int UnmatchedV4A = 0;
+         if (vEnBGOBackA[n] >= Ethr[m]) {
             int GoodEventV4A = 0;
             for (int k=0; k<vEvIDV4A.size(); k++) {
                if (vEvIDV4A[k] == vIDBGOBackA[n]) {
                   if (vInstV4A[k] == 0) {
-                     //if ((vTimeV4A[k] >= (vTmBGOBackA[n]-50)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+450))) {
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-300)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+100))) {
-                        //if ((vTimeV4A[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+160))) {
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-300)) && (vTimeV4A[k] <= (vTmBGOBackA[n]-100))) {
-                           MatchCounterVeto1++;
-                           vMatchedEnVeto1.push_back(vEdepV4A[k]);
+                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-50)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+450))) {
+                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+160))) {
+                           if ((vTimeV4A[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+25))) {
+                              MCount1++;
+                           }
+                           MCount2++;
                         }
-                        if ((vTimeV4A[k] >= (vTmBGOBackA[n]-50)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+50))) {
-                           MatchCounterVeto2++;
-                           vMatchedEnVeto2.push_back(vEdepV4A[k]);
-                        }
-                           //if ((vTimeV4A[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+25))) {
-                              //MatchCounterVeto1++;
-                              //vMatchedEnVeto1.push_back(vEdepV4A[k]);
-                           //}
-                           //MatchCounterVeto2++;
-                           //vMatchedEnVeto2.push_back(vEdepV4A[k]);
-                        //}
-                        MatchCounterVeto3++;
-                        vMatchedEnVeto3.push_back(vEdepV4A[k]);
-                        UnmatchedV4A = 1;  
+                        MCount3++;
                      }
                   } else {
                      GoodEventV4A = 1;
                   }
                }
             }
-            
             if (GoodEventV4A == 0) {
-               TotalCounterVeto++;
+               TCount++;
             }
          }
       }
-      std::cout << "Ethr = " << Ethr[m] << ", V4A :: Eff1 = " << MatchCounterVeto1/TotalCounterVeto << ", Eff2 = " << MatchCounterVeto2/TotalCounterVeto << ", Eff3 = " << MatchCounterVeto3/TotalCounterVeto << std::endl;
-      EffVeto1.push_back(MatchCounterVeto1/TotalCounterVeto);
-      EffVeto2.push_back(MatchCounterVeto2/TotalCounterVeto);
-      EffVeto3.push_back(MatchCounterVeto3/TotalCounterVeto);
+      std::cout << "Ethr = " << Ethr[m] << ", V4A :: Eff1 = " << MCount1/TCount << ", Eff2 = " << MCount2/TCount << ", Eff3 = " << MCount3/TCount << std::endl;
+      std::cout << "MCount1 = " << MCount1 << ", MCount2 = " << MCount2 << ", MCount3 = " << MCount3 << ", TCount = " << TCount << std::endl;
+      std::cout << std::endl;
+      EffVeto1.push_back(MCount1/TCount);
+      EffVeto2.push_back(MCount2/TCount);
+      EffVeto3.push_back(MCount3/TCount);
 
    }
 
@@ -269,45 +253,42 @@ void VetoEff2(){
    std::cout << "\033[1;31m--------------------- Plotting ---------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
-   float EffVeto1arr[nbins-1] = {}; // Efficiency V4_A
-   float EffVeto2arr[nbins-1] = {};
-   float EffVeto3arr[nbins-1] = {};
-   float Ethrarr[nbins-1] = {};
+   float EffVeto1arr[nbins] = {}; // Efficiency V4_A
+   float EffVeto2arr[nbins] = {};
+   float EffVeto3arr[nbins] = {};
+   float Ethrarr[nbins] = {};
 
-   for (int i=0; i<(nbins-1); i++) {
+   for (int i=0; i<(nbins); i++) {
       EffVeto1arr[i] = EffVeto1[i];
       EffVeto2arr[i] = EffVeto2[i];
       EffVeto3arr[i] = EffVeto3[i];
-      Ethrarr[i] = (Ethr[i]/1000.0)+0.5;
+      Ethrarr[i] = (Ethr[i]/1000.0);
    }
 
 
    TCanvas *c = new TCanvas("c","c",800,600);
    gPad->SetGrid(1,1);
-   TGraph *grVeto1 = new TGraph(nbins-1,Ethrarr,EffVeto1arr);
-   grVeto1->SetTitle("Efficiency of Veto_4_A");
-   grVeto1->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   TGraph *grVeto1 = new TGraph(nbins,Ethrarr,EffVeto1arr);
+   grVeto1->SetTitle("");
+   grVeto1->GetXaxis()->SetTitle("E_{BGO} > E_{THR} [MeV]");
    grVeto1->GetYaxis()->SetTitle("Eff");
    grVeto1->GetYaxis()->SetTitleOffset(1.1);
-   grVeto1->GetYaxis()->SetRangeUser(0.0,0.7);
+   grVeto1->GetYaxis()->SetRangeUser(0.0,1.01);
    grVeto1->SetLineWidth(3);
    grVeto1->SetLineColor(kViolet-5);
    grVeto1->Draw("ALP");
-   TGraph *grVeto2 = new TGraph(nbins-1,Ethrarr,EffVeto2arr);
+   TGraph *grVeto2 = new TGraph(nbins,Ethrarr,EffVeto2arr);
    grVeto2->SetLineWidth(3);
    grVeto2->SetLineColor(kTeal-5);
    grVeto2->Draw("LP");
-   TGraph *grVeto3 = new TGraph(nbins-1,Ethrarr,EffVeto3arr);
+   TGraph *grVeto3 = new TGraph(nbins,Ethrarr,EffVeto3arr);
    grVeto3->SetLineWidth(3);
    grVeto3->SetLineColor(kOrange-3);
    grVeto3->Draw("LP");
    auto legend = new TLegend(0.84,0.71,0.96,0.87); 
-   //legend->AddEntry(grVeto1,"t=[-25, 25] ns","f");
-   //legend->AddEntry(grVeto2,"t=[-40, 160] ns","f");
-   //legend->AddEntry(grVeto3,"t=[-50, 450] ns","f");
-   legend->AddEntry(grVeto1,"t=[-300, -100] ns","f");
-   legend->AddEntry(grVeto2,"t=[-50, 50] ns", "f");
-   legend->AddEntry(grVeto3,"t=[-300, 100] ns","f");
+   legend->AddEntry(grVeto1,"t=[-25, 25] ns","l");
+   legend->AddEntry(grVeto2,"t=[-40, 160] ns","l");
+   legend->AddEntry(grVeto3,"t=[-50, 450] ns","l");
    legend->Draw();
    //c->SaveAs("EffV4A_run549.pdf");
 
