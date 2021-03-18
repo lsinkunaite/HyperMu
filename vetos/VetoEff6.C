@@ -79,7 +79,7 @@ void VetoEff6(){
    // Uncomment for PE-target
    //std::string runnumber = "run530/530";
    // Uncomment for Au-target
-   std::string runnumber = "run549/549";
+   std::string runnumber = "run548/548";
   
    std::vector<int> timemin;
    std::vector<int> timemax;
@@ -301,7 +301,7 @@ void VetoEff6(){
                      //if ((vTimeV4A[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+65))) {
                      // Uncomment for Au-target
                      //if ((vTimeV4A[k] >= (vTmBGOBackA[n]-50)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+450))) {
-                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+160))) {
+                     if ((vTimeV4A[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+25))) {
                         if ((vTimeV4A[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+160))) {
                            if ((vTimeV4A[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+25))) {
                               MCountA1++;
@@ -323,20 +323,18 @@ void VetoEff6(){
             TCountA++;
             if (UnmatchedV4A3 == 0) {
                vMBGOA3.push_back(0);
-               vMBGOA2.push_back(0);
-               vMBGOA1.push_back(0);
             } else {
                vMBGOA3.push_back(1);
-               if (UnmatchedV4A2 == 0) {
-                  vMBGOA2.push_back(0);
-                  vMBGOA1.push_back(0);
-               } else {
-                  if (UnmatchedV4A1 == 0) {
-                     vMBGOA1.push_back(0);
-                  } else {
-                     vMBGOA1.push_back(1);
-                  }
-               }
+            }
+            if (UnmatchedV4A2 == 0) {
+               vMBGOA2.push_back(0);
+            } else {
+               vMBGOA2.push_back(1);
+            }
+            if (UnmatchedV4A1 == 0) {
+               vMBGOA1.push_back(0);
+            } else {
+               vMBGOA1.push_back(1);
             } 
          } else {
             vMBGOA1.push_back(-1);
@@ -356,7 +354,7 @@ void VetoEff6(){
                      // Uncomment for PE-target
                      //if ((vTimeV4B[k] >= (vTmBGOBackA[n]-250)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+65))) {
                      // Uncomment for Au-target
-                     if ((vTimeV4B[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+160))) {
+                     if ((vTimeV4B[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+25))) {
                         if ((vTimeV4B[k] >= (vTmBGOBackA[n]-40)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+160))) {
                            if ((vTimeV4B[k] >= (vTmBGOBackA[n]-25)) && (vTimeV4B[k] <= (vTmBGOBackA[n]+25))) {
                               MCountB1++;
@@ -378,21 +376,18 @@ void VetoEff6(){
             TCountB++;
             if (UnmatchedV4B3 == 0) {
                vMBGOB3.push_back(0);
-               vMBGOB2.push_back(0);
-               vMBGOB1.push_back(0);
             } else {
                vMBGOB3.push_back(1);
-               if (UnmatchedV4B2 == 0) {
+            }
+            if (UnmatchedV4B2 == 0) {
                   vMBGOB2.push_back(0);
-                  vMBGOB1.push_back(0);
-               } else {
-                  vMBGOB2.push_back(1);
-                  if (UnmatchedV4B1 == 0) {
-                     vMBGOB1.push_back(0);
-                  } else {
-                     vMBGOB1.push_back(1);
-                  }
-               }
+            } else {
+               vMBGOB2.push_back(1);
+            }
+            if (UnmatchedV4B1 == 0) {
+               vMBGOB1.push_back(0);
+            } else {
+               vMBGOB1.push_back(1);
             }
          } else {
             vMBGOB1.push_back(-1);
@@ -400,8 +395,8 @@ void VetoEff6(){
             vMBGOB3.push_back(-1);
          }
       }
-      std::cout << "Ethr = " << Ethr[m] << ", V4A :: Eff1 = " << MCountA1/TCountA << ", Eff2 = " << MCountA2/TCountA << ", Eff3 = " << MCountA3/TCountA << std::endl;
-      std::cout << "Ethr = " << Ethr[m] << ", V4B :: Eff1 = " << MCountB1/TCountB << ", Eff2 =  " << MCountB2/TCountB << ", Eff3 = " << MCountB3/TCountB << std::endl;
+      //std::cout << "Ethr = " << Ethr[m] << ", V4A :: Eff1 = " << MCountA1/TCountA << ", Eff2 = " << MCountA2/TCountA << ", Eff3 = " << MCountA3/TCountA << std::endl;
+      //std::cout << "Ethr = " << Ethr[m] << ", V4B :: Eff1 = " << MCountB1/TCountB << ", Eff2 =  " << MCountB2/TCountB << ", Eff3 = " << MCountB3/TCountB << std::endl;
       std::cout << std::endl;
       EffVetoA1.push_back(MCountA1/TCountA);
       EffVetoA2.push_back(MCountA2/TCountA);
