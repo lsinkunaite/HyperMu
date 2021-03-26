@@ -523,7 +523,7 @@ void VetoEff7(){
    std::vector<double> vTmBGOBackApe;
    for (int s=0; s<vTimeBGOBackApe.size(); s++) {
       if ((vTimeBGOBackApe[s] > timemin[0]) && (vTimeBGOBackApe[s] <timemax[0])) {
-         if (vEkeVBGOBackApe[s] < 100000) {
+         if ((vEkeVBGOBackApe[s] >= 2000) && (vEkeVBGOBackApe[s] < 100000)) {
             vIDBGOBackApe.push_back(vEvIDBGOBackApe[s]);
             vEnBGOBackApe.push_back(vEkeVBGOBackApe[s]);
             vTmBGOBackApe.push_back(vTimeBGOBackApe[s]);
@@ -538,7 +538,7 @@ void VetoEff7(){
    std::vector<double> vTmBGOBackAau;
    for (int s=0; s<vTimeBGOBackAau.size(); s++) {
       if ((vTimeBGOBackAau[s] > timemin[1]) && (vTimeBGOBackAau[s] <timemax[1])) {
-         if (vEkeVBGOBackAau[s] < 100000) {
+         if ((vEkeVBGOBackAau[s] >= 500) && (vEkeVBGOBackAau[s] < 10000)) {
             vIDBGOBackAau.push_back(vEvIDBGOBackAau[s]);
             vEnBGOBackAau.push_back(vEkeVBGOBackAau[s]);
             vTmBGOBackAau.push_back(vTimeBGOBackAau[s]);
@@ -652,7 +652,8 @@ void VetoEff7(){
          EnDiff3pe.push_back((EnVeto4Ape[i]-EnVeto5Ape[i])/(EnVeto4Ape[i]));
       }
       //EnDiff3pe.push_back((EnVeto4Ape[i]-EnVeto5Ape[i])*(EnVeto4Ape[i]+EnVeto5Ape[i]));
-      if (EnDiff3pe[i] <= 0.5) {
+      //if (EnDiff3pe[i] <= 0.5) {
+      if ((EnVeto4Ape[i] >= 500) && (EnVeto5Ape[i] >= 500)) {
          peee++;
       } else {
          peex++;
@@ -667,7 +668,8 @@ void VetoEff7(){
          EnDiff3au.push_back((EnVeto4Aau[i]-EnVeto5Aau[i])/(EnVeto4Aau[i]));
       }
       //EnDiff3au.push_back((EnVeto4Aau[i]-EnVeto5Aau[i])*(EnVeto4Aau[i]+EnVeto5Aau[i]));
-      if (EnDiff3au[i] <= 0.5) {
+      //if (EnDiff3au[i] <= 0.5) {
+      if ((EnVeto4Aau[i] >= 500) && (EnVeto5Aau[i] >= 500)) {
          auxe++;
       } else {
          auxx++;
@@ -689,12 +691,34 @@ void VetoEff7(){
    TH1F *hEnDiff3pe = new TH1F("hDiff3pe","hDiff3pe",50,0.0,1.01); // EnDiff3-pe
    TH1F *hEnDiff3au = new TH1F("hDiff3au","hDiff3au",50,0.0,1.01); // EnDiff3-au
 
+   TH1F *hEnV4A = new TH1F("hEnV4A","hEnV4A",100,0.0,10.0);
+   TH1F *hEnV5A = new TH1F("hEnV5A","hEnV5A",100,0.0,10.0);
+
    for (int i=0; i<EnDiff1pe.size(); i++) hEnDiff1pe->Fill(EnDiff1pe[i]);
    for (int i=0; i<EnDiff2pe.size(); i++) hEnDiff2pe->Fill(EnDiff2pe[i]);
    for (int i=0; i<EnDiff3pe.size(); i++) hEnDiff3pe->Fill(EnDiff3pe[i]);
    for (int i=0; i<EnDiff1au.size(); i++) hEnDiff1au->Fill(EnDiff1au[i]);
    for (int i=0; i<EnDiff2au.size(); i++) hEnDiff2au->Fill(EnDiff2au[i]);
    for (int i=0; i<EnDiff3au.size(); i++) hEnDiff3au->Fill(EnDiff3au[i]);
+
+   for (int i=0; i<EnVeto4Aau.size(); i++) hEnV4A->Fill(EnVeto4Aau[i]/1000.0);
+   for (int i=0; i<EnVeto5Aau.size(); i++) hEnV5A->Fill(EnVeto5Aau[i]/1000.0);
+/*
+   TCanvas *c = new TCanvas("c","c",800,600);
+   gStyle->SetOptStat(0);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   hEnV4A->SetTitle("");
+   hEnV4A->GetXaxis()->SetTitle("E_{Veto} [kadc]");
+   hEnV4A->SetLineColor(kBlue);
+   hEnV4A->Draw("");
+   hEnV5A->SetLineColor(kRed);
+   hEnV5A->Draw("SAME");
+   auto l = new TLegend(0.82, 0.71,0.94,0.87);
+   l->AddEntry(hEnV4A,"V4A","l");
+   l->AddEntry(hEnV5A,"V5A","l");
+   l->Draw();
+*/
 /*
    TCanvas *c1 = new TCanvas("c1","c1",800,600);
    gStyle->SetOptStat(0);
@@ -709,7 +733,7 @@ void VetoEff7(){
    hEnDiff1pe->SetLineWidth(3);
    hEnDiff1pe->SetLineColor(kGray+3);
    hEnDiff1pe->SetFillColorAlpha(kPink+4,0.5);
-   hEnDiff1pe->Draw("same");
+   //hEnDiff1pe->Draw("same");
    auto legend1 = new TLegend(0.82,0.71,0.94,0.87);
    legend1->AddEntry(hEnDiff1pe,"PE","f");
    legend1->AddEntry(hEnDiff1au,"Au","f");
