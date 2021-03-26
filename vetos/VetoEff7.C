@@ -639,6 +639,12 @@ void VetoEff7(){
    std::vector<double> EnDiff1au;
    std::vector<double> EnDiff2au;
    std::vector<double> EnDiff3au;
+   std::vector<double> EnPlot1pe; // sum
+   std::vector<double> EnPlot1au;
+   std::vector<double> EnPlot2pe; // average
+   std::vector<double> EnPlot2au;
+   std::vector<double> EnPlot3pe; // max
+   std::vector<double> EnPlot3au;
    double auxx = 0;
    double auxe = 0;
    double peee = 0;
@@ -652,9 +658,16 @@ void VetoEff7(){
          EnDiff3pe.push_back((EnVeto4Ape[i]-EnVeto5Ape[i])/(EnVeto4Ape[i]));
       }
       //EnDiff3pe.push_back((EnVeto4Ape[i]-EnVeto5Ape[i])*(EnVeto4Ape[i]+EnVeto5Ape[i]));
-      //if (EnDiff3pe[i] <= 0.5) {
-      if ((EnVeto4Ape[i] >= 500) && (EnVeto5Ape[i] >= 500)) {
+      if ((EnDiff3pe[i] <= 0.7) || ((EnVeto4Ape[i]+EnVeto5Ape[i]) >= 4000)) {
+      //if ((EnVeto4Ape[i] >= 500) && (EnVeto5Ape[i] >= 500)) {
          peee++;
+         EnPlot1pe.push_back(EnVeto4Ape[i]+EnVeto5Ape[i]);
+         EnPlot2pe.push_back((EnVeto4Ape[i]+EnVeto5Ape[i])*0.5);
+         if (EnVeto5Ape[i] >= EnVeto4Ape[i]) {
+            EnPlot3pe.push_back(EnVeto5Ape[i]);
+         } else {
+            EnPlot3pe.push_back(EnVeto4Ape[i]);
+         }
       } else {
          peex++;
       }
@@ -668,9 +681,16 @@ void VetoEff7(){
          EnDiff3au.push_back((EnVeto4Aau[i]-EnVeto5Aau[i])/(EnVeto4Aau[i]));
       }
       //EnDiff3au.push_back((EnVeto4Aau[i]-EnVeto5Aau[i])*(EnVeto4Aau[i]+EnVeto5Aau[i]));
-      //if (EnDiff3au[i] <= 0.5) {
-      if ((EnVeto4Aau[i] >= 500) && (EnVeto5Aau[i] >= 500)) {
+      if ((EnDiff3au[i] <= 0.7) || ((EnVeto4Aau[i]+EnVeto5Aau[i]) >= 4000)) {
+      //if ((EnVeto4Aau[i] >= 500) && (EnVeto5Aau[i] >= 500)) {
          auxe++;
+         EnPlot1au.push_back(EnVeto4Aau[i]+EnVeto5Aau[i]);
+         EnPlot2au.push_back((EnVeto4Aau[i]+EnVeto5Aau[i])*0.5);
+         if (EnVeto5Aau[i] >= EnVeto4Aau[i]) {
+            EnPlot3au.push_back(EnVeto5Aau[i]);
+         } else {
+            EnPlot3au.push_back(EnVeto4Aau[i]);
+         }
       } else {
          auxx++;
       }
@@ -691,8 +711,12 @@ void VetoEff7(){
    TH1F *hEnDiff3pe = new TH1F("hDiff3pe","hDiff3pe",50,0.0,1.01); // EnDiff3-pe
    TH1F *hEnDiff3au = new TH1F("hDiff3au","hDiff3au",50,0.0,1.01); // EnDiff3-au
 
-   TH1F *hEnV4A = new TH1F("hEnV4A","hEnV4A",100,0.0,10.0);
-   TH1F *hEnV5A = new TH1F("hEnV5A","hEnV5A",100,0.0,10.0);
+   TH1F *hpe1 = new TH1F("hpe1","hpe1",50,0.0,14.0);
+   TH1F *hpe2 = new TH1F("hpe2","hpe2",50,0.0,13.0);
+   TH1F *hpe3 = new TH1F("hpe3","hpe3",50,0.0,13.0);
+   TH1F *hau1 = new TH1F("hau1","hau1",50,0.0,14.0);
+   TH1F *hau2 = new TH1F("hau2","hau2",50,0.0,13.0);
+   TH1F *hau3 = new TH1F("hau3","hau3",50,0.0,13.0);
 
    for (int i=0; i<EnDiff1pe.size(); i++) hEnDiff1pe->Fill(EnDiff1pe[i]);
    for (int i=0; i<EnDiff2pe.size(); i++) hEnDiff2pe->Fill(EnDiff2pe[i]);
@@ -701,24 +725,29 @@ void VetoEff7(){
    for (int i=0; i<EnDiff2au.size(); i++) hEnDiff2au->Fill(EnDiff2au[i]);
    for (int i=0; i<EnDiff3au.size(); i++) hEnDiff3au->Fill(EnDiff3au[i]);
 
-   for (int i=0; i<EnVeto4Aau.size(); i++) hEnV4A->Fill(EnVeto4Aau[i]/1000.0);
-   for (int i=0; i<EnVeto5Aau.size(); i++) hEnV5A->Fill(EnVeto5Aau[i]/1000.0);
-/*
+   for (int i=0; i<EnPlot1pe.size(); i++) hpe1->Fill(EnPlot1pe[i]/1000.0);
+   for (int i=0; i<EnPlot2pe.size(); i++) hpe2->Fill(EnPlot2pe[i]/1000.0);
+   for (int i=0; i<EnPlot3pe.size(); i++) hpe3->Fill(EnPlot3pe[i]/1000.0);
+   for (int i=0; i<EnPlot1au.size(); i++) hau1->Fill(EnPlot1au[i]/1000.0);
+   for (int i=0; i<EnPlot2au.size(); i++) hau2->Fill(EnPlot2au[i]/1000.0);
+   for (int i=0; i<EnPlot3au.size(); i++) hau3->Fill(EnPlot3au[i]/1000.0);
+
+
    TCanvas *c = new TCanvas("c","c",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogy();
-   hEnV4A->SetTitle("");
-   hEnV4A->GetXaxis()->SetTitle("E_{Veto} [kadc]");
-   hEnV4A->SetLineColor(kBlue);
-   hEnV4A->Draw("");
-   hEnV5A->SetLineColor(kRed);
-   hEnV5A->Draw("SAME");
+   hpe1->SetTitle("");
+   hpe1->GetXaxis()->SetTitle("E_{V4A} + E_{V5A} [kadc]");
+   hpe1->SetLineColor(kBlue);
+   hpe1->Draw("");
+   hau1->SetLineColor(kRed);
+   hau1->Draw("SAME");
    auto l = new TLegend(0.82, 0.71,0.94,0.87);
-   l->AddEntry(hEnV4A,"V4A","l");
-   l->AddEntry(hEnV5A,"V5A","l");
+   l->AddEntry(hpe1,"PE","l");
+   l->AddEntry(hau1,"Au","l");
    l->Draw();
-*/
+
 /*
    TCanvas *c1 = new TCanvas("c1","c1",800,600);
    gStyle->SetOptStat(0);
