@@ -201,13 +201,15 @@ void VetoEff8(){
 
    std::vector<double> EnVetoMatched;
    std::vector<double> EnBGOMatched; 
-   std::vector<double> Eveto03;
-   std::vector<double> Eveto36;
-   std::vector<double> Eveto69;
-   std::vector<double> Eveto912;
-   std::vector<double> Eveto1215;
-   std::vector<double> Eveto1518;
-   std::vector<double> Eveto1821; 
+   std::vector<double> Eveto01;
+   std::vector<double> Eveto12;
+   std::vector<double> Eveto23;
+   std::vector<double> Eveto34;
+   std::vector<double> Eveto45;
+   std::vector<double> Eveto56;
+   std::vector<double> Eveto67;
+   std::vector<double> Eveto78;
+   std::vector<double> Eveto89; 
    
    for (int n=0; n<vIDBGOBackA.size(); n++) {
       for (int k=0; k<vEvIDV4A.size(); k++) {
@@ -216,21 +218,25 @@ void VetoEff8(){
                if ((vTimeV4A[k] >= (vTmBGOBackA[n]-50)) && (vTimeV4A[k] <= (vTmBGOBackA[n]+450))) {
                   EnVetoMatched.push_back(vEdepV4A[k]);
                   EnBGOMatched.push_back(vEnBGOBackA[n]);
-                  if (vEnBGOBackA[n] < 3000) {
-                     Eveto03.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 3000) && (vEnBGOBackA[n] < 6000)) {
-                     Eveto36.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 6000) && (vEnBGOBackA[n] < 9000)) {
-                     Eveto69.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 9000) && (vEnBGOBackA[n] < 12000)) {
-                     Eveto912.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 12000) && (vEnBGOBackA[n] < 15000)) {
-                     Eveto1215.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 15000) && (vEnBGOBackA[n] < 18000)) {
-                     Eveto1518.push_back(vEdepV4A[k]);
-                  } else if ((vEnBGOBackA[n] >= 18000) && (vEnBGOBackA[n] < 21000)) {
-                     Eveto1821.push_back(vEdepV4A[k]);
-                  } 
+                  if (vEnBGOBackA[n] < 1000) {
+                     Eveto01.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 1000) && (vEnBGOBackA[n] < 2000)) {
+                     Eveto12.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 2000) && (vEnBGOBackA[n] < 3000)) {
+                     Eveto23.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 3000) && (vEnBGOBackA[n] < 4000)) {
+                     Eveto34.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 4000) && (vEnBGOBackA[n] < 5000)) {
+                     Eveto45.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 5000) && (vEnBGOBackA[n] < 6000)) {
+                     Eveto56.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 6000) && (vEnBGOBackA[n] < 7000)) {
+                     Eveto67.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 7000) && (vEnBGOBackA[n] < 8000)) {
+                     Eveto78.push_back(vEdepV4A[k]);
+                  } else if ((vEnBGOBackA[n] >= 8000) && (vEnBGOBackA[n] < 9000)) {
+                     Eveto89.push_back(vEdepV4A[k]);
+                  }
                }
             }
          }
@@ -243,58 +249,70 @@ void VetoEff8(){
    std::cout << "\033[1;31m--------------------- Plotting ---------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
 
-   TH1F *hveto03 = new TH1F("hveto03","hveto03",20,0,8.5);
-   TH1F *hveto36 = new TH1F("hveto36","hveto36",20,0,8.5);
-   TH1F *hveto69 = new TH1F("hveto69","hveto69",20,0,8.5);
-   TH1F *hveto912 = new TH1F("hveto912","hveto912",20,0,8.5);
-   TH1F *hveto1215 = new TH1F("hveto1215","hveto1215",20,0,8.5);
-   TH1F *hveto1518 = new TH1F("hveto1518","hveto1518",20,0,8.5);
-   TH1F *hveto1821 = new TH1F("hveto1821","hveto1821",20,0,8.5);
-   for (int i=0; i<Eveto03.size(); i++) hveto03->Fill(Eveto03[i]/1000.0);
-   for (int i=0; i<Eveto36.size(); i++) hveto36->Fill(Eveto36[i]/1000.0);
-   for (int i=0; i<Eveto69.size(); i++) hveto69->Fill(Eveto69[i]/1000.0);
-   for (int i=0; i<Eveto912.size(); i++) hveto912->Fill(Eveto912[i]/1000.0);
-   for (int i=0; i<Eveto1215.size(); i++) hveto1215->Fill(Eveto1215[i]/1000.0);
-   for (int i=0; i<Eveto1518.size(); i++) hveto1518->Fill(Eveto1518[i]/1000.0);
-   for (int i=0; i<Eveto1821.size(); i++) hveto1821->Fill(Eveto1821[i]/1000.0);
+   TH1F *hveto01 = new TH1F("hveto01","hveto01",20,0,8.5);
+   TH1F *hveto12 = new TH1F("hveto12","hveto12",20,0,8.5);
+   TH1F *hveto23 = new TH1F("hveto23","hveto23",20,0,8.5);
+   TH1F *hveto34 = new TH1F("hveto34","hveto34",20,0,8.5);
+   TH1F *hveto45 = new TH1F("hveto45","hveto45",20,0,8.5);
+   TH1F *hveto56 = new TH1F("hveto56","hveto56",20,0,8.5);
+   TH1F *hveto67 = new TH1F("hveto67","hveto67",20,0,8.5);
+   TH1F *hveto78 = new TH1F("hveto78","hveto78",20,0,8.5);
+   TH1F *hveto89 = new TH1F("hveto89","hveto89",20,0,8.5);
+   for (int i=0; i<Eveto01.size(); i++) hveto01->Fill(Eveto01[i]/1000.0);
+   for (int i=0; i<Eveto12.size(); i++) hveto12->Fill(Eveto12[i]/1000.0);
+   for (int i=0; i<Eveto23.size(); i++) hveto23->Fill(Eveto23[i]/1000.0);
+   for (int i=0; i<Eveto34.size(); i++) hveto34->Fill(Eveto34[i]/1000.0);
+   for (int i=0; i<Eveto45.size(); i++) hveto45->Fill(Eveto45[i]/1000.0);
+   for (int i=0; i<Eveto56.size(); i++) hveto56->Fill(Eveto56[i]/1000.0);
+   for (int i=0; i<Eveto67.size(); i++) hveto67->Fill(Eveto67[i]/1000.0);
+   for (int i=0; i<Eveto78.size(); i++) hveto78->Fill(Eveto78[i]/1000.0);
+   for (int i=0; i<Eveto89.size(); i++) hveto89->Fill(Eveto89[i]/1000.0);
 
-   hveto03->Scale(1/(hveto03->GetBinContent(hveto03->GetMaximumBin())),"nosw2");
-   hveto36->Scale(1/(hveto36->GetBinContent(hveto36->GetMaximumBin())),"nosw2");
-   hveto69->Scale(1/(hveto69->GetBinContent(hveto69->GetMaximumBin())),"nosw2");
-   hveto912->Scale(1/(hveto912->GetBinContent(hveto912->GetMaximumBin())),"nosw2");
-   hveto1215->Scale(1/(hveto1215->GetBinContent(hveto1215->GetMaximumBin())),"nosw2");
-   hveto1518->Scale(1/(hveto1518->GetBinContent(hveto1518->GetMaximumBin())),"nosw2");
-   hveto1821->Scale(1/(hveto1821->GetBinContent(hveto1821->GetMaximumBin())),"nosw2");
+   hveto01->Scale(1/(hveto01->GetBinContent(hveto01->GetMaximumBin())),"nosw2");
+   hveto12->Scale(1/(hveto12->GetBinContent(hveto12->GetMaximumBin())),"nosw2");
+   hveto23->Scale(1/(hveto23->GetBinContent(hveto23->GetMaximumBin())),"nosw2");
+   hveto34->Scale(1/(hveto34->GetBinContent(hveto34->GetMaximumBin())),"nosw2");
+   hveto45->Scale(1/(hveto45->GetBinContent(hveto45->GetMaximumBin())),"nosw2");
+   hveto56->Scale(1/(hveto56->GetBinContent(hveto56->GetMaximumBin())),"nosw2");
+   hveto67->Scale(1/(hveto67->GetBinContent(hveto67->GetMaximumBin())),"nosw2");
+   hveto78->Scale(1/(hveto78->GetBinContent(hveto78->GetMaximumBin())),"nosw2");
+   hveto89->Scale(1/(hveto89->GetBinContent(hveto89->GetMaximumBin())),"nosw2");
 
 
    TCanvas *c = new TCanvas("c","c",800,600);
    gStyle->SetOptStat(0);
    gPad->SetGrid(1,1);
    gPad->SetLogy();
-   hveto03->SetTitle("");
-   hveto03->GetXaxis()->SetTitle("E_{Veto} [kadc]");
-   hveto03->SetLineColor(kRed);
-   hveto03->Draw();
-   hveto36->SetLineColor(kGreen-2);
-   hveto36->Draw("same");
-   hveto69->SetLineColor(kAzure-5);
-   hveto69->Draw("same");
-   hveto912->SetLineColor(kOrange+3);
-   hveto912->Draw("same");
-   hveto1215->SetLineColor(kViolet-5);
-   hveto1215->Draw("same");
-   hveto1518->SetLineColor(kBlack);
-   hveto1518->Draw("same");
-   hveto1821->SetLineColor(kSpring+7);
-   hveto1821->Draw("same");
+   hveto01->SetTitle("");
+   hveto01->GetXaxis()->SetTitle("E_{Veto} [kadc]");
+   hveto01->SetLineColor(kRed);
+   hveto01->Draw();
+   hveto12->SetLineColor(kGreen-2);
+   hveto12->Draw("same");
+   hveto23->SetLineColor(kAzure-5);
+   hveto23->Draw("same");
+   hveto34->SetLineColor(kOrange+3);
+   hveto34->Draw("same");
+   hveto45->SetLineColor(kViolet-5);
+   hveto45->Draw("same");
+   hveto56->SetLineColor(kBlack);
+   hveto56->Draw("same");
+   hveto67->SetLineColor(kSpring+7);
+   hveto67->Draw("same");
+   hveto78->SetLineColor(kPink+3);
+   hveto78->Draw("same");
+   hveto89->SetLineColor(kYellow-4);
+   hveto89->Draw("same");
    auto legend = new TLegend(0.67,0.75,0.87,0.95);
-   legend->AddEntry(hveto03,"E_{BGO} #in [0, 3) MeV","l");
-   legend->AddEntry(hveto36,"E_{BGO} #in [3, 6) MeV","l");
-   legend->AddEntry(hveto69,"E_{BGO} #in [6, 9) MeV","l");
-   legend->AddEntry(hveto912,"E_{BGO} #in [9, 12) MeV","l");
-   legend->AddEntry(hveto1215,"E_{BGO} #in [12, 15) MeV","l");
-   legend->AddEntry(hveto1518,"E_{BGO} #in [15, 18) MeV","l");
-   legend->AddEntry(hveto1821,"E_{BGO} #in [18, 21) MeV","l");
+   legend->AddEntry(hveto01,"E_{BGO} #in [0, 1) MeV","l");
+   legend->AddEntry(hveto12,"E_{BGO} #in [1, 2) MeV","l");
+   legend->AddEntry(hveto23,"E_{BGO} #in [2, 3) MeV","l");
+   legend->AddEntry(hveto34,"E_{BGO} #in [4, 4) MeV","l");
+   legend->AddEntry(hveto45,"E_{BGO} #in [4, 5) MeV","l");
+   legend->AddEntry(hveto56,"E_{BGO} #in [5, 6) MeV","l");
+   legend->AddEntry(hveto67,"E_{BGO} #in [6, 7) MeV","l");
+   legend->AddEntry(hveto78,"E_{BGO} #in [7, 8) MeV","l");
+   legend->AddEntry(hveto89,"E_{BGO} #in [8, 9] MeV","l");
    legend->Draw();
 
 
