@@ -54,15 +54,15 @@ void VetoEff8pe(){
    gStyle->SetPaperSize(26,20);
    gStyle->SetOptStat(1);
    gStyle->SetTitleXOffset(1.15);
-   gStyle->SetTitleYOffset(0.95);
+   gStyle->SetTitleYOffset(1.30);
    gStyle->SetTitleBorderSize(1);
    gStyle->SetLegendBorderSize(1);
    //gStyle->SetPadBottomMargin(0.32);
    gStyle->SetPadBottomMargin(0.12);
-   gStyle->SetPadLeftMargin(0.12);
+   gStyle->SetPadLeftMargin(0.18);
    //gStyle->SetPadTopMargin(0.32);
    gStyle->SetPadTopMargin(0.04);
-   gStyle->SetPadRightMargin(0.12);
+   gStyle->SetPadRightMargin(0.06);
    gStyle->SetCanvasColor(0);
    gStyle->SetPadColor(0);
    gStyle->SetPalette(1,0);
@@ -211,6 +211,16 @@ void VetoEff8pe(){
    std::vector<double> Eveto1416;
    std::vector<double> Eveto1618;
    std::vector<double> Eveto1820; 
+   std::vector<double> Ebgo02;
+   std::vector<double> Ebgo24;
+   std::vector<double> Ebgo46;
+   std::vector<double> Ebgo68;
+   std::vector<double> Ebgo810;
+   std::vector<double> Ebgo1012;
+   std::vector<double> Ebgo1214;
+   std::vector<double> Ebgo1416;
+   std::vector<double> Ebgo1618;
+   std::vector<double> Ebgo1820;
    
    for (int n=0; n<vIDBGOBackA.size(); n++) {
       for (int k=0; k<vEvIDV4A.size(); k++) {
@@ -221,24 +231,34 @@ void VetoEff8pe(){
                   EnBGOMatched.push_back(vEnBGOBackA[n]);
                   if (vEnBGOBackA[n] < 2000) {
                      Eveto02.push_back(vEdepV4A[k]);
+                     Ebgo02.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 2000) && (vEnBGOBackA[n] < 4000)) {
                      Eveto24.push_back(vEdepV4A[k]);
+                     Ebgo24.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 4000) && (vEnBGOBackA[n] < 6000)) {
                      Eveto46.push_back(vEdepV4A[k]);
+                     Ebgo46.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 6000) && (vEnBGOBackA[n] < 8000)) {
                      Eveto68.push_back(vEdepV4A[k]);
+                     Ebgo68.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 8000) && (vEnBGOBackA[n] < 10000)) {
                      Eveto810.push_back(vEdepV4A[k]);
+                     Ebgo810.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 10000) && (vEnBGOBackA[n] < 12000)) {
                      Eveto1012.push_back(vEdepV4A[k]);
+                     Ebgo1012.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 12000) && (vEnBGOBackA[n] < 14000)) {
                      Eveto1214.push_back(vEdepV4A[k]);
+                     Ebgo1214.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 14000) && (vEnBGOBackA[n] < 16000)) {
                      Eveto1416.push_back(vEdepV4A[k]);
+                     Ebgo1416.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 16000) && (vEnBGOBackA[n] < 18000)) {
                      Eveto1618.push_back(vEdepV4A[k]);
+                     Ebgo1618.push_back(vEnBGOBackA[n]);
                   } else if ((vEnBGOBackA[n] >= 18000) && (vEnBGOBackA[n] < 20000)) {
                      Eveto1820.push_back(vEdepV4A[k]);
+                     Ebgo1820.push_back(vEnBGOBackA[n]);
                   }
                }
             }
@@ -272,6 +292,64 @@ void VetoEff8pe(){
    for (int i=0; i<Eveto1416.size(); i++) hveto1416->Fill(Eveto1416[i]/1000.0);
    for (int i=0; i<Eveto1618.size(); i++) hveto1618->Fill(Eveto1618[i]/1000.0);
    for (int i=0; i<Eveto1820.size(); i++) hveto1820->Fill(Eveto1820[i]/1000.0);
+   
+   TH1F *hbgo02 = new TH1F("hbgo02","hbgo02",20,0,22.0);
+   TH1F *hbgo24 = new TH1F("hbgo24","hbgo24",20,0,22.0);
+   TH1F *hbgo46 = new TH1F("hbgo46","hbgo46",20,0,22.0);
+   TH1F *hbgo68 = new TH1F("hbgo68","hbgo68",20,0,22.0);
+   TH1F *hbgo810 = new TH1F("hbgo810","hbgo810",20,0,22.0);
+   TH1F *hbgo1012 = new TH1F("hbgo1012","hbgo1012",20,0,22.0);
+   TH1F *hbgo1214 = new TH1F("hbgo1214","hbgo1214",20,0,22.0);
+   TH1F *hbgo1416 = new TH1F("hbgo1416","hbgo1416",20,0,22.0);
+   TH1F *hbgo1618 = new TH1F("hbgo1618","hbgo1618",20,0,22.0);
+   TH1F *hbgo1820 = new TH1F("hbgo1820","hbgo1820",20,0,22.0);
+   for (int i=0; i<Ebgo02.size(); i++) hbgo02->Fill(Ebgo02[i]/1000.0);
+   for (int i=0; i<Ebgo24.size(); i++) hbgo24->Fill(Ebgo24[i]/1000.0);
+   for (int i=0; i<Ebgo46.size(); i++) hbgo46->Fill(Ebgo46[i]/1000.0);
+   for (int i=0; i<Ebgo68.size(); i++) hbgo68->Fill(Ebgo68[i]/1000.0);
+   for (int i=0; i<Ebgo810.size(); i++) hbgo810->Fill(Ebgo810[i]/1000.0); 
+   for (int i=0; i<Ebgo1012.size(); i++) hbgo1012->Fill(Ebgo1012[i]/1000.0);
+   for (int i=0; i<Ebgo1214.size(); i++) hbgo1214->Fill(Ebgo1214[i]/1000.0);
+   for (int i=0; i<Ebgo1416.size(); i++) hbgo1416->Fill(Ebgo1416[i]/1000.0);
+   for (int i=0; i<Ebgo1618.size(); i++) hbgo1618->Fill(Ebgo1618[i]/1000.0);
+   for (int i=0; i<Ebgo1820.size(); i++) hbgo1820->Fill(Ebgo1820[i]/1000.0);   
+
+   float IntRatio[10] = {};
+   float EnBGO[10] = {};
+   IntRatio[0] = (hveto02->Integral())/(hbgo02->Integral());
+   IntRatio[1] = (hveto24->Integral())/(hbgo24->Integral());
+   IntRatio[2] = (hveto46->Integral())/(hbgo46->Integral());
+   IntRatio[3] = (hveto68->Integral())/(hbgo68->Integral());
+   IntRatio[4] = (hveto810->Integral())/(hbgo810->Integral());
+   IntRatio[5] = (hveto1012->Integral())/(hbgo1012->Integral());
+   IntRatio[6] = (hveto1214->Integral())/(hbgo1214->Integral());
+   IntRatio[7] = (hveto1416->Integral())/(hbgo1416->Integral());
+   IntRatio[8] = (hveto1618->Integral())/(hbgo1618->Integral());
+   IntRatio[9] = (hveto1820->Integral())/(hbgo1820->Integral());
+   EnBGO[0] = 1.0;
+   EnBGO[1] = 3.0;
+   EnBGO[2] = 5.0;
+   EnBGO[3] = 7.0;
+   EnBGO[4] = 9.0;
+   EnBGO[5] = 11.0;
+   EnBGO[6] = 13.0;
+   EnBGO[7] = 15.0;
+   EnBGO[8] = 17.0;
+   EnBGO[9] = 19.0;
+
+
+   TCanvas *cgraph = new TCanvas("cgraph","cgraph",800,600);
+   gPad->SetGrid(1,1);
+   TGraph *grate = new TGraph(10,EnBGO,IntRatio);
+   grate->SetTitle("");
+   grate->GetXaxis()->SetTitle("E_{BGO} [MeV]");
+   grate->GetYaxis()->SetTitle("N_{Veto}/N_{BGO}");
+   grate->SetMarkerColor(kTeal-5);
+   grate->SetMarkerSize(1.5);
+   grate->SetMarkerStyle(22);
+   grate->SetLineColor(kTeal-7);
+   grate->Draw("ALP");
+
 
    hveto02->Scale(1/(hveto02->GetBinContent(hveto02->GetMaximumBin())),"nosw2");
    hveto24->Scale(1/(hveto24->GetBinContent(hveto24->GetMaximumBin())),"nosw2");
