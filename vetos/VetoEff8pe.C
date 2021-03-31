@@ -1,6 +1,6 @@
 //////////////////////////////////////////////
 //                                          //
-//               VetoEff8pe.C                 //
+//               VetoEff8pe.C               //
 //                                          //                
 //  Plots 2D histograms in energy and time  //
 //  for the matched veto and BGO.           //
@@ -314,18 +314,44 @@ void VetoEff8pe(){
    for (int i=0; i<Ebgo1618.size(); i++) hbgo1618->Fill(Ebgo1618[i]/1000.0);
    for (int i=0; i<Ebgo1820.size(); i++) hbgo1820->Fill(Ebgo1820[i]/1000.0);   
 
+   double wintv02=0, wintv24=0, wintv46=0, wintv68=0, wintv810=0, wintv1012=0, wintv1214=0, wintv1416=0, wintv1618=0, wintv1820=0;
+   double wintb02=0, wintb24=0, wintb46=0, wintb68=0, wintb810=0, wintb1012=0, wintb1214=0, wintb1416=0, wintb1618=0, wintb1820=0;
+
+   for (int i=0; i<=20; i++) {
+      wintv02 = wintv02 + ((hveto02->GetBinCenter(i))*(hveto02->GetBinContent(i)));
+      wintb02 = wintb02 + ((hbgo02->GetBinCenter(i))*(hbgo02->GetBinContent(i)));
+      wintv24 = wintv24 + ((hveto24->GetBinCenter(i))*(hveto24->GetBinContent(i)));
+      wintb24 = wintb24 + ((hbgo24->GetBinCenter(i))*(hbgo24->GetBinContent(i)));
+      wintv46 = wintv46 + ((hveto46->GetBinCenter(i))*(hveto46->GetBinContent(i)));
+      wintb46 = wintb46 + ((hbgo46->GetBinCenter(i))*(hbgo46->GetBinContent(i)));
+      wintv68 = wintv68 + ((hveto68->GetBinCenter(i))*(hveto68->GetBinContent(i)));
+      wintb68 = wintb68 + ((hbgo68->GetBinCenter(i))*(hbgo68->GetBinContent(i)));
+      wintv810 = wintv810 + ((hveto810->GetBinCenter(i))*(hveto810->GetBinContent(i)));
+      wintb810 = wintb810 + ((hbgo810->GetBinCenter(i))*(hbgo810->GetBinContent(i)));
+      wintv1012 = wintv1012 + ((hveto1012->GetBinCenter(i))*(hveto1012->GetBinContent(i)));
+      wintb1012 = wintb1012 + ((hbgo1012->GetBinCenter(i))*(hbgo1012->GetBinContent(i)));
+      wintv1214 = wintv1214 + ((hveto1214->GetBinCenter(i))*(hveto1214->GetBinContent(i)));
+      wintb1214 = wintb1214 + ((hbgo1214->GetBinCenter(i))*(hbgo1214->GetBinContent(i)));
+      wintv1416 = wintv1416 + ((hveto1416->GetBinCenter(i))*(hveto1416->GetBinContent(i)));
+      wintb1416 = wintb1416 + ((hbgo1416->GetBinCenter(i))*(hbgo1416->GetBinContent(i)));
+      wintv1618 = wintv1618 + ((hveto1618->GetBinCenter(i))*(hveto1618->GetBinContent(i)));
+      wintb1618 = wintb1618 + ((hbgo1618->GetBinCenter(i))*(hbgo1618->GetBinContent(i)));
+      wintv1820 = wintv1820 + ((hveto1820->GetBinCenter(i))*(hveto1820->GetBinContent(i)));
+      wintb1820 = wintb1820 + ((hbgo1820->GetBinCenter(i))*(hbgo1820->GetBinContent(i)));
+   }
+
    float IntRatio[10] = {};
    float EnBGO[10] = {};
-   IntRatio[0] = (hveto02->Integral())/(hbgo02->Integral());
-   IntRatio[1] = (hveto24->Integral())/(hbgo24->Integral());
-   IntRatio[2] = (hveto46->Integral())/(hbgo46->Integral());
-   IntRatio[3] = (hveto68->Integral())/(hbgo68->Integral());
-   IntRatio[4] = (hveto810->Integral())/(hbgo810->Integral());
-   IntRatio[5] = (hveto1012->Integral())/(hbgo1012->Integral());
-   IntRatio[6] = (hveto1214->Integral())/(hbgo1214->Integral());
-   IntRatio[7] = (hveto1416->Integral())/(hbgo1416->Integral());
-   IntRatio[8] = (hveto1618->Integral())/(hbgo1618->Integral());
-   IntRatio[9] = (hveto1820->Integral())/(hbgo1820->Integral());
+   IntRatio[0] = wintv02/wintb02;
+   IntRatio[1] = wintv24/wintb24;
+   IntRatio[2] = wintv46/wintb46;
+   IntRatio[3] = wintv68/wintb68;
+   IntRatio[4] = wintv810/wintb810;
+   IntRatio[5] = wintv1012/wintb1012;
+   IntRatio[6] = wintv1214/wintb1214;
+   IntRatio[7] = wintv1416/wintb1416;
+   IntRatio[8] = wintv1618/wintb1618;
+   IntRatio[9] = wintv1820/wintb1820;
    EnBGO[0] = 1.0;
    EnBGO[1] = 3.0;
    EnBGO[2] = 5.0;
