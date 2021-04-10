@@ -240,11 +240,11 @@ void VetoEff3(){
    hAllTm->GetXaxis()->SetTitle("t [ns]");
    hAllTm->SetLineWidth(3);
    hAllTm->SetLineColor(kGray+3);
-   hAllTm->SetFillColorAlpha(kViolet-5,0.9);
+   hAllTm->SetFillColorAlpha(kTeal-5,0.5);
    hAllTm->Draw();
    hMTm->SetLineWidth(3);
    hMTm->SetLineColor(kGray+3);
-   hMTm->SetFillColorAlpha(kTeal-5,0.9);
+   hMTm->SetFillColorAlpha(kViolet-5,0.7);
    hMTm->Draw("same");
    auto lTm = new TLegend(0.8,0.76,0.92,0.93); 
    lTm->AddEntry(hAllTm,"All","f");
@@ -260,11 +260,11 @@ void VetoEff3(){
    hAllEn->GetXaxis()->SetTitle("E [kadc]");
    hAllEn->SetLineWidth(3);
    hAllEn->SetLineColor(kGray+3);
-   hAllEn->SetFillColorAlpha(kViolet-5,0.9);
+   hAllEn->SetFillColorAlpha(kTeal-5,0.5);
    hAllEn->Draw();
    hMEn->SetLineWidth(3);
    hMEn->SetLineColor(kGray+3);
-   hMEn->SetFillColorAlpha(kTeal-5,0.9);
+   hMEn->SetFillColorAlpha(kViolet-5,0.7);
    hMEn->Draw("same");
    auto lEn = new TLegend(0.80,0.76,0.92,0.93);
    lEn->AddEntry(hAllTm,"All","f");
