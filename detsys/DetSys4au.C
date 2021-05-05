@@ -27,6 +27,7 @@ using namespace std;
 #include "TAttMarker.h"
 #include "TAxis.h"
 #include "TCanvas.h"
+#include "TColor.h"
 #include "TF1.h"
 #include "TF2.h"
 #include "TFile.h"
@@ -79,8 +80,6 @@ void DetSys4au(){
 
    // Uncomment for Au-target
    std::string runnumber = "run373/373";
-   // Uncomment for PE-target
-   //std::string runnumber = "run383/383";
 
    // Time coincidence for the BGOs
    std::vector<int> timemin;
@@ -88,9 +87,6 @@ void DetSys4au(){
    // Uncomment for Au-target
    timemin.push_back(-30);
    timemax.push_back(30);
-   // Uncomment for PE-target
-   //timemin.push_back(100);
-   //timemax.push_back(1000);
 
    // Names of the files
    // Muon Entrance [main trigger]
@@ -276,10 +272,12 @@ void DetSys4au(){
    std::vector<double> V4En;
    std::vector<double> ElectronTm;
 
-   double tmelmin = -25;
-   double tmelmax = 25;
+   double tmelmin = -25; // -40
+   double tmelmax = 25; // 400
 
-   for (int n=0; n<10000; n++) {
+   int nmuons = 10000;
+
+   for (int n=0; n<nmuons; n++) {
       double BackRunEn = 0.0;
       double FrontRunEn = 0.0;
       std::vector<double> RunTm;
@@ -344,42 +342,42 @@ void DetSys4au(){
 
    double Ethr3 = 10000; // keV [BGO upper]
 
-   double Ethr1[] = {1000,1250,1500,1750,2000}; // adc [Veto]
-   double Ethr2[] = {800,900,1000,1100,1200}; // keV [BGO lower]
- 
-   for (int p=0; p<5; p++) {
+   double Ethr1[] = {0,500,1000,1500,2000,2500,3000}; // adc [Veto]
+   double Ethr2[] = {500,750,1000,1250,1500,1750,2000}; // keV [BGO lower]
+
+   int nvar = 7; 
+
+   for (int p=0; p<nvar; p++) {
       std::vector<double> RunPxx;
       std::vector<double> RunPxe;
-      for (int q=0; q<5; q++) { 
+      for (int q=0; q<nvar; q++) { 
          double XrayCounter = 0;
          double elecCounter = 0;
          double TotalCounter = 0;
          for (int i=0; i < BackClusterEn.size(); i++) {
-            if ((V3En[i] <= Ethr1[p]) && (V4En[i] <= Ethr1[p])) {
-               if (((BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3)) || ((FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3))) {
-                  XrayCounter++;
-                  TotalCounter++;
-               } else {
-                  elecCounter++;
-                  TotalCounter++;
-               }
+            if (((V3En[i] <= Ethr1[p]) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) {
+               XrayCounter++;
+               TotalCounter++;
             } else {
                elecCounter++;
                TotalCounter++;
-            } 
-         }
-         RunPxx.push_back(XrayCounter/TotalCounter);
-         RunPxe.push_back(elecCounter/TotalCounter);
+            }
+         } 
+         //RunPxx.push_back(XrayCounter/TotalCounter);
+         //RunPxe.push_back(elecCounter/TotalCounter);
+         RunPxx.push_back(XrayCounter/nmuons);
+         RunPxe.push_back(elecCounter/nmuons);
       }
       AllPxx.push_back(RunPxx);
       AllPxe.push_back(RunPxe);
    }
 
+
    TGraph2D *gpxx = new TGraph2D();
    
-   for (int p=0; p<5;p++) {
-      for (int q=0; q<5;q++) {
-         gpxx->SetPoint(p*5+q,Ethr1[p],Ethr2[q],AllPxx[p][q]);
+   for (int p=0; p<nvar;p++) {
+      for (int q=0; q<nvar;q++) {
+         gpxx->SetPoint(p*nvar+q,Ethr1[p],Ethr2[q],AllPxx[p][q]);
       }
    }
 
@@ -414,6 +412,8 @@ void DetSys4au(){
    TCanvas *d = new TCanvas("d","d",800,600);
    gPad->SetGrid(1,1);
    gStyle->SetOptStat(0);
+   //gStyle->SetPalette(kCMYK);
+   //TColor::InvertPalette();
    gpxx->SetTitle("; E_{THR 1} [adc]; E_{THR 2} [keV]; P_{XX}");
    gpxx->Draw("colz");
 
