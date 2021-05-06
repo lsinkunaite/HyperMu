@@ -278,10 +278,7 @@ void DetSys4pe(){
    double tbwindow = 60; // time window BGO
 
    int nmuons = 1000;
-
    for (int n=0; n<nmuons; n++) {
-      //double BackRunEn = 0.0;
-      //double FrontRunEn = 0.0;
       std::vector<double> RunTm;
       std::vector<double> RunEn;
       std::vector<double> RunCh;
@@ -292,11 +289,6 @@ void DetSys4pe(){
                   RunTm.push_back(vTimeBGO[k]);
                   RunEn.push_back(vEkeVBGO[k]);
                   RunCh.push_back(vCluster[k]);
-                  //if (vCluster[k] > 0) {
-                     //BackRunEn += vEkeVBGO[k];
-                  //} else {
-                     //FrontRunEn += vEkeVBGO[k];
-                  //}
                }
             }
          }
@@ -323,11 +315,7 @@ void DetSys4pe(){
          } else {
             SortedIndex.push_back(Indices[UsedIndex.size()]);
             UsedIndex.push_back(Indices[UsedIndex.size()]);
-            if (UsedIndex.size() == Indices.size()) {
-               std::cout << "pre : " << UsedIndex.size() << std::endl;
-               UsedIndex.clear();
-               std::cout << "post : " << UsedIndex.size() << std::endl;
-            }
+            if (UsedIndex.size() == Indices.size()) UsedIndex.clear();
          } 
          SortedRunEn.push_back(RunEn[SortedIndex[i]]);
          SortedRunCh.push_back(RunCh[SortedIndex[i]]);  
@@ -335,10 +323,10 @@ void DetSys4pe(){
 
       double BackRunEn = 0.0;
       double FrontRunEn = 0.0;
-      
+      double runclustertm; 
+
       if (SortedRunTm.size() > 0) {
-         double runclustertm = SortedRunTm[0];
-         //std::cout << std::endl; 
+         runclustertm = SortedRunTm[0]; 
          std::cout << "muon no. = " << n << std::endl;
          for (int i=0; i<RunTm.size(); i++) std::cout << "Tm = " << RunTm[i] << ", En = " << RunEn[i] << ", Ch = " << RunCh[i] << std::endl;
          for (int i=0; i<SortedRunTm.size(); i++) std::cout << "\033[1;32m Tm = " << SortedRunTm[i] << ", En = " << SortedRunEn[i] << ", Ch = " << SortedRunCh[i] << "\033[0m" << std::endl;
@@ -349,7 +337,14 @@ void DetSys4pe(){
                } else {
                   FrontRunEn += SortedRunEn[i];
                }
+               //if ((SortedRunTm.size()-i) == 1) {
+                  //BackClusterEn.push_back(BackRunEn);
+                  //FrontClusterEn.push_back(FrontRunEn);
+               //}
             } else {
+               BackClusterEn.push_back(BackRunEn);
+               FrontClusterEn.push_back(FrontRunEn);
+               ClusterTm.push_back(runclustertm);
                BackRunEn = 0.0;
                FrontRunEn = 0.0;
                runclustertm = SortedRunTm[i];
@@ -360,9 +355,11 @@ void DetSys4pe(){
                }
                  
             }
-             
             std::cout << "cl.time = " << runclustertm << ", back en = " << BackRunEn << ", front en = " << FrontRunEn << std::endl; 
          }
+         BackClusterEn.push_back(BackRunEn);
+         FrontClusterEn.push_back(FrontRunEn);
+         ClusterTm.push_back(runclustertm);
          std::cout << std::endl;
 
 /*
@@ -393,6 +390,11 @@ void DetSys4pe(){
       }
 
    }
+
+   for (int i=0; i<ClusterTm.size(); i++ ) {
+      std::cout << "tm = " << ClusterTm[i] << ", back en = " << BackClusterEn[i] << ", front en = " << FrontClusterEn[i] << std::endl;
+   }
+
 
    std::cout << std::endl;
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
