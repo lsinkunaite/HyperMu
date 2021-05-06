@@ -310,71 +310,25 @@ void DetSys4pe(){
       std::sort(SortedRunTm.begin(),SortedRunTm.end());      
 
       std::vector<double> UsedIndex;
-      std::vector<int> DupElement;
-      int units;
-      //std::vector<double> Indices;
-      bool Used; //= false;
 
       for (int i=0; i<SortedRunTm.size(); i++) {
-         units = std::count(RunTm.begin(),RunTm.end(),SortedRunTm[i]);
-         Used = false;
-
-         //auto it = find(RunTm.begin(),RunTm.end(),SortedRunTm[i]);
-/*       
-         std::cout << "it = " << it-RunTm.begin() << ", repeatance = " << std::count(RunTm.begin(),RunTm.end(),SortedRunTm[i]) << std::endl;
-         if ((std::count(RunTm.begin(),RunTm.end(),SortedRunTm[i])) > 1) {
-            if ((std::count(UsedIndex.begin(),UsedIndex.end(),(it-RunTm.begin()))) == 0) {
-               UsedIndex.push_back(it-RunTm.begin());
-            } else {
-               std::cout << "Already filled" << std::endl;
-                   
-               //std::vector<double>::iterator it2 = RunTm.begin();
-
-            }
-         }         
-*/
-
          std::vector<double> Indices;
-         
          std::vector<double>::iterator it = RunTm.begin();
          while ((it = find(it,RunTm.end(),SortedRunTm[i])) != RunTm.end()) {
-         //while ((it = find(it,RunTm.end(),SortedRunTm[i])) != IsFound) {
-         
-            //std::cout << "units = " << units << std::endl;
-//            std::cout << "index = " << std::distance(RunTm.begin(),it) <<std::endl;
-            //UsedIndex.push_back(            
-
-            //if (units > 1) {
             Indices.push_back(std::distance(RunTm.begin(),it));
-            //vIndex.push_back(std::distance(RunTm.begin(),it));
-            //SortedIndex.push_back(std::distance(RunTm.begin(),it));
             it++;
          }
          if (Indices.size() == 1) {
             SortedIndex.push_back(Indices[0]);
          } else {
-            //if (UsedIndex.size() == 0) {
             SortedIndex.push_back(Indices[UsedIndex.size()]);
             UsedIndex.push_back(Indices[UsedIndex.size()]);
-         } 
-         //std::cout << "size = " << Indices.size() << std::endl;
-         //while ( ! Used ) {
-   /*         for (int h=0; h<Indices.size(); h++) {
-               //std::cout << "index = " << Indices[h] << ", size of UsedIndex = " << UsedIndex.size() <<std::endl;
-               //std::cout << "tindex = " << tindex << std::endl;
-               double tindex = std::count(UsedIndex.begin(),UsedIndex.end(),Indices[h]);
-               //std::cout << "size = " <<Indices.size() << ", index = " << Indices[h] << ", size of UsedIndex = " << UsedIndex.size() <<", tindex = " << tindex <<std::endl;
-               //std::cout << "tindex = " << tindex << std::endl;
-               //if (std::count(UsedIndex.begin(),UsedIndex.end(),Indices[h])
-               //SortedIndex.push_back(Indices[tindex]);
-
-               SortedIndex.push_back(Indices[h]);
-               //UsedIndex.push_back(Indices[tindex]);
-               UsedIndex.push_back(Indices[h]);
-               Used = true;
+            if (UsedIndex.size() == Indices.size()) {
+               std::cout << "pre : " << UsedIndex.size() << std::endl;
+               UsedIndex.clear();
+               std::cout << "post : " << UsedIndex.size() << std::endl;
             }
-*/         //}
-         //SortedIndex.push_back(it-RunTm.begin());
+         } 
          SortedRunEn.push_back(RunEn[SortedIndex[i]]);
          SortedRunCh.push_back(RunCh[SortedIndex[i]]);  
       }
@@ -388,7 +342,6 @@ void DetSys4pe(){
          std::cout << "muon no. = " << n << std::endl;
          for (int i=0; i<RunTm.size(); i++) std::cout << "Tm = " << RunTm[i] << ", En = " << RunEn[i] << ", Ch = " << RunCh[i] << std::endl;
          for (int i=0; i<SortedRunTm.size(); i++) std::cout << "\033[1;32m Tm = " << SortedRunTm[i] << ", En = " << SortedRunEn[i] << ", Ch = " << SortedRunCh[i] << "\033[0m" << std::endl;
-         //std::cout << runclustertm << std::endl;
          for (int i=0; i<SortedRunTm.size(); i++) {
             if ((SortedRunTm[i] - runclustertm) < tbwindow) {
                if (SortedRunCh[i] > 0) {
@@ -396,7 +349,6 @@ void DetSys4pe(){
                } else {
                   FrontRunEn += SortedRunEn[i];
                }
-               //runclustertm = SortedRunTm[i];
             } else {
                BackRunEn = 0.0;
                FrontRunEn = 0.0;
@@ -410,7 +362,6 @@ void DetSys4pe(){
             }
              
             std::cout << "cl.time = " << runclustertm << ", back en = " << BackRunEn << ", front en = " << FrontRunEn << std::endl; 
-            //std::cout << std::endl;
          }
          std::cout << std::endl;
 
