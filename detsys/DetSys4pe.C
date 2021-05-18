@@ -86,7 +86,7 @@ void DetSys4pe(){
    std::vector<int> timemax;
    // Uncomment for PE-target
    timemin.push_back(100);
-   timemax.push_back(2000);
+   timemax.push_back(1000);
 
    // Names of the files
    // Muon Entrance [main trigger]
@@ -98,7 +98,7 @@ void DetSys4pe(){
 
 
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;34m---------------------- Reading ---------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;34m------------------------ Reading -------------------------\033[0m" << std::endl;
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
    
 
@@ -239,7 +239,7 @@ void DetSys4pe(){
 
    std::cout << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;35m--------------------- Reading II -------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;35m----------------------- Reading II -----------------------\033[0m" << std::endl;
    std::cout << "\033[1;35m----------------------------------------------------------\033[0m" << std::endl;
 
 
@@ -258,14 +258,16 @@ void DetSys4pe(){
       }
    }
 
+
    std::cout << std::endl;
-   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;36m---------------------- Matching --------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;32m----------------------------------------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;32m------------------------ Sorting -------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;32m----------------------------------------------------------\033[0m" << std::endl;
 
    std::vector<double> BackClusterEn;
    std::vector<double> FrontClusterEn;
    std::vector<double> ClusterTm;
+   std::vector<double> ClusterMu;
    std::vector<double> V1En;
    std::vector<double> V2En;
    std::vector<double> V3En;
@@ -276,8 +278,10 @@ void DetSys4pe(){
    double tmelmax = 25; // 400
 
    double tbwindow = 60; // time window BGO
-
    int nmuons = 1000;
+   double muon_tau = 2197.0;
+   double norm = nmuons*((exp(-timemin[0]/muon_tau)) - (exp(-timemax[0]/muon_tau)));
+
    for (int n=0; n<nmuons; n++) {
       std::vector<double> RunTm;
       std::vector<double> RunEn;
@@ -327,9 +331,9 @@ void DetSys4pe(){
 
       if (SortedRunTm.size() > 0) {
          runclustertm = SortedRunTm[0]; 
-         std::cout << "muon no. = " << n << std::endl;
-         for (int i=0; i<RunTm.size(); i++) std::cout << "Tm = " << RunTm[i] << ", En = " << RunEn[i] << ", Ch = " << RunCh[i] << std::endl;
-         for (int i=0; i<SortedRunTm.size(); i++) std::cout << "\033[1;32m Tm = " << SortedRunTm[i] << ", En = " << SortedRunEn[i] << ", Ch = " << SortedRunCh[i] << "\033[0m" << std::endl;
+         //std::cout << "muon no. = " << vEvIDTrig[n] << std::endl;
+         //for (int i=0; i<RunTm.size(); i++) std::cout << "Tm = " << RunTm[i] << ", En = " << RunEn[i] << ", Ch = " << RunCh[i] << std::endl;
+         //for (int i=0; i<SortedRunTm.size(); i++) std::cout << "\033[1;32m Tm = " << SortedRunTm[i] << ", En = " << SortedRunEn[i] << ", Ch = " << SortedRunCh[i] << "\033[0m" << std::endl;
          for (int i=0; i<SortedRunTm.size(); i++) {
             if ((SortedRunTm[i] - runclustertm) < tbwindow) {
                if (SortedRunCh[i] > 0) {
@@ -337,14 +341,11 @@ void DetSys4pe(){
                } else {
                   FrontRunEn += SortedRunEn[i];
                }
-               //if ((SortedRunTm.size()-i) == 1) {
-                  //BackClusterEn.push_back(BackRunEn);
-                  //FrontClusterEn.push_back(FrontRunEn);
-               //}
             } else {
                BackClusterEn.push_back(BackRunEn);
                FrontClusterEn.push_back(FrontRunEn);
                ClusterTm.push_back(runclustertm);
+               ClusterMu.push_back(vEvIDTrig[n]);
                BackRunEn = 0.0;
                FrontRunEn = 0.0;
                runclustertm = SortedRunTm[i];
@@ -355,57 +356,77 @@ void DetSys4pe(){
                }
                  
             }
-            std::cout << "cl.time = " << runclustertm << ", back en = " << BackRunEn << ", front en = " << FrontRunEn << std::endl; 
+            //std::cout << "cl.time = " << runclustertm << ", back en = " << BackRunEn << ", front en = " << FrontRunEn << std::endl; 
          }
          BackClusterEn.push_back(BackRunEn);
          FrontClusterEn.push_back(FrontRunEn);
          ClusterTm.push_back(runclustertm);
-         std::cout << std::endl;
+         ClusterMu.push_back(vEvIDTrig[n]);
+         //std::cout << "cluster length = " <<ClusterTm.size() << ", cluster last = " << ClusterTm[ClusterTm.size()-1] << ", cluster back = " << ClusterTm.back() << ", muon = " << ClusterMu.back() << std::endl;
+         //std::cout << std::endl;
 
-/*
-         BackClusterEn.push_back(BackRunEn);
-         FrontClusterEn.push_back(FrontRunEn);        
-         ClusterTm.push_back(*std::min_element(RunTm.begin(),RunTm.end()));
-         double tttime = *std::min_element(RunTm.begin(),RunTm.end());
-
-         double V1RunEn = 0.0;
-         double V2RunEn = 0.0;
-         double V3RunEn = 0.0;
-         double V4RunEn = 0.0;
-         for (int l=0; l<(3*nmuons); l++) {
-            if ((vEvIDVeto[l] == vEvIDTrig[n]) && (vEdepVeto[l] > 100)) {
-               if (((vTimeVeto[l] - tttime) >= tmelmin) && ((vTimeVeto[l] - tttime) <= tmelmax)) {
-                  if (vChanVeto[l] == 34) V1RunEn += vEdepVeto[l];
-                  if (vChanVeto[l] == 35) V2RunEn += vEdepVeto[l];
-                  if (vChanVeto[l] == 36) V3RunEn += vEdepVeto[l];
-                  if (vChanVeto[l] == 38) V4RunEn += vEdepVeto[l];
-                  if (vChanVeto[l] == 38) ElectronTm.push_back(vTimeVeto[l]-tttime);
-               }
-            }
-         }
-         V1En.push_back(V1RunEn);
-         V2En.push_back(V2RunEn);
-         V3En.push_back(V3RunEn);
-         V4En.push_back(V4RunEn);  */
       }
 
    }
 
-   for (int i=0; i<ClusterTm.size(); i++ ) {
-      std::cout << "tm = " << ClusterTm[i] << ", back en = " << BackClusterEn[i] << ", front en = " << FrontClusterEn[i] << std::endl;
+
+   std::cout << std::endl;
+   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;36m---------------------- Matching --------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;36m----------------------------------------------------------\033[0m" << std::endl;
+   std::cout << std::endl;
+
+   for (int n=0; n<ClusterMu.size(); n++) {
+      double V1RunEn = 0.0;
+      double V2RunEn = 0.0;
+      double V3RunEn = 0.0;
+      double V4RunEn = 0.0;   
+      for (int l=0; l<(3*nmuons); l++) {
+         if ((vEvIDVeto[l] == ClusterMu[n]) && (vEdepVeto[l] > 100)) {
+            if (((vTimeVeto[l] - ClusterTm[n]) >= tmelmin) && ((vTimeVeto[l] - ClusterTm[n]) <= tmelmax)) {
+               if (vChanVeto[l] == 34) V1RunEn += vEdepVeto[l];
+               if (vChanVeto[l] == 35) V2RunEn += vEdepVeto[l];
+               if (vChanVeto[l] == 36) V3RunEn += vEdepVeto[l];
+               if (vChanVeto[l] == 38) V4RunEn += vEdepVeto[l];
+            }
+         }
+      }
+      V1En.push_back(V1RunEn);
+      V2En.push_back(V2RunEn);
+      V3En.push_back(V3RunEn);
+      V4En.push_back(V4RunEn);
    }
 
+/*
+   int sampcount = 0;
+   for (int i=0; i<BackClusterEn.size(); i++) {
+      if ((FrontClusterEn[i] != 0) && (BackClusterEn[i] == 0) && (V3En[i] == 0) && (V4En[i] == 0)) {
+         if ((FrontClusterEn[i] >= 800) && (FrontClusterEn[i] <= 10000)) {
+            sampcount++;
+            std::cout << FrontClusterEn[i] << std::endl;
+         }
+      }
+   }
+
+   std::cout << "sampcount = " << sampcount << std::endl;
+*/
+//   std::cout << "Sizes :: V1 = " << V1En.size() <<", V2 = " << V2En.size() << ", V3 = " << V3En.size() << ", V4 = " << V4En.size() << std::endl;
+//   for (int i=0; i<V1En.size(); i++) {
+//      std::cout << "V1 = " << V1En[i] << ", V2 = " << V2En[i] << ", V3 = " << V3En[i] << ", V4 = " << V4En[i] << std::endl;
+//   }
 
    std::cout << std::endl;
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
    std::cout << "\033[1;34m-------------------- Real Matching -----------------------\033[0m" << std::endl;
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
    std::cout << std::endl;
-/*
-   std::vector<std::vector<double>> AllPxx;
-   std::vector<std::vector<double>> AllPxe; 
+
+   std::vector<std::vector<double>> AllPex;
+   std::vector<std::vector<double>> AllPee; 
 
    double Ethr3 = 10000; // keV [BGO upper]
+   double Ethr4 = 1000; // adc [Veto 2]
+   double Ethr5 = 700; // adc [Veto 1]
 
    double Ethr1[] = {0,500,1000,1500,2000,2500,3000}; // adc [Veto]
    double Ethr2[] = {500,750,1000,1250,1500,1750,2000}; // keV [BGO lower]
@@ -413,14 +434,14 @@ void DetSys4pe(){
    int nvar = 7; 
 
    for (int p=0; p<nvar; p++) {
-      std::vector<double> RunPxx;
-      std::vector<double> RunPxe;
+      std::vector<double> RunPex;
+      std::vector<double> RunPee;
       for (int q=0; q<nvar; q++) { 
          double XrayCounter = 0;
          double elecCounter = 0;
          double TotalCounter = 0;
          for (int i=0; i < BackClusterEn.size(); i++) {
-            if (((V3En[i] <= Ethr1[p]) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) {
+            if (((V3En[i] <= Ethr1[p]) && (V2En[i] <= Ethr4) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) {
                XrayCounter++;
                TotalCounter++;
             } else {
@@ -428,31 +449,28 @@ void DetSys4pe(){
                TotalCounter++;
             }
          } 
-         //RunPxx.push_back(XrayCounter/TotalCounter);
-         //RunPxe.push_back(elecCounter/TotalCounter);
-         RunPxx.push_back(XrayCounter/nmuons);
-         RunPxe.push_back(elecCounter/nmuons);
+         RunPex.push_back(XrayCounter/norm);
+         RunPee.push_back(elecCounter/norm);
+         //std::cout << "Pex = " << XrayCounter/TotalCounter <<", Pee = "<< elecCounter/TotalCounter << std::endl;
       }
-      AllPxx.push_back(RunPxx);
-      AllPxe.push_back(RunPxe);
+      AllPex.push_back(RunPex);
+      AllPee.push_back(RunPee);
    }
 
 
-   TGraph2D *gpxx = new TGraph2D();
+   TGraph2D *gpex = new TGraph2D();
    
    for (int p=0; p<nvar;p++) {
       for (int q=0; q<nvar;q++) {
-         gpxx->SetPoint(p*nvar+q,Ethr1[p],Ethr2[q],AllPxx[p][q]);
+         gpex->SetPoint(p*nvar+q,Ethr1[p],Ethr2[q],AllPex[p][q]);
       }
    }
 
-   //std::cout << "PXX = " << XrayCounter/TotalCounter << ", PXe = " << elecCounter/TotalCounter << ", abs. PXX = " << XrayCounter/10000 << ", abs. PXe = " << elecCounter/10000 << ", detected = " << TotalCounter << std::endl;
-*/
 
 
    std::cout << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
-   std::cout << "\033[1;31m--------------------- Plotting ---------------------------\033[0m" << std::endl;
+   std::cout << "\033[1;31m----------------------- Plotting -------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl; 
 
 /*
@@ -473,15 +491,15 @@ void DetSys4pe(){
    //legend->AddEntry(htmvetos,"Any veto","l");
    //legend->Draw();
 */
-/*
+
    TCanvas *d = new TCanvas("d","d",800,600);
    gPad->SetGrid(1,1);
    gStyle->SetOptStat(0);
    //gStyle->SetPalette(kCMYK);
    //TColor::InvertPalette();
-   gpxx->SetTitle("; E_{THR 1} [adc]; E_{THR 2} [keV]; P_{eX}");
-   gpxx->Draw("colz");
-*/
+   gpex->SetTitle("; E_{THR 1} [adc]; E_{THR 2} [keV]; P_{eX}");
+   gpex->Draw("colz");
+
 
 }
 
