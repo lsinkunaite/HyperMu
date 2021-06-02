@@ -271,6 +271,8 @@ void DetSys4au(){
    std::vector<double> V3En;
    std::vector<double> V4En;
    std::vector<double> ElectronTm;
+   std::vector<double> Same_side;
+
 
    double tmelmin = -25; // -40
    double tmelmax = 25; // 400
@@ -322,14 +324,33 @@ void DetSys4au(){
          V3En.push_back(V3RunEn);
          V4En.push_back(V4RunEn);  
       }
+ 
 
-      for (int m=0; m<30000; m++) {
-         if ((vEvIDVeto[m] == vEvIDTrig[n]) && (vEdepVeto[m] > 100)) {
+//      for (int m=0; m<30000; m++) {
+//         if ((vEvIDVeto[m] == vEvIDTrig[n]) && (vEdepVeto[m] > 100)) {
             //if (vChanVeto[m] == 38) ElectronTm.push_back(vTimeVeto[m]);
-         }
-      }
+//         }
+//      }
 
    }
+
+
+   for (int i=0; i<BackClusterEn.size(); i++) {
+      double vetoside = 0;
+      double bgoside = 0;
+      double sameside = 0;
+      vetoside = ((V4En[i]-V3En[i])/(V4En[i]+V3En[i]));
+      bgoside = ((BackClusterEn[i]-FrontClusterEn[i])/(BackClusterEn[i]+FrontClusterEn[i]));
+      if ((V4En[i] + V3En[i]) == 0) {
+         sameside = abs(bgoside);
+      } else {
+         sameside = abs(bgoside+vetoside);
+      }
+      std::cout << "vetoside = " << vetoside << ", bgoside = " << bgoside << ", sameside = " << sameside << std::endl;
+      Same_side.push_back(sameside);
+   }
+
+
 
    std::cout << std::endl;
    std::cout << "\033[1;34m----------------------------------------------------------\033[0m" << std::endl;
@@ -339,14 +360,20 @@ void DetSys4au(){
 
    std::vector<std::vector<double>> AllPxx;
    std::vector<std::vector<double>> AllPxe; 
+   std::vector<std::vector<double>> AllPxx2;
+   std::vector<std::vector<double>> AllPxe2;
+
 
    double Ethr3 = 10000; // keV [BGO upper]
+   double Ethr4 = 1000; // adc [Veto 2]
+   double Ethr5 = 700; // adc [Veto 1]
 
    double Ethr1[] = {0,500,1000,1500,2000,2500,3000}; // adc [Veto]
    double Ethr2[] = {500,750,1000,1250,1500,1750,2000}; // keV [BGO lower]
 
    int nvar = 7; 
 
+   // Standard method + Carlos' sideness
    for (int p=0; p<nvar; p++) {
       std::vector<double> RunPxx;
       std::vector<double> RunPxe;
@@ -355,7 +382,7 @@ void DetSys4au(){
          double elecCounter = 0;
          double TotalCounter = 0;
          for (int i=0; i < BackClusterEn.size(); i++) {
-            if (((V3En[i] <= Ethr1[p]) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) {
+            if ((((V3En[i] <= Ethr1[p]) && (V2En[i] <= Ethr4) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) && (Same_side[i] < 1.6)) {
                XrayCounter++;
                TotalCounter++;
             } else {
@@ -372,12 +399,43 @@ void DetSys4au(){
       AllPxe.push_back(RunPxe);
    }
 
+   // Standard method + Carlos' sideness + Aldo's recuperation 
+   for (int p=0; p<nvar; p++) {
+      std::vector<double> RunPxx2;
+      std::vector<double> RunPxe2;
+      for (int q=0; q<nvar; q++) {
+         double XrayCounter = 0;
+         double Xray2Counter = 0;
+         double elecCounter = 0;
+         double TotalCounter = 0;
+         for (int i=0; i < BackClusterEn.size(); i++) {
+            if ((((V3En[i] <= Ethr1[p]) && (V2En[i] <= Ethr4) && (FrontClusterEn[i] >= Ethr2[q]) && (FrontClusterEn[i] <= Ethr3)) || ((V4En[i] <= Ethr1[p]) && (BackClusterEn[i] >= Ethr2[q]) && (BackClusterEn[i] <= Ethr3))) && (Same_side[i] < 1.6)) {
+               XrayCounter++;
+               TotalCounter++;
+            } else if ((FrontClusterEn[i] >=  Ethr2[q]) && (FrontClusterEn[i] <= Ethr3) && (BackClusterEn[i] <= Ethr2[q]) && (BackClusterEn[i] <= Ethr3)) {
+               Xray2Counter++;
+               TotalCounter++;
+            } else {
+               elecCounter++;
+               TotalCounter++;
+            }
+         }
+         RunPxx2.push_back((XrayCounter+Xray2Counter)/nmuons);
+         RunPxe2.push_back(elecCounter/nmuons);
+         std::cout << "X-rays = " << XrayCounter << ", X*-rays = " << Xray2Counter << ", electrons = " << elecCounter << ", total = " << TotalCounter << std::endl;
+      }
+      AllPxx2.push_back(RunPxx2);
+      AllPxe2.push_back(RunPxe2);
+   }
 
-   TGraph2D *gpxx = new TGraph2D();
+
+   TGraph2D *gpxx = new TGraph2D(); // Standard method + Carlos' side
+   TGraph2D *gpxx2 = new TGraph2D(); // Standard method + Carlos's side + Aldo's
    
    for (int p=0; p<nvar;p++) {
       for (int q=0; q<nvar;q++) {
          gpxx->SetPoint(p*nvar+q,Ethr1[p],Ethr2[q],AllPxx[p][q]);
+         gpxx2->SetPoint(p*nvar+q,Ethr1[p],Ethr2[q],AllPxx2[p][q]);
       }
    }
 
@@ -389,6 +447,17 @@ void DetSys4au(){
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m--------------------- Plotting ---------------------------\033[0m" << std::endl;
    std::cout << "\033[1;31m----------------------------------------------------------\033[0m" << std::endl; 
+
+   TH1F *hsameside2 = new TH1F("hsameside2","hsameside",50,0,2);
+   for (int i=0; i<Same_side.size(); i++) hsameside2->Fill(Same_side[i]);
+   
+   TCanvas *csameside = new TCanvas("csameside","csameside",800,600);
+   gPad->SetGrid(1,1);
+   gPad->SetLogy();
+   gStyle->SetOptStat(0);
+   hsameside2->SetTitle("");
+   hsameside2->Draw();
+   csameside->SaveAs("same_side_au.C");
 
 /*
    TH1F *htmvetos = new TH1F("htmvetos","htmvetos",110,-40.0,400.0);
@@ -416,6 +485,13 @@ void DetSys4au(){
    //TColor::InvertPalette();
    gpxx->SetTitle("; E_{THR 1} [adc]; E_{THR 2} [keV]; P_{XX}");
    gpxx->Draw("colz");
+   //d->SaveAs("Pxx_run373_w35.pdf");
+
+   TCanvas *caldo = new TCanvas("caldo","caldo",800,600);
+   gPad->SetGrid(1,1);
+   gStyle->SetOptStat(0);
+   gpxx2->SetTitle("; E_{THR 1} [adc]; E_{THR 2} [keV]; P_{XX}");
+   gpxx2->Draw("colz");
 
 
 }
